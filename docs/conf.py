@@ -33,7 +33,7 @@ __location__ = os.path.join(os.getcwd(), os.path.dirname(
     inspect.getfile(inspect.currentframe())))
 
 output_dir = os.path.join(__location__, "../docs/_reference")
-module_dir = os.path.join(__location__, "../elements")
+module_dir = os.path.join(__location__, "../mendeleev")
 cmd_line_template = "sphinx-apidoc -f -o {outputdir} {moduledir}"
 cmd_line = cmd_line_template.format(outputdir=output_dir, moduledir=module_dir)
 apidoc.main(cmd_line.split(" "))
@@ -67,7 +67,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'elements'
+project = u'mendeleev'
 copyright = u'2015, Lukasz Mentel'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -135,7 +135,7 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 try:
-    from elements import __version__ as version
+    from mendeleev import __version__ as version
 except ImportError:
     pass
 else:
@@ -200,7 +200,7 @@ html_static_path = ['_static']
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'elements-doc'
+htmlhelp_basename = 'mendeleev-doc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -219,7 +219,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'user_guide.tex', u'elements Documentation',
+  ('index', 'user_guide.tex', u'mendeleev Documentation',
    u'Lukasz Mentel', 'manual'),
 ]
 
