@@ -1,0 +1,28 @@
+syntax: glob
+# do not keep build directory created by foray under version control
+mendeleev.egg-info/**
+mendeleev/__pycache__/**
+docs/ipynb/.ipynb_checkpoints/**
+docs/_build/**
+docs/_reference/**
+dist/**
+build/**
+*.x
+*.a
+*.so
+*.pyc
+# ingnore vim .swp files
+.*.swp
+# ignore the .mod files
+*.mod
+# ignore the latex byproduct files
+*.aux
+*.log
+*.bbl
+*.blg
+*.fls
+*.idx
+*.ilg
+*.ind
+*.out
+*.fdb_latexmk

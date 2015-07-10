@@ -1,0 +1,5 @@
+include *.txt
+include *.rst
+recursive-include mendeleev *.py *.c *.h *.pxd *.pyx
+recursive-include docs *.rst *.py
+include mendeleev/elements.db
