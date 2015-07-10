@@ -11,6 +11,7 @@ MAIN_PACKAGE = "mendeleev"
 DESCRIPTION = "Python API with a database of atomic properties for elements in the periodic table"
 LICENSE = "MIT"
 URL = "https://bitbucket.org/lukaszmentel/mendeleev"
+DOWNLOAD_URL='https://bitbucket.org/lukaszmentel/mendeleev/get/v0.1.0.tar.gz'
 AUTHOR = "Lukasz Mentel"
 EMAIL = "lmmentel@gmail.com"
 VERSION = '0.1.0'
@@ -38,6 +39,7 @@ def setup_package():
     setup(name=MAIN_PACKAGE,
           version=VERSION,
           url=URL,
+          download_url=DOWNLOAD_URL,
           description=DESCRIPTION,
           author=AUTHOR,
           author_email=EMAIL,
