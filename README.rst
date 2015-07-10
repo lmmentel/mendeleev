@@ -293,8 +293,8 @@ Another composite attribute is ``ionic_radii`` which returns a list of
 Documentation
 =============
 
-.. image:: https://readthedocs.org/projects/elements/badge/
-   :target: https://elements.readthedocs.org/en/latest/
+.. image:: https://readthedocs.org/projects/mendeleev/badge/
+   :target: https://mendeleev.readthedocs.org
    :alt: Documentation Status
 
 Documentation can be found `here <http://elements.readthedocs.org/en/latest/>`_.
