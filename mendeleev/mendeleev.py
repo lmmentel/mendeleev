@@ -26,12 +26,16 @@
 
 from sqlalchemy import Column, Boolean, Integer, String, Float, create_engine, ForeignKey
 from sqlalchemy.orm import sessionmaker, relationship
-from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
+#from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property
 import os
 from operator import attrgetter
+
+__all__ = ['element', 'get_session', 'get_engine', 'get_table',
+           'Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
+           'Isotope', 'Series']
 
 Base = declarative_base()
 
@@ -399,5 +403,23 @@ def get_element(ids):
         return session.query(Element).filter(Element.atomic_number == ids).one()
     else:
         raise ValueError("Expecting a <str> or <int>, got: {0:s}".format(type(ids)))
+
+def get_table(tablename):
+    ''' Return a table from the database as pandas DataFrame'''
+
+    try:
+        import pandas as pd
+    except:
+        raise ImportError('Cannot import pandas')
+
+    tables = ['elements', 'isotopes', 'ionicradii', 'ionizationenergies',
+              'groups', 'series', 'oxidationstates']
+
+    if tablename in tables:
+        engine = get_engine()
+        return pd.read_sql(tablename, engine)
+    else:
+        raise ValueError('Table should be one of: {}'.format(", ".join(tables)))
+
 
 
