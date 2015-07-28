@@ -299,6 +299,13 @@ Documentation
 
 Documentation can be found `here <http://elements.readthedocs.org/en/latest/>`_.
 
+Citing
+======
+
+If you use *mendeleev* in a scientific publication, please cite the software as 
+
+|    L. M. Mentel, *mendeleev*, 2014. Available at: `https://bitbucket.org/lukaszmentel/mendeleev <https://bitbucket.org/lukaszmentel/mendeleev>`_.
+
 
 License
 =======
