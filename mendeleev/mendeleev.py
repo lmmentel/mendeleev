@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 #The MIT License (MIT)
 #
 #Copyright (c) 2015 Lukasz Mentel
@@ -19,8 +21,6 @@
 #LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
-
-# -*- coding: utf-8 -*-
 
 '''mendeleev module'''
 
@@ -404,7 +404,7 @@ def get_element(ids):
     else:
         raise ValueError("Expecting a <str> or <int>, got: {0:s}".format(type(ids)))
 
-def get_table(tablename):
+def get_table(tablename,  **kwargs):
     ''' Return a table from the database as pandas DataFrame'''
 
     try:
@@ -417,7 +417,7 @@ def get_table(tablename):
 
     if tablename in tables:
         engine = get_engine()
-        return pd.read_sql(tablename, engine)
+        return pd.read_sql(tablename, engine, **kwargs)
     else:
         raise ValueError('Table should be one of: {}'.format(", ".join(tables)))
 
