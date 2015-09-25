@@ -241,8 +241,11 @@ class Element(Base):
 
 class IonicRadius(Base):
     '''
-    Effective ionic radii and crystal radii based on the data in R. D. Shannon,
-    Acta Cryst. (1976) A32, 751
+    Effective ionic radii and crystal radii in pm retrieved from [1].
+
+    .. [1] Shannon, R. D. (1976). Revised effective ionic radii and systematic
+       studies of interatomic distances in halides and chalcogenides. Acta
+       Crystallographica Section A. `doi:10.1107/S0567739476001551 <http://www.dx.doi.org/10.1107/S0567739476001551>`_
 
     Attributes:
       atomic_number : int
@@ -260,6 +263,7 @@ class IonicRadius(Base):
       ionic_radius : float
         Ionic radius in pm
       origin : str
+        Source of the data
       most_reliable : bool
     '''
 
@@ -454,7 +458,19 @@ def get_element(ids):
         raise ValueError("Expecting a <str> or <int>, got: {0:s}".format(type(ids)))
 
 def get_table(tablename,  **kwargs):
-    ''' Return a table from the database as pandas DataFrame'''
+    '''
+    Return a table from the database as pandas DataFrame
+
+    Args:
+      tablename: str
+        Name of the table from the database
+      kwargs:
+        A dictionary of keyword arguments to pass to the `pandas.read_qsl`
+
+    Returns:
+      df: pandas.DataFrame
+        Pandas DataFrame with the contents of the table
+    '''
 
     try:
         import pandas as pd
