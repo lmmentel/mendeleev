@@ -24,6 +24,8 @@ def heatmap(prop, style='whitegrid', figsize=(16, 10), cmap='RdBu_r', lw=1, outp
 
     ptable = get_table('elements')
 
+    # add lanthanides and actinides
+
     keys = ['period', 'group_id', prop]
     els = ptable[keys].dropna()
     elements_rect = els.pivot(*keys)
