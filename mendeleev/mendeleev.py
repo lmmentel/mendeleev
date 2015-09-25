@@ -29,7 +29,7 @@ from sqlalchemy.orm import sessionmaker, relationship
 #from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 import os
 from operator import attrgetter
 
@@ -150,7 +150,7 @@ class Element(Base):
     @hybrid_property
     def ionenergies(self):
         '''
-        Return a dict with ionization degree as keyis and ionization energies
+        Return a dict with ionization degree as keys and ionization energies
         in eV as values.
         '''
 
@@ -187,6 +187,43 @@ class Element(Base):
         return max(self.isotopes, key=attrgetter("abundance")).mass_number
 
     @hybrid_property
+    def abselen(self):
+        '''
+        Return the absolute electronegativity, calculated as
+
+        .. math::
+
+           \chi = \frac{I + A}{2}
+
+        where I is the ionization energy and A is the electron affinity
+        '''
+
+        return (self.ionenerges[1] + self.electron_affinity)*0.5
+
+    @hybrid_method
+    def hardness(self, charge=0):
+        '''
+        Return the absolute hardness, calculated as
+
+        .. math::
+
+           \eta = \frac{I - A}{2}
+
+        where I is the ionization energy and A is the electron affinity
+
+        Args:
+          charge: int
+            Charge of the cation for which the hardness will be calculated
+        '''
+
+        if charge == 0:
+            return (self.ionenerges[1] - self.electron_affinity)*0.5
+        elif charge > 0:
+            return (self.ionenergies[charge + 1] - self.ionenergies[charge])*0.5
+        elif charge < 0:
+            raise ValueError('Charge has to be a non-negative integer, got: {}'.format(charge))
+
+    @hybrid_property
     def exact_mass(self):
         '''Return the mass calculated from isotopic composition.'''
 
@@ -208,10 +245,22 @@ class IonicRadius(Base):
     Acta Cryst. (1976) A32, 751
 
     Attributes:
+      atomic_number : int
+        Atomic number
       charge : int
         Charge of the ion
       econf : str
         Electronic configuration of the ion
+      coordination : str
+        Type of coordination
+      spin : str
+        Spin state: HS - high spin, LS - low spin
+      crystal_radius : float
+        Crystal radius in pm
+      ionic_radius : float
+        Ionic radius in pm
+      origin : str
+      most_reliable : bool
     '''
 
     __tablename__ = 'ionicradii'
