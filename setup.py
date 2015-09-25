@@ -50,6 +50,9 @@ def setup_package():
           classifiers=CLASSIFIERS,
           packages=find_packages(exclude=['tests', 'tests.*']),
           install_requires=['SQLAlchemy'],
+          scripts = [
+              'scripts/element.py',
+          ]
     )
 
 if __name__ == "__main__":
