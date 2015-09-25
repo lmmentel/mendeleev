@@ -33,7 +33,7 @@ The followig data is currently avaialble:
 +-----------------------+-------+-------------------------------------+-------------+
 | dipole_polarizability | float | Dipole polarizability in a.u.       | [1]_        |
 +-----------------------+-------+-------------------------------------+-------------+
-| electron_affinity     | float | Electron affinity in eV             |             |
+| electron_affinity     | float | Electron affinity in eV             | [2]_, [3]_  |
 +-----------------------+-------+-------------------------------------+-------------+
 | electronegativity     | float | Electronegativity (Pauling scale)   |             |
 +-----------------------+-------+-------------------------------------+-------------+
@@ -45,9 +45,9 @@ The followig data is currently avaialble:
 +-----------------------+-------+-------------------------------------+-------------+
 | group                 | int   | Group in periodic table             |             |
 +-----------------------+-------+-------------------------------------+-------------+
-| ionenergy             | tuple | Ionization energies in eV           | [2]_        |
+| ionenergy             | tuple | Ionization energies in eV           | [4]_        |
 +-----------------------+-------+-------------------------------------+-------------+
-| ionic_radii           | list  | Ionic radii                         | [3]_        |
+| ionic_radii           | list  | Ionic and crystal radii in pm       | [5]_        |
 +-----------------------+-------+-------------------------------------+-------------+
 | isotopes              | list  | Isotopes                            |             |
 +-----------------------+-------+-------------------------------------+-------------+
@@ -79,9 +79,14 @@ The followig data is currently avaialble:
 .. [1] P. Schwerdtfeger "Table of experimental and calculated static dipole
    polarizabilities for the electronic ground states of the neutral elements
    (in atomic units)", February 11, 2014 `source <http://ctcp.massey.ac.nz/Tablepol2014.pdf>`_
-.. [2] `NIST Atomic Database <http://physics.nist.gov/cgi-bin/ASD/ie.pl>`_
+.. [2] W. M. Haynes, Handboob of Chemistry and Physics 95th Edition, CRC Press,
+   New York, 2014, ISBN-10: 1482208679, ISBN-13: 978-1482208672.
+.. [3] Andersen, T. (2004). Atomic negative ions: structure, dynamics and collisions.
+   Physics Reports, 394(4-5), 157–313.
+   `doi:10.1016/j.physrep.2004.01.001 <http://www.dx.doi.org/10.1016/j.physrep.2004.01.001>`_
+.. [4] `NIST Atomic Database <http://physics.nist.gov/cgi-bin/ASD/ie.pl>`_
    accessed on April 13, 2015
-.. [3] Shannon, R. D. (1976). Revised effective ionic radii and systematic
+.. [5] Shannon, R. D. (1976). Revised effective ionic radii and systematic
    studies of interatomic distances in halides and chalcogenides.
    Acta Crystallographica Section A.
    `doi:10.1107/S0567739476001551 <http://www.dx.doi.org/10.1107/S0567739476001551>`_
