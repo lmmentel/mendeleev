@@ -22,407 +22,164 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
-'''mendeleev module'''
+import os
+import pandas as pd
 
-from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey
-from sqlalchemy.orm import relationship
-#from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
-from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
-from operator import attrgetter
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.dialects import sqlite
 
-__all__ = ['Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
-           'Isotope', 'Series']
+from .tables import (Base, Element, IonizationEnergy, IonicRadius,
+        OxidationState, Isotope, Series)
 
-Base = declarative_base()
+__all__ = ['element', 'get_session', 'get_engine', 'get_table', 'ids_to_attr',
+           'get_ips']
 
-class Element(Base):
+def get_session():
+    '''Return the database session connection.'''
+
+    dbpath = os.path.join(os.path.abspath(os.path.dirname(__file__)), "elements.db")
+    engine = create_engine("sqlite:///{path:s}".format(path=dbpath), echo=False)
+    db_session =  sessionmaker(bind=engine, autoflush=False, autocommit=False)
+    return db_session()
+
+def get_engine():
+    '''Return the db engine'''
+
+    dbpath = os.path.join(os.path.abspath(os.path.dirname(__file__)), "elements.db")
+    engine = create_engine("sqlite:///{path:s}".format(path=dbpath), echo=False)
+    return engine
+
+def element(ids):
     '''
-    Chemical element.
-
-    Attributes:
-      annotation : str
-        Annotations regarding the data
-      atomic_number : int
-        Atomic number
-      atomic_radius : float
-        Atomic radius in pm
-      atomic_volume : float
-        Atomic volume in cm3/mol
-      block : int
-        Block in periodic table
-      boiling_point : float
-        Boiling temperature in K
-      covalent_radius : float
-        Covalent radius in pm
-      density : float
-        Density at 295K in g/cm3
-      description : str
-        Short description of the element
-      dipole_polarizability : float
-        Dipole polarizability in atomic units from P. Schwerdtfeger "Table of
-        experimental and calculated static dipole polarizabilities for the
-        electronic ground states of the neutral elements (in atomic units)",
-        February 11, 2014
-      electron_affinity : float
-        Electron affinity in eV
-      electronegativity : float
-        Electronegativity (Pauling scale)
-      econf : str
-        Ground state electron configuration
-      evaporation_heat : float
-        Evaporation heat in kJ/mol
-      fusion_heat : float
-        Fusion heat in kJ/mol
-      group : int
-        Group in periodic table
-      lattice_constant : float
-        Lattice constant in ang
-      lattice_structure : str
-        Lattice structure code
-      mass : float
-        Relative atomic mass. Ratio of the average mass of atoms
-        of the element to 1/12 of the mass of an atom of 12C
-      melting_point : float
-        Melting temperature in K
-      name : str
-        Name in english
-      period : int
-        Period in periodic table
-      series : int
-        Index to chemical series
-      specific_heat : float
-        Specific heat in J/g mol @ 20 C
-      symbol : str of length 1 or 2
-        Chemical symbol
-      thermal_conductivity : float
-        Thermal conductivity in @/m K @25 C
-      vdw_radius : float
-        Van der Waals radius in pm
-      oxistates : str
-        Oxidation states
-      ionenergy : tuple
-        Ionization energies in eV parsed from
-        http://physics.nist.gov/cgi-bin/ASD/ie.pl on April 13, 2015
+    Based on the type of the `ids` identifier return either an ``Element``
+    object from the database, or a list of ``Element`` objects if the `ids` is
+    a list or a tuple of identifiers. Valid identifiers for an element are:
+    *name*, *symbol*, *atomic number*.
     '''
 
-    __tablename__ = 'elements'
+    if isinstance(ids, (list, tuple)):
+        return [get_element(i) for i in ids]
+    elif isinstance(ids, (str, int)):
+        return get_element(ids)
+    else:
+        raise ValueError("Expected a <list>, <tuple>, <str> or <int>, got: {0:s}".format(type(ids)))
 
-    annotation = Column(String)
-    atomic_number = Column(Integer, primary_key=True)
-    atomic_radius = Column(Float)
-    atomic_volume = Column(Float)
-    block = Column(String)
-    boiling_point = Column(Float)
-    covalent_radius = Column(Float)
-    density = Column(Float)
-    description = Column(String)
-    dipole_polarizability = Column(Float)
-    electron_affinity = Column(Float)
-    electronegativity = Column(Float)
-    econf = Column('electronic_configuration', String)
-    evaporation_heat = Column(Float)
-    fusion_heat = Column(Float)
-    group = relationship("Group", uselist=False)
-    group_id = Column(Integer, ForeignKey("groups.group_id"))
-    lattice_constant = Column(Float)
-    lattice_structure = Column(String)
-    mass = Column(Float)
-    melting_point = Column(String)
-    name = Column(String)
-    period = Column(Integer)
-    _series_id = Column("series_id", Integer, ForeignKey("series.id"))
-    _series = relationship("Series", uselist=False)
-    series = association_proxy("_series", "name")
-    specific_heat = Column(Float)
-    symbol = Column(String)
-    thermal_conductivity = Column(Float)
-    vdw_radius = Column(Float)
-
-    ionic_radii = relationship("IonicRadius")
-    _ionization_energies = relationship("IonizationEnergy")
-    _oxidation_states = relationship("OxidationState")
-    isotopes = relationship("Isotope")
-
-    @hybrid_property
-    def ionenergies(self):
-        '''
-        Return a dict with ionization degree as keys and ionization energies
-        in eV as values.
-        '''
-
-        return {ie.degree:ie.energy for ie in self._ionization_energies}
-
-    @hybrid_property
-    def oxistates(self):
-        '''Return the oxidation states as a list of ints'''
-
-        return [os.oxidation_state for os in self._oxidation_states]
-
-    @hybrid_property
-    def electrons(self):
-        '''Return the number of electrons.'''
-
-        return self.atomic_number
-
-    @hybrid_property
-    def protons(self):
-        '''Return the number of protons.'''
-
-        return self.atomic_number
-
-    @hybrid_property
-    def neutrons(self):
-        '''Return the number of neutrons of the most abundant natural stable isotope.'''
-
-        return self.mass_number - self.protons
-
-    @hybrid_property
-    def mass_number(self):
-        '''Return the mass number of the most abundant natural stable isotope.'''
-
-        return max(self.isotopes, key=attrgetter("abundance")).mass_number
-
-    @hybrid_method
-    def abselen(self, charge=0):
-        '''
-        Return the absolute electronegativity, calculated as
-
-        .. math::
-
-           \chi = \frac{I + A}{2}
-
-        where I is the ionization energy and A is the electron affinity
-        '''
-
-        if charge == 0:
-            if self.ionenergies.get(1, None) is not None and\
-                    self.electron_affinity is not None:
-                return (self.ionenergies[1] + self.electron_affinity)*0.5
-            else:
-                return None
-        elif charge > 0:
-            if self.ionenergies.get(charge + 1, None) is not None and\
-               self.ionenergies.get(charge, None) is not None:
-                return (self.ionenergies[charge + 1] + self.ionenergies[charge])*0.5
-            else:
-                return None
-        elif charge < 0:
-            raise ValueError('Charge has to be a non-negative integer, got: {}'.format(charge))
-
-    @hybrid_method
-    def hardness(self, charge=0):
-        '''
-        Return the absolute hardness, calculated as
-
-        .. math::
-
-           \eta = \frac{I - A}{2}
-
-        where I is the ionization energy and A is the electron affinity
-
-        Args:
-          charge: int
-            Charge of the cation for which the hardness will be calculated
-        '''
-
-        if charge == 0:
-            if self.ionenergies.get(1, None) is not None and self.electron_affinity is not None:
-                return (self.ionenergies[1] - self.electron_affinity)*0.5
-            else:
-                return None
-        elif charge > 0:
-            if self.ionenergies.get(charge + 1, None) is not None and\
-               self.ionenergies.get(charge, None) is not None:
-                return (self.ionenergies[charge + 1] - self.ionenergies[charge])*0.5
-            else:
-                return None
-        elif charge < 0:
-            raise ValueError('Charge has to be a non-negative integer, got: {}'.format(charge))
-
-    @hybrid_property
-    def exact_mass(self):
-        '''Return the mass calculated from isotopic composition.'''
-
-        return sum(iso.mass * iso.abundance for iso in self.isotopes)
-
-    def __str__(self):
-        return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
-
-    def __repr__(self):
-        return "%s(\n%s)" % (
-                 (self.__class__.__name__),
-                 ' '.join(["\t%s=%r,\n" % (key, getattr(self, key))
-                            for key in sorted(self.__dict__.keys())
-                            if not key.startswith('_')]))
-
-class IonicRadius(Base):
+def get_element(ids):
     '''
-    Effective ionic radii and crystal radii in pm retrieved from [1].
-
-    .. [1] Shannon, R. D. (1976). Revised effective ionic radii and systematic
-       studies of interatomic distances in halides and chalcogenides. Acta
-       Crystallographica Section A. `doi:10.1107/S0567739476001551 <http://www.dx.doi.org/10.1107/S0567739476001551>`_
-
-    Attributes:
-      atomic_number : int
-        Atomic number
-      charge : int
-        Charge of the ion
-      econf : str
-        Electronic configuration of the ion
-      coordination : str
-        Type of coordination
-      spin : str
-        Spin state: HS - high spin, LS - low spin
-      crystal_radius : float
-        Crystal radius in pm
-      ionic_radius : float
-        Ionic radius in pm
-      origin : str
-        Source of the data
-      most_reliable : bool
+    Return an element from the database based on the `ids` identifier passed.
+    Valid identifiers for an element are: *name*, *symbol*, *atomic number*.
     '''
 
-    __tablename__ = 'ionicradii'
+    session = get_session()
 
-    id = Column(Integer, primary_key=True)
-    atomic_number = Column(Integer, ForeignKey('elements.atomic_number'))
-    charge = Column(Integer)
-    econf = Column(String)
-    coordination = Column(String)
-    spin = Column(String)
-    crystal_radius = Column(Float)
-    ionic_radius = Column(Float)
-    origin = Column(String)
-    most_reliable = Column(Boolean)
+    if isinstance(ids, str):
+        if len(ids) <= 3 and ids.lower() != "tin":
+            return session.query(Element).filter(Element.symbol == ids).one()
+        else:
+            return session.query(Element).filter(Element.name == ids).one()
+    elif isinstance(ids, int):
+        return session.query(Element).filter(Element.atomic_number == ids).one()
+    else:
+        raise ValueError("Expecting a <str> or <int>, got: {0:s}".format(type(ids)))
 
-    def __str__(self):
-        out = ["{0}={1:>4d}", "{0}={1:5s}", "{0}={1:>6.3f}", "{0}={1:>6.3f}"]
-        keys = ['charge', 'coordination', 'crystal_radius', 'ionic_radius']
-        return ", ".join([o.format(k, getattr(self, k)) for o, k in zip(out, keys)])
-
-    def __repr__(self):
-        return "%s(\n%s)" % (
-                 (self.__class__.__name__),
-                 ' '.join(["\t%s=%r,\n" % (key, getattr(self, key))
-                            for key in sorted(self.__dict__.keys())
-                            if not key.startswith('_')]))
-
-class IonizationEnergy(Base):
+def get_table(tablename,  **kwargs):
     '''
-    Ionization energy of an element
+    Return a table from the database as pandas DataFrame
 
-    Attributes:
-      atomic_number : int
-        Atomic number
-      degree : int
-        Degree of ionization with respect to neutral atom
-      energy : float
-        Ionization energy in eV parsed from
-        http://physics.nist.gov/cgi-bin/ASD/ie.pl on April 13, 2015
+    Args:
+      tablename: str
+        Name of the table from the database
+      kwargs:
+        A dictionary of keyword arguments to pass to the `pandas.read_qsl`
+
+    Returns:
+      df: pandas.DataFrame
+        Pandas DataFrame with the contents of the table
     '''
 
-    __tablename__ = 'ionizationenergies'
+    tables = ['elements', 'isotopes', 'ionicradii', 'ionizationenergies',
+              'groups', 'series', 'oxidationstates']
 
-    id = Column(Integer, primary_key=True)
-    atomic_number = Column(Integer, ForeignKey('elements.atomic_number'))
-    degree = Column(Integer)
-    energy = Column(Float)
+    if tablename in tables:
+        engine = get_engine()
+        df = pd.read_sql(tablename, engine, **kwargs)
+        return df
+    else:
+        raise ValueError('Table should be one of: {}'.format(", ".join(tables)))
 
-    def __str__(self):
-
-        return "{1:5d} {2:10.5f}".format(self.degree, self.energy)
-
-    def __repr__(self):
-
-        return "<IonizationEnergy(atomic_number={a:5d}, degree={d:3d}, energy={e:10.5f})>".format(
-               a=self.atomic_number, d=self.degree, e=self.energy)
-
-class OxidationState(Base):
+def ids_to_attr(ids, attr='atomic_number'):
     '''
-    Oxidation states of an element
+    Convert the element ids: atomic numbers, symbols, element names or a
+    combination of the above to a list of corresponding attributes.
 
-    Attributes:
-      atomic_number : int
-        Atomic number
-      oxidation_state : int
-        Oxidation state
-    '''
+    Args:
+      ids: list, str or int
+        A list of atomic number, symbols, element names of a combination of them
+      attr: str
+        Name of the desired attribute
 
-    __tablename__ = 'oxidationstates'
-
-    id = Column(Integer, primary_key=True)
-    atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
-    oxidation_state = Column(Integer)
-
-    def __repr__(self):
-
-        return "<OxidationState(atomic_number={a:5d}, oxidation_state={o:5d})>".format(
-               a=self.atomic_number, o=self.oxidation_state)
-
-class Group(Base):
-    '''Name of the group in the periodic table.'''
-
-    __tablename__ = 'groups'
-
-    group_id = Column(Integer, primary_key=True)
-    symbol = Column(String)
-    name = Column(String)
-
-    def __repr__(self):
-
-        return "<Group(symbol={s:s}, name={n:s})>".format(
-               s=self.symbol, n=self.name)
-
-class Series(Base):
-    '''
-    Name of the series in the periodic table.
-
-    Attributes:
-      name : str
-        Name of the series
+    Returns:
+      out: list
+        List of attributes corresponding to the ids
     '''
 
-    __tablename__ = 'series'
+    if isinstance(ids, (list, tuple)):
+        return [getattr(e, attr) for e in element(ids)]
+    else:
+        return [getattr(element(ids), attr)]
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
 
-    def __repr__(self):
-
-        return "<Series(name={n:s})>".format(n=self.name)
-
-class Isotope(Base):
+def get_ips(ids=None, deg=1):
     '''
-    Isotope
+    Return a pandas DataFrame with ionization energies for a set of elements.
 
-    Attributes:
-      atomic_number : int
-        Atomic number
-      mass : float
-        Mass of the isotope
-      abundance : float
-        Abundance of the isotope
-      mass_number : int
-        Mass number of the isotope
+    Args:
+      ids: list, str or int
+        A list of atomic number, symbols, element names of a combination of the
+        above. If nothing is specified all elements are selected.
+      deg: int or list of int
+        Degree of ionization, either as int or a list of ints. If a list is
+        passed then the output will contain ionization energies corresponding
+        to particalr degrees in columns.
+
+    Returns:
+      df: DataFrame
+        Pandas DataFrame with atomic numbers, symbols and ionization energies
     '''
 
-    __tablename__ = "isotopes"
+    session = get_session()
+    engine = get_engine()
 
-    id = Column(Integer, primary_key=True)
-    atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
-    mass = Column(Float)
-    abundance = Column(Float)
-    mass_number = Column(Integer)
+    if ids is None:
+        atns = range(1, 119)
+    else:
+        atns = ids_to_attr(ids, attr='atomic_number')
 
-    def __str__(self):
+    query = session.query(Element.atomic_number, Element.symbol).filter(Element.atomic_number.in_(atns))
+    df = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
 
-        return "{0:5d} {1:10.5f} {2:6.2f}% {3:5d}".format(
-                self.atomic_number, self.mass, self.abundance*100, self.mass_number)
+    if isinstance(deg, (list, tuple)):
+        if all(isinstance(d, int) for d in deg):
+            for d in deg:
+                query = session.query(IonizationEnergy).\
+                            filter(IonizationEnergy.degree == d).\
+                            filter(IonizationEnergy.atomic_number.in_((atns)))
+                out = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
+                out = out[['atomic_number', 'energy']]
+                out.columns = ['atomic_number', 'IP{0:d}'.format(d)]
+                df = pd.merge(df, out, on='atomic_number', how='left')
+        else:
+            raise ValueError('deg should be a list of ints')
+    elif isinstance(deg, int):
+        query = session.query(IonizationEnergy).\
+                    filter(IonizationEnergy.degree == deg).\
+                    filter(IonizationEnergy.atomic_number.in_((atns)))
+        out = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
+        out = out[['atomic_number', 'energy']]
+        out.columns = ['atomic_number', 'IP{0:d}'.format(deg)]
+        df = pd.merge(df, out, on='atomic_number', how='left')
+    else:
+        raise ValueError('deg should be an int or a list or tuple of ints')
 
-    def __repr__(self):
-
-        return "<Isotope(mass={}, abundance={}, mass_number={})>".format(
-               self.mass, self.abundance, self.mass_number)
+    return df
