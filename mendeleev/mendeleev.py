@@ -24,17 +24,15 @@
 
 '''mendeleev module'''
 
-from sqlalchemy import Column, Boolean, Integer, String, Float, create_engine, ForeignKey
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey
+from sqlalchemy.orm import relationship
 #from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
-import os
 from operator import attrgetter
 
-__all__ = ['element', 'get_session', 'get_engine', 'get_table',
-           'Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
+__all__ = ['Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
            'Isotope', 'Series']
 
 Base = declarative_base()
@@ -186,8 +184,8 @@ class Element(Base):
 
         return max(self.isotopes, key=attrgetter("abundance")).mass_number
 
-    @hybrid_property
-    def abselen(self):
+    @hybrid_method
+    def abselen(self, charge=0):
         '''
         Return the absolute electronegativity, calculated as
 
@@ -198,7 +196,20 @@ class Element(Base):
         where I is the ionization energy and A is the electron affinity
         '''
 
-        return (self.ionenerges[1] + self.electron_affinity)*0.5
+        if charge == 0:
+            if self.ionenergies.get(1, None) is not None and\
+                    self.electron_affinity is not None:
+                return (self.ionenergies[1] + self.electron_affinity)*0.5
+            else:
+                return None
+        elif charge > 0:
+            if self.ionenergies.get(charge + 1, None) is not None and\
+               self.ionenergies.get(charge, None) is not None:
+                return (self.ionenergies[charge + 1] + self.ionenergies[charge])*0.5
+            else:
+                return None
+        elif charge < 0:
+            raise ValueError('Charge has to be a non-negative integer, got: {}'.format(charge))
 
     @hybrid_method
     def hardness(self, charge=0):
@@ -217,9 +228,16 @@ class Element(Base):
         '''
 
         if charge == 0:
-            return (self.ionenerges[1] - self.electron_affinity)*0.5
+            if self.ionenergies.get(1, None) is not None and self.electron_affinity is not None:
+                return (self.ionenergies[1] - self.electron_affinity)*0.5
+            else:
+                return None
         elif charge > 0:
-            return (self.ionenergies[charge + 1] - self.ionenergies[charge])*0.5
+            if self.ionenergies.get(charge + 1, None) is not None and\
+               self.ionenergies.get(charge, None) is not None:
+                return (self.ionenergies[charge + 1] - self.ionenergies[charge])*0.5
+            else:
+                return None
         elif charge < 0:
             raise ValueError('Charge has to be a non-negative integer, got: {}'.format(charge))
 
@@ -408,83 +426,3 @@ class Isotope(Base):
 
         return "<Isotope(mass={}, abundance={}, mass_number={})>".format(
                self.mass, self.abundance, self.mass_number)
-
-def get_session():
-    '''Return the database session connection.'''
-
-    dbpath = os.path.join(os.path.abspath(os.path.dirname(__file__)), "elements.db")
-    engine = create_engine("sqlite:///{path:s}".format(path=dbpath), echo=False)
-    db_session =  sessionmaker(bind=engine, autoflush=False, autocommit=False)
-    return db_session()
-
-def get_engine():
-    '''Return the db engine'''
-
-    dbpath = os.path.join(os.path.abspath(os.path.dirname(__file__)), "elements.db")
-    engine = create_engine("sqlite:///{path:s}".format(path=dbpath), echo=False)
-    return engine
-
-def element(ids):
-    '''
-    Based on the type of the `ids` identifier return either an ``Element``
-    object from the database, or a list of ``Element`` objects if the `ids` is
-    a list or a tuple of identifiers. Valid identifiers for an element are:
-    *name*, *symbol*, *atomic number*.
-    '''
-
-    if isinstance(ids, (list, tuple)):
-        return [get_element(i) for i in ids]
-    elif isinstance(ids, (str, int)):
-        return get_element(ids)
-    else:
-        raise ValueError("Expected a <list>, <tuple>, <str> or <int>, got: {0:s}".format(type(ids)))
-
-def get_element(ids):
-    '''
-    Return an element from the database based on the `ids` identifier passed.
-    Valid identifiers for an element are: *name*, *symbol*, *atomic number*.
-    '''
-
-    session = get_session()
-
-    if isinstance(ids, str):
-        if len(ids) <= 3 and ids.lower() != "tin":
-            return session.query(Element).filter(Element.symbol == ids).one()
-        else:
-            return session.query(Element).filter(Element.name == ids).one()
-    elif isinstance(ids, int):
-        return session.query(Element).filter(Element.atomic_number == ids).one()
-    else:
-        raise ValueError("Expecting a <str> or <int>, got: {0:s}".format(type(ids)))
-
-def get_table(tablename,  **kwargs):
-    '''
-    Return a table from the database as pandas DataFrame
-
-    Args:
-      tablename: str
-        Name of the table from the database
-      kwargs:
-        A dictionary of keyword arguments to pass to the `pandas.read_qsl`
-
-    Returns:
-      df: pandas.DataFrame
-        Pandas DataFrame with the contents of the table
-    '''
-
-    try:
-        import pandas as pd
-    except:
-        raise ImportError('Cannot import pandas')
-
-    tables = ['elements', 'isotopes', 'ionicradii', 'ionizationenergies',
-              'groups', 'series', 'oxidationstates']
-
-    if tablename in tables:
-        engine = get_engine()
-        return pd.read_sql(tablename, engine, **kwargs)
-    else:
-        raise ValueError('Table should be one of: {}'.format(", ".join(tables)))
-
-
-
