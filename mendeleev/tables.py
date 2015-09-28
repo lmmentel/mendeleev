@@ -241,6 +241,29 @@ class Element(Base):
         elif charge < 0:
             raise ValueError('Charge has to be a non-negative integer, got: {}'.format(charge))
 
+    @hybrid_method
+    def softness(self, charge=0):
+        '''
+        Return the absolute softness, calculated as
+
+        .. math::
+
+           S = \frac{1}{2\eta}
+
+        where $\eta$ is the absolute hardness
+
+        Args:
+          charge: int
+            Charge of the cation for which the hardness will be calculated
+        '''
+
+        eta = self.hardness(charge=charge)
+
+        if eta is None:
+            return None
+        else:
+            return 1.0/(2.0*eta)
+
     @hybrid_property
     def exact_mass(self):
         '''Return the mass calculated from isotopic composition.'''
