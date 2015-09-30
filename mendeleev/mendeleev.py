@@ -129,7 +129,6 @@ def ids_to_attr(ids, attr='atomic_number'):
     else:
         return [getattr(element(ids), attr)]
 
-
 def get_ips(ids=None, deg=1):
     '''
     Return a pandas DataFrame with ionization energies for a set of elements.
@@ -183,7 +182,6 @@ def get_ips(ids=None, deg=1):
         raise ValueError('deg should be an int or a list or tuple of ints')
 
     return df
-
 
 def get_ionic_radii(ids=None, charge=1, coord=None):
     '''
@@ -251,4 +249,3 @@ def deltaN(id1, id2, charge1=0, charge2=0):
         return (chi[0] - chi[1])/(2.0*(e1.hardness(charge=charge1) + e2.hardness(charge=charge2)))
     else:
         return None
-

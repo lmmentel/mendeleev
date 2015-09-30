@@ -279,6 +279,36 @@ class Element(Base):
 
         return sum(iso.mass * iso.abundance for iso in self.isotopes)
 
+    def zeff(self, method='slater', n=None, s=None):
+        '''
+        Return the effective nuclear charge for (n, s)
+
+        Args:
+          method : str
+            Method to calculate the screening constant, the choices are
+              - `slater`, for Slater's method as in Slater, J. C. (1930).
+                Atomic Shielding Constants. Physical Review, 36(1), 57–64.
+                `doi:10.1103/PhysRev.36.57 <http://www.dx.doi.org/10.1103/PhysRev.36.57>`_
+              - `clementi` for values of screening constants from Clementi, E.,
+                & Raimondi, D. L. (1963). Atomic Screening Constants from SCF
+                Functions. The Journal of Chemical Physics, 38(11), 2686.
+                `doi:10.1063/1.1733573 <http://www.dx.doi.org/10.1063/1.1733573`_
+                and Clementi, E. (1967). Atomic Screening Constants from SCF
+                Functions. II. Atoms with 37 to 86 Electrons. The Journal of
+                Chemical Physics, 47(4), 1300.
+                `doi:10.1063/1.1712084 <http://www.dx.doi.org/10.1063/1.1712084>`_
+          n : int
+            Principal quantum number
+          s : str
+            Subshell label, (s, p, d, ...)
+        '''
+
+        methods = ['slater', 'clementi']
+        if method.lower() not in methods:
+            raise ValueError('<method> should be one of {}'.format(", ".join(methods)))
+
+
+
     def __str__(self):
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
 
@@ -468,8 +498,8 @@ class ScreeningConstant(Base):
         Atomic number
       n : int
         Principal quantum number
-      s : int
-        Subshell
+      s : str
+        Subshell label, (s, p, d, ...)
       screening : float
         Screening constant
     '''
@@ -490,3 +520,137 @@ class ScreeningConstant(Base):
 
         return "<ScreeningConstant(Z={0:4d}, n={1:3d}, s={2:s}, screening={3:10.4f})>".format(
                 self.atomic_number, self.n, self.s, self.screening)
+
+
+subshells = ['s', 'p', 'd', 'f', 'g', 'h', 'i', 'j', 'k']
+
+class ElectronicConfiguration(object):
+
+    def __init__(self, confstr, atomre=None, shellre=None):
+
+        self.noble = {
+            'He' : '1s2',
+            'Ne' : '1s2 2s2 2p6',
+            'Ar' : '1s2 2s2 2p6 3s2 3p6',
+            'Kr' : '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6',
+            'Xe' : '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6',
+            'Rn' : '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6'
+        }
+
+        self.confstr = confstr
+        self.atomre = atomre
+        self.shellre = shellre
+
+        # parse the confstr and initialize core, valence and conf attributes
+        self.parse()
+
+    @property
+    def atomre(self):
+        return self._atomre
+
+    @atomre.setter
+    def atomre(self, value):
+
+        if value is None:
+            self._atomre = re.compile(r'\[([A-Z][a-z]*)\]')
+        else:
+            self._atomre = re.compile(value)
+
+    @property
+    def shellre(self):
+        return self._shellre
+
+    @shellre.setter
+    def shellre(self, value):
+
+        if value is None:
+            self._shellre = re.compile(r'(?P<n>\d)(?P<s>[spdfghijk])(?P<e>\d+)?')
+        else:
+            self._shellre = re.compile(value)
+
+    def parse(self):
+
+        citems = self.confstr.split()
+
+        core = {}
+        calence = {}
+
+        if self.atomre.match(citems[0]):
+            symbol = str(self.atomre.match(citems[0]).group(1))
+            citems = citems[1:]
+            core = [self.shellre.match(s).group('n', 's', 'e')
+                       for s in self.noble[symbol].split() if self.shellre.match(s)]
+        valence = [self.shellre.match(s).group('n', 's', 'e')
+                       for s in citems if self.shellre.match(s)]
+
+        self.core = OrderedDict([((int(n), s) , (int(e) if e is not None else 1)) for (n, s, e) in core])
+        self.valence = OrderedDict([((int(n), s), (int(e) if e is not None else 1)) for (n, s, e) in valence])
+        self.conf = OrderedDict(self.core.items() + self.valence.items())
+
+    def sort(self, inplace=True):
+
+        if inplace:
+            self.conf = OrderedDict(sorted(self.conf.items(), key=lambda x: (x[0][0]+subshells.index(x[0][1]), x[0][0])))
+        else:
+            OrderedDict(sorted(self.conf.items(), key=lambda x: (x[0][0]+subshells.index(x[0][1]), x[0][0])))
+
+    def electrons_per_shell(self):
+
+        pass
+
+    def __repr__(self):
+
+        return self.conf2str(self.conf)
+
+    def __str__(self):
+
+        return self.conf2str(self.conf)
+
+    @staticmethod
+    def conf2str(dictlike):
+
+        return " ".join(["{n:d}{s:s}{e:d}".format(n=k[0], s=k[1], e=v) for k, v in dictlike.items()])
+
+    def shell2int(self):
+
+        return [(x[0], subshells.index(x[1]), x[2]) for x in self.econf]
+
+    def maxn(self):
+
+        return max([shell[0] for shell in self.conf.keys()])
+
+    def slater_shielding(self, n=None, s=None):
+
+        # identify th valence s,p vs d,f
+        if n is None:
+            maxn = self.maxn()
+        else:
+            maxn = n
+
+        if s is None:
+            valsh = subshells[max([subshells.index(x[1]) for x in self.conf.keys() if x[0] == maxn])]
+        else:
+            if s in subshells:
+                valsh = s
+            else:
+                raise ValueError('<s> should be one of {}'.format(", ".join(subshells)))
+
+        if maxn == 1:
+            coeff = 0.3
+        else:
+            coeff = 0.35
+
+        if valsh in ['s', 'p']:
+            # get the number of valence electrons - 1
+            vale = float(sum([v for k, v in self.conf.items() if k[0] == maxn and k[1] in ['s', 'p']]) - 1)
+            n1 = sum([v*0.85 for k, v in self.conf.items() if k[0] == maxn-1])
+            n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, maxn-1)])
+            return n1 + n2 + vale*coeff
+        elif valsh in ['d', 'f']:
+            # get the number of valence electrons - 1
+            vale = float(sum([v for k, v in self.conf.items() if k[0] == maxn and k[1] == valsh]) - 1)
+            n1 = sum([float(v) for k, v in self.conf.items() if k[0] == maxn and k[1] != valsh])
+            n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, maxn)])
+            return n1 + n2 + vale*coeff
+        else:
+            raise ValueError('wrong valence subshell: ', valsh)
