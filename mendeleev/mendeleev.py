@@ -33,7 +33,7 @@ from .tables import (Base, Element, IonizationEnergy, IonicRadius,
         OxidationState, Isotope, Series)
 
 __all__ = ['element', 'get_session', 'get_engine', 'get_table', 'ids_to_attr',
-           'get_ips']
+           'get_ips', 'deltaN']
 
 def get_session():
     '''Return the database session connection.'''
@@ -227,3 +227,28 @@ def get_ionic_radii(ids=None, charge=1, coord=None):
     df = pd.merge(df, out, on='atomic_number', how='left')
 
     return df
+
+def deltaN(id1, id2, charge1=0, charge2=0):
+    '''
+    Calcualte the approximate number of transferred electrons between elements
+    or ions `id1` and `id2` according to
+
+    .. math::
+
+       \Delta N = \frac{\chi_{A} - \chi_{B}}{2(\eta_{A} + \eta_{B})}
+
+    '''
+
+    session = get_session()
+    atns = ids_to_attr([id1, id2], attr='atomic_number')
+
+
+    e1, e2 = [session.query(Element).filter(Element.atomic_number == a).one() for a in atns]
+
+    chi = [x.abselen(charge=c) for x, c in zip([e1, e2], [charge1, charge2])]
+
+    if all(x is not None for x in chi):
+        return (chi[0] - chi[1])/(2.0*(e1.hardness(charge=charge1) + e2.hardness(charge=charge2)))
+    else:
+        return None
+

@@ -33,7 +33,7 @@ from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 from operator import attrgetter
 
 __all__ = ['Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
-           'Isotope', 'Series']
+           'Isotope', 'Series', 'ScreeningConstant']
 
 Base = declarative_base()
 
@@ -144,6 +144,7 @@ class Element(Base):
     _ionization_energies = relationship("IonizationEnergy")
     _oxidation_states = relationship("OxidationState")
     isotopes = relationship("Isotope")
+    screening_constants = relationship('ScreeningConstant')
 
     @hybrid_property
     def ionenergies(self):
@@ -159,6 +160,14 @@ class Element(Base):
         '''Return the oxidation states as a list of ints'''
 
         return [os.oxidation_state for os in self._oxidation_states]
+
+    @hybrid_property
+    def sconst(self):
+        '''
+        Return a dict with screening constants with tuples (n, s) as keys and
+        screening constants as values'''
+
+        return {(x.n, x.s) : x.screening for x in self.screening_constants}
 
     @hybrid_property
     def electrons(self):
@@ -449,3 +458,35 @@ class Isotope(Base):
 
         return "<Isotope(mass={}, abundance={}, mass_number={})>".format(
                self.mass, self.abundance, self.mass_number)
+
+class ScreeningConstant(Base):
+    '''
+    Nuclear screening constants from
+
+    Attributes:
+      atomic_number : int
+        Atomic number
+      n : int
+        Principal quantum number
+      s : int
+        Subshell
+      screening : float
+        Screening constant
+    '''
+
+    __tablename__ = 'screeningconstants'
+
+    id = Column(Integer, primary_key=True)
+    atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
+    n = Column(Integer)
+    s = Column(String)
+    screening = Column(Float)
+
+    def __str__(self):
+
+        return "{0:4d} {1:3d} {2:s} {3:10.4f}".format(self.atomic_number, self.n, self.s, self.screening)
+
+    def __repr__(self):
+
+        return "<ScreeningConstant(Z={0:4d}, n={1:3d}, s={2:s}, screening={3:10.4f})>".format(
+                self.atomic_number, self.n, self.s, self.screening)
