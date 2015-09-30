@@ -65,6 +65,8 @@ The followig data is currently avaialble:
 +-----------------------+-------+-------------------------------------+-------------+
 | period                | int   | Period in periodic table            |             |
 +-----------------------+-------+-------------------------------------+-------------+
+| sconst                | float | Nuclear charge screening constants  | [6]_, [7]_  |
++-----------------------+-------+-------------------------------------+-------------+
 | series                | int   | Index to chemical series            |             |
 +-----------------------+-------+-------------------------------------+-------------+
 | specific_heat         | float | Specific heat in J/g mol @ 20 C     |             |
@@ -90,7 +92,12 @@ The followig data is currently avaialble:
    studies of interatomic distances in halides and chalcogenides.
    Acta Crystallographica Section A.
    `doi:10.1107/S0567739476001551 <http://www.dx.doi.org/10.1107/S0567739476001551>`_
-
+.. [6] Clementi, E., & Raimondi, D. L. (1963). Atomic Screening Constants from
+   SCF Functions. The Journal of Chemical Physics, 38(11), 2686.
+   `doi:10.1063/1.1733573 <http://www.dx.doi.org/10.1063/1.1733573>`_
+.. [7] Clementi, E. (1967). Atomic Screening Constants from SCF Functions. II.
+   Atoms with 37 to 86 Electrons. The Journal of Chemical Physics, 47(4), 1300.
+   `doi:10.1063/1.1712084 <http://www.dx.doi.org/10.1063/1.1712084>`_
 
 
 Installation
