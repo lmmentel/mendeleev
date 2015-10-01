@@ -328,7 +328,11 @@ class Element(Base):
         if method.lower() == 'slater':
             return self.atomic_number - self.ec.slater_screening(n=n, s=s)
         elif method.lower() == 'clementi':
-            return self.atomic_number - self.sconst[n,s]
+            sc = self.sconst.get((n, s), None)
+            if sc is not None:
+                return self.atomic_number - self.sconst.get((n, s), None)
+            else:
+                return sc
         else:
             raise ValueError('<method> should be one of {}'.format("slater, clementi"))
 
