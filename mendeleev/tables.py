@@ -38,6 +38,7 @@ from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 __all__ = ['Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
            'Isotope', 'Series', 'ScreeningConstant']
 
+subshells = ['s', 'p', 'd', 'f', 'g', 'h', 'i', 'j', 'k']
 Base = declarative_base()
 
 class Element(Base):
@@ -287,7 +288,7 @@ class Element(Base):
 
         return sum(iso.mass * iso.abundance for iso in self.isotopes)
 
-    def zeff(self, method='slater', n=None, s=None):
+    def zeff(self, n=None, s=None, method='slater'):
         '''
         Return the effective nuclear charge for (n, s)
 
@@ -311,11 +312,25 @@ class Element(Base):
             Subshell label, (s, p, d, ...)
         '''
 
-        methods = ['slater', 'clementi']
-        if method.lower() not in methods:
-            raise ValueError('<method> should be one of {}'.format(", ".join(methods)))
+        # identify th valence s,p vs d,f
+        if n is None:
+            n = self.ec.maxn()
+        else:
+            if not isinstance(n, int):
+                raise ValueError('<n> should be an integer, got'.format(typ(n)))
 
+        if s is None:
+            s = subshells[max([subshells.index(x[1]) for x in self.ec.conf.keys() if x[0] == n])]
+        else:
+            if s not in subshells:
+                raise ValueError('<s> should be one of {}'.format(", ".join(subshells)))
 
+        if method.lower() == 'slater':
+            return self.atomic_number - self.ec.slater_screening(n=n, s=s)
+        elif method.lower() == 'clementi':
+            return self.atomic_number - self.sconst[n,s]
+        else:
+            raise ValueError('<method> should be one of {}'.format("slater, clementi"))
 
     def __str__(self):
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
@@ -499,7 +514,13 @@ class Isotope(Base):
 
 class ScreeningConstant(Base):
     '''
-    Nuclear screening constants from
+    Nuclear screening constants from Clementi, E., & Raimondi, D. L. (1963).
+    Atomic Screening Constants from SCF Functions. The Journal of Chemical
+    Physics, 38(11), 2686.  `doi:10.1063/1.1733573
+    <http://www.dx.doi.org/10.1063/1.1733573`_ and Clementi, E. (1967). Atomic
+    Screening Constants from SCF Functions. II. Atoms with 37 to 86 Electrons.
+    The Journal of Chemical Physics, 47(4), 1300.  `doi:10.1063/1.1712084
+    <http://www.dx.doi.org/10.1063/1.1712084>`_
 
     Attributes:
       atomic_number : int
@@ -529,10 +550,8 @@ class ScreeningConstant(Base):
         return "<ScreeningConstant(Z={0:4d}, n={1:3d}, s={2:s}, screening={3:10.4f})>".format(
                 self.atomic_number, self.n, self.s, self.screening)
 
-
-subshells = ['s', 'p', 'd', 'f', 'g', 'h', 'i', 'j', 'k']
-
 class ElectronicConfiguration(object):
+    '''Electronic configuration handler'''
 
     def __init__(self, confstr, atomre=None, shellre=None):
 
@@ -621,13 +640,13 @@ class ElectronicConfiguration(object):
 
     def shell2int(self):
 
-        return [(x[0], subshells.index(x[1]), x[2]) for x in self.econf]
+        return [(x[0], subshells.index(x[1]), x[2]) for x in self.conf]
 
     def maxn(self):
 
         return max([shell[0] for shell in self.conf.keys()])
 
-    def slater_shielding(self, n=None, s=None):
+    def slater_screening(self, n, s):
         '''
         Calculate the screening constant using the papproach introduced by
         Slater in Slater, J. C. (1930). Atomic Shielding Constants. Physical
@@ -641,36 +660,22 @@ class ElectronicConfiguration(object):
             Subshell label, (s, p, d, ...)
         '''
 
-        # identify th valence s,p vs d,f
-        if n is None:
-            maxn = self.maxn()
-        else:
-            maxn = n
-
-        if s is None:
-            valsh = subshells[max([subshells.index(x[1]) for x in self.conf.keys() if x[0] == maxn])]
-        else:
-            if s in subshells:
-                valsh = s
-            else:
-                raise ValueError('<s> should be one of {}'.format(", ".join(subshells)))
-
-        if maxn == 1:
+        if n == 1:
             coeff = 0.3
         else:
             coeff = 0.35
 
-        if valsh in ['s', 'p']:
+        if s in ['s', 'p']:
             # get the number of valence electrons - 1
-            vale = float(sum([v for k, v in self.conf.items() if k[0] == maxn and k[1] in ['s', 'p']]) - 1)
-            n1 = sum([v*0.85 for k, v in self.conf.items() if k[0] == maxn-1])
-            n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, maxn-1)])
+            vale = float(sum([v for k, v in self.conf.items() if k[0] == n and k[1] in ['s', 'p']]) - 1)
+            n1 = sum([v*0.85 for k, v in self.conf.items() if k[0] == n-1])
+            n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, n-1)])
             return n1 + n2 + vale*coeff
-        elif valsh in ['d', 'f']:
+        elif s in ['d', 'f']:
             # get the number of valence electrons - 1
-            vale = float(sum([v for k, v in self.conf.items() if k[0] == maxn and k[1] == valsh]) - 1)
-            n1 = sum([float(v) for k, v in self.conf.items() if k[0] == maxn and k[1] != valsh])
-            n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, maxn)])
+            vale = float(sum([v for k, v in self.conf.items() if k[0] == n and k[1] == s]) - 1)
+            n1 = sum([float(v) for k, v in self.conf.items() if k[0] == n and k[1] != s])
+            n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, n)])
             return n1 + n2 + vale*coeff
         else:
-            raise ValueError('wrong valence subshell: ', valsh)
+            raise ValueError('wrong valence subshell: ', s)
