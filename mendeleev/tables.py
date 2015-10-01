@@ -24,13 +24,16 @@
 
 '''mendeleev module'''
 
+import re
+from collections import OrderedDict
+from operator import attrgetter
+
 from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, reconstructor
 #from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
-from operator import attrgetter
 
 __all__ = ['Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
            'Isotope', 'Series', 'ScreeningConstant']
@@ -145,6 +148,11 @@ class Element(Base):
     _oxidation_states = relationship("OxidationState")
     isotopes = relationship("Isotope")
     screening_constants = relationship('ScreeningConstant')
+
+    @reconstructor
+    def init_on_load(self):
+
+        self.ec = ElectronicConfiguration(self.econf)
 
     @hybrid_property
     def ionenergies(self):
@@ -620,6 +628,18 @@ class ElectronicConfiguration(object):
         return max([shell[0] for shell in self.conf.keys()])
 
     def slater_shielding(self, n=None, s=None):
+        '''
+        Calculate the screening constant using the papproach introduced by
+        Slater in Slater, J. C. (1930). Atomic Shielding Constants. Physical
+        Review, 36(1), 57–64.
+        `doi:10.1103/PhysRev.36.57 <http://www.dx.doi.org/10.1103/PhysRev.36.57>`_
+
+        Args:
+          n : int
+            Principal quantum number
+          s : str
+            Subshell label, (s, p, d, ...)
+        '''
 
         # identify th valence s,p vs d,f
         if n is None:
