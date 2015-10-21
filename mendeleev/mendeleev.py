@@ -33,7 +33,7 @@ from .tables import (Base, Element, IonizationEnergy, IonicRadius,
         OxidationState, Isotope, Series)
 
 __all__ = ['element', 'get_session', 'get_engine', 'get_table', 'ids_to_attr',
-           'get_ips', 'deltaN']
+           'get_ips', 'get_ionic_radii', 'deltaN']
 
 def get_session():
     '''Return the database session connection.'''
