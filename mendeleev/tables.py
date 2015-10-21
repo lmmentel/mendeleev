@@ -24,6 +24,7 @@
 
 '''mendeleev module'''
 
+import math
 import re
 from collections import OrderedDict
 from operator import attrgetter
@@ -55,7 +56,7 @@ class Element(Base):
       atomic_volume : float
         Atomic volume in cm3/mol
       block : int
-        Block in periodic table
+        Block in periodic table, s, p, d, f
       boiling_point : float
         Boiling temperature in K
       covalent_radius : float
@@ -104,9 +105,9 @@ class Element(Base):
         Thermal conductivity in @/m K @25 C
       vdw_radius : float
         Van der Waals radius in pm
-      oxistates : str
+      oxistates : list
         Oxidation states
-      ionenergy : tuple
+      ionenergy : dict
         Ionization energies in eV parsed from
         http://physics.nist.gov/cgi-bin/ASD/ie.pl on April 13, 2015
     '''
@@ -288,7 +289,7 @@ class Element(Base):
 
         return sum(iso.mass * iso.abundance for iso in self.isotopes)
 
-    def zeff(self, n=None, s=None, method='slater'):
+    def zeff(self, n=None, s=None, method='slater', alle=False):
         '''
         Return the effective nuclear charge for (n, s)
 
@@ -310,6 +311,10 @@ class Element(Base):
             Principal quantum number
           s : str
             Subshell label, (s, p, d, ...)
+          alle : bool
+            Use all the valence electrons, i.e. calculate screening for an extra
+            electron when method='slater', if method='clementi' this option is
+            ignored
         '''
 
         # identify th valence s,p vs d,f
@@ -326,7 +331,7 @@ class Element(Base):
                 raise ValueError('<s> should be one of {}'.format(", ".join(subshells)))
 
         if method.lower() == 'slater':
-            return self.atomic_number - self.ec.slater_screening(n=n, s=s)
+            return self.atomic_number - self.ec.slater_screening(n=n, s=s, alle=alle)
         elif method.lower() == 'clementi':
             sc = self.sconst.get((n, s), None)
             if sc is not None:
@@ -335,6 +340,41 @@ class Element(Base):
                 return sc
         else:
             raise ValueError('<method> should be one of {}'.format("slater, clementi"))
+
+    def electronegativity(self, scale='pauling'):
+        '''
+        Calculate the electronegativity using one of the methods
+          - `allen`
+          - `allred-rochow`
+          - `gordy`
+          - `mulliken`
+          - `nagle`
+          - `pauling`
+          - `sanderson`
+        '''
+
+        if scale == 'allen':
+            raise NotImplementedError
+        elif scale == 'allred-rochow':
+            return self.zeff(alle=True)/math.pow(self.covalent_radius, 2)
+        elif scale == 'gordy':
+            return self.zeff(alle=True)/self.covalent_radius
+        elif scale == 'mulliken':
+            return self.abselen()
+        elif scale == 'nagle':
+            return math.pow(self.nvalence()/self.dipole_polarizability, 1.0/3.0)
+        elif scale == 'pauling':
+            return self.electronegativity
+        elif scale == 'sanderson':
+            raise NotImplementedError
+        else:
+            raise ValueError('unknown <scale> value: {}'.format(scale))
+
+
+    def nvalence(self):
+        '''Return the number of valence electrons'''
+
+        return self.ec.nvalence(self.block)
 
     def __str__(self):
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
@@ -623,7 +663,7 @@ class ElectronicConfiguration(object):
         if inplace:
             self.conf = OrderedDict(sorted(self.conf.items(), key=lambda x: (x[0][0]+subshells.index(x[0][1]), x[0][0])))
         else:
-            OrderedDict(sorted(self.conf.items(), key=lambda x: (x[0][0]+subshells.index(x[0][1]), x[0][0])))
+            return OrderedDict(sorted(self.conf.items(), key=lambda x: (x[0][0]+subshells.index(x[0][1]), x[0][0])))
 
     def electrons_per_shell(self):
 
@@ -650,7 +690,25 @@ class ElectronicConfiguration(object):
 
         return max([shell[0] for shell in self.conf.keys()])
 
-    def slater_screening(self, n, s):
+    def last_subshell(self, wrt='aufbau'):
+
+        if wrt == 'aufbau':
+            return sorted(self.conf.items(), key=lambda x: (x[0][0]+subshells.index(x[0][1]), x[0][0]))[-1]
+
+    def nvalence(self, block):
+        'Return the number of valence electrons'
+
+        if block in ['s', 'p']:
+            return sum([v for k, v in self.conf.items() if k[0] == self.maxn()])
+        elif block == 'd':
+            return 2
+        elif block == 'f':
+            return 2
+        else:
+            raise ValueError('wrong block: {}'.format(block))
+
+
+    def slater_screening(self, n, s, alle=False):
         '''
         Calculate the screening constant using the papproach introduced by
         Slater in Slater, J. C. (1930). Atomic Shielding Constants. Physical
@@ -662,7 +720,15 @@ class ElectronicConfiguration(object):
             Principal quantum number
           s : str
             Subshell label, (s, p, d, ...)
+          alle : bool
+            Use all the valence electrons, i.e. calculate screening for an extra
+            electron
         '''
+
+        if alle:
+            ne = 0
+        else:
+            ne = 1
 
         if n == 1:
             coeff = 0.3
@@ -671,13 +737,13 @@ class ElectronicConfiguration(object):
 
         if s in ['s', 'p']:
             # get the number of valence electrons - 1
-            vale = float(sum([v for k, v in self.conf.items() if k[0] == n and k[1] in ['s', 'p']]) - 1)
+            vale = float(sum([v for k, v in self.conf.items() if k[0] == n and k[1] in ['s', 'p']]) - ne)
             n1 = sum([v*0.85 for k, v in self.conf.items() if k[0] == n-1])
             n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, n-1)])
             return n1 + n2 + vale*coeff
         elif s in ['d', 'f']:
             # get the number of valence electrons - 1
-            vale = float(sum([v for k, v in self.conf.items() if k[0] == n and k[1] == s]) - 1)
+            vale = float(sum([v for k, v in self.conf.items() if k[0] == n and k[1] == s]) - ne)
             n1 = sum([float(v) for k, v in self.conf.items() if k[0] == n and k[1] != s])
             n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, n)])
             return n1 + n2 + vale*coeff
