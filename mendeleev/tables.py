@@ -59,8 +59,15 @@ class Element(Base):
         Block in periodic table, s, p, d, f
       boiling_point : float
         Boiling temperature in K
-      covalent_radius : float
-        Covalent radius in pm
+      covalent_radius_2008 : float
+        Covalent radius in pm from Cordero, B., Gómez, V., Platero-Prats, A.
+        E., Revés, M., Echeverría, J., Cremades, E., … Alvarez, S. (2008).
+        Covalent radii revisited. Dalton Transactions, (21), 2832.
+        doi:10.1039/b801115j
+      covalent_radius_2009 : float
+        Covalent radius in pm Pyykkö, P., & Atsumi, M. (2009). Molecular
+        Single-Bond Covalent Radii for Elements 1-118. Chemistry - A European
+        Journal, 15(1), 186–197. doi:10.1002/chem.200800987
       density : float
         Density at 295K in g/cm3
       description : str
@@ -72,8 +79,10 @@ class Element(Base):
         February 11, 2014
       electron_affinity : float
         Electron affinity in eV
-      electronegativity : float
-        Electronegativity (Pauling scale)
+      en_allen : float
+        Allen's scale of electronegativity (Configurational energy)
+      en_pauling : float
+        Pauling's scale of electronegativity
       econf : str
         Ground state electron configuration
       evaporation_heat : float
@@ -120,12 +129,14 @@ class Element(Base):
     atomic_volume = Column(Float)
     block = Column(String)
     boiling_point = Column(Float)
-    covalent_radius = Column(Float)
+    covalent_radius_2008 = Column(Float)
+    covalent_radius_2009 = Column(Float)
     density = Column(Float)
     description = Column(String)
     dipole_polarizability = Column(Float)
     electron_affinity = Column(Float)
-    electronegativity = Column(Float)
+    en_allen = Column(Float)
+    en_pauling = Column(Float)
     econf = Column('electronic_configuration', String)
     evaporation_heat = Column(Float)
     fusion_heat = Column(Float)
@@ -203,10 +214,16 @@ class Element(Base):
 
         return max(self.isotopes, key=attrgetter("abundance")).mass_number
 
+    @hybrid_property
+    def covalent_radius(self):
+        '''Return the default covalent radius which is covalent_radius_2009'''
+
+        return self.covalent_radius_2009
+
     @hybrid_method
     def abselen(self, charge=0):
         '''
-        Return the absolute electronegativity, calculated as
+        Return the absolute electronegativity (Mulliken scale), calculated as
 
         .. math::
 
@@ -354,7 +371,7 @@ class Element(Base):
         '''
 
         if scale == 'allen':
-            raise NotImplementedError
+            return self.en_allen
         elif scale == 'allred-rochow':
             return self.zeff(alle=True)/math.pow(self.covalent_radius, 2)
         elif scale == 'gordy':
@@ -364,12 +381,11 @@ class Element(Base):
         elif scale == 'nagle':
             return math.pow(self.nvalence()/self.dipole_polarizability, 1.0/3.0)
         elif scale == 'pauling':
-            return self.electronegativity
+            return self.en_pauling
         elif scale == 'sanderson':
             raise NotImplementedError
         else:
             raise ValueError('unknown <scale> value: {}'.format(scale))
-
 
     def nvalence(self):
         '''Return the number of valence electrons'''

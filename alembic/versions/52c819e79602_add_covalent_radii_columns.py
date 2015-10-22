@@ -26,4 +26,6 @@ def upgrade():
 def downgrade():
 
     with op.batch_alter_table("elements") as batch_op:
+        batch_op.drop_column('covalent_radius_2008')
         batch_op.drop_column('covalent_radius_2009')
+        batch_op.add_column(sa.Column('covalent_radius', sa.Float))
