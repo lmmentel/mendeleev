@@ -339,6 +339,12 @@ If you use *mendeleev* in a scientific publication, please cite the software as
 |    L. M. Mentel, *mendeleev*, 2014. Available at: `https://bitbucket.org/lukaszmentel/mendeleev <https://bitbucket.org/lukaszmentel/mendeleev>`_.
 
 
+Funding
+=======
+
+This project is supported by the RCN (The Research Council of Norway) project
+number 239193.
+
 License
 =======
 
