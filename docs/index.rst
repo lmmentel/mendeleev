@@ -309,6 +309,7 @@ API
 
    Module Reference <_reference/modules>
    Data Notes <datanotes>
+   Electronegativity <electronegativity>
 
 License
 =======
