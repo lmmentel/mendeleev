@@ -145,7 +145,7 @@ class Element(Base):
     lattice_constant = Column(Float)
     lattice_structure = Column(String)
     mass = Column(Float)
-    melting_point = Column(String)
+    melting_point = Column(Float)
     name = Column(String)
     period = Column(Integer)
     _series_id = Column("series_id", Integer, ForeignKey("series.id"))
@@ -164,6 +164,7 @@ class Element(Base):
 
     @reconstructor
     def init_on_load(self):
+        'Initialize the ElectronicConfiguration class as attribute of self'
 
         self.ec = ElectronicConfiguration(self.econf)
 
