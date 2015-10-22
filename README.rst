@@ -10,92 +10,109 @@ Data
 
 The followig data is currently avaialble:
 
-+-----------------------+-------+-------------------------------------+-------------+
-| Name                  | Type  | Comment                             | Data Source |
-+=======================+=======+=====================================+=============+
-| annotation            | str   | Annotations regarding ithe data     |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| atomic_number         | int   | Atomic number                       |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| atomic_radius         | float | Atomic radius in pm                 |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| atomic_volume         | float | Atomic volume in cm3/mol            |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| block                 | int   | Block in periodic table             |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| boiling_point         | float | Boiling temperature in K            |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| covalent_radius       | float | Covalent radius in pm               |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| density               | float | Density at 295K in g/cm3            |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| description           | str   | Short description of the element    |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| dipole_polarizability | float | Dipole polarizability in a.u.       | [1]_        |
-+-----------------------+-------+-------------------------------------+-------------+
-| electron_affinity     | float | Electron affinity in eV             | [2]_, [3]_  |
-+-----------------------+-------+-------------------------------------+-------------+
-| electronegativity     | float | Electronegativity (Pauling scale)   |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| econf                 | str   | Ground state electron configuration |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| evaporation_heat      | float | Evaporation heat in kJ/mol          |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| fusion_heat           | float | Fusion heat in kJ/mol               |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| group                 | int   | Group in periodic table             |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| ionenergy             | tuple | Ionization energies in eV           | [4]_        |
-+-----------------------+-------+-------------------------------------+-------------+
-| ionic_radii           | list  | Ionic and crystal radii in pm       | [5]_        |
-+-----------------------+-------+-------------------------------------+-------------+
-| isotopes              | list  | Isotopes                            |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| lattice_constant      | float | Lattice constant in Angstrom        |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| lattice_structure     | str   | Lattice structure code              |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| mass                  | float | Relative atomic mass.               |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| melting_point         | float | Melting temperature in K            |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| name                  | str   | Name in english                     |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| oxistates             | list  | Oxidation states                    |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| period                | int   | Period in periodic table            |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| sconst                | float | Nuclear charge screening constants  | [6]_, [7]_  |
-+-----------------------+-------+-------------------------------------+-------------+
-| series                | int   | Index to chemical series            |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| specific_heat         | float | Specific heat in J/g mol @ 20 C     |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| symbol                | str   | Chemical symbol                     |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| thermal_conductivity  | float | Thermal conductivity in @/m K @25 C |             |
-+-----------------------+-------+-------------------------------------+-------------+
-| vdw_radius            | float | Van der Waals radius in pm          |             |
-+-----------------------+-------+-------------------------------------+-------------+
++-----------------------+-------+------------------------------------------+-------------+
+| Name                  | Type  | Comment                                  | Data Source |
++=======================+=======+==========================================+=============+
+| annotation            | str   | Annotations regarding ithe data          |             |
++-----------------------+-------+------------------------------------------+-------------+
+| atomic_number         | int   | Atomic number                            |             |
++-----------------------+-------+------------------------------------------+-------------+
+| atomic_radius         | float | Atomic radius in pm                      |             |
++-----------------------+-------+------------------------------------------+-------------+
+| atomic_volume         | float | Atomic volume in cm3/mol                 |             |
++-----------------------+-------+------------------------------------------+-------------+
+| block                 | int   | Block in periodic table                  |             |
++-----------------------+-------+------------------------------------------+-------------+
+| boiling_point         | float | Boiling temperature in K                 |             |
++-----------------------+-------+------------------------------------------+-------------+
+| covalent_radius_2008  | float | Covalent radius in pm (2008)             | [1]_        |
++-----------------------+-------+------------------------------------------+-------------+
+| covalent_radius_2009  | float | Covalent radius in pm (2009)             | [2]_        |
++-----------------------+-------+------------------------------------------+-------------+
+| density               | float | Density at 295K in g/cm3                 |             |
++-----------------------+-------+------------------------------------------+-------------+
+| description           | str   | Short description of the element         |             |
++-----------------------+-------+------------------------------------------+-------------+
+| dipole_polarizability | float | Dipole polarizability in a.u.            | [3]_        |
++-----------------------+-------+------------------------------------------+-------------+
+| electron_affinity     | float | Electron affinity in eV                  | [4]_, [5]_  |
++-----------------------+-------+------------------------------------------+-------------+
+| en_allen              | float | Allen's scale of electronegativity in eV | [6]_, [7]_  |
++-----------------------+-------+------------------------------------------+-------------+
+| en_pauling            | float | Pauling's scale of electronegativity     |             |
++-----------------------+-------+------------------------------------------+-------------+
+| econf                 | str   | Ground state electron configuration      |             |
++-----------------------+-------+------------------------------------------+-------------+
+| evaporation_heat      | float | Evaporation heat in kJ/mol               |             |
++-----------------------+-------+------------------------------------------+-------------+
+| fusion_heat           | float | Fusion heat in kJ/mol                    |             |
++-----------------------+-------+------------------------------------------+-------------+
+| group                 | int   | Group in periodic table                  |             |
++-----------------------+-------+------------------------------------------+-------------+
+| ionenergy             | tuple | Ionization energies in eV                | [8]_        |
++-----------------------+-------+------------------------------------------+-------------+
+| ionic_radii           | list  | Ionic and crystal radii in pm            | [9]_        |
++-----------------------+-------+------------------------------------------+-------------+
+| isotopes              | list  | Isotopes                                 |             |
++-----------------------+-------+------------------------------------------+-------------+
+| lattice_constant      | float | Lattice constant in Angstrom             |             |
++-----------------------+-------+------------------------------------------+-------------+
+| lattice_structure     | str   | Lattice structure code                   |             |
++-----------------------+-------+------------------------------------------+-------------+
+| mass                  | float | Relative atomic mass.                    |             |
++-----------------------+-------+------------------------------------------+-------------+
+| melting_point         | float | Melting temperature in K                 |             |
++-----------------------+-------+------------------------------------------+-------------+
+| name                  | str   | Name in english                          |             |
++-----------------------+-------+------------------------------------------+-------------+
+| oxistates             | list  | Oxidation states                         |             |
++-----------------------+-------+------------------------------------------+-------------+
+| period                | int   | Period in periodic table                 |             |
++-----------------------+-------+------------------------------------------+-------------+
+| sconst                | float | Nuclear charge screening constants       | [10]_, [11]_|
++-----------------------+-------+------------------------------------------+-------------+
+| series                | int   | Index to chemical series                 |             |
++-----------------------+-------+------------------------------------------+-------------+
+| specific_heat         | float | Specific heat in J/g mol @ 20 C          |             |
++-----------------------+-------+------------------------------------------+-------------+
+| symbol                | str   | Chemical symbol                          |             |
++-----------------------+-------+------------------------------------------+-------------+
+| thermal_conductivity  | float | Thermal conductivity in @/m K @25 C      |             |
++-----------------------+-------+------------------------------------------+-------------+
+| vdw_radius            | float | Van der Waals radius in pm               |             |
++-----------------------+-------+------------------------------------------+-------------+
 
-.. [1] P. Schwerdtfeger "Table of experimental and calculated static dipole
+.. [1] Cordero, B., Gómez, V., Platero-Prats, A. E., Revés, M., Echeverría, J.,
+   Cremades, E., … Alvarez, S. (2008). Covalent radii revisited. Dalton
+   Transactions, (21), 2832. `doi:10.1039/b801115j <http://www.dx.doi.org/10.1039/b801115j>`_
+.. [2] Pyykkö, P., & Atsumi, M. (2009). Molecular Single-Bond Covalent Radii
+   for Elements 1-118. Chemistry - A European Journal, 15(1), 186–197.
+   `doi:10.1002/chem.200800987 <http://www.dx.doi.org/10.1002/chem.200800987>`_
+.. [3] P. Schwerdtfeger "Table of experimental and calculated static dipole
    polarizabilities for the electronic ground states of the neutral elements
    (in atomic units)", February 11, 2014 `source <http://ctcp.massey.ac.nz/Tablepol2014.pdf>`_
-.. [2] W. M. Haynes, Handboob of Chemistry and Physics 95th Edition, CRC Press,
+.. [4] W. M. Haynes, Handboob of Chemistry and Physics 95th Edition, CRC Press,
    New York, 2014, ISBN-10: 1482208679, ISBN-13: 978-1482208672.
-.. [3] Andersen, T. (2004). Atomic negative ions: structure, dynamics and collisions.
+.. [5] Andersen, T. (2004). Atomic negative ions: structure, dynamics and collisions.
    Physics Reports, 394(4-5), 157–313.
    `doi:10.1016/j.physrep.2004.01.001 <http://www.dx.doi.org/10.1016/j.physrep.2004.01.001>`_
-.. [4] `NIST Atomic Database <http://physics.nist.gov/cgi-bin/ASD/ie.pl>`_
+.. [6] Mann, J. B., Meek, T. L., & Allen, L. C. (2000). Configuration Energies of the
+   Main Group Elements. Journal of the American Chemical Society, 122(12),
+   2780–2783. `doi:10.1021/ja992866e <http://dx.doi.org/10.1021/ja992866e>`_
+.. [7] Mann, J. B., Meek, T. L., Knight, E. T., Capitani, J. F., & Allen, L. C.
+   (2000). Configuration Energies of the d-Block Elements. Journal of the American
+   Chemical Society, 122(21), 5132–5137.
+   `doi:10.1021/ja9928677 <http://dx.doi.org/10.1021/ja9928677>`_
+.. [8] `NIST Atomic Database <http://physics.nist.gov/cgi-bin/ASD/ie.pl>`_
    accessed on April 13, 2015
-.. [5] Shannon, R. D. (1976). Revised effective ionic radii and systematic
+.. [9] Shannon, R. D. (1976). Revised effective ionic radii and systematic
    studies of interatomic distances in halides and chalcogenides.
    Acta Crystallographica Section A.
    `doi:10.1107/S0567739476001551 <http://www.dx.doi.org/10.1107/S0567739476001551>`_
-.. [6] Clementi, E., & Raimondi, D. L. (1963). Atomic Screening Constants from
+.. [10] Clementi, E., & Raimondi, D. L. (1963). Atomic Screening Constants from
    SCF Functions. The Journal of Chemical Physics, 38(11), 2686.
    `doi:10.1063/1.1733573 <http://www.dx.doi.org/10.1063/1.1733573>`_
-.. [7] Clementi, E. (1967). Atomic Screening Constants from SCF Functions. II.
+.. [11] Clementi, E. (1967). Atomic Screening Constants from SCF Functions. II.
    Atoms with 37 to 86 Electrons. The Journal of Chemical Physics, 47(4), 1300.
    `doi:10.1063/1.1712084 <http://www.dx.doi.org/10.1063/1.1712084>`_
 
@@ -132,32 +149,35 @@ symbol type
    >>> si = element('Si')
    >>> si
    Element(
-	    annotation=u'',
-   	    atomic_number=14,
- 	 	atomic_radius=132.0,
- 	 	atomic_volume=12.1,
- 	 	block=u'p',
- 	 	boiling_point=2628.0,
- 	 	covalent_radius=111.0,
- 	 	density=2.33,
- 	 	description=u"Metalloid element belonging to group 14 of the periodic table. It is the second most abundant element in the Earth's crust, making up 25.7% of it by weight. Chemically less reactive than carbon. First identified by Lavoisier in 1787 and first isolated in 1823 by Berzelius.",
- 	 	dipole_polarizability=37.31,
- 	 	electron_affinity=1.389521,
- 	 	electronegativity=1.9,
- 	 	electronic_configuration=u'[Ne] 3s2 3p2',
- 	 	evaporation_heat=383.0,
- 	 	fusion_heat=50.6,
- 	 	group_id=14,
- 	 	lattice_constant=5.43,
- 	 	lattice_structure=u'DIA',
- 	 	mass=28.0855,
- 	 	melting_point=u'1683',
- 	 	name=u'Silicon',
- 	 	period=3,
- 	 	specific_heat=0.703,
- 	 	symbol=u'Si',
- 	 	thermal_conductivity=149.0,
- 	 	vdw_radius=210.0,
+       annotation=u'',
+       atomic_number=14,
+       atomic_radius=132.0,
+       atomic_volume=12.1,
+       block=u'p',
+       boiling_point=2628.0,
+       covalent_radius_2008=111.00000000000001,
+       covalent_radius_2009=115.99999999999999,
+       density=2.33,
+       description=u"Metalloid element belonging to group 14 of the periodic table. It is the second most abundant element in the Earth's crust, making up 25.7% of it by weight. Chemically less reactive than carbon. First identified by Lavoisier in 1787 and first isolated in 1823 by Berzelius.",
+       dipole_polarizability=37.31,
+       ec=1s2 2s2 2p6 3s2 3p2,
+       econf=u'[Ne] 3s2 3p2',
+       electron_affinity=1.3895211,
+       en_allen=11.33,
+       en_pauling=1.9,
+       evaporation_heat=383.0,
+       fusion_heat=50.6,
+       group_id=14,
+       lattice_constant=5.43,
+       lattice_structure=u'DIA',
+       mass=28.0855,
+       melting_point=u'1683',
+       name=u'Silicon',
+       period=3,
+       specific_heat=0.703,
+       symbol=u'Si',
+       thermal_conductivity=149.0,
+       vdw_radius=210.0,
    )
 
 Similarly to access the data by atomic number or element names type
