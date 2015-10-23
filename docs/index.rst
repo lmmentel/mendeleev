@@ -39,7 +39,7 @@ The followig data is currently avaialble:
 +-----------------------+-------+------------------------------------------+-------------+
 | en_allen              | float | Allen's scale of electronegativity in eV | [6]_, [7]_  |
 +-----------------------+-------+------------------------------------------+-------------+
-| en_pauling            | float | Pauling's scale of electronegativity     |             |
+| en_pauling            | float | Pauling's scale of electronegativity     | [4]_        |
 +-----------------------+-------+------------------------------------------+-------------+
 | econf                 | str   | Ground state electron configuration      |             |
 +-----------------------+-------+------------------------------------------+-------------+
