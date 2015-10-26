@@ -36,6 +36,8 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
+import mendeleev
+
 __all__ = ['Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
            'Isotope', 'Series', 'ScreeningConstant']
 
@@ -222,7 +224,7 @@ class Element(Base):
         return self.covalent_radius_2009
 
     @hybrid_method
-    def abselen(self, charge=0):
+    def en_mulliken(self, charge=0, missingIsZero=False, useNegativeEA=False):
         '''
         Return the absolute electronegativity (Mulliken scale), calculated as
 
@@ -230,23 +232,44 @@ class Element(Base):
 
            \chi = \frac{I + A}{2}
 
-        where I is the ionization energy and A is the electron affinity
+        where :math:`I` is the ionization energy and :math:`A` is the electron
+        affinity
         '''
 
         if charge == 0:
-            if self.ionenergies.get(1, None) is not None and\
-                    self.electron_affinity is not None:
-                return (self.ionenergies[1] + self.electron_affinity)*0.5
-            else:
-                return None
+            ip = self.ionenergies.get(1, None)
+            ea = self.electron_affinity
         elif charge > 0:
-            if self.ionenergies.get(charge + 1, None) is not None and\
-               self.ionenergies.get(charge, None) is not None:
-                return (self.ionenergies[charge + 1] + self.ionenergies[charge])*0.5
-            else:
-                return None
-        elif charge < 0:
+            ip = self.ionenergies.get(charge + 1, None)
+            ea = self.ionenergies.get(charge, None)
+        else:
             raise ValueError('Charge has to be a non-negative integer, got: {}'.format(charge))
+
+        if ip is not None:
+            if ea is not None:
+                if ea < 0.0 and useNegativeEA:
+                    return (ip + ea)*0.5
+                else:
+                    return ip*0.5
+            elif ea is None and missingIsZero:
+                return ip*0.5
+        else:
+            return None
+
+    @hybrid_method
+    def en_sanderson(self, radius='covalent_radius_2009'):
+        '''Sanderson electronegativity
+
+        .. math::
+
+           \chi = \frac{AD}{AD_{\text{ng}}}
+
+        '''
+
+        r = getattr(self, radius)
+        rng = mendeleev.interpolate(self.atomic_number, radius)
+
+        return math.pow(rng/r, 3)
 
     @hybrid_method
     def hardness(self, charge=0):
@@ -340,7 +363,7 @@ class Element(Base):
             n = self.ec.maxn()
         else:
             if not isinstance(n, int):
-                raise ValueError('<n> should be an integer, got'.format(typ(n)))
+                raise ValueError('<n> should be an integer, got: {}'.format(type(n)))
 
         if s is None:
             s = subshells[max([subshells.index(x[1]) for x in self.ec.conf.keys() if x[0] == n])]
@@ -364,6 +387,7 @@ class Element(Base):
         Calculate the electronegativity using one of the methods
           - `allen`
           - `allred-rochow`
+          - `cottrell-sutton`
           - `gordy`
           - `mulliken`
           - `nagle`
@@ -375,23 +399,54 @@ class Element(Base):
             return self.en_allen
         elif scale == 'allred-rochow':
             return self.zeff(alle=True)/math.pow(self.covalent_radius, 2)
+        elif scale == 'cottrell-sutton':
+            return math.sqrt(self.zeff(alle=True)/self.covalent_radius)
         elif scale == 'gordy':
             return self.zeff(alle=True)/self.covalent_radius
         elif scale == 'mulliken':
-            return self.abselen()
+            return self.en_mulliken()
         elif scale == 'nagle':
             return math.pow(self.nvalence()/self.dipole_polarizability, 1.0/3.0)
         elif scale == 'pauling':
             return self.en_pauling
         elif scale == 'sanderson':
-            raise NotImplementedError
+            raise self.en_sanderson()
         else:
             raise ValueError('unknown <scale> value: {}'.format(scale))
 
-    def nvalence(self):
+    def en_calc(self, radius='covalent_radius_2009', rpow=1, apow=1, **zeffkwargs):
+        '''
+        Calculate the electronegativity from a general formula
+
+        .. math::
+
+          \chi = \left(\frac{Z_{\text{eff}}}{r^{\beta}}\right)^{\alpha}
+
+        where, :math:`Z_{\text{eff}}`
+        '''
+
+        zeff = self.zeff(**zeffkwargs)
+        r = getattr(self, radius)
+
+        return math.pow(zeff/math.pow(r, rpow), apow)
+
+    def en_li_xue(self, charge=0, radius='covalent_radius_2009'):
+
+        neff = {1: 0.85, 2: 1.99, 3: 2.89, 4: 3.45, 5: 3.85, 6: 4.36, 7:4.99}
+
+        if charge == 0:
+            Im = self.electron_affinity
+        elif charge > 0:
+            Im = self.ionenergies[charge]
+
+        r = getattr(self, radius)
+
+        return neff[self.ec.maxn()]*math.sqrt(Im)/rion
+
+    def nvalence(self, method=None):
         '''Return the number of valence electrons'''
 
-        return self.ec.nvalence(self.block)
+        return self.ec.nvalence(self.block, method=method)
 
     def __str__(self):
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
@@ -409,7 +464,8 @@ class IonicRadius(Base):
 
     .. [1] Shannon, R. D. (1976). Revised effective ionic radii and systematic
        studies of interatomic distances in halides and chalcogenides. Acta
-       Crystallographica Section A. `doi:10.1107/S0567739476001551 <http://www.dx.doi.org/10.1107/S0567739476001551>`_
+       Crystallographica Section A.
+       `doi:10.1107/S0567739476001551 <http://www.dx.doi.org/10.1107/S0567739476001551>`_
 
     Attributes:
       atomic_number : int
@@ -684,7 +740,9 @@ class ElectronicConfiguration(object):
 
     def electrons_per_shell(self):
 
-        pass
+        shells = ['K', 'L', 'M', 'N', 'O', 'P', 'Q']
+
+        return {s : sum([v for k, v in self.conf.items() if k[0] == n]) for n, s in zip(range(1, self.maxn()+1), shells)}
 
     def __repr__(self):
 
@@ -712,13 +770,16 @@ class ElectronicConfiguration(object):
         if wrt == 'aufbau':
             return sorted(self.conf.items(), key=lambda x: (x[0][0]+subshells.index(x[0][1]), x[0][0]))[-1]
 
-    def nvalence(self, block):
+    def nvalence(self, block, method=None):
         'Return the number of valence electrons'
 
         if block in ['s', 'p']:
             return sum([v for k, v in self.conf.items() if k[0] == self.maxn()])
         elif block == 'd':
-            return 2
+            if method == 'simple':
+                return 2
+            else:
+                return self.conf[(self.maxn(), 's')] + self.conf[(self.maxn()-1, 'd')]
         elif block == 'f':
             return 2
         else:

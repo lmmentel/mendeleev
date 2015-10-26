@@ -49,7 +49,7 @@ def setup_package():
           long_description=readme(),
           classifiers=CLASSIFIERS,
           packages=find_packages(exclude=['tests', 'tests.*']),
-          install_requires=['SQLAlchemy'],
+          install_requires=['SQLAlchemy', 'numpy'],
           scripts = [
               'scripts/element.py',
           ]

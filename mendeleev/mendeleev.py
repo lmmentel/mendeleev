@@ -29,11 +29,14 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.dialects import sqlite
 
+from scipy.interpolate import interp1d
+import numpy as np
+
 from .tables import (Base, Element, IonizationEnergy, IonicRadius,
         OxidationState, Isotope, Series)
 
 __all__ = ['element', 'get_session', 'get_engine', 'get_table', 'ids_to_attr',
-           'get_ips', 'get_ionic_radii', 'deltaN']
+           'get_ips', 'get_ionic_radii', 'deltaN', 'get_data', 'interpolate']
 
 def get_session():
     '''Return the database session connection.'''
@@ -107,6 +110,14 @@ def get_table(tablename,  **kwargs):
         return df
     else:
         raise ValueError('Table should be one of: {}'.format(", ".join(tables)))
+
+def get_data(attribute):
+
+    session = get_session()
+    ngs = session.query(Element).filter(Element.series == 'Noble gases').all()
+    data = {ng.atomic_number : getattr(ng, attribute) for ng in ngs}
+    session.close()
+    return data
 
 def ids_to_attr(ids, attr='atomic_number'):
     '''
@@ -249,3 +260,31 @@ def deltaN(id1, id2, charge1=0, charge2=0):
         return (chi[0] - chi[1])/(2.0*(e1.hardness(charge=charge1) + e2.hardness(charge=charge2)))
     else:
         return None
+
+def interpolate(key, attribute, deg=1, kind='linear'):
+    '''
+    Evaluate a value for `key` by interpolation or extrapolation of the data
+    points in `data`.
+
+    Args:
+      key : int
+        Key for which the property will be evaluated
+      deg : int
+        Degree of the polynomial used in the extrapolation beyond the provided data points
+      kind : str
+        Kind of the interpolation used, see docs for `numpy.interp1d
+    '''
+
+    data = get_data(attribute)
+
+    if min(data.keys()) <= key <= max(data.keys()):
+        fn = interp1d(data.keys(), data.values(), kind=kind)
+        return fn(key).item()
+    else:
+        if key < min(data.keys()):
+            dataslice = dict(sorted(data.items(), key=lambda x: x[0])[:3])
+        elif key > max(data.keys()):
+            dataslice = dict(sorted(data.items(), key=lambda x: x[0])[-3:])
+        fit = np.polyfit(dataslice.keys(), dataslice.values(), deg)
+        fn = np.poly1d(fit)
+        return fn(key)
