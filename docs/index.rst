@@ -113,16 +113,20 @@ The followig data is currently avaialble:
    (2000). Configuration Energies of the d-Block Elements. Journal of the American
    Chemical Society, 122(21), 5132–5137.
    `doi:10.1021/ja9928677 <http://dx.doi.org/10.1021/ja9928677>`_
-.. [8] `NIST Atomic Database <http://physics.nist.gov/cgi-bin/ASD/ie.pl>`_
+.. [8] Mulliken, R. S. (1934). A New Electroaffinity Scale; Together with Data on
+   Valence States and on Valence Ionization Potentials and Electron Affinities.
+   The Journal of Chemical Physics, 2(11), 782.
+   `doi:10.1063/1.1749394 <http://dx.doi.org/10.1063/1.1749394>`_
+.. [9] `NIST Atomic Database <http://physics.nist.gov/cgi-bin/ASD/ie.pl>`_
    accessed on April 13, 2015
-.. [9] Shannon, R. D. (1976). Revised effective ionic radii and systematic
+.. [10] Shannon, R. D. (1976). Revised effective ionic radii and systematic
    studies of interatomic distances in halides and chalcogenides.
    Acta Crystallographica Section A.
    `doi:10.1107/S0567739476001551 <http://www.dx.doi.org/10.1107/S0567739476001551>`_
-.. [10] Clementi, E., & Raimondi, D. L. (1963). Atomic Screening Constants from
+.. [11] Clementi, E., & Raimondi, D. L. (1963). Atomic Screening Constants from
    SCF Functions. The Journal of Chemical Physics, 38(11), 2686.
    `doi:10.1063/1.1733573 <http://www.dx.doi.org/10.1063/1.1733573>`_
-.. [11] Clementi, E. (1967). Atomic Screening Constants from SCF Functions. II.
+.. [12] Clementi, E. (1967). Atomic Screening Constants from SCF Functions. II.
    Atoms with 37 to 86 Electrons. The Journal of Chemical Physics, 47(4), 1300.
    `doi:10.1063/1.1712084 <http://www.dx.doi.org/10.1063/1.1712084>`_
 

@@ -24,17 +24,27 @@ class Mock(MagicMock):
     def __getattr__(cls, name):
             return Mock()
 
-MOCK_MODULES = ['argparse', 'numpy', 'scipy', 'scipy.optimize', 'pandas',
-    'sqlalchemy', 'sqlalchemy.orm.exc', 'sqlalchemy.orm', 'sqlalchemy.ext', 'sqlalchemy.ext.associationproxy',
-    'sqlalchemy.ext.declarative', 'sqlalchemy.ext.hybrid']
+MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma',
+                'seaborn', 'matplotlib', 'matplotlib.pyplot',
+                'scipy', 'scipy.optimize', 'scipy.interpolate', 'pandas',
+                'sqlalchemy', 'sqlalchemy.orm.exc', 'sqlalchemy.orm',
+                'sqlalchemy.ext', 'sqlalchemy.ext.associationproxy',
+                'sqlalchemy.ext.declarative', 'sqlalchemy.ext.hybrid',
+                'sqlalchemy.dialects']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
+
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+if on_rtd:
+    html_theme = 'default'
+else:
+    sys.path.append('/home/lmentel/Devel/mendeleev')
 
 __location__ = os.path.join(os.getcwd(), os.path.dirname(
     inspect.getfile(inspect.currentframe())))
 
-output_dir = os.path.join(__location__, "../docs/_reference")
+output_dir = os.path.join(__location__, "_reference")
 module_dir = os.path.join(__location__, "../mendeleev")
-cmd_line_template = "sphinx-apidoc -f -o {outputdir} {moduledir}"
+cmd_line_template = "sphinx-apidoc -f --separate -o {outputdir} {moduledir}"
 cmd_line = cmd_line_template.format(outputdir=output_dir, moduledir=module_dir)
 apidoc.main(cmd_line.split(" "))
 

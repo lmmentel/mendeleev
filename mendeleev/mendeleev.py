@@ -239,13 +239,18 @@ def get_ionic_radii(ids=None, charge=1, coord=None):
 
 def deltaN(id1, id2, charge1=0, charge2=0):
     '''
-    Calcualte the approximate number of transferred electrons between elements
+    Calculate the approximate fraction of transferred electrons between elements
     or ions `id1` and `id2` according to
 
     .. math::
 
        \Delta N = \frac{\chi_{A} - \chi_{B}}{2(\eta_{A} + \eta_{B})}
 
+    Args:
+      id1: str or int
+        Element identifier atomic number, symbol or element name
+      id2: str or int
+        Element identifier atomic number, symbol or element name
     '''
 
     session = get_session()
@@ -272,7 +277,7 @@ def interpolate(key, attribute, deg=1, kind='linear'):
       deg : int
         Degree of the polynomial used in the extrapolation beyond the provided data points
       kind : str
-        Kind of the interpolation used, see docs for `numpy.interp1d
+        Kind of the interpolation used, see docs for `numpy.interp1d`
     '''
 
     data = get_data(attribute)
