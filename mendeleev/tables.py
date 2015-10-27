@@ -585,16 +585,21 @@ class Series(Base):
     Attributes:
       name : str
         Name of the series
+      color : str
+        The HEX representation of a color of the series, the colors we obtained
+        from `ColorBrewer <http://colorbrewer2.org/?type=qualitative&scheme=Paired&n=10>`_
+        the qualitative 10-class paired colormap
     '''
 
     __tablename__ = 'series'
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    color = Column(String)
 
     def __repr__(self):
 
-        return "<Series(name={n:s})>".format(n=self.name)
+        return "<Series(name={n:s}, color={c:s})>".format(n=self.name, c=self.color)
 
 class Isotope(Base):
     '''
