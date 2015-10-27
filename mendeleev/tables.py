@@ -70,6 +70,8 @@ class Element(Base):
         Covalent radius in pm Pyykkö, P., & Atsumi, M. (2009). Molecular
         Single-Bond Covalent Radii for Elements 1-118. Chemistry - A European
         Journal, 15(1), 186–197. doi:10.1002/chem.200800987
+      cpk_color : str
+        CPK color of the atom in HEX, see http://jmol.sourceforge.net/jscolors/#color_U
       density : float
         Density at 295K in g/cm3
       description : str
@@ -93,6 +95,9 @@ class Element(Base):
         Fusion heat in kJ/mol
       group : int
         Group in periodic table
+      jmol_color : str
+        Color of the atom as used in Jmol, in HEX,
+        see http://jmol.sourceforge.net/jscolors/#color_U
       lattice_constant : float
         Lattice constant in ang
       lattice_structure : str
@@ -133,6 +138,7 @@ class Element(Base):
     boiling_point = Column(Float)
     covalent_radius_2008 = Column(Float)
     covalent_radius_2009 = Column(Float)
+    cpk_color = Column(String)
     density = Column(Float)
     description = Column(String)
     dipole_polarizability = Column(Float)
@@ -144,6 +150,7 @@ class Element(Base):
     fusion_heat = Column(Float)
     group = relationship("Group", uselist=False)
     group_id = Column(Integer, ForeignKey("groups.group_id"))
+    jmol_color = Column(String)
     lattice_constant = Column(Float)
     lattice_structure = Column(String)
     mass = Column(Float)
