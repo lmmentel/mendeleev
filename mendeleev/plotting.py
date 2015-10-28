@@ -75,8 +75,7 @@ def heatmap(prop, style='whitegrid', figsize=(16, 10), cmap='RdBu_r', lw=1, outp
         plt.savefig(output)
     return ax
 
-
-def colormap_column(df, column, cmap='BuGn', missing='#ffffff'):
+def colormap_column(df, column, cmap='RdBu_r', missing='#ffffff'):
     '''
     Return a new DataFrame with the same size (and index) as `df` with a column
     `cmap` containing HEX color mapping from `cmap` colormap.
@@ -93,7 +92,7 @@ def colormap_column(df, column, cmap='BuGn', missing='#ffffff'):
     '''
 
     colormap = plt.get_cmap(cmap)
-    cnorm = colors.Normalize(vmin=ptable[column].min(), vmax=ptable[column].max())
+    cnorm = colors.Normalize(vmin=df[column].min(), vmax=df[column].max())
     scalarmap = cmx.ScalarMappable(norm=cnorm, cmap=colormap)
     out = pd.DataFrame(index=df.index)
     mask = df[column].isnull()
@@ -103,7 +102,9 @@ def colormap_column(df, column, cmap='BuGn', missing='#ffffff'):
 
     return out
 
-def periodic_plot(df, values=None, long_version=False, width=1000, height=800, colorby=None, output=None):
+def periodic_plot(df, values=None, title='Periodic Table', width=1000,
+                  height=800, missing='#ffffff', decimals=0,
+                  colorby=None, output=None, cmap='RdBu_r', long_version=False):
     '''
     Use Bokeh to plot the periodic table data contained in the `df`
 
@@ -125,7 +126,7 @@ def periodic_plot(df, values=None, long_version=False, width=1000, height=800, c
     elements = df.copy()
 
     if long_version:
-        pass
+        raise NotImplemented
     else:
         elements.loc[elements['group_id'].notnull(), 'x'] = \
             elements.loc[elements['group_id'].notnull(), 'group_id'].astype(int)
@@ -149,8 +150,9 @@ def periodic_plot(df, values=None, long_version=False, width=1000, height=800, c
         elements.loc[:, 'y_prop'] = elements['y'] + 0.35
 
     if values:
-        temp = colormap_column(ptable, values)
+        temp = colormap_column(elements, values, cmap=cmap, missing=missing)
         elements = pd.merge(elements, temp, left_index=True, right_index=True)
+        elements[values] = elements[values].round(decimals=decimals)
 
     if colorby not in elements.columns:
         series = get_table('series')
@@ -162,15 +164,14 @@ def periodic_plot(df, values=None, long_version=False, width=1000, height=800, c
 
     TOOLS = "resize,hover,save"
 
-    p = figure(title="Periodic Table",
+    p = figure(title=title,
                tools=TOOLS,
                x_axis_location='above',
                x_range = (elements.x.min()-0.5, elements.x.max()+0.5),
                y_range = (elements.y.max()+0.5, elements.y.min()-0.5),
                width=width, height=height,
+               toolbar_location='above',
               )
-
-    p.toolbar_location = "left"
 
     if values:
         colorby = 'cmap'
