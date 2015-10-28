@@ -5,6 +5,17 @@ Welcome to mendeleev's documentation
 This package provides an API for accessing various properties of elements from
 the periodic table of elements.
 
+Contents
+========
+
+.. toctree::
+   :maxdepth: 2
+
+   Tutorials <tutorials>
+   Data Notes <datanotes>
+   Electronegativity <electronegativity>
+   Module Reference <_reference/modules>
+
 Data
 ====
 
@@ -334,16 +345,6 @@ Another composite attribute is ``ionic_radii`` which returns a list of
    charge=   3, coordination=VIII , crystal_radius= 0.920, ionic_radius= 0.780
    charge=   4, coordination=VI   , crystal_radius= 0.725, ionic_radius= 0.585
    charge=   6, coordination=IV   , crystal_radius= 0.390, ionic_radius= 0.250
-
-API
-===
-
-.. toctree::
-   :maxdepth: 2
-
-   Module Reference <_reference/modules>
-   Data Notes <datanotes>
-   Electronegativity <electronegativity>
 
 License
 =======

@@ -240,11 +240,12 @@ def get_ionic_radii(ids=None, charge=1, coord=None):
 def deltaN(id1, id2, charge1=0, charge2=0):
     '''
     Calculate the approximate fraction of transferred electrons between elements
-    or ions `id1` and `id2` according to
+    or ions `id1` and `id2` with charges `charge1` and `charge2` respectively
+    according to the expression
 
     .. math::
 
-       \Delta N = \frac{\chi_{A} - \chi_{B}}{2(\eta_{A} + \eta_{B})}
+       \Delta N = \\frac{\chi_{A} - \chi_{B}}{2(\eta_{A} + \eta_{B})}
 
     Args:
       id1: str or int

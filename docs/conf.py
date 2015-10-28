@@ -25,8 +25,11 @@ class Mock(MagicMock):
             return Mock()
 
 MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma',
-                'seaborn', 'matplotlib', 'matplotlib.pyplot',
+                'seaborn',
+                'matplotlib', 'matplotlib.pyplot', 'matplotlib.colors',
+                'matplotlib.cm',
                 'scipy', 'scipy.optimize', 'scipy.interpolate', 'pandas',
+                'bokeh', 'bokeh.models', 'bokeh.plotting',
                 'sqlalchemy', 'sqlalchemy.orm.exc', 'sqlalchemy.orm',
                 'sqlalchemy.ext', 'sqlalchemy.ext.associationproxy',
                 'sqlalchemy.ext.declarative', 'sqlalchemy.ext.hybrid',
