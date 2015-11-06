@@ -89,7 +89,7 @@ The followig data is currently avaialble:
 +-----------------------+-------+---------------------------------------------+-------------+
 | thermal_conductivity  | float | Thermal conductivity in @/m K @25 C         |             |
 +-----------------------+-------+---------------------------------------------+-------------+
-| vdw_radius            | float | Van der Waals radius in pm                  |             |
+| vdw_radius            | float | Van der Waals radius in pm                  | [4]_        |
 +-----------------------+-------+---------------------------------------------+-------------+
 
 .. [1] Cordero, B., Gómez, V., Platero-Prats, A. E., Revés, M., Echeverría, J.,
@@ -101,7 +101,7 @@ The followig data is currently avaialble:
 .. [3] P. Schwerdtfeger "Table of experimental and calculated static dipole
    polarizabilities for the electronic ground states of the neutral elements
    (in atomic units)", February 11, 2014 `source <http://ctcp.massey.ac.nz/Tablepol2014.pdf>`_
-.. [4] W. M. Haynes, Handboob of Chemistry and Physics 95th Edition, CRC Press,
+.. [4] W. M. Haynes, Handbook of Chemistry and Physics 95th Edition, CRC Press,
    New York, 2014, ISBN-10: 1482208679, ISBN-13: 978-1482208672.
 .. [5] Andersen, T. (2004). Atomic negative ions: structure, dynamics and collisions.
    Physics Reports, 394(4-5), 157–313.
@@ -343,7 +343,7 @@ Documentation
    :target: https://mendeleev.readthedocs.org
    :alt: Documentation Status
 
-Documentation can be found `here <http://elements.readthedocs.org/en/latest/>`_.
+Documentation can be found `here <http://mendeleev.readthedocs.org/en/latest/>`_.
 
 Citing
 ======
