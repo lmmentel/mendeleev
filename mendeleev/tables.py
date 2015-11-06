@@ -97,6 +97,8 @@ class Element(Base):
         Gas basicity
       group : int
         Group in periodic table
+      heat_of_formation : float
+        Heat of formation in kJ/mol
       jmol_color : str
         Color of the atom as used in Jmol, in HEX,
         see http://jmol.sourceforge.net/jscolors/#color_U
@@ -155,6 +157,7 @@ class Element(Base):
     gas_basicity = Column(Float)
     group_id = Column(Integer, ForeignKey("groups.group_id"))
     group = relationship("Group", uselist=False)
+    heat_of_formation = Column(Float)
     jmol_color = Column(String)
     lattice_constant = Column(Float)
     lattice_structure = Column(String)
