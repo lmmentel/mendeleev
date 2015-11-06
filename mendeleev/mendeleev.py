@@ -63,7 +63,7 @@ def element(ids):
 
     if isinstance(ids, (list, tuple)):
         return [get_element(i) for i in ids]
-    elif isinstance(ids, (str, int)):
+    elif isinstance(ids, (str, unicode, int)):
         return get_element(ids)
     else:
         raise ValueError("Expected a <list>, <tuple>, <str> or <int>, got: {0:s}".format(type(ids)))
@@ -76,7 +76,7 @@ def get_element(ids):
 
     session = get_session()
 
-    if isinstance(ids, str):
+    if isinstance(ids, (str, unicode)):
         if len(ids) <= 3 and ids.lower() != "tin":
             return session.query(Element).filter(Element.symbol == ids).one()
         else:
@@ -237,7 +237,7 @@ def get_ionic_radii(ids=None, charge=1, coord=None):
 
     return df
 
-def deltaN(id1, id2, charge1=0, charge2=0):
+def deltaN(id1, id2, charge1=0, charge2=0, missingIsZero=True):
     '''
     Calculate the approximate fraction of transferred electrons between elements
     or ions `id1` and `id2` with charges `charge1` and `charge2` respectively
@@ -257,10 +257,9 @@ def deltaN(id1, id2, charge1=0, charge2=0):
     session = get_session()
     atns = ids_to_attr([id1, id2], attr='atomic_number')
 
-
     e1, e2 = [session.query(Element).filter(Element.atomic_number == a).one() for a in atns]
 
-    chi = [x.abselen(charge=c) for x, c in zip([e1, e2], [charge1, charge2])]
+    chi = [x.en_mulliken(charge=c, missingIsZero=missingIsZero) for x, c in zip([e1, e2], [charge1, charge2])]
 
     if all(x is not None for x in chi):
         return (chi[0] - chi[1])/(2.0*(e1.hardness(charge=charge1) + e2.hardness(charge=charge2)))

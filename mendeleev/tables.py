@@ -93,6 +93,8 @@ class Element(Base):
         Evaporation heat in kJ/mol
       fusion_heat : float
         Fusion heat in kJ/mol
+      gas_basicity : Float
+        Gas basicity
       group : int
         Group in periodic table
       jmol_color : str
@@ -111,6 +113,8 @@ class Element(Base):
         Name in english
       period : int
         Period in periodic table
+      proton_affinity : Float
+        Proton affinity
       series : int
         Index to chemical series
       specific_heat : float
@@ -148,8 +152,9 @@ class Element(Base):
     econf = Column('electronic_configuration', String)
     evaporation_heat = Column(Float)
     fusion_heat = Column(Float)
-    group = relationship("Group", uselist=False)
+    gas_basicity = Column(Float)
     group_id = Column(Integer, ForeignKey("groups.group_id"))
+    group = relationship("Group", uselist=False)
     jmol_color = Column(String)
     lattice_constant = Column(Float)
     lattice_structure = Column(String)
@@ -157,6 +162,7 @@ class Element(Base):
     melting_point = Column(Float)
     name = Column(String)
     period = Column(Integer)
+    proton_affinity = Column(Float)
     _series_id = Column("series_id", Integer, ForeignKey("series.id"))
     _series = relationship("Series", uselist=False)
     series = association_proxy("_series", "name")
@@ -413,7 +419,10 @@ class Element(Base):
         elif scale == 'mulliken':
             return self.en_mulliken()
         elif scale == 'nagle':
-            return math.pow(self.nvalence()/self.dipole_polarizability, 1.0/3.0)
+            if self.dipole_polarizability is not None:
+                return math.pow(self.nvalence()/self.dipole_polarizability, 1.0/3.0)
+            else:
+                return None
         elif scale == 'pauling':
             return self.en_pauling
         elif scale == 'sanderson':
