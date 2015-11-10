@@ -194,46 +194,33 @@ def get_ips(ids=None, deg=1):
 
     return df
 
-def get_ionic_radii(ids=None, charge=1, coord=None):
+def get_ionic_radii(values='ionic_radius'):
     '''
     Return a pandas DataFrame with ionic radii for a set of elements.
 
     Args:
-      ids: list, str or int
-        A list of atomic number, symbols, element names of a combination of the
-        above. If nothing is specified all elements are selected.
-      charge: int
-        Charge of the ion for the ionic radii
-      coord: str
-        Coordination type for the ionic radii
+      values : str
+        The values to be returned either `ionic_radius` or `crystal_radius`
 
     Returns:
       df: DataFrame
-        Pandas DataFrame with atomic numbers, symbols and ionic radii
+        Pandas DataFrame with atomic numbers, symbols and ionic radii for all
+        coordinations
     '''
 
-    session = get_session()
-    engine = get_engine()
+    if values not in ['ionic_radius', 'crystal_radius']:
+        raise ValueError('wrong values, should be "ionic_radius" or "crystal_radius"')
 
-    if ids is None:
-        atns = range(1, 119)
-    else:
-        atns = ids_to_attr(ids, attr='atomic_number')
-
-    query = session.query(Element.atomic_number, Element.symbol).filter(Element.atomic_number.in_(atns))
-    df = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
-
-    if coord:
-        query = session.query(IonicRadius).\
-                            filter(IonicRadius.charge == charge).\
-                            filter(IonicRadius.coordination == coord).\
-                            filter(IonicRadius.atomic_number.in_(atns))
-    else:
-        query = session.query(IonicRadius).\
-                            filter(IonicRadius.charge == charge).\
-                            filter(IonicRadius.atomic_number.in_(atns))
-    out = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
-    df = pd.merge(df, out, on='atomic_number', how='left')
+    ir = get_table('ionicradii')
+    ir = ir[ir.spin != 'HS']
+    # create new temporary pseudo multiindex
+    ir['idx'] = ir.atomic_number.astype(str) + '(' + ir.charge.astype(str) + ')'
+    df = ir.pivot(index='idx', columns='coordination', values='ionic_radius')
+    # get back the atomic_number and charge columns from idx
+    df['atomic_number'] = df.index.str.extract(r'^(\d+)')
+    df['charge'] = df.index.str.extract(r'^\d+\((-?\d+)\)')
+    df.reset_index(inplace=True)
+    df.drop('idx', axis=1, inplace=True)
 
     return df
 
