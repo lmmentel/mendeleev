@@ -4,7 +4,8 @@ from __future__ import print_function
 
 import argparse
 import textwrap
-from mendeleev import element
+from mendeleev import element, get_table
+from pyfiglet import Figlet
 
 #write units
 
@@ -21,14 +22,20 @@ def main():
 
     e = element(args.element)
 
-    headtitle = '{0:<15s}{1:<15s}{2:<15s}'.format('Atomic number', 'Name', 'Symbol')
-    headvalue = '{0:<15d}{1:<15s}{2:<15s}'.format(e.atomic_number, e.name, e.symbol)
+    f = Figlet('dotmatrix')
+    header = f.renderText(e.symbol)
 
-    radii = 'Radii:\n'  
+    table = get_table('elements')
+    et = table[table['symbol'] == e.symbol].transpose()
+    et.drop('description', inplace=True)
+    et.index = et.index.str.replace('_', ' ').str.capitalize()
+    et.sort_index(inplace=True)
 
-    desc = 'Description:\n' + '\n'.join(['\t' + s for s in textwrap.wrap(e.description, 70)])
+    desc = 'Description\n===========\n\n' + '\n'.join(['  ' + s for s in textwrap.wrap(e.description, 70)])
 
-    print(headtitle, headvalue, desc, sep='\n')
+    props = '\nProperties\n==========\n'
+
+    print(header, desc, props, et.to_string(justify='left', header=False), sep='\n')
 
 if __name__ == '__main__':
     main()
