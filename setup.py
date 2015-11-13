@@ -55,6 +55,7 @@ def setup_package():
               'pandas',
               'bokeh',
               'matplotlib',
+              'pyfiglet',
           ],
           scripts = [
               'scripts/element.py',

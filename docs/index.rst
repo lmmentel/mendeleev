@@ -1,3 +1,5 @@
+.. _mendeleev:
+
 ====================================
 Welcome to mendeleev's documentation
 ====================================
@@ -12,8 +14,8 @@ Contents
    :maxdepth: 2
 
    Tutorials <tutorials>
-   Data Notes <datanotes>
    Electronegativity <electronegativity>
+   Data Notes <datanotes>
    Module Reference <_reference/modules>
 
 Data
@@ -62,7 +64,11 @@ The followig data is currently avaialble:
 +-----------------------+-------+---------------------------------------------+-------------+
 | fusion_heat           | float | Fusion heat in kJ/mol                       |             |
 +-----------------------+-------+---------------------------------------------+-------------+
+| gas_basicity          | float | Gas basicity in kJ/mol                      | [4]_        |
++-----------------------+-------+---------------------------------------------+-------------+
 | group                 | int   | Group in periodic table                     |             |
++-----------------------+-------+---------------------------------------------+-------------+
+| heat_of_formation     | float | Heat of formation in kJ/mol                 | [4]_        |
 +-----------------------+-------+---------------------------------------------+-------------+
 | ionenergy             | tuple | Ionization energies in eV                   | [9]_        |
 +-----------------------+-------+---------------------------------------------+-------------+
@@ -88,6 +94,8 @@ The followig data is currently avaialble:
 +-----------------------+-------+---------------------------------------------+-------------+
 | period                | int   | Period in periodic table                    |             |
 +-----------------------+-------+---------------------------------------------+-------------+
+| proton_affinity       | float | Proton affinity in kJ/mol                   | [4]_        |
++-----------------------+-------+---------------------------------------------+-------------+
 | protons               | int   | Number of protons                           |             |
 +-----------------------+-------+---------------------------------------------+-------------+
 | sconst                | float | Nuclear charge screening constants          | [11]_, [12]_|
@@ -100,7 +108,7 @@ The followig data is currently avaialble:
 +-----------------------+-------+---------------------------------------------+-------------+
 | thermal_conductivity  | float | Thermal conductivity in @/m K @25 C         |             |
 +-----------------------+-------+---------------------------------------------+-------------+
-| vdw_radius            | float | Van der Waals radius in pm                  |             |
+| vdw_radius            | float | Van der Waals radius in pm                  | [4]_        |
 +-----------------------+-------+---------------------------------------------+-------------+
 
 .. [1] Cordero, B., Gómez, V., Platero-Prats, A. E., Revés, M., Echeverría, J.,
@@ -112,7 +120,7 @@ The followig data is currently avaialble:
 .. [3] P. Schwerdtfeger "Table of experimental and calculated static dipole
    polarizabilities for the electronic ground states of the neutral elements
    (in atomic units)", February 11, 2014 `source <http://ctcp.massey.ac.nz/Tablepol2014.pdf>`_
-.. [4] W. M. Haynes, Handboob of Chemistry and Physics 95th Edition, CRC Press,
+.. [4] W. M. Haynes, Handbook of Chemistry and Physics 95th Edition, CRC Press,
    New York, 2014, ISBN-10: 1482208679, ISBN-13: 978-1482208672.
 .. [5] Andersen, T. (2004). Atomic negative ions: structure, dynamics and collisions.
    Physics Reports, 394(4-5), 157–313.
@@ -345,6 +353,75 @@ Another composite attribute is ``ionic_radii`` which returns a list of
    charge=   3, coordination=VIII , crystal_radius= 0.920, ionic_radius= 0.780
    charge=   4, coordination=VI   , crystal_radius= 0.725, ionic_radius= 0.585
    charge=   6, coordination=IV   , crystal_radius= 0.390, ionic_radius= 0.250
+
+CLI utility
+===========
+
+For those who work in the terminal there is a simple command line interface
+(CLI) for printing the information about a given element. The script name is
+`element.py` and it accepts either the symbol or name of the element as an
+argument and prints the data about it. For example, to print the properties of
+silicon type
+
+.. code-block:: bash
+
+   $ element.py Si
+      _  _  _  _      _
+    _(_)(_)(_)(_)_   (_)
+   (_)          (_)_  _
+   (_)_  _  _  _  (_)(_)
+     (_)(_)(_)(_)_   (_)
+    _           (_)  (_)
+   (_)_  _  _  _(_)_ (_)
+     (_)(_)(_)(_) (_)(_)(_)
+
+
+
+   Description
+   ===========
+
+     Metalloid element belonging to group 14 of the periodic table. It is
+     the second most abundant element in the Earth's crust, making up 25.7%
+     of it by weight. Chemically less reactive than carbon. First
+     identified by Lavoisier in 1787 and first isolated in 1823 by
+     Berzelius.
+
+   Properties
+   ==========
+
+   Annotation
+   Atomic number                       14
+   Atomic radius                      132
+   Atomic volume                     12.1
+   Block                                p
+   Boiling point                     2628
+   Covalent radius 2008               111
+   Covalent radius 2009               116
+   Cpk color                      #daa520
+   Density                           2.33
+   Dipole polarizability            37.31
+   Electron affinity              1.38952
+   Electronic configuration  [Ne] 3s2 3p2
+   En allen                         11.33
+   En pauling                         1.9
+   Evaporation heat                   383
+   Fusion heat                       50.6
+   Gas basicity                     814.1
+   Group id                            14
+   Heat of formation                  450
+   Jmol color                     #f0c8a0
+   Lattice constant                  5.43
+   Lattice structure                  DIA
+   Mass                           28.0855
+   Melting point                     1683
+   Name                           Silicon
+   Period                               3
+   Proton affinity                    837
+   Series id                            5
+   Specific heat                    0.703
+   Symbol                              Si
+   Thermal conductivity               149
+   Vdw radius                         210
 
 License
 =======
