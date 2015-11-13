@@ -341,6 +341,75 @@ Another composite attribute is ``ionic_radii`` which returns a list of
    charge=   4, coordination=VI   , crystal_radius= 0.725, ionic_radius= 0.585
    charge=   6, coordination=IV   , crystal_radius= 0.390, ionic_radius= 0.250
 
+CLI utility
+===========
+
+For those who work in the terminal there is a simple command line interface
+(CLI) for printing the information about a given element. The script name is
+`element.py` and it accepts either the symbol or name of the element as an
+argument and prints the data about it. For example, to print the properties of
+silicon type
+
+.. code-block:: bash
+
+   $ element.py Si
+      _  _  _  _      _
+    _(_)(_)(_)(_)_   (_)
+   (_)          (_)_  _
+   (_)_  _  _  _  (_)(_)
+     (_)(_)(_)(_)_   (_)
+    _           (_)  (_)
+   (_)_  _  _  _(_)_ (_)
+     (_)(_)(_)(_) (_)(_)(_)
+
+
+
+   Description
+   ===========
+
+     Metalloid element belonging to group 14 of the periodic table. It is
+     the second most abundant element in the Earth's crust, making up 25.7%
+     of it by weight. Chemically less reactive than carbon. First
+     identified by Lavoisier in 1787 and first isolated in 1823 by
+     Berzelius.
+
+   Properties
+   ==========
+
+   Annotation
+   Atomic number                       14
+   Atomic radius                      132
+   Atomic volume                     12.1
+   Block                                p
+   Boiling point                     2628
+   Covalent radius 2008               111
+   Covalent radius 2009               116
+   Cpk color                      #daa520
+   Density                           2.33
+   Dipole polarizability            37.31
+   Electron affinity              1.38952
+   Electronic configuration  [Ne] 3s2 3p2
+   En allen                         11.33
+   En pauling                         1.9
+   Evaporation heat                   383
+   Fusion heat                       50.6
+   Gas basicity                     814.1
+   Group id                            14
+   Heat of formation                  450
+   Jmol color                     #f0c8a0
+   Lattice constant                  5.43
+   Lattice structure                  DIA
+   Mass                           28.0855
+   Melting point                     1683
+   Name                           Silicon
+   Period                               3
+   Proton affinity                    837
+   Series id                            5
+   Specific heat                    0.703
+   Symbol                              Si
+   Thermal conductivity               149
+   Vdw radius                         210
+
 
 Documentation
 =============
