@@ -168,14 +168,14 @@ You can also install the most recent version from the repository:
 Usage
 =====
 
-The simple interface to the data is through the ``element`` method that returns
-the ``Element`` objects::
+The simple interface to the data is through the :py:func:`element <mendeleev.mendeleev.element>`
+method that returns the :py:class:`Element <mendeleev.tables.Element>` objects::
 
    >>> from mendeleev import element
 
-The ``element`` method accepts unique identifiers: atomic number, atomic
-symbol or element's name in english. To retrieve the entries on Silicon by
-symbol type
+The :py:func:`element <mendeleev.mendeleev.element>` method accepts unique
+identifiers: atomic number, atomic symbol or element's name in english. To
+retrieve the entries on Silicon by symbol type
 
 .. code-block:: python
 
@@ -227,8 +227,9 @@ Similarly to access the data by atomic number or element names type
 Lists of elements
 -----------------
 
-The ``element`` method also accepts list or tuple  of identifiers and then
-returns a list of ``Element`` objects
+The :py:func:`element <mendeleev.mendeleev.element>` method also accepts list
+or tuple  of identifiers and then returns a list of :py:class:`Element <mendeleev.tables.Element>`
+objects
 
 .. code-block:: python
 
@@ -239,19 +240,19 @@ returns a list of ``Element`` objects
 Composite Attributes
 --------------------
 
-Currently four of the attributes are more complex object than ``str``, ``int``
-or ``float``, those are:
+Currently four of the attributes are more complex object than :class:`str`,
+:class:`int` or :class:`float`, those are:
 
 * ``oxistates``, returns a list of oxidation states
 * ``ionenergies``, returns a dictionary of ionization energies
-* ``isotopes``, returns a list of ``Isotope`` objects
-* ``ionic_radii`` returns a list of ``IonicRadius`` objects
+* ``isotopes``, returns a list of :py:class:`Isotope <mendeleev.tables.Isotope>` objects
+* ``ionic_radii`` returns a list of :py:class:`IonicRadius <mendeleev.tables.IonicRadius>` objects
 
 Oxidation states
 ++++++++++++++++
 
-For examples ``oxistates`` returns a list of oxidation states for
-a given element
+For examples :py:attr:`oxistates <mendeleev.tables.Element.oxistates>` returns
+a list of oxidation states for a given element
 
 .. code-block:: python
 
@@ -262,8 +263,8 @@ a given element
 Ionization energies
 +++++++++++++++++++
 
-The ``ionenergies`` returns a dictionary with ionization energies as values and
-degrees of ionization as keys.
+The :py:attr:`ionenergies <mendeleev.tables.Element.ionenergies>` returns a
+dictionary with ionization energies as values and degrees of ionization as keys
 
 .. code-block:: python
 
@@ -299,7 +300,8 @@ degrees of ionization as keys.
 Isotopes
 ++++++++
 
-The ``isotopes`` attribute returns a list of ``Isotope`` objects with the
+The :py:attr:`isotopes <mendeleev.tables.Element.isotopes>` attribute returns a
+list of :py:class:`Isotope <mendeleev.tables.Isotope>` objects with the
 following attributes per isotope
 
 * ``atomic_number``
@@ -324,7 +326,8 @@ Ionic radii
 +++++++++++
 
 Another composite attribute is ``ionic_radii`` which returns a list of
-``IonicRadius`` object with the following attributes
+:py:class:`IonicRadius <mendeleev.tables.IonicRadius>` object with the following
+attributes
 
 * ``atomic_number``, atomic number of the ion
 * ``charge``, charge of the ion
