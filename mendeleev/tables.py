@@ -246,7 +246,7 @@ class Element(Base):
 
         .. math::
 
-           \chi = \frac{I + A}{2}
+           \chi = \\frac{I + A}{2}
 
         where :math:`I` is the ionization energy and :math:`A` is the electron
         affinity
@@ -278,7 +278,8 @@ class Element(Base):
 
         .. math::
 
-           \chi = \frac{AD}{AD_{\text{ng}}}
+           \chi = \\frac{AD}{AD_{\\text{ng}}}
+
 
         '''
 
@@ -294,7 +295,7 @@ class Element(Base):
 
         .. math::
 
-           \eta = \frac{I - A}{2}
+           \eta = \\frac{I - A}{2}
 
         where I is the ionization energy and A is the electron affinity
 
@@ -324,9 +325,9 @@ class Element(Base):
 
         .. math::
 
-           S = \frac{1}{2\eta}
+           S = \\frac{1}{2\eta}
 
-        where $\eta$ is the absolute hardness
+        where :math:`\eta` is the absolute hardness
 
         Args:
           charge: int
@@ -359,7 +360,7 @@ class Element(Base):
               - `clementi` for values of screening constants from Clementi, E.,
                 & Raimondi, D. L. (1963). Atomic Screening Constants from SCF
                 Functions. The Journal of Chemical Physics, 38(11), 2686.
-                `doi:10.1063/1.1733573 <http://www.dx.doi.org/10.1063/1.1733573`_
+                `doi:10.1063/1.1733573 <http://www.dx.doi.org/10.1063/1.1733573>`_
                 and Clementi, E. (1967). Atomic Screening Constants from SCF
                 Functions. II. Atoms with 37 to 86 Electrons. The Journal of
                 Chemical Physics, 47(4), 1300.
@@ -439,9 +440,9 @@ class Element(Base):
 
         .. math::
 
-          \chi = \left(\frac{Z_{\text{eff}}}{r^{\beta}}\right)^{\alpha}
+           \chi = \left(\\frac{Z_{\\text{eff}}}{r^{\\beta}}\\right)^{\\alpha}
 
-        where, :math:`Z_{\text{eff}}`
+        where, :math:`Z_{\\text{eff}}`
         '''
 
         zeff = self.zeff(**zeffkwargs)
@@ -504,6 +505,7 @@ class IonicRadius(Base):
       origin : str
         Source of the data
       most_reliable : bool
+        Most reliable value (see reference)
     '''
 
     __tablename__ = 'ionicradii'
@@ -658,7 +660,7 @@ class ScreeningConstant(Base):
     Nuclear screening constants from Clementi, E., & Raimondi, D. L. (1963).
     Atomic Screening Constants from SCF Functions. The Journal of Chemical
     Physics, 38(11), 2686.  `doi:10.1063/1.1733573
-    <http://www.dx.doi.org/10.1063/1.1733573`_ and Clementi, E. (1967). Atomic
+    <http://www.dx.doi.org/10.1063/1.1733573>`_ and Clementi, E. (1967). Atomic
     Screening Constants from SCF Functions. II. Atoms with 37 to 86 Electrons.
     The Journal of Chemical Physics, 47(4), 1300.  `doi:10.1063/1.1712084
     <http://www.dx.doi.org/10.1063/1.1712084>`_

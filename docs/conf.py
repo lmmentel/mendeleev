@@ -30,10 +30,11 @@ MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma',
                 'matplotlib.cm',
                 'scipy', 'scipy.optimize', 'scipy.interpolate', 'pandas',
                 'bokeh', 'bokeh.models', 'bokeh.plotting',
-                'sqlalchemy', 'sqlalchemy.orm.exc', 'sqlalchemy.orm',
-                'sqlalchemy.ext', 'sqlalchemy.ext.associationproxy',
-                'sqlalchemy.ext.declarative', 'sqlalchemy.ext.hybrid',
-                'sqlalchemy.dialects']
+#                'sqlalchemy', 'sqlalchemy.orm.exc', 'sqlalchemy.orm',
+#                'sqlalchemy.ext', 'sqlalchemy.ext.associationproxy',
+#                'sqlalchemy.ext.declarative', 'sqlalchemy.ext.hybrid',
+#                'sqlalchemy.dialects']
+]
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
