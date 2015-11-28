@@ -66,15 +66,19 @@ class Element(Base):
         121(9), 4083–4088 (2004) doi:10.1063/1.1779576, and the value for
         Hydrogen was taken from K. T. Tang, J. M. Norbeck and P. R. Certain,
         J. Chem. Phys. 64, 3063 (1976), doi:10.1063/1.432569
-      covalent_radius_2008 : float
+      covalent_radius_bragg : float
+        Covalent radius in pm from
+      covalent_radius_cordero : float
         Covalent radius in pm from Cordero, B., Gómez, V., Platero-Prats, A.
         E., Revés, M., Echeverría, J., Cremades, E., … Alvarez, S. (2008).
         Covalent radii revisited. Dalton Transactions, (21), 2832.
         doi:10.1039/b801115j
-      covalent_radius_2009 : float
+      covalent_radius_pyykko : float
         Covalent radius in pm Pyykkö, P., & Atsumi, M. (2009). Molecular
         Single-Bond Covalent Radii for Elements 1-118. Chemistry - A European
         Journal, 15(1), 186–197. doi:10.1002/chem.200800987
+      covalent_radius_slater : float
+        Covalent radius in pm from
       cpk_color : str
         CPK color of the atom in HEX, see http://jmol.sourceforge.net/jscolors/#color_U
       density : float
@@ -147,8 +151,10 @@ class Element(Base):
     atomic_volume = Column(Float)
     block = Column(String)
     boiling_point = Column(Float)
-    covalent_radius_2008 = Column(Float)
-    covalent_radius_2009 = Column(Float)
+    covalent_radius_bragg = Column(Float)
+    covalent_radius_cordero = Column(Float)
+    covalent_radius_pyykko = Column(Float)
+    covalent_radius_slater = Column(Float)
     c6 = Column(Float)
     cpk_color = Column(String)
     density = Column(Float)
@@ -241,9 +247,9 @@ class Element(Base):
 
     @hybrid_property
     def covalent_radius(self):
-        '''Return the default covalent radius which is covalent_radius_2009'''
+        '''Return the default covalent radius which is covalent_radius_pyykko'''
 
-        return self.covalent_radius_2009
+        return self.covalent_radius_pyykko
 
     @hybrid_method
     def en_mulliken(self, charge=0, missingIsZero=False, useNegativeEA=False):
@@ -279,7 +285,7 @@ class Element(Base):
             return None
 
     @hybrid_method
-    def en_sanderson(self, radius='covalent_radius_2009'):
+    def en_sanderson(self, radius='covalent_radius_pyykko'):
         '''Sanderson electronegativity
 
         .. math::
@@ -355,7 +361,7 @@ class Element(Base):
 
     def zeff(self, n=None, s=None, method='slater', alle=False):
         '''
-        Return the effective nuclear charge for (n, s)
+        Return the effective nuclear charge for ``(n, s)``
 
         Args:
           method : str
@@ -408,14 +414,19 @@ class Element(Base):
     def electronegativity(self, scale='pauling'):
         '''
         Calculate the electronegativity using one of the methods
-          - `allen`
-          - `allred-rochow`
-          - `cottrell-sutton`
-          - `gordy`
-          - `mulliken`
-          - `nagle`
-          - `pauling`
-          - `sanderson`
+
+        Args:
+          scale : str
+           Name of the electronegativity scale, one of
+
+           - `allen`
+           - `allred-rochow`
+           - `cottrell-sutton`
+           - `gordy`
+           - `mulliken`
+           - `nagle`
+           - `pauling`
+           - `sanderson`
         '''
 
         if scale == 'allen':
@@ -440,7 +451,7 @@ class Element(Base):
         else:
             raise ValueError('unknown <scale> value: {}'.format(scale))
 
-    def en_calc(self, radius='covalent_radius_2009', rpow=1, apow=1, **zeffkwargs):
+    def en_calc(self, radius='covalent_radius_pyykko', rpow=1, apow=1, **zeffkwargs):
         '''
         Calculate the electronegativity from a general formula
 
@@ -448,7 +459,11 @@ class Element(Base):
 
            \chi = \left(\\frac{Z_{\\text{eff}}}{r^{\\beta}}\\right)^{\\alpha}
 
-        where, :math:`Z_{\\text{eff}}`
+        where
+
+        - :math:`Z_{\\text{eff}}` is the effective nuclear charge
+        - :math:`r` is the covalent radius
+        - :math:`\\alpha,\\beta` parameters
         '''
 
         zeff = self.zeff(**zeffkwargs)
@@ -456,7 +471,7 @@ class Element(Base):
 
         return math.pow(zeff/math.pow(r, rpow), apow)
 
-    def en_li_xue(self, charge=0, radius='covalent_radius_2009'):
+    def en_li_xue(self, charge=0, radius='covalent_radius_pyykko'):
 
         neff = {1: 0.85, 2: 1.99, 3: 2.89, 4: 3.45, 5: 3.85, 6: 4.36, 7:4.99}
 
