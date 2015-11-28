@@ -38,25 +38,27 @@ The followig data is currently avaialble:
 +-----------------------+-------+---------------------------------------------+-------------+
 | boiling_point         | float | Boiling temperature in K                    |             |
 +-----------------------+-------+---------------------------------------------+-------------+
-| covalent_radius_2008  | float | Covalent radius in pm (2008)                | [1]_        |
+| c6                    | float | C_6 dispersion coefficient in a.u.          | [1]_, [2]_  |
 +-----------------------+-------+---------------------------------------------+-------------+
-| covalent_radius_2009  | float | Covalent radius in pm (2009)                | [2]_        |
+| covalent_radius_2008  | float | Covalent radius in pm (2008)                | [3]_        |
++-----------------------+-------+---------------------------------------------+-------------+
+| covalent_radius_2009  | float | Covalent radius in pm (2009)                | [4]_        |
 +-----------------------+-------+---------------------------------------------+-------------+
 | density               | float | Density at 295K in g/cm3                    |             |
 +-----------------------+-------+---------------------------------------------+-------------+
 | description           | str   | Short description of the element            |             |
 +-----------------------+-------+---------------------------------------------+-------------+
-| dipole_polarizability | float | Dipole polarizability in a.u.               | [3]_        |
+| dipole_polarizability | float | Dipole polarizability in a.u.               | [5]_        |
 +-----------------------+-------+---------------------------------------------+-------------+
-| electron_affinity     | float | Electron affinity in eV                     | [4]_, [5]_  |
+| electron_affinity     | float | Electron affinity in eV                     | [6]_, [7]_  |
 +-----------------------+-------+---------------------------------------------+-------------+
 | electrons             | int   | Number of electrons                         |             |
 +-----------------------+-------+---------------------------------------------+-------------+
-| en_allen              | float | Allen's scale of electronegativity in eV    | [6]_, [7]_  |
+| en_allen              | float | Allen's scale of electronegativity in eV    | [8]_, [9]_  |
 +-----------------------+-------+---------------------------------------------+-------------+
-| en_mulliken           | float | Mulliken's scale of electronegativity in eV | [8]_        |
+| en_mulliken           | float | Mulliken's scale of electronegativity in eV | [10]_       |
 +-----------------------+-------+---------------------------------------------+-------------+
-| en_pauling            | float | Pauling's scale of electronegativity        | [4]_        |
+| en_pauling            | float | Pauling's scale of electronegativity        | [6]_        |
 +-----------------------+-------+---------------------------------------------+-------------+
 | econf                 | str   | Ground state electron configuration         |             |
 +-----------------------+-------+---------------------------------------------+-------------+
@@ -64,15 +66,15 @@ The followig data is currently avaialble:
 +-----------------------+-------+---------------------------------------------+-------------+
 | fusion_heat           | float | Fusion heat in kJ/mol                       |             |
 +-----------------------+-------+---------------------------------------------+-------------+
-| gas_basicity          | float | Gas basicity in kJ/mol                      | [4]_        |
+| gas_basicity          | float | Gas basicity in kJ/mol                      | [6]_        |
 +-----------------------+-------+---------------------------------------------+-------------+
 | group                 | int   | Group in periodic table                     |             |
 +-----------------------+-------+---------------------------------------------+-------------+
-| heat_of_formation     | float | Heat of formation in kJ/mol                 | [4]_        |
+| heat_of_formation     | float | Heat of formation in kJ/mol                 | [6]_        |
 +-----------------------+-------+---------------------------------------------+-------------+
-| ionenergy             | tuple | Ionization energies in eV                   | [9]_        |
+| ionenergy             | tuple | Ionization energies in eV                   | [11]_       |
 +-----------------------+-------+---------------------------------------------+-------------+
-| ionic_radii           | list  | Ionic and crystal radii in pm               | [10]_       |
+| ionic_radii           | list  | Ionic and crystal radii in pm               | [12]_       |
 +-----------------------+-------+---------------------------------------------+-------------+
 | isotopes              | list  | Isotopes                                    |             |
 +-----------------------+-------+---------------------------------------------+-------------+
@@ -94,11 +96,11 @@ The followig data is currently avaialble:
 +-----------------------+-------+---------------------------------------------+-------------+
 | period                | int   | Period in periodic table                    |             |
 +-----------------------+-------+---------------------------------------------+-------------+
-| proton_affinity       | float | Proton affinity in kJ/mol                   | [4]_        |
+| proton_affinity       | float | Proton affinity in kJ/mol                   | [6]_        |
 +-----------------------+-------+---------------------------------------------+-------------+
 | protons               | int   | Number of protons                           |             |
 +-----------------------+-------+---------------------------------------------+-------------+
-| sconst                | float | Nuclear charge screening constants          | [11]_, [12]_|
+| sconst                | float | Nuclear charge screening constants          | [13]_, [14]_|
 +-----------------------+-------+---------------------------------------------+-------------+
 | series                | int   | Index to chemical series                    |             |
 +-----------------------+-------+---------------------------------------------+-------------+
@@ -108,44 +110,51 @@ The followig data is currently avaialble:
 +-----------------------+-------+---------------------------------------------+-------------+
 | thermal_conductivity  | float | Thermal conductivity in @/m K @25 C         |             |
 +-----------------------+-------+---------------------------------------------+-------------+
-| vdw_radius            | float | Van der Waals radius in pm                  | [4]_        |
+| vdw_radius            | float | Van der Waals radius in pm                  | [6]_        |
 +-----------------------+-------+---------------------------------------------+-------------+
 
-.. [1] Cordero, B., Gómez, V., Platero-Prats, A. E., Revés, M., Echeverría, J.,
+.. [1] Chu, X., & Dalgarno, A. (2004). Linear response time-dependent density
+   functional theory for van der Waals coefficients. The Journal of Chemical
+   Physics, 121(9), 4083. `doi:10.1063/1.1779576 <http://dx.doi.org/10.1063/1.1779576>`_
+.. [2] Tang, K. T., Norbeck, J. M., & Certain, P. R. (1976). Upper and lower bounds of
+   two- and three-body dipole, quadrupole, and octupole van der Waals coefficients
+   for hydrogen, noble gas, and alkali atom interactions. The Journal of Chemical
+   Physics, 64(7), 3063. `doi:10.1063/1.432569 <http://dx.doi.org/10.1063/1.432569>`_
+.. [3] Cordero, B., Gómez, V., Platero-Prats, A. E., Revés, M., Echeverría, J.,
    Cremades, E., … Alvarez, S. (2008). Covalent radii revisited. Dalton
    Transactions, (21), 2832. `doi:10.1039/b801115j <http://www.dx.doi.org/10.1039/b801115j>`_
-.. [2] Pyykkö, P., & Atsumi, M. (2009). Molecular Single-Bond Covalent Radii
+.. [4] Pyykkö, P., & Atsumi, M. (2009). Molecular Single-Bond Covalent Radii
    for Elements 1-118. Chemistry - A European Journal, 15(1), 186–197.
    `doi:10.1002/chem.200800987 <http://www.dx.doi.org/10.1002/chem.200800987>`_
-.. [3] P. Schwerdtfeger "Table of experimental and calculated static dipole
+.. [5] P. Schwerdtfeger "Table of experimental and calculated static dipole
    polarizabilities for the electronic ground states of the neutral elements
    (in atomic units)", February 11, 2014 `source <http://ctcp.massey.ac.nz/Tablepol2014.pdf>`_
-.. [4] W. M. Haynes, Handbook of Chemistry and Physics 95th Edition, CRC Press,
+.. [6] W. M. Haynes, Handbook of Chemistry and Physics 95th Edition, CRC Press,
    New York, 2014, ISBN-10: 1482208679, ISBN-13: 978-1482208672.
-.. [5] Andersen, T. (2004). Atomic negative ions: structure, dynamics and collisions.
+.. [7] Andersen, T. (2004). Atomic negative ions: structure, dynamics and collisions.
    Physics Reports, 394(4-5), 157–313.
    `doi:10.1016/j.physrep.2004.01.001 <http://www.dx.doi.org/10.1016/j.physrep.2004.01.001>`_
-.. [6] Mann, J. B., Meek, T. L., & Allen, L. C. (2000). Configuration Energies of the
+.. [8] Mann, J. B., Meek, T. L., & Allen, L. C. (2000). Configuration Energies of the
    Main Group Elements. Journal of the American Chemical Society, 122(12),
    2780–2783. `doi:10.1021/ja992866e <http://dx.doi.org/10.1021/ja992866e>`_
-.. [7] Mann, J. B., Meek, T. L., Knight, E. T., Capitani, J. F., & Allen, L. C.
+.. [9] Mann, J. B., Meek, T. L., Knight, E. T., Capitani, J. F., & Allen, L. C.
    (2000). Configuration Energies of the d-Block Elements. Journal of the American
    Chemical Society, 122(21), 5132–5137.
    `doi:10.1021/ja9928677 <http://dx.doi.org/10.1021/ja9928677>`_
-.. [8] Mulliken, R. S. (1934). A New Electroaffinity Scale; Together with Data on
+.. [10] Mulliken, R. S. (1934). A New Electroaffinity Scale; Together with Data on
    Valence States and on Valence Ionization Potentials and Electron Affinities.
    The Journal of Chemical Physics, 2(11), 782.
    `doi:10.1063/1.1749394 <http://dx.doi.org/10.1063/1.1749394>`_
-.. [9] `NIST Atomic Database <http://physics.nist.gov/cgi-bin/ASD/ie.pl>`_
+.. [11] `NIST Atomic Database <http://physics.nist.gov/cgi-bin/ASD/ie.pl>`_
    accessed on April 13, 2015
-.. [10] Shannon, R. D. (1976). Revised effective ionic radii and systematic
+.. [12] Shannon, R. D. (1976). Revised effective ionic radii and systematic
    studies of interatomic distances in halides and chalcogenides.
    Acta Crystallographica Section A.
    `doi:10.1107/S0567739476001551 <http://www.dx.doi.org/10.1107/S0567739476001551>`_
-.. [11] Clementi, E., & Raimondi, D. L. (1963). Atomic Screening Constants from
+.. [13] Clementi, E., & Raimondi, D. L. (1963). Atomic Screening Constants from
    SCF Functions. The Journal of Chemical Physics, 38(11), 2686.
    `doi:10.1063/1.1733573 <http://www.dx.doi.org/10.1063/1.1733573>`_
-.. [12] Clementi, E. (1967). Atomic Screening Constants from SCF Functions. II.
+.. [14] Clementi, E. (1967). Atomic Screening Constants from SCF Functions. II.
    Atoms with 37 to 86 Electrons. The Journal of Chemical Physics, 47(4), 1300.
    `doi:10.1063/1.1712084 <http://www.dx.doi.org/10.1063/1.1712084>`_
 

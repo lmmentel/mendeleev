@@ -61,6 +61,11 @@ class Element(Base):
         Block in periodic table, s, p, d, f
       boiling_point : float
         Boiling temperature in K
+      c6 : float
+        C_6 dispersion coefficient in a.u. from X. Chu & A. Dalgarno, J. Chem. Phys.,
+        121(9), 4083–4088 (2004) doi:10.1063/1.1779576, and the value for
+        Hydrogen was taken from K. T. Tang, J. M. Norbeck and P. R. Certain,
+        J. Chem. Phys. 64, 3063 (1976), doi:10.1063/1.432569
       covalent_radius_2008 : float
         Covalent radius in pm from Cordero, B., Gómez, V., Platero-Prats, A.
         E., Revés, M., Echeverría, J., Cremades, E., … Alvarez, S. (2008).
@@ -144,6 +149,7 @@ class Element(Base):
     boiling_point = Column(Float)
     covalent_radius_2008 = Column(Float)
     covalent_radius_2009 = Column(Float)
+    c6 = Column(Float)
     cpk_color = Column(String)
     density = Column(Float)
     description = Column(String)
@@ -755,7 +761,7 @@ class ElectronicConfiguration(object):
 
         self.core = OrderedDict([((int(n), s) , (int(e) if e is not None else 1)) for (n, s, e) in core])
         self.valence = OrderedDict([((int(n), s), (int(e) if e is not None else 1)) for (n, s, e) in valence])
-        self.conf = OrderedDict(self.core.items() + self.valence.items())
+        self.conf = OrderedDict(list(self.core.items()) + list(self.valence.items()))
 
     def sort(self, inplace=True):
 
