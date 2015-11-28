@@ -55,8 +55,8 @@ def get_engine():
 
 def element(ids):
     '''
-    Based on the type of the `ids` identifier return either an ``Element``
-    object from the database, or a list of ``Element`` objects if the `ids` is
+    Based on the type of the `ids` identifier return either an :py:class:`Element <mendeleev.tables.Element>`
+    object from the database, or a list of :py:class:`Element <mendeleev.tables.Element>` objects if the `ids` is
     a list or a tuple of identifiers. Valid identifiers for an element are:
     *name*, *symbol*, *atomic number*.
     '''
@@ -88,7 +88,8 @@ def get_element(ids):
 
 def get_table(tablename,  **kwargs):
     '''
-    Return a table from the database as pandas DataFrame
+    Return a table from the database as `pandas <http://pandas.pydata.org/>`_
+    `DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
 
     Args:
       tablename: str
