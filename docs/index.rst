@@ -7,6 +7,12 @@ Welcome to mendeleev's documentation
 This package provides an API for accessing various properties of elements from
 the periodic table of elements.
 
+.. image:: img/periodictable.png
+    :width: 800px
+    :align: center
+    :alt: alternate text
+
+
 Contents
 ========
 
