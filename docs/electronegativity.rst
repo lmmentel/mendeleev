@@ -11,7 +11,7 @@ following scales are stored:
 - :ref:`Pauling <pauling_en>`
 - :ref:`Allen <allen_en>`
 
-Moreover there are electronagativity scales that can be computed from their
+Moreover there are electronegativity scales that can be computed from their
 respective definition and the atomic properties available in :ref:`mendeleev <mendeleev>`:
 
 - :ref:`Mulliken <mulliken_en>`
@@ -28,7 +28,7 @@ For a short overview on electronegativity see this `presentation <https://speake
 Allen
 =====
 
-The electronegativity scale propsed by Allen in ref [1]_ can be defined as:
+The electronegativity scale proposed by Allen in ref [1]_ can be defined as:
 
 .. math::
 
@@ -46,7 +46,7 @@ The values that are tabulated were obtained from refs. [2]_ and [3]_.
 Pauling
 =======
 
-Pauling's thermchemical scale was introduced in [4]_ as a relative scale based
+Pauling's thermochemical scale was introduced in [4]_ as a relative scale based
 on electronegativity differences:
 
 .. math::

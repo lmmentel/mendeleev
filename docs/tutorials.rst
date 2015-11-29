@@ -10,7 +10,7 @@ method that returns the :py:class:`Element <mendeleev.tables.Element>` objects::
    >>> from mendeleev import element
 
 The :py:func:`element <mendeleev.mendeleev.element>` method accepts unique
-identifiers: atomic number, atomic symbol or element's name in english. To
+identifiers: atomic number, atomic symbol or element's name in English. To
 retrieve the entries on Silicon by symbol type
 
 .. code-block:: python
@@ -266,9 +266,9 @@ silicon type
 Jupyter notebooks
 -----------------
 
-A series of short tutorials is avaiable as `Jupyter <https://jupyter.org/>`_
+A series of short tutorials is available as `Jupyter <https://jupyter.org/>`_
 (former `IPython notebook <http://ipython.org/notebook.html>`_) notebooks that
-present the main funcitonality and provide real-life examples
+present the main functionality and provide real-life examples
 
 * `Plotting periodic tables <http://nbviewer.ipython.org/url/bitbucket.org/lukaszmentel/mendeleev/raw/tip/docs/ipynb/plotting_tutorial.ipynb>`_
 

@@ -4,7 +4,7 @@ Data
 Available properties of the elements
 ------------------------------------
 
-The followig data is currently avaialble:
+The following data is currently available:
 
 +-------------------------+-------+---------------------------------------------+-------------+
 | Name                    | Type  | Comment                                     | Data Source |
@@ -75,7 +75,7 @@ The followig data is currently avaialble:
 +-------------------------+-------+---------------------------------------------+-------------+
 | melting_point           | float | Melting temperature in K                    |             |
 +-------------------------+-------+---------------------------------------------+-------------+
-| name                    | str   | Name in english                             |             |
+| name                    | str   | Name in English                             |             |
 +-------------------------+-------+---------------------------------------------+-------------+
 | neutrons                | int   | Number of neutrons (most abundant isotope)  |             |
 +-------------------------+-------+---------------------------------------------+-------------+
@@ -107,7 +107,7 @@ Some notes on the data
 Covalent Radii
 ++++++++++++++
 
-In order to have a more homogenous data for covalent radii taken from ref. [4]_
+In order to have a more homogeneous data for covalent radii taken from ref. [4]_
 the values for 3 different valences for C, also the low and high spin values
 for Mn, Fe Co, were respectively averaged.
 
@@ -120,8 +120,8 @@ reported in eV without converting to Pauling units.
 Electron affinity
 +++++++++++++++++
 
-Electron affinites we taken from [8]_ for the elements for which the data was
-available. For He, Be, N, Ar and Xe afinities were taken from [9]_ where they
+Electron affinities we taken from [8]_ for the elements for which the data was
+available. For He, Be, N, Ar and Xe affinities were taken from [9]_ where they
 were specified for metastable ions and therefore the values are negative.
 
 
@@ -134,8 +134,8 @@ The screening constants were calculated according to the following formula
 
    \sigma_{n,l,m} = Z - n\cdot\zeta_{n,l,m}
 
-where :math:`n` is the pricipal quantum number, :math:`Z` is the atomic number,
-:math:`\sigma_{n,l,m}` is the screening constant, :math:`\zeta_{n,l,m}` si the
+where :math:`n` is the principal quantum number, :math:`Z` is the atomic number,
+:math:`\sigma_{n,l,m}` is the screening constant, :math:`\zeta_{n,l,m}` is the
 optimized exponent from [15]_, [16]_.
 
 For elements Nb, Mo, Ru, Rh, Pd and Ag the exponent values corresponding to the
