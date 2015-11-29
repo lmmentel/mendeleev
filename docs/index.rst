@@ -40,13 +40,13 @@ The followig data is currently avaialble:
 +-------------------------+-------+---------------------------------------------+-------------+
 | c6                      | float | C_6 dispersion coefficient in a.u.          | [1]_, [2]_  |
 +-------------------------+-------+---------------------------------------------+-------------+
-| covalent_radius_bragg   | float | Covalent radius in pm (2009)                | [3]_        |
+| covalent_radius_bragg   | float | Covalent radius in pm by Bragg              | [3]_        |
 +-------------------------+-------+---------------------------------------------+-------------+
-| covalent_radius_cordero | float | Covalent radius in pm (2008)                | [4]_        |
+| covalent_radius_cordero | float | Covalent radius in pm by Cerdero et al.     | [4]_        |
 +-------------------------+-------+---------------------------------------------+-------------+
-| covalent_radius_pyykko  | float | Covalent radius in pm (2009)                | [5]_        |
+| covalent_radius_pyykko  | float | Covalent radius in pm by Pyykko et al.      | [5]_        |
 +-------------------------+-------+---------------------------------------------+-------------+
-| covalent_radius_slater  | float | Covalent radius in pm (2009)                | [6]_        |
+| covalent_radius_slater  | float | Covalent radius in pm by Slater             | [6]_        |
 +-------------------------+-------+---------------------------------------------+-------------+
 | density                 | float | Density at 295K in g/cm3                    |             |
 +-------------------------+-------+---------------------------------------------+-------------+
