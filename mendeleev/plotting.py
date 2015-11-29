@@ -104,39 +104,61 @@ def colormap_column(df, column, cmap='RdBu_r', missing='#ffffff'):
 
 def periodic_plot(df, values=None, title='Periodic Table', width=1000,
                   height=800, missing='#ffffff', decimals=0,
-                  colorby=None, output=None, cmap='RdBu_r', long_version=False):
+                  colorby=None, output=None, cmap='RdBu_r',
+                  showfblock=True, long_version=False):
     '''
     Use Bokeh to plot the periodic table data contained in the `df`
 
     Args:
       df : DataFrame
         Pandas DataFrame with the data on elements
+      tile : str
+        Title to appear above the periodic table
       colorby : str
         Name of the column containig the colors
-      long_version : bool
-        NotImplemented
       width : int
-        Width of the figure
+        Width of the figure in pixels
       height : int
-        Height of the figure
+        Height of the figure in pixels
+      decimals : int
+        Number of decimals to be displayed in the bottom row of each cell
+      missing : str
+        Hex code of the color to be used for the missing values
       output : str
         Name of the output file to store the plot, should end in .html
+      cmap : str
+        Colormap to use, see matplotlib colormaps
+      long_version : bool
+        Show the long version of the periodic table with the f block between the
+        s and d blocks
+      showfblock : bool
+        Show the elements from the f block
     '''
 
     elements = df.copy()
 
-    if long_version:
-        raise NotImplemented
-    else:
-        elements.loc[elements['group_id'].notnull(), 'x'] = \
-            elements.loc[elements['group_id'].notnull(), 'group_id'].astype(int)
-        elements.loc[elements['period'].notnull(), 'y'] = \
-            elements.loc[elements['period'].notnull(), 'period'].astype(int)
-        for period in [6, 7]:
-            mask = (elements['block'] == 'f') & (elements['period'] == period)
-            elements.loc[mask, 'x'] = elements.loc[mask, 'atomic_number'] -\
+    # calculate x and y of the main group/row elements
+
+    elements.loc[elements['group_id'].notnull(), 'x'] = \
+        elements.loc[elements['group_id'].notnull(), 'group_id'].astype(int)
+    elements.loc[elements['period'].notnull(), 'y'] = \
+        elements.loc[elements['period'].notnull(), 'period'].astype(int)
+
+    if showfblock:
+        if long_version:
+            elements.loc[elements['x'] > 2, 'x'] = \
+                elements.loc[elements['x'] > 2, 'x'] + 14
+            for period in [6, 7]:
+                mask = (elements['block'] == 'f') & (elements['period'] == period)
+                elements.loc[mask, 'x'] = elements.loc[mask, 'atomic_number'] -\
                                              elements.loc[mask, 'atomic_number'].min() + 3
-            elements.loc[mask, 'y'] = elements.loc[mask, 'period'] + 2.5
+                elements.loc[mask, 'y'] = period
+        else:
+            for period in [6, 7]:
+                mask = (elements['block'] == 'f') & (elements['period'] == period)
+                elements.loc[mask, 'x'] = elements.loc[mask, 'atomic_number'] -\
+                                             elements.loc[mask, 'atomic_number'].min() + 3
+                elements.loc[mask, 'y'] = elements.loc[mask, 'period'] + 2.5
 
     elements['mass'] = elements['mass'].astype(str)
 
@@ -181,7 +203,14 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
     # adjust the ticks and axis bounds
     p.yaxis.bounds = (1, 7)
     p.axis[1].ticker.num_minor_ticks = 0
-    p.axis[0].ticker = FixedTicker(ticks=range(1, 19))
+    if long_version:
+        # Turn off tick labels
+        p.axis[0].major_label_text_font_size = '0pt'
+        # Turn off tick marks
+        p.axis[0].major_tick_line_color = None  # turn off major ticks
+        p.axis[0].ticker.num_minor_ticks = 0  # turn off minor ticks
+    else:
+        p.axis[0].ticker = FixedTicker(ticks=range(1, 19))
 
     text_props = {
         "source": source,
