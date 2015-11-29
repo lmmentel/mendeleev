@@ -37,17 +37,18 @@ MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma',
 ]
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-if on_rtd:
-    html_theme = 'default'
-else:
-    sys.path.append('/home/lmentel/Devel/mendeleev')
-
 __location__ = os.path.join(os.getcwd(), os.path.dirname(
     inspect.getfile(inspect.currentframe())))
 
 output_dir = os.path.join(__location__, "_reference")
 module_dir = os.path.join(__location__, "../mendeleev")
+
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+if on_rtd:
+    html_theme = 'default'
+else:
+    sys.path.append(os.path.dirname(os.path.normpath(module_dir)))
+
 cmd_line_template = "sphinx-apidoc -f --separate -o {outputdir} {moduledir}"
 cmd_line = cmd_line_template.format(outputdir=output_dir, moduledir=module_dir)
 apidoc.main(cmd_line.split(" "))
