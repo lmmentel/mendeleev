@@ -1,12 +1,15 @@
 Data
 ====
 
+Available properties of the elements
+------------------------------------
+
 The followig data is currently avaialble:
 
 +-------------------------+-------+---------------------------------------------+-------------+
 | Name                    | Type  | Comment                                     | Data Source |
 +=========================+=======+=============================================+=============+
-| annotation              | str   | Annotations regarding ithe data             |             |
+| annotation              | str   | Annotations regarding the data              |             |
 +-------------------------+-------+---------------------------------------------+-------------+
 | atomic_number           | int   | Atomic number                               |             |
 +-------------------------+-------+---------------------------------------------+-------------+
@@ -99,23 +102,23 @@ The followig data is currently avaialble:
 
 
 Some notes on the data
-======================
+----------------------
 
 Covalent Radii
---------------
+++++++++++++++
 
 In order to have a more homogenous data for covalent radii taken from ref. [4]_
 the values for 3 different valences for C, also the low and high spin values
 for Mn, Fe Co, were respectively averaged.
 
 Allen's configuration energies
-------------------------------
+++++++++++++++++++++++++++++++
 
 The values of configurational energies from refs. [10]_ and [11]_ were taken as
 reported in eV without converting to Pauling units.
 
 Electron affinity
------------------
++++++++++++++++++
 
 Electron affinites we taken from [8]_ for the elements for which the data was
 available. For He, Be, N, Ar and Xe afinities were taken from [9]_ where they
@@ -123,7 +126,7 @@ were specified for metastable ions and therefore the values are negative.
 
 
 Nuclear charge screening constants
-----------------------------------
+++++++++++++++++++++++++++++++++++
 
 The screening constants were calculated according to the following formula
 
@@ -144,7 +147,7 @@ For elements La, Pr, Nd and Pm two exponent were reported for 4f shell denoted
 the authors these are the dominant ones.
 
 References
-==========
+----------
 
 .. [1] Chu, X., & Dalgarno, A. (2004). Linear response time-dependent density
    functional theory for van der Waals coefficients. The Journal of Chemical
