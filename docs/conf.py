@@ -29,12 +29,8 @@ MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma',
                 'matplotlib', 'matplotlib.pyplot', 'matplotlib.colors',
                 'matplotlib.cm',
                 'scipy', 'scipy.optimize', 'scipy.interpolate', 'pandas',
-                'bokeh', 'bokeh.models', 'bokeh.plotting',
-#                'sqlalchemy', 'sqlalchemy.orm.exc', 'sqlalchemy.orm',
-#                'sqlalchemy.ext', 'sqlalchemy.ext.associationproxy',
-#                'sqlalchemy.ext.declarative', 'sqlalchemy.ext.hybrid',
-#                'sqlalchemy.dialects']
 ]
+
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 __location__ = os.path.join(os.getcwd(), os.path.dirname(
@@ -58,6 +54,8 @@ apidoc.main(cmd_line.split(" "))
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 # sys.path.insert(0, os.path.abspath('.'))
 
+sys.path.insert(0, '/home/lmentel/.virtualenvs/cat/local/lib/python2.7/site-packages/')
+
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -67,7 +65,8 @@ apidoc.main(cmd_line.split(" "))
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx', 'sphinx.ext.todo',
               'sphinx.ext.autosummary', 'sphinx.ext.viewcode', 'sphinx.ext.coverage',
-              'sphinx.ext.doctest', 'sphinx.ext.ifconfig', 'sphinx.ext.pngmath']
+              'sphinx.ext.doctest', 'sphinx.ext.ifconfig', 'sphinx.ext.pngmath',
+              'bokeh.sphinxext.bokeh_plot']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
