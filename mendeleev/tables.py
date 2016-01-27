@@ -135,7 +135,23 @@ class Element(Base):
       thermal_conductivity : float
         Thermal conductivity in @/m K @25 C
       vdw_radius : float
-        Van der Waals radius in pm
+        Van der Waals radius in pm from W. M. Haynes, Handbook of Chemistry and
+        Physics 95th Edition, CRC Press, New York, 2014, ISBN-10: 1482208679,
+        ISBN-13: 978-1482208672.
+      vdw_radius_bondi : float
+        Van der Waals radius according to Bondi in pm
+      vdw_radius_truhlar : float
+        Van der Waals radius according to Truhlar in pm
+      vdw_radius_rt : float
+        Van der Waals radius according to Rowland and Taylor in pm
+      vdw_radius_batsanov : float
+        Van der Waals radius according to Batsanov in pm
+      vdw_radius_dreiding : float
+        Van der Waals radius from the DREIDING force field in pm
+      vdw_radius_uff : float
+        Van der Waals radius from the UFF in pm
+      vdw_radius_mm3 : float
+        Van der Waals radius from MM3 in pm
       oxistates : list
         Oxidation states
       ionenergy : dict
@@ -185,6 +201,13 @@ class Element(Base):
     symbol = Column(String)
     thermal_conductivity = Column(Float)
     vdw_radius = Column(Float)
+    vdw_radius_bondi = Column(Float)
+    vdw_radius_truhlar = Column(Float)
+    vdw_radius_rt = Column(Float)
+    vdw_radius_batsanov = Column(Float)
+    vdw_radius_dreiding = Column(Float)
+    vdw_radius_uff = Column(Float)
+    vdw_radius_mm3 = Column(Float)
 
     ionic_radii = relationship("IonicRadius")
     _ionization_energies = relationship("IonizationEnergy")
