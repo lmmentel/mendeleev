@@ -33,7 +33,7 @@ The followig data is currently avaialble:
 +-------------------------+-------+---------------------------------------------+----------+-------------+
 | covalent_radius_pyykko  | float | Covalent radius by Pyykko et al.            | pm       | [5]_        |
 +-------------------------+-------+---------------------------------------------+----------+-------------+
-| covalent_radius_slater  | float | Covalent radius by Slater                   | pm [6]_  |             |
+| covalent_radius_slater  | float | Covalent radius by Slater                   | pm       | [6]_        |
 +-------------------------+-------+---------------------------------------------+----------+-------------+
 | density                 | float | Density at 295K                             | g/cm3    |             |
 +-------------------------+-------+---------------------------------------------+----------+-------------+
