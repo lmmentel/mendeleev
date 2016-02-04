@@ -36,6 +36,8 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
+from scipy.constants import value as spcvalue
+
 import mendeleev
 
 __all__ = ['Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
@@ -434,7 +436,7 @@ class Element(Base):
         else:
             raise ValueError('<method> should be one of {}'.format("slater, clementi"))
 
-    def electronegativity(self, scale='pauling'):
+    def electronegativity(self, scale='pauling', charge=0):
         '''
         Calculate the electronegativity using one of the methods
 
@@ -446,6 +448,7 @@ class Element(Base):
            - `allred-rochow`
            - `cottrell-sutton`
            - `gordy`
+           - `li-xue`
            - `mulliken`
            - `nagle`
            - `pauling`
@@ -460,6 +463,8 @@ class Element(Base):
             return math.sqrt(self.zeff(alle=True)/self.covalent_radius)
         elif scale == 'gordy':
             return self.zeff(alle=True)/self.covalent_radius
+        elif scale == 'li-xue':
+            return self.en_li_xue(charge=charge)
         elif scale == 'mulliken':
             return self.en_mulliken()
         elif scale == 'nagle':
@@ -494,18 +499,48 @@ class Element(Base):
 
         return math.pow(zeff/math.pow(r, rpow), apow)
 
-    def en_li_xue(self, charge=0, radius='covalent_radius_pyykko'):
+    def en_li_xue(e, charge=0, radius='crystal_radius'):
+        '''
+        Calculate the electronegativity of an atom according to the definition
+        of Li and Xue
 
-        neff = {1: 0.85, 2: 1.99, 3: 2.89, 4: 3.45, 5: 3.85, 6: 4.36, 7:4.99}
+        Args:
+            charge : int
+                Charge of the ion
+            radius : str
+                Type of radius to be used in the calculation, either `crystal_radius`
+                as recommended in the paper or `ionic_radius`
+
+        Returns:
+            out : dict
+                A dictionary with electronegativities as values and coordination
+                string as keys or tuple of coordination and spin if the ion is
+                LS or HS
+        '''
+
+        if charge is None or not isinstance(charge, int) or charge == 0:
+            raise ValueError('charge should be a nonzero  initeger')
+
+        neff = {1: 0.85, 2: 1.99, 3: 2.89, 4: 3.45, 5: 3.85, 6: 4.36, 7: 4.99}
+        RY = spcvalue('Rydberg constant times hc in eV')
 
         if charge == 0:
-            Im = self.electron_affinity
+            Ie = e.electron_affinity
         elif charge > 0:
-            Im = self.ionenergies[charge]
+            Ie = e.ionenergies.get(charge, None)
 
-        r = getattr(self, radius)
+        crs = [(IR.coordination, IR.spin, getattr(IR, radius)) for IR in e.ionic_radii if IR.charge == charge]
 
-        return neff[self.ec.maxn()]*math.sqrt(Im)/rion
+        out = {}
+        for coord, spin, cr in crs:
+            # the 100.0 factor converts picometers to Angstroms
+            eneg = neff[e.ec.maxn()]*math.sqrt(Ie/RY)*100.0/cr
+            if len(spin) < 1:
+                out[coord] = eneg
+            else:
+                out[(coord, spin)] = eneg
+
+        return out
 
     def nvalence(self, method=None):
         '''Return the number of valence electrons'''
