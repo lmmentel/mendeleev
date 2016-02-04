@@ -28,7 +28,8 @@ MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma',
                 'seaborn',
                 'matplotlib', 'matplotlib.pyplot', 'matplotlib.colors',
                 'matplotlib.cm',
-                'scipy', 'scipy.optimize', 'scipy.interpolate', 'pandas',
+                'scipy', 'scipy.optimize', 'scipy.interpolate', 'scipy.constants',
+                'pandas',
 ]
 
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
