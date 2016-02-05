@@ -475,7 +475,7 @@ class Element(Base):
         elif scale == 'pauling':
             return self.en_pauling
         elif scale == 'sanderson':
-            raise self.en_sanderson()
+            return self.en_sanderson()
         else:
             raise ValueError('unknown <scale> value: {}'.format(scale))
 
