@@ -21,7 +21,7 @@ Contents
 
    Data <data>
    Installation <install>
-   Tutorial <tutorials>
+   Tutorials <tutorials>
    Electronegativity <electronegativity>
    API Reference <_reference/modules>
 
