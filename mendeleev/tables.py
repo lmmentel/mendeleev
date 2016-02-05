@@ -867,6 +867,7 @@ class ElectronicConfiguration(object):
         return [(x[0], subshells.index(x[1]), x[2]) for x in self.conf]
 
     def maxn(self):
+        'Return the largest value of pricncipal qunatum number for the atom'
 
         return max([shell[0] for shell in self.conf.keys()])
 
