@@ -28,10 +28,10 @@ import math
 import re
 from collections import OrderedDict
 from operator import attrgetter
+import numpy as np
 
 from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import relationship, reconstructor
-#from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
@@ -276,54 +276,6 @@ class Element(Base):
 
         return self.covalent_radius_pyykko
 
-    @hybrid_method
-    def en_mulliken(self, charge=0, missingIsZero=False, useNegativeEA=False):
-        '''
-        Return the absolute electronegativity (Mulliken scale), calculated as
-
-        .. math::
-
-           \chi = \\frac{I + A}{2}
-
-        where :math:`I` is the ionization energy and :math:`A` is the electron
-        affinity
-        '''
-
-        if charge == 0:
-            ip = self.ionenergies.get(1, None)
-            ea = self.electron_affinity
-        elif charge > 0:
-            ip = self.ionenergies.get(charge + 1, None)
-            ea = self.ionenergies.get(charge, None)
-        else:
-            raise ValueError('Charge has to be a non-negative integer, got: {}'.format(charge))
-
-        if ip is not None:
-            if ea is not None:
-                if ea < 0.0 and useNegativeEA:
-                    return (ip + ea)*0.5
-                else:
-                    return ip*0.5
-            elif ea is None and missingIsZero:
-                return ip*0.5
-        else:
-            return None
-
-    @hybrid_method
-    def en_sanderson(self, radius='covalent_radius_pyykko'):
-        '''Sanderson electronegativity
-
-        .. math::
-
-           \chi = \\frac{AD}{AD_{\\text{ng}}}
-
-
-        '''
-
-        r = getattr(self, radius)
-        rng = mendeleev.interpolate(self.atomic_number, radius)
-
-        return math.pow(rng/r, 3)
 
     @hybrid_method
     def hardness(self, charge=0):
@@ -449,10 +401,16 @@ class Element(Base):
            - `cottrell-sutton`
            - `gordy`
            - `li-xue`
+           - `martynov-batsanov`
            - `mulliken`
            - `nagle`
            - `pauling`
            - `sanderson`
+
+            TODO:
+                add an option to convert the value to Pauling units
+                pu : bool
+                    Convert to Pauling's units
         '''
 
         if scale == 'allen':
@@ -465,6 +423,8 @@ class Element(Base):
             return self.zeff(alle=True)/self.covalent_radius
         elif scale == 'li-xue':
             return self.en_li_xue(charge=charge)
+        elif scale == 'martynov-batsanov':
+            return self.en_martynov_batsanov()
         elif scale == 'mulliken':
             return self.en_mulliken()
         elif scale == 'nagle':
@@ -478,6 +438,39 @@ class Element(Base):
             return self.en_sanderson()
         else:
             raise ValueError('unknown <scale> value: {}'.format(scale))
+
+    def en_mulliken(self, charge=0, missingIsZero=False, useNegativeEA=False):
+        '''
+        Return the absolute electronegativity (Mulliken scale), calculated as
+
+        .. math::
+
+           \chi = \\frac{I + A}{2}
+
+        where :math:`I` is the ionization energy and :math:`A` is the electron
+        affinity
+        '''
+
+        if charge == 0:
+            ip = self.ionenergies.get(1, None)
+            ea = self.electron_affinity
+        elif charge > 0:
+            ip = self.ionenergies.get(charge + 1, None)
+            ea = self.ionenergies.get(charge, None)
+        else:
+            raise ValueError('Charge has to be a non-negative integer, got: {}'.format(charge))
+
+        if ip is not None:
+            if ea is not None:
+                if ea < 0.0 and useNegativeEA:
+                    return (ip + ea)*0.5
+                else:
+                    return ip*0.5
+            elif ea is None and missingIsZero:
+                return ip*0.5
+        else:
+            return None
+
 
     def en_calc(self, radius='covalent_radius_pyykko', rpow=1, apow=1, **zeffkwargs):
         '''
@@ -499,7 +492,27 @@ class Element(Base):
 
         return math.pow(zeff/math.pow(r, rpow), apow)
 
-    def en_li_xue(e, charge=0, radius='crystal_radius'):
+    def en_martynov_batsanov(self):
+        '''
+        Calculates the electronegativity value according to Martynov and Batsanov
+        as the average of the ionization energies of the valence electrons
+
+        .. math::
+
+           \chi_{MB} = \sqrt{\\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
+
+        where: :math:`n_{v}` is the number of valence electrons and :math:`I_{k}`
+        is the :math:`k`th ionization potential.
+        '''
+
+        ionenergies = [self.ionenergies.get(i, None) for i in range(1, self.nvalence(method='simple') + 1)]
+
+        if all(ionenergies):
+            return np.sqrt(np.array(ionenergies).mean())
+        else:
+            return None
+
+    def en_li_xue(self, charge=0, radius='crystal_radius'):
         '''
         Calculate the electronegativity of an atom according to the definition
         of Li and Xue
@@ -525,22 +538,39 @@ class Element(Base):
         RY = spcvalue('Rydberg constant times hc in eV')
 
         if charge == 0:
-            Ie = e.electron_affinity
+            Ie = self.electron_affinity
         elif charge > 0:
-            Ie = e.ionenergies.get(charge, None)
+            Ie = self.ionenergies.get(charge, None)
 
-        crs = [(IR.coordination, IR.spin, getattr(IR, radius)) for IR in e.ionic_radii if IR.charge == charge]
+        crs = [(IR.coordination, IR.spin, getattr(IR, radius)) for IR in self.ionic_radii if IR.charge == charge]
 
         out = {}
         for coord, spin, cr in crs:
             # the 100.0 factor converts picometers to Angstroms
-            eneg = neff[e.ec.maxn()]*math.sqrt(Ie/RY)*100.0/cr
+            eneg = neff[self.ec.maxn()]*math.sqrt(Ie/RY)*100.0/cr
             if len(spin) < 1:
                 out[coord] = eneg
             else:
                 out[(coord, spin)] = eneg
 
         return out
+
+    def en_sanderson(self, radius='covalent_radius_pyykko'):
+        '''Sanderson electronegativity
+
+        .. math::
+
+           \chi = \\frac{AD}{AD_{\\text{ng}}}
+
+        Args:
+            radius : str
+                Radius to use in the calcualtion
+        '''
+
+        r = getattr(self, radius)
+        rng = mendeleev.interpolate(self.atomic_number, radius)
+
+        return math.pow(rng/r, 3)
 
     def nvalence(self, method=None):
         '''Return the number of valence electrons'''
@@ -552,10 +582,10 @@ class Element(Base):
 
     def __repr__(self):
         return "%s(\n%s)" % (
-                 (self.__class__.__name__),
-                 ' '.join(["\t%s=%r,\n" % (key, getattr(self, key))
-                            for key in sorted(self.__dict__.keys())
-                            if not key.startswith('_')]))
+            (self.__class__.__name__),
+            ' '.join(["\t%s=%r,\n" % (key, getattr(self, key))
+                      for key in sorted(self.__dict__.keys())
+                      if not key.startswith('_')]))
 
 class IonicRadius(Base):
     '''
@@ -607,10 +637,10 @@ class IonicRadius(Base):
 
     def __repr__(self):
         return "%s(\n%s)" % (
-                 (self.__class__.__name__),
-                 ' '.join(["\t%s=%r,\n" % (key, getattr(self, key))
-                            for key in sorted(self.__dict__.keys())
-                            if not key.startswith('_')]))
+            (self.__class__.__name__),
+            ' '.join(["\t%s=%r,\n" % (key, getattr(self, key))
+                      for key in sorted(self.__dict__.keys())
+                      if not key.startswith('_')]))
 
 class IonizationEnergy(Base):
     '''
@@ -640,7 +670,7 @@ class IonizationEnergy(Base):
     def __repr__(self):
 
         return "<IonizationEnergy(atomic_number={a:5d}, degree={d:3d}, energy={e:10.5f})>".format(
-               a=self.atomic_number, d=self.degree, e=self.energy)
+            a=self.atomic_number, d=self.degree, e=self.energy)
 
 class OxidationState(Base):
     '''
@@ -662,7 +692,7 @@ class OxidationState(Base):
     def __repr__(self):
 
         return "<OxidationState(atomic_number={a:5d}, oxidation_state={o:5d})>".format(
-               a=self.atomic_number, o=self.oxidation_state)
+            a=self.atomic_number, o=self.oxidation_state)
 
 class Group(Base):
     '''Name of the group in the periodic table.'''
@@ -676,7 +706,7 @@ class Group(Base):
     def __repr__(self):
 
         return "<Group(symbol={s:s}, name={n:s})>".format(
-               s=self.symbol, n=self.name)
+            s=self.symbol, n=self.name)
 
 class Series(Base):
     '''
@@ -727,12 +757,12 @@ class Isotope(Base):
     def __str__(self):
 
         return "{0:5d} {1:10.5f} {2:6.2f}% {3:5d}".format(
-                self.atomic_number, self.mass, self.abundance*100, self.mass_number)
+            self.atomic_number, self.mass, self.abundance*100, self.mass_number)
 
     def __repr__(self):
 
         return "<Isotope(mass={}, abundance={}, mass_number={})>".format(
-               self.mass, self.abundance, self.mass_number)
+            self.mass, self.abundance, self.mass_number)
 
 class ScreeningConstant(Base):
     '''
@@ -765,12 +795,13 @@ class ScreeningConstant(Base):
 
     def __str__(self):
 
-        return "{0:4d} {1:3d} {2:s} {3:10.4f}".format(self.atomic_number, self.n, self.s, self.screening)
+        return "{0:4d} {1:3d} {2:s} {3:10.4f}".format(
+            self.atomic_number, self.n, self.s, self.screening)
 
     def __repr__(self):
 
         return "<ScreeningConstant(Z={0:4d}, n={1:3d}, s={2:s}, screening={3:10.4f})>".format(
-                self.atomic_number, self.n, self.s, self.screening)
+            self.atomic_number, self.n, self.s, self.screening)
 
 class ElectronicConfiguration(object):
     '''Electronic configuration handler'''
@@ -795,6 +826,7 @@ class ElectronicConfiguration(object):
 
     @property
     def atomre(self):
+        'Regular expression for atomic symbols'
         return self._atomre
 
     @atomre.setter
@@ -807,6 +839,7 @@ class ElectronicConfiguration(object):
 
     @property
     def shellre(self):
+        'Regular expression for the shell'
         return self._shellre
 
     @shellre.setter
@@ -822,7 +855,6 @@ class ElectronicConfiguration(object):
         citems = self.confstr.split()
 
         core = {}
-        calence = {}
 
         if self.atomre.match(citems[0]):
             symbol = str(self.atomre.match(citems[0]).group(1))
@@ -890,7 +922,6 @@ class ElectronicConfiguration(object):
             return 2
         else:
             raise ValueError('wrong block: {}'.format(block))
-
 
     def slater_screening(self, n, s, alle=False):
         '''
