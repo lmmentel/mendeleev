@@ -24,12 +24,8 @@ Contents
    Tutorials <tutorials>
    Electronegativity <electronegativity>
    API Reference <_reference/modules>
+   License <license_link>
 
-
-License
-=======
-
-.. literalinclude:: ../LICENSE.txt
 
 Indices and tables
 ==================

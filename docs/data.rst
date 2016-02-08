@@ -114,7 +114,6 @@ The following data is currently available:
 | vdw_radius_uff          | float | Van der Waals radius from the UFF                    | pm       | [23]_       |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 
-
 Some notes on the data
 ----------------------
 

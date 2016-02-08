@@ -18,6 +18,7 @@ respective definition and the atomic properties available in :ref:`mendeleev <me
 - :ref:`Cottrell-Sutton <cottrell-sutton_en>`
 - :ref:`Gordy <gordy_en>`
 - :ref:`Li and Xue <li_xue_en>`
+- :ref:`Martynov and Batsanov <martynov_batsanov_en>`
 - :ref:`Mulliken <mulliken_en>`
 - :ref:`Nagle <nagle_en>`
 - :ref:`Sanderson <sanderson_en>`
@@ -136,12 +137,34 @@ Example::
     >>> Si.electronegativity('li-xue', charge=4)
     {u'IV': 13.16033405547733, u'VI': 9.748395596649873}
 
+.. _martynov_batsanov_en:
+
+Martynov and Batsanov
+=====================
+
+Martynov and Batsanov [9]_ used the square root of the averaged valence
+ionization energy as a measure of electronegativity:
+
+.. math::
+
+   \chi_{MB} = \sqrt{\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
+
+where: :math:`n_{v}` is the number of valence electrons and :math:`I_{k}`
+is the :math:`k` th ionization potential.
+
+Example::
+
+    >>> Si.en_martynov_batsanov()
+    5.0777041564076963
+    >>> Si.electronegativity(scale='martynov-batsanov')
+    5.0777041564076963
+
 .. _mulliken_en:
 
 Mulliken
 ========
 
-Mulliken scale [9]_ is defined as the arithmetic average of the ionization
+Mulliken scale [10]_ is defined as the arithmetic average of the ionization
 potential (:math:`IP`) and the electron affinity (:math:`EA`):
 
 .. math::
@@ -160,7 +183,7 @@ Example::
 Nagle
 =====
 
-Nagle [10]_ derived his scale from the atomic dipole polarizability:
+Nagle [11]_ derived his scale from the atomic dipole polarizability:
 
 .. math::
 
@@ -176,7 +199,7 @@ Example::
 Pauling
 =======
 
-Pauling's thermochemical scale was introduced in [11]_ as a relative scale based
+Pauling's thermochemical scale was introduced in [12]_ as a relative scale based
 on electronegativity differences:
 
 .. math::
@@ -184,7 +207,7 @@ on electronegativity differences:
    \chi_{A} - \chi_{B} = \sqrt{E_{d}(AB) - \frac{1}{2}\left[E_{d}(AA) + E_{d}(BB)\right] }
 
 where: :math:`E_{d}(XY)` is the bond dissociation energy of a diatomic :math:`XY`.
-The values available in :ref:`mendeleev <mendeleev>` are taken from ref. [12]_.
+The values available in :ref:`mendeleev <mendeleev>` are taken from ref. [13]_.
 
 Example::
 
@@ -198,7 +221,7 @@ Example::
 Sanderson
 ==========
 
-Sanderson [13]_, [14]_ established his scale of electronegativity based on the
+Sanderson [14]_, [15]_ established his scale of electronegativity based on the
 stability ratio:
 
 .. math::
@@ -261,22 +284,25 @@ References
 .. [8] Li, K., & Xue, D. (2009). New development of concept of electronegativity.
    Chinese Science Bulletin, 54(2), 328–334.
    `doi:10.1007/s11434-008-0578-9 <http://dx.doi.org/10.1007/s11434-008-0578-9>`_
-.. [9] Mulliken, R. S. (1934). A New Electroaffinity Scale; Together with Data on
+.. [9] Batsanov, S. S. (1982). Dielectric Methods of Studying the Chemical Bond
+   and the Concept of Electronegativity. Russian Chemical Reviews, 51(7), 684–697.
+   `doi:10.1070/RC1982v051n07ABEH002900 <http://dx.doi.org/10.1070/RC1982v051n07ABEH002900>`_
+.. [10] Mulliken, R. S. (1934). A New Electroaffinity Scale; Together with Data on
    Valence States and on Valence Ionization Potentials and Electron Affinities.
    The Journal of Chemical Physics, 2(11), 782.
    `doi:10.1063/1.1749394 <http://dx.doi.org/10.1063/1.1749394>`_
-.. [10] Nagle, J. K. (1990). Atomic polarizability and electronegativity. Journal of
+.. [11] Nagle, J. K. (1990). Atomic polarizability and electronegativity. Journal of
    the American Chemical Society, 112(12), 4741–4747.
    `doi:10.1021/ja00168a019 <http://dx.doi.org/10.1021/ja00168a019>`_
-.. [11] Pauling, L. (1932). THE NATURE OF THE CHEMICAL BOND. IV. THE ENERGY OF
+.. [12] Pauling, L. (1932). THE NATURE OF THE CHEMICAL BOND. IV. THE ENERGY OF
    SINGLE BONDS AND THE RELATIVE ELECTRONEGATIVITY OF ATOMS. Journal of the
    American Chemical Society, 54(9), 3570–3582. doi:10.1021/ja01348a011
-.. [12] W. M. Haynes, Handbook of Chemistry and Physics 95th Edition, CRC Press,
+.. [13] W. M. Haynes, Handbook of Chemistry and Physics 95th Edition, CRC Press,
    New York, 2014, ISBN-10: 1482208679, ISBN-13: 978-1482208672.
-.. [13] Sanderson, R. T. (1951). An Interpretation of Bond Lengths and a Classification
+.. [14] Sanderson, R. T. (1951). An Interpretation of Bond Lengths and a Classification
    of Bonds. Science, 114(2973), 670–672.
    `doi:10.1126/science.114.2973.670 <http://dx.doi.org/10.1126/science.114.2973.670>`_
-.. [14] Sanderson, R. T. (1952). An Explanation of Chemical Variations within Periodic
+.. [15] Sanderson, R. T. (1952). An Explanation of Chemical Variations within Periodic
    Major Groups. Journal of the American Chemical Society, 74(19), 4792–4794.
    `doi:10.1021/ja01139a020 <http://dx.doi.org/10.1021/ja01139a020>`_
 .. [] Smith, D. W. (1990). Electronegativity in two dimensions: Reassessment and
