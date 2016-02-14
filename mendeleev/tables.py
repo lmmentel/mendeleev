@@ -51,6 +51,10 @@ class Element(Base):
     Chemical element.
 
     Attributes:
+      abundance_crust : float
+        Abundance in the earth's crust in mg/kg
+      abundance_sea : float
+        Abundance in the seas in mg/L
       annotation : str
         Annotations regarding the data
       atomic_number : int
@@ -163,6 +167,8 @@ class Element(Base):
 
     __tablename__ = 'elements'
 
+    abundance_crust = Column(Float)
+    abundance_sea = Column(Float)
     annotation = Column(String)
     atomic_number = Column(Integer, primary_key=True)
     atomic_radius = Column(Float)
