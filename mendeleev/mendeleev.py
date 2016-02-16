@@ -112,7 +112,40 @@ def get_table(tablename,  **kwargs):
     else:
         raise ValueError('Table should be one of: {}'.format(", ".join(tables)))
 
-def get_data(attribute):
+def get_data():
+    '''
+    Get extensive set of data from multiple databse tables as pandas.DataFrame
+    '''
+
+    data = get_table('elements')
+
+    en_scales = ['allred-rochow', 'cottrell-sutton', 'gordy', 'martynov-batsanov', 'mulliken', 'nagle', 'sanderson',]
+    for scale in en_scales:
+        data['en_' + scale] = [element(row.symbol).electronegativity(scale=scale) for i, row in data.iterrows()]
+
+    hs = ['hardness', 'softness']
+    for attr in hs:
+        data[attr] = [getattr(element(row.symbol), attr)() for i, row in data.iterrows()]
+
+    # TODO: zeff, slater, clementi, series, grups, ionization energies up to a
+    # values
+
+    return data
+
+def _get_ng_data(attribute):
+    '''
+    A convenience function for getting a specified attribute for all the nobel
+    gases.
+
+    Args:
+        attribute : str
+            Attribute of `Element` to retrieve for all the noble gasses
+
+    Returns:
+        data : dict
+            Dictionary with nobel gas atomic numbers as keys and values of the
+            `attribute` as values
+    '''
 
     session = get_session()
     ngs = session.query(Element).filter(Element.series == 'Noble gases').all()
@@ -268,7 +301,7 @@ def interpolate(key, attribute, deg=1, kind='linear'):
         Kind of the interpolation used, see docs for `numpy.interp1d`
     '''
 
-    data = get_data(attribute)
+    data = _get_ng_data(attribute)
 
     if min(data.keys()) <= key <= max(data.keys()):
         fn = interp1d(data.keys(), data.values(), kind=kind)

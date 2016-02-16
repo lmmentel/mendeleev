@@ -1,2 +1,7 @@
-sqlalchemy
 bokeh
+matplotlib
+numpy
+pandas
+scipy
+seaborn
+sqlalchemy
