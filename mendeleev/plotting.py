@@ -66,7 +66,7 @@ def heatmap(prop, style='whitegrid', figsize=(16, 10), cmap='RdBu_r', lw=1, outp
     ax = sns.heatmap(elements_rect, cmap=cmap, mask=mask, linewidths=lw, **kwargs)
     n = len(ax.xaxis.get_ticklabels())
     ax.set_yticklabels(elements_rect.index[::-1], rotation=0)
-    ax.set_xticklabels(range(1, n+1))
+    ax.set_xticklabels(list(range(1, n+1)))
     ax.xaxis.tick_top()
     ax.xaxis.set_label_position('top')
     ax.set_xlabel('Group')
@@ -210,7 +210,7 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
         p.axis[0].major_tick_line_color = None  # turn off major ticks
         p.axis[0].ticker.num_minor_ticks = 0  # turn off minor ticks
     else:
-        p.axis[0].ticker = FixedTicker(ticks=range(1, 19))
+        p.axis[0].ticker = FixedTicker(ticks=list(range(1, 19)))
 
     text_props = {
         "source": source,

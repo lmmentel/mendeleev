@@ -63,7 +63,7 @@ def element(ids):
 
     if isinstance(ids, (list, tuple)):
         return [get_element(i) for i in ids]
-    elif isinstance(ids, (str, unicode, int)):
+    elif isinstance(ids, (str, int)):
         return get_element(ids)
     else:
         raise ValueError("Expected a <list>, <tuple>, <str> or <int>, got: {0:s}".format(type(ids)))
@@ -76,7 +76,7 @@ def get_element(ids):
 
     session = get_session()
 
-    if isinstance(ids, (str, unicode)):
+    if isinstance(ids, str):
         if len(ids) <= 3 and ids.lower() != "tin":
             return session.query(Element).filter(Element.symbol == ids).one()
         else:
