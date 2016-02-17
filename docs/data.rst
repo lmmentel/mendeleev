@@ -35,6 +35,8 @@ The following data is currently available:
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | covalent_radius_slater  | float | Covalent radius by Slater                            | pm       | [6]_        |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
+| cpk_color               | str   | Element color in CPK convention                      | HEX      | [24]_       |
++-------------------------+-------+------------------------------------------------------+----------+-------------+
 | density                 | float | Density at 295K                                      | g/cm3    |             |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | description             | str   | Short description of the element                     |          |             |
@@ -69,6 +71,8 @@ The following data is currently available:
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | isotopes                | list  | Isotopes                                             |          |             |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
+| jmol_color              | str   | Element color in Jmol convention                     | HEX      | [25]_       |
++-------------------------+-------+------------------------------------------------------+----------+-------------+
 | lattice_constant        | float | Lattice constant                                     | Angstrom |             |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | lattice_structure       | str   | Lattice structure code                               |          |             |
@@ -78,6 +82,8 @@ The following data is currently available:
 | mass_number             | int   | Mass number (most abundant isotope)                  |          |             |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | melting_point           | float | Melting temperature                                  | K        |             |
++-------------------------+-------+------------------------------------------------------+----------+-------------+
+| molcas_gv_color         | str   | Element color in MOCAS GV convention                 | HEX      | [26]_       |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | name                    | str   | Name in English                                      |          |             |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
@@ -240,3 +246,6 @@ References
    molecular dynamics simulations. Journal of the American Chemical Society,
    114(25), 10024–10035.
    `doi:10.1021/ja00051a040 <http://www.dx.doi.org/10.1021/ja00051a040>`_
+.. [24] `CPK colors <https://en.wikipedia.org/wiki/CPK_coloring>`_
+.. [25] `Jmol colors <http://jmol.sourceforge.net/jscolors/#color_U>`_
+.. [26] `MOLCAS GV colors <http://www.molcas.org/GV/>`_

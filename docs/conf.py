@@ -55,7 +55,7 @@ apidoc.main(cmd_line.split(" "))
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 # sys.path.insert(0, os.path.abspath('.'))
 
-sys.path.insert(0, '/home/lmentel/.virtualenvs/cat/local/lib/python2.7/site-packages/')
+sys.path.insert(0, '/home/lmentel/.virtualenvs/py34/local/lib/python2.7/site-packages/')
 
 # -- General configuration -----------------------------------------------------
 

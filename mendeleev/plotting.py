@@ -248,6 +248,7 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
         ('Electron affinity', '@electron_affinity'),
         ("CPK color", "$color[hex, swatch]:cpk_color"),
         ("Jmol color", "$color[hex, swatch]:jmol_color"),
+        ("Molcas GV color", "$color[hex, swatch]:molcas_gv_color"),
         ("electronic configuration", "@electronic_configuration"),
     ])
 

@@ -12,8 +12,16 @@ Features added
 * Added calculation of Martynov and Batsanov scale of electronegativity in 
   ``en_martynov_batsanov`` method in the ``Element`` class
 
+* Added ``abundance_crust`` and ``abundance_sea`` with element abundancies in
+  the crust and seas
+
+* Added ``molcas_gv_color`` attribute with `MOLCAS GV <http://www.molcas.org/GV/>`_
+  colors
+
 Bugs fixed
 ----------
+
+* Restored Python 3.x compatibility
 
 
 v0.2.4 (05-02-2016)
