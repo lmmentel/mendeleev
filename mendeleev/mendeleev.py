@@ -303,14 +303,14 @@ def interpolate(key, attribute, deg=1, kind='linear'):
 
     data = _get_ng_data(attribute)
 
-    if min(data.keys()) <= key <= max(data.keys()):
-        fn = interp1d(data.keys(), data.values(), kind=kind)
+    if min(list(data.keys())) <= key <= max(list(data.keys())):
+        fn = interp1d(list(data.keys()), list(data.values()), kind=kind)
         return fn(key).item()
     else:
         if key < min(data.keys()):
             dataslice = dict(sorted(data.items(), key=lambda x: x[0])[:3])
         elif key > max(data.keys()):
             dataslice = dict(sorted(data.items(), key=lambda x: x[0])[-3:])
-        fit = np.polyfit(dataslice.keys(), dataslice.values(), deg)
+        fit = np.polyfit(list(dataslice.keys()), list(dataslice.values()), deg)
         fn = np.poly1d(fit)
         return fn(key)
