@@ -49,17 +49,11 @@ def setup_package():
           long_description=readme(),
           classifiers=CLASSIFIERS,
           packages=find_packages(exclude=['tests', 'tests.*']),
-#          install_requires=[
-#              'SQLAlchemy',
-#              'numpy',
-#              'pandas',
-#              'bokeh',
-#              'matplotlib',
-#              'pyfiglet',
-#          ],
-          scripts = [
-              'scripts/element.py',
-          ]
+          entry_points = {
+            'console_scripts' : [
+                'element.py = mendeleev.mendeleev:clielement',
+            ]
+          },
     )
 
 if __name__ == "__main__":

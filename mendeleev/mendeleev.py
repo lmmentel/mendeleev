@@ -23,6 +23,10 @@
 #SOFTWARE.
 
 import os
+import argparse
+import textwrap
+from pyfiglet import Figlet
+
 import pandas as pd
 
 from sqlalchemy import create_engine
@@ -32,8 +36,7 @@ from sqlalchemy.dialects import sqlite
 from scipy.interpolate import interp1d
 import numpy as np
 
-from .tables import (Base, Element, IonizationEnergy, IonicRadius,
-        OxidationState, Isotope, Series)
+from .tables import (Base, Element, IonizationEnergy, OxidationState)
 
 __all__ = ['element', 'get_session', 'get_engine', 'get_table', 'ids_to_attr',
            'get_ips', 'get_ionic_radii', 'deltaN', 'get_data', 'interpolate']
@@ -43,7 +46,7 @@ def get_session():
 
     dbpath = os.path.join(os.path.abspath(os.path.dirname(__file__)), "elements.db")
     engine = create_engine("sqlite:///{path:s}".format(path=dbpath), echo=False)
-    db_session =  sessionmaker(bind=engine, autoflush=False, autocommit=False)
+    db_session = sessionmaker(bind=engine, autoflush=False, autocommit=False)
     return db_session()
 
 def get_engine():
@@ -55,10 +58,11 @@ def get_engine():
 
 def element(ids):
     '''
-    Based on the type of the `ids` identifier return either an :py:class:`Element <mendeleev.tables.Element>`
-    object from the database, or a list of :py:class:`Element <mendeleev.tables.Element>` objects if the `ids` is
-    a list or a tuple of identifiers. Valid identifiers for an element are:
-    *name*, *symbol*, *atomic number*.
+    Based on the type of the `ids` identifier return either an
+    :py:class:`Element <mendeleev.tables.Element>` object from the database, or
+    a list of :py:class:`Element <mendeleev.tables.Element>` objects if the
+    `ids` is a list or a tuple of identifiers. Valid identifiers for an element
+    are: *name*, *symbol*, *atomic number*.
     '''
 
     if isinstance(ids, (list, tuple)):
@@ -86,7 +90,7 @@ def get_element(ids):
     else:
         raise ValueError("Expecting a <str> or <int>, got: {0:s}".format(type(ids)))
 
-def get_table(tablename,  **kwargs):
+def get_table(tablename, **kwargs):
     '''
     Return a table from the database as `pandas <http://pandas.pydata.org/>`_
     `DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
@@ -107,8 +111,8 @@ def get_table(tablename,  **kwargs):
 
     if tablename in tables:
         engine = get_engine()
-        df = pd.read_sql(tablename, engine, **kwargs)
-        return df
+        dframe = pd.read_sql(tablename, engine, **kwargs)
+        return dframe
     else:
         raise ValueError('Table should be one of: {}'.format(", ".join(tables)))
 
@@ -123,8 +127,7 @@ def get_data():
     for scale in en_scales:
         data['en_' + scale] = [element(row.symbol).electronegativity(scale=scale) for i, row in data.iterrows()]
 
-    hs = ['hardness', 'softness']
-    for attr in hs:
+    for attr in ['hardness', 'softness']:
         data[attr] = [getattr(element(row.symbol), attr)() for i, row in data.iterrows()]
 
     # TODO: zeff, slater, clementi, series, grups, ionization energies up to a
@@ -196,7 +199,7 @@ def get_ips(ids=None, deg=1):
     engine = get_engine()
 
     if ids is None:
-        atns = range(1, 119)
+        atns = list(range(1, 119))
     else:
         atns = ids_to_attr(ids, attr='atomic_number')
 
@@ -314,3 +317,35 @@ def interpolate(key, attribute, deg=1, kind='linear'):
         fit = np.polyfit(list(dataslice.keys()), list(dataslice.values()), deg)
         fn = np.poly1d(fit)
         return fn(key)
+
+def attributes(elem, names, fmt='8.3f'):
+    '''Return a list of strings of all the attributes of ``elem`` specified in ``names``'''
+    return ['\t{0:s} = {1:{fmt}}'.format(name.replace('_', ' ').capitalize(), getattr(elem, name), fmt=fmt) for name in names]
+
+def clielement():
+    '''
+    CLI for convenient printing of properties for a given element
+    '''
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('element', help='Element identifier: symbol, name or atomic number')
+    #parser.add_argument('-f', help='Full information')
+    args = parser.parse_args()
+
+    e = element(args.element)
+
+    f = Figlet('dotmatrix')
+    header = f.renderText(e.symbol)
+
+    table = get_table('elements')
+    et = table[table['symbol'] == e.symbol].transpose()
+    et.drop('description', inplace=True)
+    et.index = et.index.str.replace('_', ' ').str.capitalize()
+    et.sort_index(inplace=True)
+
+    desc = 'Description\n===========\n\n' + '\n'.join(['  ' + s for s in textwrap.wrap(e.description, 70)])
+
+    props = '\nProperties\n==========\n'
+
+    print(header, desc, props, et.to_string(justify='left', header=False), sep='\n')
+
