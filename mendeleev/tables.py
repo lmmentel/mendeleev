@@ -415,12 +415,12 @@ class Element(Base):
            - `nagle`
            - `pauling`
            - `sanderson`
-
-            TODO:
-                add an option to convert the value to Pauling units
-                pu : bool
-                    Convert to Pauling's units
         '''
+
+        #TODO:
+        #        add an option to convert the value to Pauling units
+        #        pu : bool
+        #            Convert to Pauling's units
 
         if scale == 'allen':
             return self.en_allen
@@ -511,7 +511,7 @@ class Element(Base):
            \chi_{MB} = \sqrt{\\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
 
         where: :math:`n_{v}` is the number of valence electrons and :math:`I_{k}`
-        is the :math:`k`th ionization potential.
+        is the :math:`k` th ionization potential.
         '''
 
         ionenergies = [self.ionenergies.get(i, None) for i in range(1, self.nvalence(method='simple') + 1)]

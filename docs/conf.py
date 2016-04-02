@@ -15,14 +15,9 @@ from sphinx import apidoc
 import sphinx_rtd_theme
 
 if sys.version_info.major == 3:
-    from unittest.mock import MagicMock    # if python ver >= 3.3
+    from unittest.mock import Mock    # if python ver >= 3.3
 else:
-    from mock import Mock as MagicMock     # if python ver 2.7
-
-class Mock(MagicMock):
-    @classmethod
-    def __getattr__(cls, name):
-            return Mock()
+    from mock import Mock as Mock     # if python ver 2.7
 
 MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma',
                 'seaborn',
@@ -32,7 +27,8 @@ MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma',
                 'pandas',
 ]
 
-sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = Mock()
 
 __location__ = os.path.join(os.getcwd(), os.path.dirname(
     inspect.getfile(inspect.currentframe())))
