@@ -444,7 +444,7 @@ class Element(Base):
         elif scale == 'pauling':
             return self.en_pauling
         elif scale == 'sanderson':
-            return self.en_sanderson()
+            return self.calc_en_sanderson()
         else:
             raise ValueError('unknown <scale> value: {}'.format(scale))
 
@@ -564,7 +564,7 @@ class Element(Base):
 
         return out
 
-    def en_sanderson(self, radius='covalent_radius_pyykko'):
+    def calc_en_sanderson(self, radius='covalent_radius_pyykko'):
         '''Sanderson electronegativity
 
         .. math::

@@ -26,4 +26,4 @@ __version__ = '0.2.4'
 
 from .mendeleev import *
 from .tables import *
-from .plotting import *
+
