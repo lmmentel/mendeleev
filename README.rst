@@ -533,7 +533,3 @@ Funding
 This project is supported by the RCN (The Research Council of Norway) project
 number 239193.
 
-
-.. include:: LICENSE.rst
-
-.. include:: CHANGES.rst
