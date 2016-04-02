@@ -1,12 +1,16 @@
-=================
+#################
 mendeleev package
-=================
+#################
 
 This package provides an API for accessing various properties of elements from
 the periodic table of elements.
 
-Electronegativity scales
-------------------------
+****
+Data
+****
+
+Following electronegativity scales are available either as stored values or
+computed on request from other properties:
 
 * Allen
 * Allred & Rochow
@@ -19,10 +23,8 @@ Electronegativity scales
 * Pauling
 * Sanderson
 
-Data
-====
 
-The followig data are currently available:
+The following data are currently available:
 
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | Name                    | Type  | Comment                                              | Unit     | Data Source |
@@ -228,8 +230,9 @@ The followig data are currently available:
    the electron affinity of niobium. Physical Review A, 93(2), 020501.
    `doi:10.1103/PhysRevA.93.020501 <http://dx.doi.org/10.1103/PhysRevA.93.020501>`_
 
+************
 Installation
-============
+************
 
 The package can be installed using `pip <https://pypi.python.org/pypi/pip>`_
 
@@ -243,8 +246,9 @@ You can also install the most recent version from the repository:
 
    pip install https://bitbucket.org/lukaszmentel/mendeleev/get/tip.tar.gz
 
+*****
 Usage
-=====
+*****
 
 The simple interface to the data is through the ``element`` method that returns
 the ``Element`` objects::
@@ -303,7 +307,7 @@ Similarly to access the data by atomic number or element names type
    8
 
 Lists of elements
------------------
+=================
 
 The ``element`` method also accepts list or tuple  of identifiers and then
 returns a list of ``Element`` objects
@@ -315,7 +319,7 @@ returns a list of ``Element`` objects
    ('Carbon', 'Hydrogen', 'Oxygen')
 
 Composite Attributes
---------------------
+====================
 
 Currently four of the attributes are more complex object than ``str``, ``int``
 or ``float``, those are:
@@ -326,7 +330,7 @@ or ``float``, those are:
 * ``ionic_radii`` returns a list of ``IonicRadius`` objects
 
 Oxidation states
-++++++++++++++++
+----------------
 
 For examples ``oxistates`` returns a list of oxidation states for
 a given element
@@ -338,7 +342,7 @@ a given element
    [6, 3, 2, 0, -2]
 
 Ionization energies
-+++++++++++++++++++
+-------------------
 
 The ``ionenergies`` returns a dictionary with ionization energies as values and
 degrees of ionization as keys.
@@ -375,7 +379,7 @@ degrees of ionization as keys.
     26: 9277.681}
 
 Isotopes
-++++++++
+--------
 
 The ``isotopes`` attribute returns a list of ``Isotope`` objects with the
 following attributes per isotope
@@ -399,7 +403,7 @@ The columns represent the attributes ``atomic_number``, ``mass``,
 ``abundance`` and ``mass_number`` respectively.
 
 Ionic radii
-+++++++++++
+-----------
 
 Another composite attribute is ``ionic_radii`` which returns a list of
 ``IonicRadius`` object with the following attributes
@@ -432,8 +436,9 @@ Another composite attribute is ``ionic_radii`` which returns a list of
    charge=   4, coordination=VI   , crystal_radius= 0.725, ionic_radius= 0.585
    charge=   6, coordination=IV   , crystal_radius= 0.390, ionic_radius= 0.250
 
+***********
 CLI utility
-===========
+***********
 
 For those who work in the terminal there is a simple command line interface
 (CLI) for printing the information about a given element. The script name is
@@ -502,8 +507,9 @@ silicon type
    Vdw radius                         210
 
 
+*************
 Documentation
-=============
+*************
 
 .. image:: https://readthedocs.org/projects/mendeleev/badge/
    :target: https://mendeleev.readthedocs.org
@@ -511,16 +517,18 @@ Documentation
 
 Documentation can be found `here <http://mendeleev.readthedocs.org/en/latest/>`_.
 
+******
 Citing
-======
+******
 
-If you use *mendeleev* in a scientific publication, please cite the software as 
+If you use *mendeleev* in a scientific publication, please cite the software as
 
 |    L. M. Mentel, *mendeleev*, 2014. Available at: `https://bitbucket.org/lukaszmentel/mendeleev <https://bitbucket.org/lukaszmentel/mendeleev>`_.
 
 
+*******
 Funding
-=======
+*******
 
 This project is supported by the RCN (The Research Council of Norway) project
 number 239193.
