@@ -22,10 +22,11 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
+from __future__ import print_function
+
 import os
 import argparse
 import textwrap
-from pyfiglet import Figlet
 
 import pandas as pd
 
@@ -326,6 +327,8 @@ def clielement():
     '''
     CLI for convenient printing of properties for a given element
     '''
+
+    from pyfiglet import Figlet
 
     parser = argparse.ArgumentParser()
     parser.add_argument('element', help='Element identifier: symbol, name or atomic number')
