@@ -140,10 +140,17 @@ reported in eV without converting to Pauling units.
 Electron affinity
 +++++++++++++++++
 
-Electron affinities we taken from [8]_ for the elements for which the data was
+Electron affinities were taken from [8]_ for the elements for which the data was
 available. For He, Be, N, Ar and Xe affinities were taken from [9]_ where they
-were specified for metastable ions and therefore the values are negative. The
-electron affinity of niobium was taken from [29]_.
+were specified for metastable ions and therefore the values are negative.
+
+Updates
+
+  - Electron affinity of niobium was taken from [29]_.
+
+  - Electron affinity of cobalt was taken from [30]_.
+
+
 
 Nuclear charge screening constants
 ++++++++++++++++++++++++++++++++++
@@ -262,3 +269,6 @@ References
 .. [29] Luo, Z., Chen, X., Li, J., & Ning, C. (2016). Precision measurement of
    the electron affinity of niobium. Physical Review A, 93(2), 020501.
    `doi:10.1103/PhysRevA.93.020501 <http://dx.doi.org/10.1103/PhysRevA.93.020501>`_
+.. [30] Chen, X., & Ning, C. (2016). Accurate electron affinity of Co and
+   fine-structure splittings of Co$^-$ via slow-electron velocity-map imaging.
+   Physical Review A, 93(5), 052508. doi:10.1103/PhysRevA.93.052508
