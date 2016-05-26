@@ -4,8 +4,8 @@ mendeleev.egg-info/**
 mendeleev/__pycache__/**
 docs/ipynb/.ipynb_checkpoints/**
 ipynb/.ipynb_checkpoints/**
-docs/_build/**
-docs/_reference/**
+docs/build/**
+docs/source/_reference/**
 dist/**
 build/**
 *.x

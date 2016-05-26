@@ -34,13 +34,7 @@ __location__ = os.path.join(os.getcwd(), os.path.dirname(
     inspect.getfile(inspect.currentframe())))
 
 output_dir = os.path.join(__location__, "_reference")
-module_dir = os.path.join(__location__, "../mendeleev")
-
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-if on_rtd:
-    html_theme = 'default'
-else:
-    sys.path.append(os.path.dirname(os.path.normpath(module_dir)))
+module_dir = os.path.join(__location__, "../../mendeleev")
 
 cmd_line_template = "sphinx-apidoc -f --separate -o {outputdir} {moduledir}"
 cmd_line = cmd_line_template.format(outputdir=output_dir, moduledir=module_dir)
@@ -51,7 +45,7 @@ apidoc.main(cmd_line.split(" "))
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 # sys.path.insert(0, os.path.abspath('.'))
 
-sys.path.insert(0, '/home/lmentel/.virtualenvs/py34/local/lib/python2.7/site-packages/')
+sys.path.insert(0, os.path.abspath(os.path.basename(module_dir)))
 
 # -- General configuration -----------------------------------------------------
 
@@ -62,8 +56,7 @@ sys.path.insert(0, '/home/lmentel/.virtualenvs/py34/local/lib/python2.7/site-pac
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx', 'sphinx.ext.todo',
               'sphinx.ext.autosummary', 'sphinx.ext.viewcode', 'sphinx.ext.coverage',
-              'sphinx.ext.doctest', 'sphinx.ext.ifconfig', 'sphinx.ext.pngmath',
-              'bokeh.sphinxext.bokeh_plot']
+              'sphinx.ext.doctest', 'sphinx.ext.ifconfig', 'sphinx.ext.pngmath']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
