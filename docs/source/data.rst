@@ -150,6 +150,7 @@ Updates
 
   - Electron affinity of cobalt was taken from [30]_.
 
+  - Electron affinity of lead was taken from [31]_.
 
 
 Nuclear charge screening constants
@@ -272,3 +273,6 @@ References
 .. [30] Chen, X., & Ning, C. (2016). Accurate electron affinity of Co and
    fine-structure splittings of Co$^-$ via slow-electron velocity-map imaging.
    Physical Review A, 93(5), 052508. doi:10.1103/PhysRevA.93.052508
+.. [31] Chen, X., & Ning, C. (2016). Accurate electron affinity of Pb and
+   isotope shifts of binding energies of Pb−. The Journal of Chemical Physics,
+   145(8), 84303. `doi:10.1063/1.4961654 <http://doi.org/10.1063/1.4961654>`_
