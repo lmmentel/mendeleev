@@ -23,9 +23,8 @@ MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma',
                 'seaborn',
                 'matplotlib', 'matplotlib.pyplot', 'matplotlib.colors',
                 'matplotlib.cm',
-                'scipy', 'scipy.optimize', 'scipy.interpolate', 'scipy.constants',
-                'pandas',
-]
+                'scipy', 'scipy.optimize', 'scipy.interpolate',
+                'scipy.constants', 'pandas']
 
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = Mock()
@@ -33,12 +32,14 @@ for mod_name in MOCK_MODULES:
 __location__ = os.path.join(os.getcwd(), os.path.dirname(
     inspect.getfile(inspect.currentframe())))
 
-output_dir = os.path.join(__location__, "_reference")
+#output_dir = os.path.join(__location__, "_reference")
 module_dir = os.path.join(__location__, "../../mendeleev")
 
-cmd_line_template = "sphinx-apidoc -f --separate -o {outputdir} {moduledir}"
-cmd_line = cmd_line_template.format(outputdir=output_dir, moduledir=module_dir)
-apidoc.main(cmd_line.split(" "))
+#cmd_line_template = "sphinx-apidoc -f --separate -o {outputdir} {moduledir}"
+#cmd_line = cmd_line_template.format(outputdir=output_dir, moduledir=module_dir)
+#apidoc.main(cmd_line.split(" "))
+
+autosummary_generate = True
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -258,4 +259,3 @@ intersphinx_mapping = {
     'pandas': ('http://pandas.pydata.org/pandas-docs/stable', None),
     'scipy': ('http://docs.scipy.org/doc/scipy/reference/', None),
 }
-
