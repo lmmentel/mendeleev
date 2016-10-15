@@ -15,6 +15,7 @@ computed on request from other properties:
 * Allen
 * Allred & Rochow
 * Cottrell & Sutton
+* Ghosh
 * Gordy
 * Li & Xue
 * Nagle
@@ -68,6 +69,8 @@ The following data are currently available:
 | electrons               | int   | Number of electrons                                  |          |             |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | en_allen                | float | Allen's scale of electronegativity                   | eV       | [10]_, [11]_|
++-------------------------+-------+------------------------------------------------------+----------+-------------+
+| en_ghosh                | float | Ghosh's scale of electronegativity                   |          | [32]_       |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | en_mulliken             | float | Mulliken's scale of electronegativity                | eV       | [12]_       |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
@@ -229,6 +232,16 @@ The following data are currently available:
 .. [29] Luo, Z., Chen, X., Li, J., & Ning, C. (2016). Precision measurement of
    the electron affinity of niobium. Physical Review A, 93(2), 020501.
    `doi:10.1103/PhysRevA.93.020501 <http://dx.doi.org/10.1103/PhysRevA.93.020501>`_
+.. [30] Chen, X., & Ning, C. (2016). Accurate electron affinity of Co and
+   fine-structure splittings of Co$^-$ via slow-electron velocity-map imaging.
+   Physical Review A, 93(5), 052508. doi:10.1103/PhysRevA.93.052508
+.. [31] Chen, X., & Ning, C. (2016). Accurate electron affinity of Pb and
+   isotope shifts of binding energies of Pb−. The Journal of Chemical Physics,
+   145(8), 84303. `doi:10.1063/1.4961654 <http://doi.org/10.1063/1.4961654>`_
+.. [32] Ghosh, D. C. (2005). A New Scale of Electronegativity Based on Absolute Radii of Atoms.
+   Journal of Theoretical and Computational Chemistry, 4(1), 21–33.
+   `doi:10.1142/S0219633605001556 <http://doi.org/10.1142/S0219633605001556>`_
+
 
 ************
 Installation

@@ -46,6 +46,8 @@ The followig data are currently available:
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | en_allen                | float | Allen's scale of electronegativity                   | eV       | [10]_, [11]_|
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
+| en_ghosh                | float | Ghosh's scale of electronegativity                   |          | [32]_       |
++-------------------------+-------+------------------------------------------------------+----------+-------------+
 | en_mulliken             | float | Mulliken's scale of electronegativity                | eV       | [12]_       |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | en_pauling              | float | Pauling's scale of electronegativity                 |          | [8]_        |
@@ -276,3 +278,6 @@ References
 .. [31] Chen, X., & Ning, C. (2016). Accurate electron affinity of Pb and
    isotope shifts of binding energies of Pb−. The Journal of Chemical Physics,
    145(8), 84303. `doi:10.1063/1.4961654 <http://doi.org/10.1063/1.4961654>`_
+.. [32] Ghosh, D. C. (2005). A New Scale of Electronegativity Based on Absolute Radii of Atoms.
+   Journal of Theoretical and Computational Chemistry, 4(1), 21–33.
+   `doi:10.1142/S0219633605001556 <http://doi.org/10.1142/S0219633605001556>`_

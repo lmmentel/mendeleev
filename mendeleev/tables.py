@@ -100,6 +100,8 @@ class Element(Base):
         Electron affinity in eV
       en_allen : float
         Allen's scale of electronegativity (Configurational energy)
+      en_ghosh : float
+        Ghosh's scale of enectronegativity
       en_pauling : float
         Pauling's scale of electronegativity
       econf : str
@@ -188,6 +190,7 @@ class Element(Base):
     dipole_polarizability = Column(Float)
     electron_affinity = Column(Float)
     en_allen = Column(Float)
+    en_ghosh = Column(Float)
     en_pauling = Column(Float)
     econf = Column('electronic_configuration', String)
     evaporation_heat = Column(Float)

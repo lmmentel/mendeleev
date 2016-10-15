@@ -9,6 +9,7 @@ either stored directly or recomputed on demand with appropriate formulas. The
 following scales are stored:
 
 - :ref:`Allen <allen_en>`
+- :ref:`Ghosh <ghosh_en>`
 - :ref:`Pauling <pauling_en>`
 
 Moreover there are electronegativity scales that can be computed from their
@@ -92,6 +93,26 @@ Example::
 
     >>> Si.electronegativity('cottrell-sutton')
     0.18099342720014772
+
+.. _ghosh_en:
+
+Ghosh
+=====
+
+Ghosh [16]_ presented a scale of electronegativity based on the absolute radii of atoms computed as
+
+.. math::
+
+   \chi_{GH} = a \cdot (1/R) + b
+
+where: :math:`R` is the absolute atomic radius and :math:`a` and :math:`b` are
+empirical parameters.
+
+Example::
+
+    >>> Si.en_ghosh
+    0.178503
+
 
 .. _gordy_en:
 
@@ -308,3 +329,6 @@ References
 .. [] Smith, D. W. (1990). Electronegativity in two dimensions: Reassessment and
     resolution of the Pearson-Pauling paradox. Journal of Chemical Education,
     67(11), 911. doi:10.1021/ed067p911
+.. [16] Ghosh, D. C. (2005). A New Scale of Electronegativity Based on Absolute Radii of Atoms.
+   Journal of Theoretical and Computational Chemistry, 4(1), 21–33.
+   `doi:10.1142/S0219633605001556 <http://doi.org/10.1142/S0219633605001556>`_
