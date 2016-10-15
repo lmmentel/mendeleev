@@ -14,7 +14,8 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import matplotlib.cm as cmx
 
-from mendeleev import get_table, periodic_plot, element
+from mendeleev import get_table, element
+from mendeleev.plotting import periodic_plot
 
 def colormap_data(data, cmap='RdBu_r', missing='#ffffff'):
     '''
@@ -97,7 +98,7 @@ def make_plot(source, title):
     # adjust the ticks and axis bounds
     p.yaxis.bounds = (1, 7)
     p.axis[1].ticker.num_minor_ticks = 0
-    p.axis[0].ticker = FixedTicker(ticks=range(1, 19))
+    p.axis[0].ticker = FixedTicker(ticks=list(range(1, 19)))
 
     text_props = {
         "source": source,
