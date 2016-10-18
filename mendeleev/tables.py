@@ -46,6 +46,7 @@ __all__ = ['Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
 subshells = ['s', 'p', 'd', 'f', 'g', 'h', 'i', 'j', 'k']
 Base = declarative_base()
 
+
 class Element(Base):
     '''
     Chemical element.
@@ -215,6 +216,7 @@ class Element(Base):
     symbol = Column(String)
     thermal_conductivity = Column(Float)
     vdw_radius = Column(Float)
+    vdw_radius_alvarez = Column(Float)
     vdw_radius_bondi = Column(Float)
     vdw_radius_truhlar = Column(Float)
     vdw_radius_rt = Column(Float)
@@ -242,7 +244,7 @@ class Element(Base):
         in eV as values.
         '''
 
-        return {ie.degree:ie.energy for ie in self._ionization_energies}
+        return {ie.degree: ie.energy for ie in self._ionization_energies}
 
     @hybrid_property
     def oxistates(self):
@@ -256,7 +258,7 @@ class Element(Base):
         Return a dict with screening constants with tuples (n, s) as keys and
         screening constants as values'''
 
-        return {(x.n, x.s) : x.screening for x in self.screening_constants}
+        return {(x.n, x.s): x.screening for x in self.screening_constants}
 
     @hybrid_property
     def electrons(self):
@@ -272,22 +274,28 @@ class Element(Base):
 
     @hybrid_property
     def neutrons(self):
-        '''Return the number of neutrons of the most abundant natural stable isotope.'''
+        '''
+        Return the number of neutrons of the most abundant natural stable
+        isotope.
+        '''
 
         return self.mass_number - self.protons
 
     @hybrid_property
     def mass_number(self):
-        '''Return the mass number of the most abundant natural stable isotope.'''
+        '''
+        Return the mass number of the most abundant natural stable isotope
+        '''
 
         return max(self.isotopes, key=attrgetter("abundance")).mass_number
 
     @hybrid_property
     def covalent_radius(self):
-        '''Return the default covalent radius which is covalent_radius_pyykko'''
+        '''
+        Return the default covalent radius which is covalent_radius_pyykko
+        '''
 
         return self.covalent_radius_pyykko
-
 
     @hybrid_method
     def hardness(self, charge=0):
@@ -307,13 +315,13 @@ class Element(Base):
 
         if charge == 0:
             if self.ionenergies.get(1, None) is not None and self.electron_affinity is not None:
-                return (self.ionenergies[1] - self.electron_affinity)*0.5
+                return (self.ionenergies[1] - self.electron_affinity) * 0.5
             else:
                 return None
         elif charge > 0:
             if self.ionenergies.get(charge + 1, None) is not None and\
                self.ionenergies.get(charge, None) is not None:
-                return (self.ionenergies[charge + 1] - self.ionenergies[charge])*0.5
+                return (self.ionenergies[charge + 1] - self.ionenergies[charge]) * 0.5
             else:
                 return None
         elif charge < 0:
@@ -340,7 +348,7 @@ class Element(Base):
         if eta is None:
             return None
         else:
-            return 1.0/(2.0*eta)
+            return 1.0 / (2.0 * eta)
 
     @hybrid_property
     def exact_mass(self):
@@ -475,16 +483,16 @@ class Element(Base):
         if ip is not None:
             if ea is not None:
                 if ea < 0.0 and useNegativeEA:
-                    return (ip + ea)*0.5
+                    return (ip + ea) * 0.5
                 else:
-                    return ip*0.5
+                    return ip * 0.5
             elif ea is None and missingIsZero:
-                return ip*0.5
+                return ip * 0.5
         else:
             return None
 
-
-    def en_calc(self, radius='covalent_radius_pyykko', rpow=1, apow=1, **zeffkwargs):
+    def en_calc(self, radius='covalent_radius_pyykko', rpow=1, apow=1,
+                **zeffkwargs):
         '''
         Calculate the electronegativity from a general formula
 
@@ -502,12 +510,13 @@ class Element(Base):
         zeff = self.zeff(**zeffkwargs)
         r = getattr(self, radius)
 
-        return math.pow(zeff/math.pow(r, rpow), apow)
+        return math.pow(zeff / math.pow(r, rpow), apow)
 
     def en_martynov_batsanov(self):
         '''
-        Calculates the electronegativity value according to Martynov and Batsanov
-        as the average of the ionization energies of the valence electrons
+        Calculates the electronegativity value according to Martynov and
+        Batsanov as the average of the ionization energies of the valence
+        electrons
 
         .. math::
 
@@ -582,7 +591,7 @@ class Element(Base):
         r = getattr(self, radius)
         rng = mendeleev.interpolate(self.atomic_number, radius)
 
-        return math.pow(rng/r, 3)
+        return math.pow(rng / r, 3)
 
     def nvalence(self, method=None):
         '''Return the number of valence electrons'''
@@ -598,6 +607,7 @@ class Element(Base):
             ' '.join(["\t%s=%r,\n" % (key, getattr(self, key))
                       for key in sorted(self.__dict__.keys())
                       if not key.startswith('_')]))
+
 
 class IonicRadius(Base):
     '''
@@ -654,6 +664,7 @@ class IonicRadius(Base):
                       for key in sorted(self.__dict__.keys())
                       if not key.startswith('_')]))
 
+
 class IonizationEnergy(Base):
     '''
     Ionization energy of an element
@@ -684,6 +695,7 @@ class IonizationEnergy(Base):
         return "<IonizationEnergy(atomic_number={a:5d}, degree={d:3d}, energy={e:10.5f})>".format(
             a=self.atomic_number, d=self.degree, e=self.energy)
 
+
 class OxidationState(Base):
     '''
     Oxidation states of an element
@@ -706,6 +718,7 @@ class OxidationState(Base):
         return "<OxidationState(atomic_number={a:5d}, oxidation_state={o:5d})>".format(
             a=self.atomic_number, o=self.oxidation_state)
 
+
 class Group(Base):
     '''Name of the group in the periodic table.'''
 
@@ -719,6 +732,7 @@ class Group(Base):
 
         return "<Group(symbol={s:s}, name={n:s})>".format(
             s=self.symbol, n=self.name)
+
 
 class Series(Base):
     '''
@@ -742,6 +756,7 @@ class Series(Base):
     def __repr__(self):
 
         return "<Series(name={n:s}, color={c:s})>".format(n=self.name, c=self.color)
+
 
 class Isotope(Base):
     '''
@@ -769,12 +784,13 @@ class Isotope(Base):
     def __str__(self):
 
         return "{0:5d} {1:10.5f} {2:6.2f}% {3:5d}".format(
-            self.atomic_number, self.mass, self.abundance*100, self.mass_number)
+            self.atomic_number, self.mass, self.abundance * 100.0, self.mass_number)
 
     def __repr__(self):
 
         return "<Isotope(mass={}, abundance={}, mass_number={})>".format(
             self.mass, self.abundance, self.mass_number)
+
 
 class ScreeningConstant(Base):
     '''
@@ -815,18 +831,19 @@ class ScreeningConstant(Base):
         return "<ScreeningConstant(Z={0:4d}, n={1:3d}, s={2:s}, screening={3:10.4f})>".format(
             self.atomic_number, self.n, self.s, self.screening)
 
+
 class ElectronicConfiguration(object):
     '''Electronic configuration handler'''
 
     def __init__(self, confstr, atomre=None, shellre=None):
 
         self.noble = {
-            'He' : '1s2',
-            'Ne' : '1s2 2s2 2p6',
-            'Ar' : '1s2 2s2 2p6 3s2 3p6',
-            'Kr' : '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6',
-            'Xe' : '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6',
-            'Rn' : '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6'
+            'He': '1s2',
+            'Ne': '1s2 2s2 2p6',
+            'Ar': '1s2 2s2 2p6 3s2 3p6',
+            'Kr': '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6',
+            'Xe': '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6',
+            'Rn': '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6'
         }
 
         self.confstr = confstr

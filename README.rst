@@ -132,6 +132,8 @@ The following data are currently available:
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | vdw_radius              | float | Van der Waals radius                                 | pm       | [8]_        |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
+| vdw_radius_alvarez      | float | Van der Waals radius according to Alvarez            | pm       | [33]_, [34]_|
++-------------------------+-------+------------------------------------------------------+----------+-------------+
 | vdw_radius_batsanov     | float | Van der Waals radius according to Batsanov           | pm       | [17]_       |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | vdw_radius_bondi        | float | Van der Waals radius according to Bondi              | pm       | [18]_       |
@@ -146,6 +148,7 @@ The following data are currently available:
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | vdw_radius_uff          | float | Van der Waals radius from the UFF                    | pm       | [23]_       |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
+
 
 .. [1] Chu, X., & Dalgarno, A. (2004). Linear response time-dependent density
    functional theory for van der Waals coefficients. The Journal of Chemical
@@ -241,6 +244,12 @@ The following data are currently available:
 .. [32] Ghosh, D. C. (2005). A New Scale of Electronegativity Based on Absolute Radii of Atoms.
    Journal of Theoretical and Computational Chemistry, 4(1), 21–33.
    `doi:10.1142/S0219633605001556 <http://doi.org/10.1142/S0219633605001556>`_
+.. [33] Alvarez, S. (2013). A cartography of the van der Waals territories.
+   Dalton Transactions, 42(24), 8617.
+   `doi:10.1039/c3dt50599e <http://doi.org/10.1039/c3dt50599e>`_
+.. [34] Vogt, J., & Alvarez, S. (2014). van der Waals Radii of Noble Gases.
+   Inorganic Chemistry, 53(17), 9260–9266.
+   `doi:10.1021/ic501364h <http://doi.org/10.1021/ic501364h>`_
 
 
 ************
