@@ -2,9 +2,35 @@
 mendeleev Changelog
 *******************
 
-Latest version
-==============
+v0.2.10 (18-10-2016)
+===================
 
+* Added the C6 coefficients from Gould and Bucko.
+* Added van der Waals radii from Alvarez.
+
+v0.2.9 (16-10-2016)
+===================
+
+* Added a scale of electronegativities by Ghosh.
+
+v0.2.8 (29-08-2016)
+===================
+
+* Updated the electron affinity of Pb and Co.
+* Updates of the docs.
+
+v0.2.7 (02-04-2016)
+===================
+
+* Maintenance.
+
+v0.2.6 (02-04-2016)
+===================
+
+* Mainly maintenance updates to docs, sphinx `conf.py`, `setup.py`, requirements.
+
+v0.2.5 (02-04-2016)
+===================
 
 Features added
 --------------
