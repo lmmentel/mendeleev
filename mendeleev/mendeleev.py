@@ -39,25 +39,32 @@ import numpy as np
 
 import six
 
-from .tables import (Base, Element, IonizationEnergy, OxidationState)
+from .tables import Base, Element, IonizationEnergy
 
 __all__ = ['element', 'get_session', 'get_engine', 'get_table', 'ids_to_attr',
            'get_ips', 'get_ionic_radii', 'deltaN', 'get_data', 'interpolate']
 
+
 def get_session():
     '''Return the database session connection.'''
 
-    dbpath = os.path.join(os.path.abspath(os.path.dirname(__file__)), "elements.db")
-    engine = create_engine("sqlite:///{path:s}".format(path=dbpath), echo=False)
+    dbpath = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                          "elements.db")
+    engine = create_engine("sqlite:///{path:s}".format(path=dbpath),
+                           echo=False)
     db_session = sessionmaker(bind=engine, autoflush=False, autocommit=False)
     return db_session()
+
 
 def get_engine():
     '''Return the db engine'''
 
-    dbpath = os.path.join(os.path.abspath(os.path.dirname(__file__)), "elements.db")
-    engine = create_engine("sqlite:///{path:s}".format(path=dbpath), echo=False)
+    dbpath = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                          "elements.db")
+    engine = create_engine("sqlite:///{path:s}".format(path=dbpath),
+                           echo=False)
     return engine
+
 
 def element(ids):
     '''
@@ -94,6 +101,7 @@ def get_element(ids):
     else:
         raise ValueError("Expecting a <str> or <int>, got: {0:s}".format(type(ids)))
 
+
 def get_table(tablename, **kwargs):
     '''
     Return a table from the database as `pandas <http://pandas.pydata.org/>`_
@@ -120,6 +128,7 @@ def get_table(tablename, **kwargs):
     else:
         raise ValueError('Table should be one of: {}'.format(", ".join(tables)))
 
+
 def get_data():
     '''
     Get extensive set of data from multiple databse tables as pandas.DataFrame
@@ -127,7 +136,8 @@ def get_data():
 
     data = get_table('elements')
 
-    en_scales = ['allred-rochow', 'cottrell-sutton', 'gordy', 'martynov-batsanov', 'mulliken', 'nagle', 'sanderson',]
+    en_scales = ['allred-rochow', 'cottrell-sutton', 'gordy',
+                 'martynov-batsanov', 'mulliken', 'nagle', 'sanderson']
     for scale in en_scales:
         data['en_' + scale] = [element(row.symbol).electronegativity(scale=scale) for i, row in data.iterrows()]
 
@@ -138,6 +148,7 @@ def get_data():
     # values
 
     return data
+
 
 def _get_ng_data(attribute):
     '''
@@ -160,6 +171,7 @@ def _get_ng_data(attribute):
     session.close()
     return data
 
+
 def ids_to_attr(ids, attr='atomic_number'):
     '''
     Convert the element ids: atomic numbers, symbols, element names or a
@@ -180,6 +192,7 @@ def ids_to_attr(ids, attr='atomic_number'):
         return [getattr(e, attr) for e in element(ids)]
     else:
         return [getattr(element(ids), attr)]
+
 
 def get_ips(ids=None, deg=1):
     '''
@@ -235,6 +248,7 @@ def get_ips(ids=None, deg=1):
 
     return df
 
+
 def get_ionic_radii(values='ionic_radius'):
     '''
     Return a pandas DataFrame with ionic radii for a set of elements.
@@ -265,6 +279,7 @@ def get_ionic_radii(values='ionic_radius'):
 
     return df
 
+
 def deltaN(id1, id2, charge1=0, charge2=0, missingIsZero=True):
     '''
     Calculate the approximate fraction of transferred electrons between elements
@@ -294,6 +309,7 @@ def deltaN(id1, id2, charge1=0, charge2=0, missingIsZero=True):
     else:
         return None
 
+
 def interpolate(key, attribute, deg=1, kind='linear'):
     '''
     Evaluate a value for `key` by interpolation or extrapolation of the data
@@ -303,7 +319,8 @@ def interpolate(key, attribute, deg=1, kind='linear'):
       key : int
         Key for which the property will be evaluated
       deg : int
-        Degree of the polynomial used in the extrapolation beyond the provided data points
+        Degree of the polynomial used in the extrapolation beyond the provided
+        data points
       kind : str
         Kind of the interpolation used, see docs for `numpy.interp1d`
     '''
@@ -322,9 +339,11 @@ def interpolate(key, attribute, deg=1, kind='linear'):
         fn = np.poly1d(fit)
         return fn(key)
 
+
 def attributes(elem, names, fmt='8.3f'):
     '''Return a list of strings of all the attributes of ``elem`` specified in ``names``'''
     return ['\t{0:s} = {1:{fmt}}'.format(name.replace('_', ' ').capitalize(), getattr(elem, name), fmt=fmt) for name in names]
+
 
 def clielement():
     '''
@@ -354,4 +373,3 @@ def clielement():
     props = '\nProperties\n==========\n'
 
     print(header, desc, props, et.to_string(justify='left', header=False), sep='\n')
-
