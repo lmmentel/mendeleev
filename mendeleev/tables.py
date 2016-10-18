@@ -73,6 +73,9 @@ class Element(Base):
         121(9), 4083–4088 (2004) doi:10.1063/1.1779576, and the value for
         Hydrogen was taken from K. T. Tang, J. M. Norbeck and P. R. Certain,
         J. Chem. Phys. 64, 3063 (1976), doi:10.1063/1.432569
+      c6_gb : float
+        C_6 dispersion coefficient in a.u. from Gould, T., & Bučko, T. (2016).
+        JCTC, 12(8), 3603–3613. http://doi.org/10.1021/acs.jctc.6b00361
       covalent_radius_bragg : float
         Covalent radius in pm from
       covalent_radius_cordero : float
@@ -185,6 +188,7 @@ class Element(Base):
     covalent_radius_pyykko = Column(Float)
     covalent_radius_slater = Column(Float)
     c6 = Column(Float)
+    c6_gb = Column(Float)
     cpk_color = Column(String)
     density = Column(Float)
     description = Column(String)

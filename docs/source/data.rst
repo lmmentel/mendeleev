@@ -24,6 +24,8 @@ The followig data are currently available:
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | c6                      | float | C_6 dispersion coefficient in a.u.                   | a.u.     | [1]_, [2]_  |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
+| c6_gb                   | float | C_6 dispersion coefficient in a.u. (Gould & Bučko)   | a.u.     | [35]_       |
++-------------------------+-------+------------------------------------------------------+----------+-------------+
 | covalent_radius_bragg   | float | Covalent radius by Bragg                             | pm       | [3]_        |
 +-------------------------+-------+------------------------------------------------------+----------+-------------+
 | covalent_radius_cordero | float | Covalent radius by Cerdero et al.                    | pm       | [4]_        |
@@ -296,3 +298,7 @@ References
 .. [34] Vogt, J., & Alvarez, S. (2014). van der Waals Radii of Noble Gases.
    Inorganic Chemistry, 53(17), 9260–9266.
    `doi:10.1021/ic501364h <http://doi.org/10.1021/ic501364h>`_
+.. [35] Gould, T., & Bučko, T. (2016). C 6 Coefficients and Dipole Polarizabilities
+   for All Atoms and Many Ions in Rows 1–6 of the Periodic Table. Journal of
+   Chemical Theory and Computation, 12(8), 3603–3613.
+   `doi:10.1021/acs.jctc.6b00361 <http://doi.org/10.1021/acs.jctc.6b00361>`_
