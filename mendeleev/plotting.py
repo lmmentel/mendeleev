@@ -33,13 +33,16 @@ from bokeh.models import HoverTool, ColumnDataSource, FixedTicker
 from collections import OrderedDict
 from .mendeleev import get_table
 
-def heatmap(prop, style='whitegrid', figsize=(16, 10), cmap='RdBu_r', lw=1, output=None, **kwargs):
+
+def heatmap(prop, style='whitegrid', figsize=(16, 10), cmap='RdBu_r', lw=1,
+            output=None, **kwargs):
     '''
     Plot a heatmap of the given property
 
     Args:
       prop : str
-        Name of the attribute of Element object that is available from the elements table
+        Name of the attribute of Element object that is available from the
+        elements table
       style : str
         Seaborn style option, default='whitegrid
       figsize : tuple
@@ -63,10 +66,11 @@ def heatmap(prop, style='whitegrid', figsize=(16, 10), cmap='RdBu_r', lw=1, outp
 
     sns.set(font_scale=1.5, style=style, rc={"figure.figsize": figsize})
     mask = np.asarray(elements_rect.isnull())
-    ax = sns.heatmap(elements_rect, cmap=cmap, mask=mask, linewidths=lw, **kwargs)
+    ax = sns.heatmap(elements_rect, cmap=cmap, mask=mask, linewidths=lw,
+                     **kwargs)
     n = len(ax.xaxis.get_ticklabels())
     ax.set_yticklabels(elements_rect.index[::-1], rotation=0)
-    ax.set_xticklabels(list(range(1, n+1)))
+    ax.set_xticklabels(list(range(1, n + 1)))
     ax.xaxis.tick_top()
     ax.xaxis.set_label_position('top')
     ax.set_xlabel('Group')
@@ -74,6 +78,7 @@ def heatmap(prop, style='whitegrid', figsize=(16, 10), cmap='RdBu_r', lw=1, outp
     if output is not None:
         plt.savefig(output)
     return ax
+
 
 def colormap_column(df, column, cmap='RdBu_r', missing='#ffffff'):
     '''
@@ -102,6 +107,7 @@ def colormap_column(df, column, cmap='RdBu_r', missing='#ffffff'):
 
     return out
 
+
 def periodic_plot(df, values=None, title='Periodic Table', width=1000,
                   height=800, missing='#ffffff', decimals=0,
                   colorby=None, output=None, cmap='RdBu_r',
@@ -129,8 +135,8 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
       cmap : str
         Colormap to use, see matplotlib colormaps
       long_version : bool
-        Show the long version of the periodic table with the f block between the
-        s and d blocks
+        Show the long version of the periodic table with the f block between
+        the s and d blocks
       showfblock : bool
         Show the elements from the f block
     '''
@@ -178,8 +184,8 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
 
     if colorby not in elements.columns:
         series = get_table('series')
-        elements = pd.merge(elements, series, left_on='series_id', right_on='id',
-                suffixes=('', '_series'))
+        elements = pd.merge(elements, series, left_on='series_id',
+                            right_on='id', suffixes=('', '_series'))
         colorby = 'color'
 
     source = ColumnDataSource(data=elements)
@@ -189,11 +195,12 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
     p = figure(title=title,
                tools=TOOLS,
                x_axis_location='above',
-               x_range = (elements.x.min()-0.5, elements.x.max()+0.5),
-               y_range = (elements.y.max()+0.5, elements.y.min()-0.5),
+               x_range=(elements.x.min() - 0.5, elements.x.max() + 0.5),
+               y_range=(elements.y.max() + 0.5, elements.y.min() - 0.5),
                width=width, height=height,
                toolbar_location='above',
-              )
+               toolbar_sticky=False,
+               )
 
     if values:
         colorby = 'cmap'
@@ -221,13 +228,13 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
     }
 
     p.text(x="x", y="y", text="symbol",
-        text_font_style="bold", text_font_size="15pt", **text_props)
+           text_font_style="bold", text_font_size="15pt", **text_props)
 
     p.text(x="x", y="y_anumber", text="atomic_number",
-        text_font_size="9pt", **text_props)
+           text_font_size="9pt", **text_props)
 
     p.text(x="x", y="y_name", text="name",
-        text_font_size="6pt", **text_props)
+           text_font_size="6pt", **text_props)
 
     if values:
         column = values
@@ -235,7 +242,7 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
         column = 'mass'
 
     p.text(x="x", y="y_prop", text=column,
-        text_font_size="7pt", **text_props)
+           text_font_size="7pt", **text_props)
 
     p.grid.grid_line_color = None
 
