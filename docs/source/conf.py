@@ -24,7 +24,7 @@ MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma',
                 'matplotlib', 'matplotlib.pyplot', 'matplotlib.colors',
                 'matplotlib.cm',
                 'scipy', 'scipy.optimize', 'scipy.interpolate',
-                'scipy.constants', 'pandas']
+                'scipy.constants', 'pandas', 'IPython']
 
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = Mock()
