@@ -2,6 +2,10 @@
 mendeleev package
 #################
 
+.. image:: https://readthedocs.org/projects/mendeleev/badge/
+   :target: https://mendeleev.readthedocs.org
+   :alt: Documentation Status
+
 This package provides an API for accessing various properties of elements from
 the periodic table of elements.
 
@@ -539,9 +543,6 @@ silicon type
 Documentation
 *************
 
-.. image:: https://readthedocs.org/projects/mendeleev/badge/
-   :target: https://mendeleev.readthedocs.org
-   :alt: Documentation Status
 
 Documentation can be found `here <http://mendeleev.readthedocs.org/en/latest/>`_.
 
