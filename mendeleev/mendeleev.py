@@ -34,7 +34,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.dialects import sqlite
 
-from scipy.interpolate import interp1d
 import numpy as np
 
 import six
@@ -167,7 +166,7 @@ def _get_ng_data(attribute):
 
     session = get_session()
     ngs = session.query(Element).filter(Element.series == 'Noble gases').all()
-    data = {ng.atomic_number : getattr(ng, attribute) for ng in ngs}
+    data = {ng.atomic_number: getattr(ng, attribute) for ng in ngs}
     session.close()
     return data
 
@@ -328,8 +327,7 @@ def interpolate(key, attribute, deg=1, kind='linear'):
     data = _get_ng_data(attribute)
 
     if min(list(data.keys())) <= key <= max(list(data.keys())):
-        fn = interp1d(list(data.keys()), list(data.values()), kind=kind)
-        return fn(key).item()
+        return np.interp([key], list(data.keys()), list(data.values()))
     else:
         if key < min(data.keys()):
             dataslice = dict(sorted(data.items(), key=lambda x: x[0])[:3])
