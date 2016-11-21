@@ -36,8 +36,6 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
-from scipy.constants import value as spcvalue
-
 import mendeleev
 
 __all__ = ['Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
@@ -560,7 +558,8 @@ class Element(Base):
             raise ValueError('charge should be a nonzero  initeger')
 
         neff = {1: 0.85, 2: 1.99, 3: 2.89, 4: 3.45, 5: 3.85, 6: 4.36, 7: 4.99}
-        RY = spcvalue('Rydberg constant times hc in eV')
+        #RY = spcvalue('Rydberg constant times hc in eV')
+        RY = 13.605693009
 
         if charge == 0:
             Ie = self.electron_affinity
