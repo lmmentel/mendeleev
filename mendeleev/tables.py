@@ -41,7 +41,19 @@ import mendeleev
 __all__ = ['Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
            'Isotope', 'Series', 'ScreeningConstant']
 
-subshells = ['s', 'p', 'd', 'f', 'g', 'h', 'i', 'j', 'k']
+ORBITALS = ('s', 'p', 'd', 'f', 'g', 'h', 'i', 'j', 'k')
+SHELLS = ('K', 'L', 'M', 'N', 'O', 'P', 'Q')
+
+
+def get_l(shell):
+    'Return the orbital angular momentum quantum number for a given shell'
+
+    if shell in ORBITALS:
+        return ORBITALS.index(shell.lower())
+    else:
+        raise ValueError('"{}" is not a proper shell label'.format(shell))
+
+
 Base = declarative_base()
 
 
@@ -358,7 +370,7 @@ class Element(Base):
 
         return sum(iso.mass * iso.abundance for iso in self.isotopes)
 
-    def zeff(self, n=None, s=None, method='slater', alle=False):
+    def zeff(self, n=None, o=None, method='slater', alle=False):
         '''
         Return the effective nuclear charge for ``(n, s)``
 
@@ -378,8 +390,8 @@ class Element(Base):
                 `doi:10.1063/1.1712084 <http://www.dx.doi.org/10.1063/1.1712084>`_
           n : int
             Principal quantum number
-          s : str
-            Subshell label, (s, p, d, ...)
+          o : str
+            Orbital label, (s, p, d, ...)
           alle : bool
             Use all the valence electrons, i.e. calculate screening for an extra
             electron when method='slater', if method='clementi' this option is
@@ -393,18 +405,20 @@ class Element(Base):
             if not isinstance(n, int):
                 raise ValueError('<n> should be an integer, got: {}'.format(type(n)))
 
-        if s is None:
-            s = subshells[max([subshells.index(x[1]) for x in self.ec.conf.keys() if x[0] == n])]
+        if o is None:
+            # take the shell with max `l` for a given `n`
+            o = ORBITALS[max([get_l(x[1]) for x in self.ec.conf.keys() if x[0] == n])]
         else:
-            if s not in subshells:
-                raise ValueError('<s> should be one of {}'.format(", ".join(subshells)))
+            if o not in ORBITALS:
+                raise ValueError('<s> should be one of {}'.format(", ".join(ORBITALS)))
 
         if method.lower() == 'slater':
-            return self.atomic_number - self.ec.slater_screening(n=n, s=s, alle=alle)
+            return self.atomic_number - self.ec.slater_screening(n=n, o=o,
+                                                                 alle=alle)
         elif method.lower() == 'clementi':
-            sc = self.sconst.get((n, s), None)
+            sc = self.sconst.get((n, o), None)
             if sc is not None:
-                return self.atomic_number - self.sconst.get((n, s), None)
+                return self.atomic_number - self.sconst.get((n, o), None)
             else:
                 return sc
         else:
@@ -544,21 +558,20 @@ class Element(Base):
             charge : int
                 Charge of the ion
             radius : str
-                Type of radius to be used in the calculation, either `crystal_radius`
-                as recommended in the paper or `ionic_radius`
+                Type of radius to be used in the calculation, either
+                `crystal_radius` as recommended in the paper or `ionic_radius`
 
         Returns:
             out : dict
-                A dictionary with electronegativities as values and coordination
-                string as keys or tuple of coordination and spin if the ion is
-                LS or HS
+                A dictionary with electronegativities as values and
+                coordination string as keys or tuple of coordination and spin
+                if the ion is LS or HS
         '''
 
         if charge is None or not isinstance(charge, int) or charge == 0:
             raise ValueError('charge should be a nonzero  initeger')
 
         neff = {1: 0.85, 2: 1.99, 3: 2.89, 4: 3.45, 5: 3.85, 6: 4.36, 7: 4.99}
-        #RY = spcvalue('Rydberg constant times hc in eV')
         RY = 13.605693009
 
         if charge == 0:
@@ -571,7 +584,7 @@ class Element(Base):
         out = {}
         for coord, spin, cr in crs:
             # the 100.0 factor converts picometers to Angstroms
-            eneg = neff[self.ec.maxn()]*math.sqrt(Ie/RY)*100.0/cr
+            eneg = neff[self.ec.maxn()] * math.sqrt(Ie / RY) * 100.0 / cr
             if len(spin) < 1:
                 out[coord] = eneg
             else:
@@ -758,7 +771,8 @@ class Series(Base):
 
     def __repr__(self):
 
-        return "<Series(name={n:s}, color={c:s})>".format(n=self.name, c=self.color)
+        return "<Series(name={n:s}, color={c:s})>".format(n=self.name,
+                                                          c=self.color)
 
 
 class Isotope(Base):
@@ -787,7 +801,8 @@ class Isotope(Base):
     def __str__(self):
 
         return "{0:5d} {1:10.5f} {2:6.2f}% {3:5d}".format(
-            self.atomic_number, self.mass, self.abundance * 100.0, self.mass_number)
+            self.atomic_number, self.mass, self.abundance * 100.0,
+            self.mass_number)
 
     def __repr__(self):
 
@@ -878,11 +893,15 @@ class ElectronicConfiguration(object):
     def shellre(self, value):
 
         if value is None:
-            self._shellre = re.compile(r'(?P<n>\d)(?P<s>[spdfghijk])(?P<e>\d+)?')
+            self._shellre = re.compile(r'(?P<n>\d)(?P<o>[spdfghijk])(?P<e>\d+)?')
         else:
             self._shellre = re.compile(value)
 
     def parse(self):
+        '''
+        Parse a string with electronic configuration into an OrderedDict
+        representation
+        '''
 
         citems = self.confstr.split()
 
@@ -891,27 +910,30 @@ class ElectronicConfiguration(object):
         if self.atomre.match(citems[0]):
             symbol = str(self.atomre.match(citems[0]).group(1))
             citems = citems[1:]
-            core = [self.shellre.match(s).group('n', 's', 'e')
-                       for s in self.noble[symbol].split() if self.shellre.match(s)]
-        valence = [self.shellre.match(s).group('n', 's', 'e')
-                       for s in citems if self.shellre.match(s)]
+            core = [self.shellre.match(o).group('n', 'o', 'e')
+                    for o in self.noble[symbol].split() if self.shellre.match(o)]
+        valence = [self.shellre.match(o).group('n', 'o', 'e')
+                   for o in citems if self.shellre.match(o)]
 
-        self.core = OrderedDict([((int(n), s) , (int(e) if e is not None else 1)) for (n, s, e) in core])
-        self.valence = OrderedDict([((int(n), s), (int(e) if e is not None else 1)) for (n, s, e) in valence])
+        self.core = OrderedDict([((int(n), o), (int(e) if e is not None else 1)) for (n, o, e) in core])
+        self.valence = OrderedDict([((int(n), o), (int(e) if e is not None else 1)) for (n, o, e) in valence])
         self.conf = OrderedDict(list(self.core.items()) + list(self.valence.items()))
 
     def sort(self, inplace=True):
 
         if inplace:
-            self.conf = OrderedDict(sorted(self.conf.items(), key=lambda x: (x[0][0]+subshells.index(x[0][1]), x[0][0])))
+            self.conf = OrderedDict(sorted(self.conf.items(),
+                                           key=lambda x: (x[0][0] +
+                                           get_l(x[0][1]), x[0][0])))
         else:
-            return OrderedDict(sorted(self.conf.items(), key=lambda x: (x[0][0]+subshells.index(x[0][1]), x[0][0])))
+            return OrderedDict(sorted(self.conf.items(),
+                                      key=lambda x: (x[0][0] + get_l(x[0][1]),
+                                      x[0][0])))
 
     def electrons_per_shell(self):
 
-        shells = ['K', 'L', 'M', 'N', 'O', 'P', 'Q']
-
-        return {s : sum([v for k, v in self.conf.items() if k[0] == n]) for n, s in zip(range(1, self.maxn()+1), shells)}
+        return {s: sum([v for k, v in self.conf.items() if k[0] == n])
+                for n, s in zip(range(1, self.maxn() + 1), SHELLS)}
 
     def __repr__(self):
 
@@ -924,11 +946,12 @@ class ElectronicConfiguration(object):
     @staticmethod
     def conf2str(dictlike):
 
-        return " ".join(["{n:d}{s:s}{e:d}".format(n=k[0], s=k[1], e=v) for k, v in dictlike.items()])
+        return " ".join(["{n:d}{s:s}{e:d}".format(n=k[0], s=k[1], e=v)
+                         for k, v in dictlike.items()])
 
     def shell2int(self):
 
-        return [(x[0], subshells.index(x[1]), x[2]) for x in self.conf]
+        return [(x[0], get_l(x[1]), x[2]) for x in self.conf]
 
     def maxn(self):
         'Return the largest value of pricncipal qunatum number for the atom'
@@ -938,7 +961,7 @@ class ElectronicConfiguration(object):
     def last_subshell(self, wrt='aufbau'):
 
         if wrt == 'aufbau':
-            return sorted(self.conf.items(), key=lambda x: (x[0][0]+subshells.index(x[0][1]), x[0][0]))[-1]
+            return sorted(self.conf.items(), key=lambda x: (x[0][0] + get_l(x[0][1]), x[0][0]))[-1]
 
     def nvalence(self, block, method=None):
         'Return the number of valence electrons'
@@ -949,13 +972,13 @@ class ElectronicConfiguration(object):
             if method == 'simple':
                 return 2
             else:
-                return self.conf[(self.maxn(), 's')] + self.conf[(self.maxn()-1, 'd')]
+                return self.conf[(self.maxn(), 's')] + self.conf[(self.maxn() - 1, 'd')]
         elif block == 'f':
             return 2
         else:
             raise ValueError('wrong block: {}'.format(block))
 
-    def slater_screening(self, n, s, alle=False):
+    def slater_screening(self, n, o, alle=False):
         '''
         Calculate the screening constant using the papproach introduced by
         Slater in Slater, J. C. (1930). Atomic Shielding Constants. Physical
@@ -965,11 +988,11 @@ class ElectronicConfiguration(object):
         Args:
           n : int
             Principal quantum number
-          s : str
-            Subshell label, (s, p, d, ...)
+          o : str
+            orbtial label, (s, p, d, ...)
           alle : bool
-            Use all the valence electrons, i.e. calculate screening for an extra
-            electron
+            Use all the valence electrons, i.e. calculate screening for
+            an extra electron
         '''
 
         if alle:
@@ -982,17 +1005,19 @@ class ElectronicConfiguration(object):
         else:
             coeff = 0.35
 
-        if s in ['s', 'p']:
+        if o in ['s', 'p']:
             # get the number of valence electrons - 1
             vale = float(sum([v for k, v in self.conf.items() if k[0] == n and k[1] in ['s', 'p']]) - ne)
-            n1 = sum([v*0.85 for k, v in self.conf.items() if k[0] == n-1])
-            n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, n-1)])
-            return n1 + n2 + vale*coeff
-        elif s in ['d', 'f']:
+            n1 = sum([v * 0.85 for k, v in self.conf.items() if k[0] == n - 1])
+            n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, n - 1)])
+
+        elif o in ['d', 'f']:
             # get the number of valence electrons - 1
-            vale = float(sum([v for k, v in self.conf.items() if k[0] == n and k[1] == s]) - ne)
-            n1 = sum([float(v) for k, v in self.conf.items() if k[0] == n and k[1] != s])
+            vale = float(sum([v for k, v in self.conf.items() if k[0] == n and k[1] == o]) - ne)
+            n1 = sum([float(v) for k, v in self.conf.items() if k[0] == n and k[1] != o])
             n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, n)])
-            return n1 + n2 + vale*coeff
+
         else:
-            raise ValueError('wrong valence subshell: ', s)
+            raise ValueError('wrong valence subshell: ', o)
+
+        return n1 + n2 + vale * coeff
