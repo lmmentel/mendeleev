@@ -74,6 +74,9 @@ class Element(Base):
         Atomic radius in pm
       atomic_volume : float
         Atomic volume in cm3/mol
+      atomic_weight : float
+        Relative atomic weight as the ratio of the average mass of atoms
+        of the element to 1/12 of the mass of an atom of 12C
       block : int
         Block in periodic table, s, p, d, f
       boiling_point : float
@@ -191,6 +194,8 @@ class Element(Base):
     atomic_number = Column(Integer, primary_key=True)
     atomic_radius = Column(Float)
     atomic_volume = Column(Float)
+    atomic_weight = Column(Float)
+    atomic_weight_uncertainty = Column(Float)
     block = Column(String)
     boiling_point = Column(Float)
     covalent_radius_bragg = Column(Float)
@@ -217,7 +222,6 @@ class Element(Base):
     jmol_color = Column(String)
     lattice_constant = Column(Float)
     lattice_structure = Column(String)
-    mass = Column(Float)
     melting_point = Column(Float)
     molcas_gv_color = Column(String)
     name = Column(String)
@@ -780,23 +784,35 @@ class Isotope(Base):
     Isotope
 
     Attributes:
-      atomic_number : int
-        Atomic number
-      mass : float
-        Mass of the isotope
       abundance : float
         Abundance of the isotope
+      atomic_number : int
+        Atomic number
+      half_life : float
+        Half life time
+      half_life_unit : str
+        Unit for the half life time
+      is_radioactive : bool
+        A flag marking wheather the isotope is radioactive
+      mass : float
+        Mass of the isotope
       mass_number : int
         Mass number of the isotope
+      mass_uncertainty : float
+        Uncertainty of the mass
     '''
 
     __tablename__ = "isotopes"
 
     id = Column(Integer, primary_key=True)
-    atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
-    mass = Column(Float)
     abundance = Column(Float)
+    atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
+    half_life = Column(Float)
+    half_life_unit = Column(String)
+    is_radioactive = Column(Boolean)
+    mass = Column(Float)
     mass_number = Column(Integer)
+    mass_uncertainty = Column(Float)
 
     def __str__(self):
 
