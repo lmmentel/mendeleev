@@ -2,8 +2,26 @@
 mendeleev Changelog
 *******************
 
+v0.2.13 (01-01-2017)
+====================
+
+* Updated atomic weight with the newest IUPAC and CIAAW recommendations.
+* Added `is_radioactive` and `is_monoisotopic` attributes.
+* Updated the docs.
+
+v0.2.12 (21-12-2016)
+====================
+
+* Got rid of the scipy dependency.
+
+v0.2.11 (10-11-2016)
+====================
+
+* Updated the names and symbols of elements 113, 115, 117, 118.
+* Updated the docs.
+
 v0.2.10 (18-10-2016)
-===================
+====================
 
 * Added the C6 coefficients from Gould and Bucko.
 * Added van der Waals radii from Alvarez.
