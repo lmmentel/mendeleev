@@ -634,6 +634,23 @@ class Element(Base):
 
         return self.ec.nvalence(self.block, method=method)
 
+    def mass_str(self):
+        '''String representation of atomic weight'''
+
+        if self.atomic_weight_uncertainty is None:
+            if self.is_radioactive:
+                return '[{aw:.0f}]'.format(aw=self.atomic_weight)
+            else:
+                return '{aw:.3f}'.format(aw=self.atomic_weight)
+        else:
+            dec = np.abs(np.floor(np.log10(np.abs(self.atomic_weight_uncertainty)))).astype(int)
+            if dec > 5:
+                dec = 5
+            if self.is_radioactive:
+                return '[{aw:.{dec}f}]'.format(aw=self.atomic_weight, dec=dec)
+            else:
+                return '{aw:.{dec}f}'.format(aw=self.atomic_weight, dec=dec)
+
     def __str__(self):
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
 
