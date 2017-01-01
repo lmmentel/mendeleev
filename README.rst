@@ -162,9 +162,6 @@ The following data are currently available:
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 
 
-References
-----------
-
 .. [1] Chu, X., & Dalgarno, A. (2004). Linear response time-dependent density
    functional theory for van der Waals coefficients. The Journal of Chemical
    Physics, 121(9), 4083. `doi:10.1063/1.1779576 <http://dx.doi.org/10.1063/1.1779576>`_
