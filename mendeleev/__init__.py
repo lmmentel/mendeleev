@@ -22,7 +22,7 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
-__version__ = '0.2.12'
+__version__ = '0.2.13'
 
 from .mendeleev import *
 from .tables import *
