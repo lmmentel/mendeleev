@@ -178,7 +178,8 @@ def ids_to_attr(ids, attr='atomic_number'):
 
     Args:
       ids: list, str or int
-        A list of atomic number, symbols, element names of a combination of them
+        A list of atomic number, symbols, element names of a combination of
+        them
       attr: str
         Name of the desired attribute
 
@@ -281,9 +282,9 @@ def get_ionic_radii(values='ionic_radius'):
 
 def deltaN(id1, id2, charge1=0, charge2=0, missingIsZero=True):
     '''
-    Calculate the approximate fraction of transferred electrons between elements
-    or ions `id1` and `id2` with charges `charge1` and `charge2` respectively
-    according to the expression
+    Calculate the approximate fraction of transferred electrons between
+    elements or ions `id1` and `id2` with charges `charge1` and `charge2`
+    respectively according to the expression
 
     .. math::
 
@@ -339,8 +340,13 @@ def interpolate(key, attribute, deg=1, kind='linear'):
 
 
 def attributes(elem, names, fmt='8.3f'):
-    '''Return a list of strings of all the attributes of ``elem`` specified in ``names``'''
-    return ['\t{0:s} = {1:{fmt}}'.format(name.replace('_', ' ').capitalize(), getattr(elem, name), fmt=fmt) for name in names]
+    '''
+    Return a list of strings of all the attributes of ``elem`` specified in
+    ``names``
+    '''
+
+    return ['\t{0:s} = {1:{fmt}}'.format(name.replace('_', ' ').capitalize(),
+                                         getattr(elem, name), fmt=fmt) for name in names]
 
 
 def clielement():
@@ -370,4 +376,5 @@ def clielement():
 
     props = '\nProperties\n==========\n'
 
-    print(header, desc, props, et.to_string(justify='left', header=False), sep='\n')
+    print(header, desc, props, et.to_string(justify='left', header=False),
+          sep='\n')
