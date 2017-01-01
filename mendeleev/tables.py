@@ -310,10 +310,7 @@ class Element(Base):
         Return the `atomic_weight` if defined or mass number otherwise.
         '''
 
-        if self.atomic_weight:
-            return self.atomic_weight
-        else:
-            return self.mass_number
+        return self.atomic_weight
 
     @hybrid_property
     def mass_number(self):
