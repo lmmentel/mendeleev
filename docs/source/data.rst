@@ -18,9 +18,9 @@ The followig data are currently available:
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | atomic_volume             | float | Atomic volume                                        | cm3/mol  |             |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
-| atomic_weight             | float | Atomic weight                                        |          | [36]_       |
+| atomic_weight             | float | Atomic weight                                        |          | [36]_,[37]_ |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
-| atomic_weight_uncertainty | float | Atomic volume                                        |          | [36]_       |
+| atomic_weight_uncertainty | float | Atomic volume                                        |          | [36]_,[37]_ |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | block                     | int   | Block in periodic table                              |          |             |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
@@ -73,6 +73,10 @@ The followig data are currently available:
 | ionenergy                 | tuple | Ionization energies                                  | eV       | [13]_       |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | ionic_radii               | list  | Ionic and crystal radii in pm                        | pm       | [14]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| is_monoisotopic           | bool  | Is the element monoisotopic                          |          |             |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| is_radioactive            | bool  | Is the element radioactive                           |          |             |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | isotopes                  | list  | Isotopes                                             |          |             |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
@@ -131,6 +135,19 @@ The followig data are currently available:
 
 Some notes on the data
 ----------------------
+
+Atomic Weights
+++++++++++++++
+
+Atomic weights and their uncertainties were retrieved mainly from ref. [37]_. For
+elements whose values were given as ranges the *conventional atomic weights* from
+Table 3 in ref. [36]_ were taken. For radioactive elements the standard approach
+was adopted where the weight is taken as the mass number of the most stable isotope.
+The data was obtained from `CIAAW page on radioactive elements <http://www.ciaaw.org/radioactive-elements.htm>`_.
+In cases where two isotopes are specified the one with the smaller standard deviation was choses.
+In case of Tc and Pm relative weights of their isotopes are used, for Tc isotope 98, and for Pm isotope 145 were taken
+from `CIAAW <http://www.ciaaw.org/atomic-masses.htm>`_.
+
 
 Covalent Radii
 ++++++++++++++
@@ -309,3 +326,5 @@ References
    (2016). Atomic weights of the elements 2013 (IUPAC Technical Report).
    Pure and Applied Chemistry, 88(3), 265–291.
    `doi:10.1515/pac-2015-0305 <http://doi.org/10.1515/pac-2015-0305>`_
+.. [37] Standard Atomic Weights, IUPAC-CIAAW, http://www.ciaaw.org/atomic-weights.htm
+   accessed Jan. 1st 2017.
