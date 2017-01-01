@@ -103,7 +103,8 @@ class Element(Base):
       covalent_radius_slater : float
         Covalent radius in pm from
       cpk_color : str
-        CPK color of the atom in HEX, see http://jmol.sourceforge.net/jscolors/#color_U
+        CPK color of the atom in HEX,
+        see http://jmol.sourceforge.net/jscolors/#color_U
       density : float
         Density at 295K in g/cm3
       description : str
@@ -222,6 +223,7 @@ class Element(Base):
     group = relationship("Group", uselist=False)
     heat_of_formation = Column(Float)
     is_monoisotopic = Column(Boolean)
+    is_radioactive = Column(Boolean)
     jmol_color = Column(String)
     lattice_constant = Column(Float)
     lattice_structure = Column(String)
@@ -288,12 +290,6 @@ class Element(Base):
         return self.atomic_number
 
     @hybrid_property
-    def protons(self):
-        '''Return the number of protons.'''
-
-        return self.atomic_number
-
-    @hybrid_property
     def neutrons(self):
         '''
         Return the number of neutrons of the most abundant natural stable
@@ -301,6 +297,23 @@ class Element(Base):
         '''
 
         return self.mass_number - self.protons
+
+    @hybrid_property
+    def protons(self):
+        '''Return the number of protons.'''
+
+        return self.atomic_number
+
+    @hybrid_property
+    def mass(self):
+        '''
+        Return the `atomic_weight` if defined or mass number otherwise.
+        '''
+
+        if self.atomic_weight:
+            return self.atomic_weight
+        else:
+            return self.mass_number
 
     @hybrid_property
     def mass_number(self):
