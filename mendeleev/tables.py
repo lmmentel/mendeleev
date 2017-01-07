@@ -318,7 +318,31 @@ class Element(Base):
         Return the mass number of the most abundant natural stable isotope
         '''
 
-        return max(self.isotopes, key=attrgetter("abundance")).mass_number
+        if len(self.isotopes) > 0:
+            lwithabu = [i for i in self.isotopes if i.abundance is not None]
+            if len(lwithabu) > 0:
+                return max(lwithabu, key=attrgetter('abundance')).mass_number
+            else:
+                return self.isotopes[0].mass_number
+        else:
+            return int(self.atomic_weight)
+
+    def mass_str(self):
+        '''String representation of atomic weight'''
+
+        if self.atomic_weight_uncertainty is None:
+            if self.is_radioactive:
+                return '[{aw:.0f}]'.format(aw=self.atomic_weight)
+            else:
+                return '{aw:.3f}'.format(aw=self.atomic_weight)
+        else:
+            dec = np.abs(np.floor(np.log10(np.abs(self.atomic_weight_uncertainty)))).astype(int)
+            if dec > 5:
+                dec = 5
+            if self.is_radioactive:
+                return '[{aw:.{dec}f}]'.format(aw=self.atomic_weight, dec=dec)
+            else:
+                return '{aw:.{dec}f}'.format(aw=self.atomic_weight, dec=dec)
 
     @hybrid_property
     def covalent_radius(self):
@@ -380,12 +404,6 @@ class Element(Base):
             return None
         else:
             return 1.0 / (2.0 * eta)
-
-    @hybrid_property
-    def exact_mass(self):
-        '''Return the mass calculated from isotopic composition.'''
-
-        return sum(iso.mass * iso.abundance for iso in self.isotopes)
 
     def zeff(self, n=None, o=None, method='slater', alle=False):
         '''
@@ -630,23 +648,6 @@ class Element(Base):
         '''Return the number of valence electrons'''
 
         return self.ec.nvalence(self.block, method=method)
-
-    def mass_str(self):
-        '''String representation of atomic weight'''
-
-        if self.atomic_weight_uncertainty is None:
-            if self.is_radioactive:
-                return '[{aw:.0f}]'.format(aw=self.atomic_weight)
-            else:
-                return '{aw:.3f}'.format(aw=self.atomic_weight)
-        else:
-            dec = np.abs(np.floor(np.log10(np.abs(self.atomic_weight_uncertainty)))).astype(int)
-            if dec > 5:
-                dec = 5
-            if self.is_radioactive:
-                return '[{aw:.{dec}f}]'.format(aw=self.atomic_weight, dec=dec)
-            else:
-                return '{aw:.{dec}f}'.format(aw=self.atomic_weight, dec=dec)
 
     def __str__(self):
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
