@@ -27,3 +27,5 @@ build/**
 *.ind
 *.out
 *.fdb_latexmk
+mendeleev.sublime-workspace
+mendeleev.sublime-project
