@@ -846,14 +846,13 @@ class Isotope(Base):
 
     def __str__(self):
 
-        return "{0:5d} {1:10.5f} {2:6.2f}% {3:5d}".format(
-            self.atomic_number, self.mass, self.abundance * 100.0,
-            self.mass_number)
+        return "{0:5d} {1:5d} {2:10.5f}".format(
+            self.atomic_number, self.mass_number, self.mass)
 
     def __repr__(self):
 
-        return "<Isotope(mass={}, abundance={}, mass_number={})>".format(
-            self.mass, self.abundance, self.mass_number)
+        return "<Isotope(Z={}, A={}, mass={})>".format(
+            self.atomic_number, self.mass_number, self.mass)
 
 
 class ScreeningConstant(Base):
