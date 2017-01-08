@@ -51,7 +51,7 @@ Issues
 
 If you would like to suggest an improvement or report a bug or data inconsistency please consider creating an
 `issue on bitbucket <https://bitbucket.org/lukaszmentel/mendeleev/issues>`_.
-I would be grateful especially grateful for references to possible data updates.
+I would be especially grateful for references to possible data updates and sources and recommendations of new data.
 
 Indices and tables
 ==================
