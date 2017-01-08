@@ -108,8 +108,8 @@ def colormap_column(df, column, cmap='RdBu_r', missing='#ffffff'):
     return out
 
 
-def periodic_plot(df, values=None, title='Periodic Table', width=1000,
-                  height=800, missing='#ffffff', decimals=0,
+def periodic_plot(df, attribute='atomic_weight', title='Periodic Table',
+                  width=1000, height=800, missing='#ffffff', decimals=3,
                   colorby=None, output=None, cmap='RdBu_r',
                   showfblock=True, long_version=False):
     '''
@@ -118,7 +118,9 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
     Args:
       df : DataFrame
         Pandas DataFrame with the data on elements
-      tile : str
+      attribute : str
+        Name of the attribute to be displayed
+      title : str
         Title to appear above the periodic table
       colorby : str
         Name of the column containig the colors
@@ -140,6 +142,8 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
       showfblock : bool
         Show the elements from the f block
     '''
+
+    ac = 'attribute_column'
 
     elements = df.copy()
 
@@ -166,21 +170,24 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
                                              elements.loc[mask, 'atomic_number'].min() + 3
                 elements.loc[mask, 'y'] = elements.loc[mask, 'period'] + 2.5
 
-    elements['mass'] = elements['mass'].astype(str)
-
     # additional columns for positioning of the text
 
     elements.loc[:, 'y_anumber'] = elements['y'] - 0.3
     elements.loc[:, 'y_name'] = elements['y'] + 0.2
-    if values:
-        elements.loc[elements[values].notnull(), 'y_prop'] = elements.loc[elements[values].notnull(), 'y'] + 0.35
+    if property:
+        elements.loc[elements[attribute].notnull(), 'y_prop'] = elements.loc[elements[attribute].notnull(), 'y'] + 0.35
     else:
         elements.loc[:, 'y_prop'] = elements['y'] + 0.35
 
-    if values:
-        temp = colormap_column(elements, values, cmap=cmap, missing=missing)
+    if colorby == 'attribute':
+        temp = colormap_column(elements, attribute, cmap=cmap, missing=missing)
         elements = pd.merge(elements, temp, left_index=True, right_index=True)
-        elements[values] = elements[values].round(decimals=decimals)
+        colorby = 'cmap'
+
+    if elements[attribute].dtype == np.float64:
+        elements[ac] = elements[attribute].round(decimals=decimals)
+    else:
+        elements[ac] = elements[attribute]
 
     if colorby not in elements.columns:
         series = get_table('series')
@@ -201,9 +208,6 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
                toolbar_location='above',
                toolbar_sticky=False,
                )
-
-    if values:
-        colorby = 'cmap'
 
     p.rect("x", "y", 0.9, 0.9, source=source, color=colorby, fill_alpha=0.6)
 
@@ -236,12 +240,7 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
     p.text(x="x", y="y_name", text="name",
            text_font_size="6pt", **text_props)
 
-    if values:
-        column = values
-    else:
-        column = 'mass'
-
-    p.text(x="x", y="y_prop", text=column,
+    p.text(x="x", y="y_prop", text=ac,
            text_font_size="7pt", **text_props)
 
     p.grid.grid_line_color = None
@@ -250,7 +249,7 @@ def periodic_plot(df, values=None, title='Periodic Table', width=1000,
     hover.tooltips = OrderedDict([
         ("name", "@name"),
         ("atomic number", "@atomic_number"),
-        ("atomic mass", "@mass"),
+        ("atomic weight", "@atomic_weight"),
         ('EN Pauling', '@en_pauling'),
         ('Electron affinity', '@electron_affinity'),
         ("CPK color", "$color[hex, swatch]:cpk_color"),
