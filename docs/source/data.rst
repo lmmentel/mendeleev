@@ -133,6 +133,23 @@ The followig data are currently available:
 | vdw_radius_uff            | float | Van der Waals radius from the UFF                    | pm       | [23]_       |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 
+Isotopes
+--------
+
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| Name                      | Type  | Comment                                              | Unit     | Data Source |
++===========================+=======+======================================================+==========+=============+
+| abundance                 | float | Relative Abundance                                   |          | [38]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| is_radioactive            | bool  | Is the isotope radioactive                           |          | [39]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| mass                      | float | Atomic mass                                          | Da       | [39]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| mass_number               | int   | Mass number of the isotope                           |          | [39]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| mass_uncertainty          | float | Uncertainty of the atomic mass                       |          | [39]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+
 Some notes on the data
 ----------------------
 
@@ -326,6 +343,12 @@ References
    (2016). Atomic weights of the elements 2013 (IUPAC Technical Report).
    Pure and Applied Chemistry, 88(3), 265–291.
    `doi:10.1515/pac-2015-0305 <http://doi.org/10.1515/pac-2015-0305>`_
-.. [37] Standard Atomic Weights, IUPAC-CIAAW, http://www.ciaaw.org/atomic-weights.htm
+.. [37] Standard Atomic Weights, IUPAC-CIAAW,
+   `http://www.ciaaw.org/atomic-weights.htm <http://www.ciaaw.org/atomic-weights.htm>`_
    accessed Jan. 1st 2017.
-   
+.. [38] Isotopic Abundances, IUPAC-CIAAW,
+   `http://ciaaw.org/isotopic-abundances.htm <http://ciaaw.org/isotopic-abundances.htm>`_
+   accessed Jan. 7th 2017.
+.. [39] Atomic Masses, IUPAC-CIAAW,
+   `http://ciaaw.org/atomic-masses.htm <http://ciaaw.org/atomic-masses.htm>`_
+   accessed Jan. 7th 2017.
