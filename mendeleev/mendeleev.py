@@ -138,10 +138,12 @@ def get_data():
     en_scales = ['allred-rochow', 'cottrell-sutton', 'gordy',
                  'martynov-batsanov', 'mulliken', 'nagle', 'sanderson']
     for scale in en_scales:
-        data['en_' + scale] = [element(row.symbol).electronegativity(scale=scale) for i, row in data.iterrows()]
+        data['en_' + scale] = [element(row.symbol).electronegativity(scale=scale)
+                               for i, row in data.iterrows()]
 
     for attr in ['hardness', 'softness']:
-        data[attr] = [getattr(element(row.symbol), attr)() for i, row in data.iterrows()]
+        data[attr] = [getattr(element(row.symbol), attr)()
+                      for i, row in data.iterrows()]
 
     # TODO: zeff, slater, clementi, series, grups, ionization energies up to a
     # values
@@ -300,12 +302,15 @@ def deltaN(id1, id2, charge1=0, charge2=0, missingIsZero=True):
     session = get_session()
     atns = ids_to_attr([id1, id2], attr='atomic_number')
 
-    e1, e2 = [session.query(Element).filter(Element.atomic_number == a).one() for a in atns]
+    e1, e2 = [session.query(Element).filter(Element.atomic_number == a).one()
+              for a in atns]
 
-    chi = [x.en_mulliken(charge=c, missingIsZero=missingIsZero) for x, c in zip([e1, e2], [charge1, charge2])]
+    chi = [x.en_mulliken(charge=c, missingIsZero=missingIsZero)
+           for x, c in zip([e1, e2], [charge1, charge2])]
 
     if all(x is not None for x in chi):
-        return (chi[0] - chi[1])/(2.0*(e1.hardness(charge=charge1) + e2.hardness(charge=charge2)))
+        return (chi[0] - chi[1]) / (2.0 * (e1.hardness(charge=charge1) +
+                                           e2.hardness(charge=charge2)))
     else:
         return None
 
@@ -346,7 +351,8 @@ def attributes(elem, names, fmt='8.3f'):
     '''
 
     return ['\t{0:s} = {1:{fmt}}'.format(name.replace('_', ' ').capitalize(),
-                                         getattr(elem, name), fmt=fmt) for name in names]
+                                         getattr(elem, name), fmt=fmt)
+                                         for name in names]
 
 
 def clielement():
@@ -357,8 +363,8 @@ def clielement():
     from pyfiglet import Figlet
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('element', help='Element identifier: symbol, name or atomic number')
-    #parser.add_argument('-f', help='Full information')
+    parser.add_argument('element',
+                        help='Element identifier: symbol, name or atomic number')
     args = parser.parse_args()
 
     e = element(args.element)
@@ -372,7 +378,8 @@ def clielement():
     et.index = et.index.str.replace('_', ' ').str.capitalize()
     et.sort_index(inplace=True)
 
-    desc = 'Description\n===========\n\n' + '\n'.join(['  ' + s for s in textwrap.wrap(e.description, 70)])
+    desc = 'Description\n===========\n\n' + '\n'.join(['  ' + s
+        for s in textwrap.wrap(e.description, 70)])
 
     props = '\nProperties\n==========\n'
 

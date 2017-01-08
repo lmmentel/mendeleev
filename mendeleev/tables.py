@@ -22,7 +22,7 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
-'''tables module'''
+'''tables module specifying the database model'''
 
 import math
 import re
@@ -442,7 +442,8 @@ class Element(Base):
 
         if o is None:
             # take the shell with max `l` for a given `n`
-            o = ORBITALS[max([get_l(x[1]) for x in self.ec.conf.keys() if x[0] == n])]
+            o = ORBITALS[max([get_l(x[1])
+                         for x in self.ec.conf.keys() if x[0] == n])]
         else:
             if o not in ORBITALS:
                 raise ValueError('<s> should be one of {}'.format(", ".join(ORBITALS)))
@@ -479,7 +480,7 @@ class Element(Base):
            - `sanderson`
         '''
 
-        #TODO:
+        # TODO:
         #        add an option to convert the value to Pauling units
         #        pu : bool
         #            Convert to Pauling's units
@@ -487,11 +488,11 @@ class Element(Base):
         if scale == 'allen':
             return self.en_allen
         elif scale == 'allred-rochow':
-            return self.zeff(alle=True)/math.pow(self.covalent_radius, 2)
+            return self.zeff(alle=True) / math.pow(self.covalent_radius, 2)
         elif scale == 'cottrell-sutton':
-            return math.sqrt(self.zeff(alle=True)/self.covalent_radius)
+            return math.sqrt(self.zeff(alle=True) / self.covalent_radius)
         elif scale == 'gordy':
-            return self.zeff(alle=True)/self.covalent_radius
+            return self.zeff(alle=True) / self.covalent_radius
         elif scale == 'li-xue':
             return self.en_li_xue(charge=charge)
         elif scale == 'martynov-batsanov':
@@ -500,7 +501,7 @@ class Element(Base):
             return self.en_mulliken()
         elif scale == 'nagle':
             if self.dipole_polarizability is not None:
-                return math.pow(self.nvalence()/self.dipole_polarizability, 1.0/3.0)
+                return math.pow(self.nvalence() / self.dipole_polarizability, 1.0 / 3.0)
             else:
                 return None
         elif scale == 'pauling':
@@ -577,7 +578,8 @@ class Element(Base):
         is the :math:`k` th ionization potential.
         '''
 
-        ionenergies = [self.ionenergies.get(i, None) for i in range(1, self.nvalence(method='simple') + 1)]
+        ionenergies = [self.ionenergies.get(i, None)
+                       for i in range(1, self.nvalence(method='simple') + 1)]
 
         if all(ionenergies):
             return np.sqrt(np.array(ionenergies).mean())
@@ -614,7 +616,8 @@ class Element(Base):
         elif charge > 0:
             Ie = self.ionenergies.get(charge, None)
 
-        crs = [(IR.coordination, IR.spin, getattr(IR, radius)) for IR in self.ionic_radii if IR.charge == charge]
+        crs = [(IR.coordination, IR.spin, getattr(IR, radius))
+               for IR in self.ionic_radii if IR.charge == charge]
 
         out = {}
         for coord, spin, cr in crs:
@@ -1007,7 +1010,8 @@ class ElectronicConfiguration(object):
     def last_subshell(self, wrt='aufbau'):
 
         if wrt == 'aufbau':
-            return sorted(self.conf.items(), key=lambda x: (x[0][0] + get_l(x[0][1]), x[0][0]))[-1]
+            return sorted(self.conf.items(),
+                          key=lambda x: (x[0][0] + get_l(x[0][1]), x[0][0]))[-1]
 
     def nvalence(self, block, method=None):
         'Return the number of valence electrons'
@@ -1018,7 +1022,8 @@ class ElectronicConfiguration(object):
             if method == 'simple':
                 return 2
             else:
-                return self.conf[(self.maxn(), 's')] + self.conf[(self.maxn() - 1, 'd')]
+                return self.conf[(self.maxn(), 's')] +\
+                    self.conf[(self.maxn() - 1, 'd')]
         elif block == 'f':
             return 2
         else:
