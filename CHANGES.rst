@@ -2,6 +2,28 @@
 mendeleev Changelog
 *******************
 
+v0.2.17 (08-01-2017)
+====================
+
+* Extended the schema for isotopes with additional attributes and updated the
+  values of abundancies, half lifes and mass uncertainties.
+* Updates to the tutorials and docs.
+
+v0.2.16 (06-01-2017)
+====================
+
+* Corrected the radioactive attribute of Th, Pa and U elements.
+
+v0.2.15 (02-01-2017)
+====================
+
+* Patched the sphinx configuration.
+
+v0.2.14 (02-01-2017)
+====================
+
+* Patched typos in README.
+
 v0.2.13 (01-01-2017)
 ====================
 
