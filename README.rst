@@ -6,8 +6,24 @@ mendeleev package
    :target: https://mendeleev.readthedocs.org
    :alt: Documentation Status
 
-This package provides an API for accessing various properties of elements from
-the periodic table of elements.
+This package provides a convenient python API for accessing various properties
+of elements, ions and isotopes in the periodic table of elements.
+
+Moreover it provides an easy to use interface to `pandas <http://pandas.pydata.org/>`_
+and convenient visualization functionality through `bokeh <http://bokeh.pydata.org/en/latest/>`_
+that enables you to create customized periodic tables displaying various properties.
+
+.. image:: docs/source/img/periodictable.png
+    :width: 800px
+    :align: center
+    :alt: alternate text
+
+
+`mendeleev` also supplies convenient tools for dealing with electronic configurations, calculating
+functions of atomic properties, exploring the periodic trends in the periodic tables. If you want
+to look at some examples there are a few `tutorials <http://mendeleev.readthedocs.io/en/stable/tutorials.html>`_
+available as `jupyter notebooks <http://jupyter.org/>`_.
+
 
 ****
 Data
@@ -161,6 +177,27 @@ The following data are currently available:
 | vdw_radius_uff            | float | Van der Waals radius from the UFF                    | pm       | [23]_       |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 
+Isotopes
+========
+
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| Name                      | Type  | Comment                                              | Unit     | Data Source |
++===========================+=======+======================================================+==========+=============+
+| abundance                 | float | Relative Abundance                                   |          | [38]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| half_life                 | float | Half life of the isotope                             |          | [36]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| half_life_unit            | str   | Unit in which the half life is given                 |          | [36]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| is_radioactive            | bool  | Is the isotope radioactive                           |          | [39]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| mass                      | float | Atomic mass                                          | Da       | [39]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| mass_number               | int   | Mass number of the isotope                           |          | [39]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| mass_uncertainty          | float | Uncertainty of the atomic mass                       |          | [39]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+
 
 .. [1] Chu, X., & Dalgarno, A. (2004). Linear response time-dependent density
    functional theory for van der Waals coefficients. The Journal of Chemical
@@ -271,8 +308,15 @@ The following data are currently available:
    (2016). Atomic weights of the elements 2013 (IUPAC Technical Report).
    Pure and Applied Chemistry, 88(3), 265–291.
    `doi:10.1515/pac-2015-0305 <http://doi.org/10.1515/pac-2015-0305>`_
-.. [37] Standard Atomic Weights, IUPAC-CIAAW, http://www.ciaaw.org/atomic-weights.htm
+.. [37] Standard Atomic Weights, IUPAC-CIAAW,
+   `http://www.ciaaw.org/atomic-weights.htm <http://www.ciaaw.org/atomic-weights.htm>`_
    accessed Jan. 1st 2017.
+.. [38] Isotopic Abundances, IUPAC-CIAAW,
+   `http://ciaaw.org/isotopic-abundances.htm <http://ciaaw.org/isotopic-abundances.htm>`_
+   accessed Jan. 7th 2017.
+.. [39] Atomic Masses, IUPAC-CIAAW,
+   `http://ciaaw.org/atomic-masses.htm <http://ciaaw.org/atomic-masses.htm>`_
+   accessed Jan. 7th 2017.
    
 
 ************
@@ -307,38 +351,8 @@ symbol type
 .. code-block:: python
 
    >>> si = element('Si')
-   >>> si
-   Element(
-       annotation=u'',
-       atomic_number=14,
-       atomic_radius=132.0,
-       atomic_volume=12.1,
-       block=u'p',
-       boiling_point=2628.0,
-       covalent_radius_2008=111.00000000000001,
-       covalent_radius_2009=115.99999999999999,
-       density=2.33,
-       description=u"Metalloid element belonging to group 14 of the periodic table. It is the second most abundant element in the Earth's crust, making up 25.7% of it by weight. Chemically less reactive than carbon. First identified by Lavoisier in 1787 and first isolated in 1823 by Berzelius.",
-       dipole_polarizability=37.31,
-       ec=1s2 2s2 2p6 3s2 3p2,
-       econf=u'[Ne] 3s2 3p2',
-       electron_affinity=1.3895211,
-       en_allen=11.33,
-       en_pauling=1.9,
-       evaporation_heat=383.0,
-       fusion_heat=50.6,
-       group_id=14,
-       lattice_constant=5.43,
-       lattice_structure=u'DIA',
-       mass=28.0855,
-       melting_point=u'1683',
-       name=u'Silicon',
-       period=3,
-       specific_heat=0.703,
-       symbol=u'Si',
-       thermal_conductivity=149.0,
-       vdw_radius=210.0,
-   )
+   >>> si.name
+   'Silicon'
 
 Similarly to access the data by atomic number or element names type
 
