@@ -13,13 +13,13 @@ Moreover it provides an easy to use interface to `pandas <http://pandas.pydata.o
 and convenient visualization functionality through `bokeh <http://bokeh.pydata.org/en/latest/>`_
 that enables you to create customized periodic tables displaying various properties.
 
-.. image:: docs/source/img/periodictable.png
+.. image:: docs/source/img/mendeleev_periodic_series.png
     :width: 800px
     :align: center
     :alt: alternate text
 
 
-`mendeleev` also supplies convenient tools for dealing with electronic configurations, calculating
+The `mendeleev` package also supplies convenient tools for dealing with electronic configurations, calculating
 functions of atomic properties, exploring the periodic trends in the periodic tables. If you want
 to look at some examples there are a few `tutorials <http://mendeleev.readthedocs.io/en/stable/tutorials.html>`_
 available as `jupyter notebooks <http://jupyter.org/>`_.
