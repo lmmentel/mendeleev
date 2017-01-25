@@ -19,7 +19,7 @@ that enables you to create customized periodic tables displaying various propert
     :alt: alternate text
 
 
-The `mendeleev` package also supplies convenient tools for dealing with electronic configurations, calculating
+The ``mendeleev`` package also supplies convenient tools for dealing with electronic configurations, calculating
 functions of atomic properties, exploring the periodic trends in the periodic tables. If you want
 to look at some examples there are a few `tutorials <http://mendeleev.readthedocs.io/en/stable/tutorials.html>`_
 available as `jupyter notebooks <http://jupyter.org/>`_.
