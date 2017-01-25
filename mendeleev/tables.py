@@ -841,12 +841,15 @@ class Isotope(Base):
     id = Column(Integer, primary_key=True)
     abundance = Column(Float)
     atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
+    g_factor = Column(Float)
     half_life = Column(Float)
     half_life_unit = Column(String)
     is_radioactive = Column(Boolean)
     mass = Column(Float)
     mass_number = Column(Integer)
     mass_uncertainty = Column(Float)
+    spin = Column(Float)
+    quadrupole_moment = Column(Float)
 
     def __str__(self):
 

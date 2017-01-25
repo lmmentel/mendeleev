@@ -2,6 +2,17 @@
 mendeleev Changelog
 *******************
 
+v0.3.1 (25-01-2017)
+===================
+
+* Added new properties of isotopes: `spin`, `g_factor`, `quadrupole_moment` 
+
+v0.3.0 (09-01-2017)
+===================
+
+* Updates of the documentation and tutorials
+* Added radioactive isotope half-lifes
+
 v0.2.17 (08-01-2017)
 ====================
 

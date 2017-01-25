@@ -136,23 +136,30 @@ The followig data are currently available:
 Isotopes
 --------
 
-+---------------------------+-------+------------------------------------------------------+----------+-------------+
-| Name                      | Type  | Comment                                              | Unit     | Data Source |
-+===========================+=======+======================================================+==========+=============+
-| abundance                 | float | Relative Abundance                                   |          | [38]_       |
-+---------------------------+-------+------------------------------------------------------+----------+-------------+
-| half_life                 | float | Half life of the isotope                             |          | [36]_       |
-+---------------------------+-------+------------------------------------------------------+----------+-------------+
-| half_life_unit            | str   | Unit in which the half life is given                 |          | [36]_       |
-+---------------------------+-------+------------------------------------------------------+----------+-------------+
-| is_radioactive            | bool  | Is the isotope radioactive                           |          | [39]_       |
-+---------------------------+-------+------------------------------------------------------+----------+-------------+
-| mass                      | float | Atomic mass                                          | Da       | [39]_       |
-+---------------------------+-------+------------------------------------------------------+----------+-------------+
-| mass_number               | int   | Mass number of the isotope                           |          | [39]_       |
-+---------------------------+-------+------------------------------------------------------+----------+-------------+
-| mass_uncertainty          | float | Uncertainty of the atomic mass                       |          | [39]_       |
-+---------------------------+-------+------------------------------------------------------+----------+-------------+
++---------------------------+-------+------------------------------------------------------+--------------+-------------+
+| Name                      | Type  | Comment                                              | Unit         | Data Source |
++===========================+=======+======================================================+==============+=============+
+| abundance                 | float | Relative Abundance                                   |              | [38]_       |
++---------------------------+-------+------------------------------------------------------+--------------+-------------+
+| g_factor                  | float | Nuclear g-factor                                     |              | [40]_       |
++---------------------------+-------+------------------------------------------------------+--------------+-------------+
+| half_life                 | float | Half life of the isotope                             |              | [36]_       |
++---------------------------+-------+------------------------------------------------------+--------------+-------------+
+| half_life_unit            | str   | Unit in which the half life is given                 |              | [36]_       |
++---------------------------+-------+------------------------------------------------------+--------------+-------------+
+| is_radioactive            | bool  | Is the isotope radioactive                           |              | [39]_       |
++---------------------------+-------+------------------------------------------------------+--------------+-------------+
+| mass                      | float | Atomic mass                                          | Da           | [39]_       |
++---------------------------+-------+------------------------------------------------------+--------------+-------------+
+| mass_number               | int   | Mass number of the isotope                           |              | [39]_       |
++---------------------------+-------+------------------------------------------------------+--------------+-------------+
+| mass_uncertainty          | float | Uncertainty of the atomic mass                       |              | [39]_       |
++---------------------------+-------+------------------------------------------------------+--------------+-------------+
+| spin                      | float | Nuclear spin quantum number                          |              |             |
++---------------------------+-------+------------------------------------------------------+--------------+-------------+
+| quadrupole_moment         | float | Nuclear electric quadrupole moment                   | b [100 fm^2] | [41]_       |
++---------------------------+-------+------------------------------------------------------+--------------+-------------+
+
 
 Some notes on the data
 ----------------------
@@ -197,6 +204,18 @@ Updates
   - Electron affinity of cobalt was taken from [30]_.
 
   - Electron affinity of lead was taken from [31]_.
+
+
+Isotopes g-factors and quadrupole moments
++++++++++++++++++++++++++++++++++++++++++
+
+The data regarding g-factors and electric quadrupole moments was parsed from
+`easyspin webpage <http://easyspin.org/documentation/isotopetable.html>`_
+(accessed 25.01.2017) where additional notes are mentioned:
+
+- Typo for Rh-103: Moment is factor of 10 too large
+- 237Np, 239Pu, 243Am magnetic moment data from [8]_, section 11-2
+- In quadrupole moment data - a typo for Ac-227: sign should be +
 
 
 Nuclear charge screening constants
@@ -356,3 +375,9 @@ References
 .. [39] Atomic Masses, IUPAC-CIAAW,
    `http://ciaaw.org/atomic-masses.htm <http://ciaaw.org/atomic-masses.htm>`_
    accessed Jan. 7th 2017.
+.. [40] N.Stone, Table of Nuclear Magnetic Dipole and Electric Quadrupole Moments
+   International Atomic Energy Agency, INDC(NDS)-0658, February 2014
+   `https://www-nds.iaea.org/publications/indc/indc-nds-0658.pdf <https://www-nds.iaea.org/publications/indc/indc-nds-0658.pdf>`_
+.. [41] N.Stone, Table of Nuclear Quadrupole Moments,
+   International Atomic Energy Agency, INDC(NDS)-650, December 2013
+   `https://www-nds.iaea.org/publications/indc/indc-nds-0650.pdf <https://www-nds.iaea.org/publications/indc/indc-nds-0650.pdf>`_
