@@ -6,6 +6,13 @@ from mendeleev import (element, get_table, get_engine, get_session,
                        IonizationEnergy)
 
 
+def get_zeff(an, method='slater'):
+    'A helper function to calculate the effective nuclear charge'
+
+    e = element(an)
+    return e.zeff(method=method)
+
+
 def get_neutral_data():
     '''
     Get extensive set of data from multiple database tables as pandas.DataFrame
@@ -34,11 +41,13 @@ def get_neutral_data():
         elements[attr] = [getattr(element(row.symbol), attr)()
                           for i, row in elements.iterrows()]
 
-    # mass
     elements['mass'] = [element(row.symbol).mass_str()
                         for i, row in elements.iterrows()]
 
-    # TODO: zeff, slater, clementi, series, grups
+    elements.loc[:, 'zeff_slater'] = elements.apply(
+        lambda x: get_zeff(x['atomic_number'], method='slater'), axis=1)
+    elements.loc[:, 'zeff_clementi'] = elements.apply(
+        lambda x: get_zeff(x['atomic_number'], method='clementi'), axis=1)
 
     session = get_session()
     engine = get_engine()
