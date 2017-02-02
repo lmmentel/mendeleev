@@ -385,3 +385,20 @@ def clielement():
 
     print(header, desc, props, et.to_string(justify='left', header=False),
           sep='\n')
+
+
+def n_eff(n):
+    '''Return the effective principal quantum number
+
+    Args:
+        n : (int)
+            Principal quantum number
+
+    .. note::
+       The values are taken from J. A. Pople, D. L. Beveridge,
+       "Approximate Molecular Orbital Theory", McGraw-Hill, 1970
+    '''
+
+    values = {1: 1.0, 2: 2.0, 3: 3.0, 4: 3.7, 5: 4.0, 6: 4.2}
+
+    return values.get(n, None)
