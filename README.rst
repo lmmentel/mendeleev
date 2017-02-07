@@ -24,6 +24,15 @@ functions of atomic properties, exploring the periodic trends in the periodic ta
 to look at some examples there are a few `tutorials <http://mendeleev.readthedocs.io/en/stable/tutorials.html>`_
 available as `jupyter notebooks <http://jupyter.org/>`_.
 
+*******************
+Interactive web app
+*******************
+
+If you would like to explore the data available in `mendeleev <http://mendeleev.readthedocs.org/en/latest/>`_
+check out the interactive web app at `mendeleev.herokuapp.com <http://mendeleev.herokuapp.com/>`_
+where you can create your own periodic tables and visualize the relations between various properties
+of elements.
+
 
 ****
 Data
