@@ -89,6 +89,8 @@ class Element(Base):
       c6_gb : float
         C_6 dispersion coefficient in a.u. from Gould, T., & Bučko, T. (2016).
         JCTC, 12(8), 3603–3613. http://doi.org/10.1021/acs.jctc.6b00361
+      cas : str
+        Chemical Abstracts Serice identifier
       covalent_radius_bragg : float
         Covalent radius in pm from
       covalent_radius_cordero : float
@@ -201,6 +203,7 @@ class Element(Base):
     atomic_weight_uncertainty = Column(Float)
     block = Column(String)
     boiling_point = Column(Float)
+    cas = Column(String)
     covalent_radius_bragg = Column(Float)
     covalent_radius_cordero = Column(Float)
     covalent_radius_pyykko = Column(Float)
