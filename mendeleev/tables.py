@@ -72,6 +72,8 @@ class Element(Base):
         Atomic number
       atomic_radius : float
         Atomic radius in pm
+      atomic_radius_rahm : float
+        Atomic radius by Rahm et al. in pm
       atomic_volume : float
         Atomic volume in cm3/mol
       atomic_weight : float
@@ -198,6 +200,7 @@ class Element(Base):
     annotation = Column(String)
     atomic_number = Column(Integer, primary_key=True)
     atomic_radius = Column(Float)
+    atomic_radius_rahm = Column(Float)
     atomic_volume = Column(Float)
     atomic_weight = Column(Float)
     atomic_weight_uncertainty = Column(Float)

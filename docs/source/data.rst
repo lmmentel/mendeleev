@@ -16,6 +16,8 @@ The followig data are currently available:
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | atomic_radius             | float | Atomic radius                                        | pm       |             |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
+| atomic_radius_rahm        | float | Atomic radius by Rahm et al.                         | pm       | [42]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
 | atomic_volume             | float | Atomic volume                                        | cm3/mol  |             |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | atomic_weight             | float | Atomic weight                                        |          | [36]_, [37]_|
@@ -383,3 +385,6 @@ References
 .. [41] N.Stone, Table of Nuclear Quadrupole Moments,
    International Atomic Energy Agency, INDC(NDS)-650, December 2013
    `https://www-nds.iaea.org/publications/indc/indc-nds-0650.pdf <https://www-nds.iaea.org/publications/indc/indc-nds-0650.pdf>`_
+.. [42] Rahm, M., Hoffmann, R., & Ashcroft, N. W. (2016). Atomic and Ionic Radii of Elements 1-96.
+   Chemistry - A European Journal, 22(41), 14625–14632.
+   `doi: 10.1002/chem.201602949 <http://doi.org/10.1002/chem.201602949>`_
