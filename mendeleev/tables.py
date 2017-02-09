@@ -428,14 +428,14 @@ class Element(Base):
           o : str
             Orbital label, (s, p, d, ...)
           alle : bool
-            Use all the valence electrons, i.e. calculate screening for an extra
-            electron when method='slater', if method='clementi' this option is
-            ignored
+            Use all the valence electrons, i.e. calculate screening for an
+            extra electron when method='slater', if method='clementi' this
+            option is ignored
         '''
 
         # identify th valence s,p vs d,f
         if n is None:
-            n = self.ec.maxn()
+            n = self.ec.max_n()
         else:
             if not isinstance(n, int):
                 raise ValueError('<n> should be an integer, got: {}'.format(type(n)))
@@ -622,7 +622,7 @@ class Element(Base):
         out = {}
         for coord, spin, cr in crs:
             # the 100.0 factor converts picometers to Angstroms
-            eneg = neff[self.ec.maxn()] * math.sqrt(Ie / RY) * 100.0 / cr
+            eneg = neff[self.ec.max_n()] * math.sqrt(Ie / RY) * 100.0 / cr
             if len(spin) < 1:
                 out[coord] = eneg
             else:
@@ -985,7 +985,7 @@ class ElectronicConfiguration(object):
     def electrons_per_shell(self):
 
         return {s: sum([v for k, v in self.conf.items() if k[0] == n])
-                for n, s in zip(range(1, self.maxn() + 1), SHELLS)}
+                for n, s in zip(range(1, self.max_n() + 1), SHELLS)}
 
     def __repr__(self):
 
@@ -1005,10 +1005,23 @@ class ElectronicConfiguration(object):
 
         return [(x[0], get_l(x[1]), x[2]) for x in self.conf]
 
-    def maxn(self):
-        'Return the largest value of pricncipal qunatum number for the atom'
+    def max_n(self):
+        'Return the largest value of principal quantum number for the atom'
 
         return max([shell[0] for shell in self.conf.keys()])
+
+    def max_l(self, n):
+        '''
+        Return the largest value of azimutal quantum number for a gieven
+        value of principal quantum number
+
+        Args:
+            n : int
+                Principal quantum number
+        '''
+
+        return ORBITALS[max([get_l(x[1])
+                        for x in self.conf.keys() if x[0] == n])]
 
     def last_subshell(self, wrt='aufbau'):
 
@@ -1020,13 +1033,13 @@ class ElectronicConfiguration(object):
         'Return the number of valence electrons'
 
         if block in ['s', 'p']:
-            return sum([v for k, v in self.conf.items() if k[0] == self.maxn()])
+            return sum([v for k, v in self.conf.items() if k[0] == self.max_n()])
         elif block == 'd':
             if method == 'simple':
                 return 2
             else:
-                return self.conf[(self.maxn(), 's')] +\
-                    self.conf[(self.maxn() - 1, 'd')]
+                return self.conf[(self.max_n(), 's')] +\
+                    self.conf[(self.max_n() - 1, 'd')]
         elif block == 'f':
             return 2
         else:
