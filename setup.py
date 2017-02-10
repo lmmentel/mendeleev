@@ -1,5 +1,5 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """
     Setup file for the mendeleev package.
 """
@@ -11,7 +11,7 @@ MAIN_PACKAGE = "mendeleev"
 DESCRIPTION = "Python API with a database of atomic properties for elements in the periodic table"
 LICENSE = "MIT"
 URL = "https://bitbucket.org/lukaszmentel/mendeleev"
-DOWNLOAD_URL='https://bitbucket.org/lukaszmentel/mendeleev/get/v0.3.1.tar.gz'
+DOWNLOAD_URL = 'https://bitbucket.org/lukaszmentel/mendeleev/get/v0.3.1.tar.gz'
 AUTHOR = "Lukasz Mentel"
 EMAIL = "lmmentel@gmail.com"
 VERSION = '0.3.1'
@@ -29,10 +29,15 @@ CLASSIFIERS = ['Development Status :: 3 - Alpha',
                'Topic :: Scientific/Engineering :: Chemistry',
                'Topic :: Scientific/Engineering :: Physics']
 
+
+DEPENDENCIES = ['numpy', 'pandas', 'sqlalchemy']
+
+
 def readme():
     '''Return the contents of the README.rst file.'''
     with open('README.rst') as freadme:
         return freadme.read()
+
 
 def setup_package():
 
@@ -44,17 +49,19 @@ def setup_package():
           author=AUTHOR,
           author_email=EMAIL,
           include_package_data=True,
+          install_requires=DEPENDENCIES,
           keywords=KEYWORDS,
           license=LICENSE,
           long_description=readme(),
           classifiers=CLASSIFIERS,
           packages=find_packages(exclude=['tests', 'tests.*']),
-          entry_points = {
-            'console_scripts' : [
-                'element.py = mendeleev.mendeleev:clielement',
-            ]
+          entry_points={
+                'console_scripts': [
+                    'element.py = mendeleev.mendeleev:clielement',
+                    'mdlvappdata = mendeleev.utils:get_app_data']
           },
-    )
+          )
+
 
 if __name__ == "__main__":
     setup_package()
