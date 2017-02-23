@@ -580,8 +580,8 @@ class Element(Base):
 
            \chi_{MB} = \sqrt{\\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
 
-        where: :math:`n_{v}` is the number of valence electrons and :math:`I_{k}`
-        is the :math:`k` th ionization potential.
+        where: :math:`n_{v}` is the number of valence electrons and
+        :math:`I_{k}` is the :math:`k` th ionization potential.
         '''
 
         ionenergies = [self.ionenergies.get(i, None)
