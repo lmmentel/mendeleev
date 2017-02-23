@@ -15,7 +15,8 @@ DOWNLOAD_URL = 'https://bitbucket.org/lukaszmentel/mendeleev/get/v0.3.1.tar.gz'
 AUTHOR = "Lukasz Mentel"
 EMAIL = "lmmentel@gmail.com"
 VERSION = '0.3.1'
-KEYWORDS = ['periodic', 'table', 'elements', 'atomic', 'properties', 'mendeleev']
+KEYWORDS = ['periodic', 'table', 'elements', 'atomic', 'properties',
+            'mendeleev']
 
 
 CLASSIFIERS = ['Development Status :: 3 - Alpha',
