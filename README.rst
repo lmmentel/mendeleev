@@ -618,6 +618,30 @@ If you use *mendeleev* in a scientific publication, please cite the software as
 |    L. M. Mentel, *mendeleev*, 2014. Available at: `https://bitbucket.org/lukaszmentel/mendeleev <https://bitbucket.org/lukaszmentel/mendeleev>`_.
 
 
+Here's the reference in the `BibLaTeX <https://www.ctan.org/pkg/biblatex?lang=en>`_ format
+
+.. code-block:: latex
+
+   @software{mendeleev2014,
+      author = {Mentel, Łukasz},
+      title = {{mendeleev} -- A Python resource for properties of elements, ions and isotopes},
+      url = {https://bitbucket.org/lukaszmentel/mendeleev},
+      version = {0.3.1},
+      date = {2014--},
+  }
+
+or the older `BibTeX <http://www.bibtex.org/>`_ format
+
+.. code-block:: latex
+
+   @misc{mendeleev2014,
+      auhor = {Mentel, Łukasz},
+      title = {mendeleev} -- A Python resource for properties of elements, ions and isotopes, ver. 0.3.1},
+      howpublished = {\url{https://bitbucket.org/lukaszmentel/mendeleev}},
+      year  = {2014--},
+   }
+
+
 *******
 Funding
 *******
