@@ -1,9 +1,12 @@
 
+import numpy as np
 import pandas as pd
 from sqlalchemy.dialects import sqlite
 
 from mendeleev import (element, get_table, get_engine, get_session,
-                       IonizationEnergy)
+                       get_attr_for_group)
+
+from .tables import IonizationEnergy
 
 
 def get_zeff(an, method='slater'):
@@ -104,3 +107,40 @@ def get_app_data():
     data = add_plot_columns(data)
 
     data.to_pickle('neutral.pkl')
+
+
+def estimate(x, attribute, group=18, deg=1, kind='linear'):
+    '''
+    Evaluate a value `attribute` for `x` by interpolation or
+    extrapolation of the data points in `data`.
+
+    Args:
+        x : int
+            Value for which the property will be evaluated
+        attribute : int
+            Attribute to be estimated
+        group : int
+            Periodic table group number
+        deg : int
+            Degree of the polynomial used in the extrapolation beyond
+            the provided data points
+        kind : str
+            Kind of the interpolation used, see docs for
+            `numpy.interp1d`
+    '''
+
+    xref, yref = get_attr_for_group(attribute, group=group)
+
+    if xref.min() <= x <= xref.max():
+        return np.interp([x], xref, yref)
+    else:
+        if x < xref.min():
+            xslice = xref[:3]
+            yslice = yref[:3]
+        elif x > xref.max():
+            xslice = xref[-3:]
+            yslice = yref[-3:]
+
+        fit = np.polyfit(xslice, yslice, deg)
+        fn = np.poly1d(fit)
+        return fn(x)

@@ -25,8 +25,6 @@
 '''tables module specifying the database model'''
 
 import math
-import re
-from collections import OrderedDict
 from operator import attrgetter
 import numpy as np
 
@@ -36,22 +34,11 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
-import mendeleev
+from .econf import ElectronicConfiguration, get_l, ORBITALS
+
 
 __all__ = ['Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
            'Isotope', 'Series', 'ScreeningConstant']
-
-ORBITALS = ('s', 'p', 'd', 'f', 'g', 'h', 'i', 'j', 'k')
-SHELLS = ('K', 'L', 'M', 'N', 'O', 'P', 'Q')
-
-
-def get_l(shell):
-    'Return the orbital angular momentum quantum number for a given shell'
-
-    if shell in ORBITALS:
-        return ORBITALS.index(shell.lower())
-    else:
-        raise ValueError('"{}" is not a proper shell label'.format(shell))
 
 
 Base = declarative_base()
@@ -648,8 +635,10 @@ class Element(Base):
                 Radius to use in the calcualtion
         '''
 
+        from mendeleev.utils import estimate
+
         r = getattr(self, radius)
-        rng = mendeleev.interpolate(self.atomic_number, radius)
+        rng = estimate(self.atomic_number, radius)
 
         return math.pow(rng / r, 3)
 
@@ -802,8 +791,9 @@ class Series(Base):
       name : str
         Name of the series
       color : str
-        The HEX representation of a color of the series, the colors we obtained
-        from `ColorBrewer <http://colorbrewer2.org/?type=qualitative&scheme=Paired&n=10>`_
+        The HEX representation of a color of the series, the colors were
+        obtained from
+        `ColorBrewer <http://colorbrewer2.org/?type=qualitative&scheme=Paired&n=10>`_
         the qualitative 10-class paired colormap
     '''
 
@@ -906,191 +896,3 @@ class ScreeningConstant(Base):
 
         return "<ScreeningConstant(Z={0:4d}, n={1:3d}, s={2:s}, screening={3:10.4f})>".format(
             self.atomic_number, self.n, self.s, self.screening)
-
-
-class ElectronicConfiguration(object):
-    '''Electronic configuration handler'''
-
-    def __init__(self, confstr, atomre=None, shellre=None):
-
-        self.noble = {
-            'He': '1s2',
-            'Ne': '1s2 2s2 2p6',
-            'Ar': '1s2 2s2 2p6 3s2 3p6',
-            'Kr': '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6',
-            'Xe': '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6',
-            'Rn': '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6'
-        }
-
-        self.confstr = confstr
-        self.atomre = atomre
-        self.shellre = shellre
-
-        # parse the confstr and initialize core, valence and conf attributes
-        self.parse()
-
-    @property
-    def atomre(self):
-        'Regular expression for atomic symbols'
-        return self._atomre
-
-    @atomre.setter
-    def atomre(self, value):
-
-        if value is None:
-            self._atomre = re.compile(r'\[([A-Z][a-z]*)\]')
-        else:
-            self._atomre = re.compile(value)
-
-    @property
-    def shellre(self):
-        'Regular expression for the shell'
-        return self._shellre
-
-    @shellre.setter
-    def shellre(self, value):
-
-        if value is None:
-            self._shellre = re.compile(r'(?P<n>\d)(?P<o>[spdfghijk])(?P<e>\d+)?')
-        else:
-            self._shellre = re.compile(value)
-
-    def parse(self):
-        '''
-        Parse a string with electronic configuration into an OrderedDict
-        representation
-        '''
-
-        citems = self.confstr.split()
-
-        core = {}
-
-        if self.atomre.match(citems[0]):
-            symbol = str(self.atomre.match(citems[0]).group(1))
-            citems = citems[1:]
-            core = [self.shellre.match(o).group('n', 'o', 'e')
-                    for o in self.noble[symbol].split() if self.shellre.match(o)]
-        valence = [self.shellre.match(o).group('n', 'o', 'e')
-                   for o in citems if self.shellre.match(o)]
-
-        self.core = OrderedDict([((int(n), o), (int(e) if e is not None else 1)) for (n, o, e) in core])
-        self.valence = OrderedDict([((int(n), o), (int(e) if e is not None else 1)) for (n, o, e) in valence])
-        self.conf = OrderedDict(list(self.core.items()) + list(self.valence.items()))
-
-    def sort(self, inplace=True):
-
-        if inplace:
-            self.conf = OrderedDict(sorted(self.conf.items(),
-                                           key=lambda x: (x[0][0] +
-                                           get_l(x[0][1]), x[0][0])))
-        else:
-            return OrderedDict(sorted(self.conf.items(),
-                                      key=lambda x: (x[0][0] + get_l(x[0][1]),
-                                      x[0][0])))
-
-    def electrons_per_shell(self):
-
-        return {s: sum([v for k, v in self.conf.items() if k[0] == n])
-                for n, s in zip(range(1, self.max_n() + 1), SHELLS)}
-
-    def __repr__(self):
-
-        return self.conf2str(self.conf)
-
-    def __str__(self):
-
-        return self.conf2str(self.conf)
-
-    @staticmethod
-    def conf2str(dictlike):
-
-        return " ".join(["{n:d}{s:s}{e:d}".format(n=k[0], s=k[1], e=v)
-                         for k, v in dictlike.items()])
-
-    def shell2int(self):
-
-        return [(x[0], get_l(x[1]), x[2]) for x in self.conf]
-
-    def max_n(self):
-        'Return the largest value of principal quantum number for the atom'
-
-        return max([shell[0] for shell in self.conf.keys()])
-
-    def max_l(self, n):
-        '''
-        Return the largest value of azimutal quantum number for a gieven
-        value of principal quantum number
-
-        Args:
-            n : int
-                Principal quantum number
-        '''
-
-        return ORBITALS[max([get_l(x[1])
-                        for x in self.conf.keys() if x[0] == n])]
-
-    def last_subshell(self, wrt='aufbau'):
-
-        if wrt == 'aufbau':
-            return sorted(self.conf.items(),
-                          key=lambda x: (x[0][0] + get_l(x[0][1]), x[0][0]))[-1]
-
-    def nvalence(self, block, method=None):
-        'Return the number of valence electrons'
-
-        if block in ['s', 'p']:
-            return sum([v for k, v in self.conf.items() if k[0] == self.max_n()])
-        elif block == 'd':
-            if method == 'simple':
-                return 2
-            else:
-                return self.conf[(self.max_n(), 's')] +\
-                    self.conf[(self.max_n() - 1, 'd')]
-        elif block == 'f':
-            return 2
-        else:
-            raise ValueError('wrong block: {}'.format(block))
-
-    def slater_screening(self, n, o, alle=False):
-        '''
-        Calculate the screening constant using the papproach introduced by
-        Slater in Slater, J. C. (1930). Atomic Shielding Constants. Physical
-        Review, 36(1), 57–64.
-        `doi:10.1103/PhysRev.36.57 <http://www.dx.doi.org/10.1103/PhysRev.36.57>`_
-
-        Args:
-          n : int
-            Principal quantum number
-          o : str
-            orbtial label, (s, p, d, ...)
-          alle : bool
-            Use all the valence electrons, i.e. calculate screening for
-            an extra electron
-        '''
-
-        if alle:
-            ne = 0
-        else:
-            ne = 1
-
-        if n == 1:
-            coeff = 0.3
-        else:
-            coeff = 0.35
-
-        if o in ['s', 'p']:
-            # get the number of valence electrons - 1
-            vale = float(sum([v for k, v in self.conf.items() if k[0] == n and k[1] in ['s', 'p']]) - ne)
-            n1 = sum([v * 0.85 for k, v in self.conf.items() if k[0] == n - 1])
-            n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, n - 1)])
-
-        elif o in ['d', 'f']:
-            # get the number of valence electrons - 1
-            vale = float(sum([v for k, v in self.conf.items() if k[0] == n and k[1] == o]) - ne)
-            n1 = sum([float(v) for k, v in self.conf.items() if k[0] == n and k[1] != o])
-            n2 = sum([float(v) for k, v in self.conf.items() if k[0] in range(1, n)])
-
-        else:
-            raise ValueError('wrong valence subshell: ', o)
-
-        return n1 + n2 + vale * coeff

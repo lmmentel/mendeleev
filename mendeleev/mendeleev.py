@@ -28,20 +28,16 @@ import os
 import argparse
 import textwrap
 
+import numpy as np
 import pandas as pd
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.dialects import sqlite
 
-import numpy as np
-
 import six
 
 from .tables import Base, Element, IonizationEnergy
-
-__all__ = ['element', 'get_session', 'get_engine', 'get_table', 'ids_to_attr',
-           'get_ips', 'get_ionic_radii', 'deltaN', 'get_data', 'interpolate']
 
 
 def get_session():
@@ -128,49 +124,27 @@ def get_table(tablename, **kwargs):
         raise ValueError('Table should be one of: {}'.format(", ".join(tables)))
 
 
-def get_data():
+def get_attr_for_group(attr, group=18):
     '''
-    Get extensive set of data from multiple databse tables as pandas.DataFrame
-    '''
-
-    data = get_table('elements')
-
-    en_scales = ['allred-rochow', 'cottrell-sutton', 'gordy',
-                 'martynov-batsanov', 'mulliken', 'nagle', 'sanderson']
-    for scale in en_scales:
-        data['en_' + scale] = [element(row.symbol).electronegativity(scale=scale)
-                               for i, row in data.iterrows()]
-
-    for attr in ['hardness', 'softness']:
-        data[attr] = [getattr(element(row.symbol), attr)()
-                      for i, row in data.iterrows()]
-
-    # TODO: zeff, slater, clementi, series, grups, ionization energies up to a
-    # values
-
-    return data
-
-
-def _get_ng_data(attribute):
-    '''
-    A convenience function for getting a specified attribute for all the nobel
-    gases.
+    A convenience function for getting a specified attribute for all
+    the memebers of a given group.
 
     Args:
-        attribute : str
+        attr : str
             Attribute of `Element` to retrieve for all the noble gasses
 
     Returns:
         data : dict
             Dictionary with nobel gas atomic numbers as keys and values of the
-            `attribute` as values
+            `attr` as values
     '''
 
     session = get_session()
-    ngs = session.query(Element).filter(Element.series == 'Noble gases').all()
-    data = {ng.atomic_number: getattr(ng, attribute) for ng in ngs}
+    ngs = session.query(Element).filter(Element.group_id == group).all()
+    x = np.array([ng.atomic_number for ng in ngs])
+    y = np.array([getattr(ng, attr) for ng in ngs])
     session.close()
-    return data
+    return x, y
 
 
 def ids_to_attr(ids, attr='atomic_number'):
@@ -313,35 +287,6 @@ def deltaN(id1, id2, charge1=0, charge2=0, missingIsZero=True):
                                            e2.hardness(charge=charge2)))
     else:
         return None
-
-
-def interpolate(key, attribute, deg=1, kind='linear'):
-    '''
-    Evaluate a value for `key` by interpolation or extrapolation of the data
-    points in `data`.
-
-    Args:
-      key : int
-        Key for which the property will be evaluated
-      deg : int
-        Degree of the polynomial used in the extrapolation beyond the provided
-        data points
-      kind : str
-        Kind of the interpolation used, see docs for `numpy.interp1d`
-    '''
-
-    data = _get_ng_data(attribute)
-
-    if min(list(data.keys())) <= key <= max(list(data.keys())):
-        return np.interp([key], list(data.keys()), list(data.values()))
-    else:
-        if key < min(data.keys()):
-            dataslice = dict(sorted(data.items(), key=lambda x: x[0])[:3])
-        elif key > max(data.keys()):
-            dataslice = dict(sorted(data.items(), key=lambda x: x[0])[-3:])
-        fit = np.polyfit(list(dataslice.keys()), list(dataslice.values()), deg)
-        fn = np.poly1d(fit)
-        return fn(key)
 
 
 def attributes(elem, names, fmt='8.3f'):
