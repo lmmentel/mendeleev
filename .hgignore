@@ -9,6 +9,7 @@ docs/build/**
 docs/source/_reference/**
 dist/**
 build/**
+.cache/**
 *.x
 *.a
 *.so
