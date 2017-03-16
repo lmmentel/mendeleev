@@ -51,14 +51,14 @@ class ElectronicConfiguration(object):
 
     def __init__(self, confstr, atomre=None, shellre=None):
 
-        self.noble = {
-            'He': '1s2',
-            'Ne': '1s2 2s2 2p6',
-            'Ar': '1s2 2s2 2p6 3s2 3p6',
-            'Kr': '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6',
-            'Xe': '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6',
-            'Rn': '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6'
-        }
+        self._noble = OrderedDict([
+            ('He', '1s2'),
+            ('Ne', '1s2 2s2 2p6'),
+            ('Ar', '1s2 2s2 2p6 3s2 3p6'),
+            ('Kr', '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6'),
+            ('Xe', '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6'),
+            ('Rn', '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6'),
+        ])
 
         self.confstr = confstr
         self.atomre = atomre
@@ -93,6 +93,26 @@ class ElectronicConfiguration(object):
         else:
             self._shellre = re.compile(value)
 
+    def get_largest_core(self):
+        '''
+        Find the largest noble gas core possible for the current
+        configuration and return the symbol of the corresponding noble
+        gas element.
+        '''
+
+        confset = set(self.conf.items())
+
+        for s, conf in reversed(self._noble.items()):
+
+            ec = ElectronicConfiguration(conf)
+            nobleset = set(ec.conf.items())
+
+            ans = confset.issuperset(nobleset)
+            if ans:
+                return s
+        else:
+            return
+
     def parse(self):
         '''
         Parse a string with electronic configuration into an OrderedDict
@@ -107,7 +127,7 @@ class ElectronicConfiguration(object):
             symbol = str(self.atomre.match(citems[0]).group(1))
             citems = citems[1:]
             core = [self.shellre.match(o).group('n', 'o', 'e')
-                    for o in self.noble[symbol].split() if self.shellre.match(o)]
+                    for o in self._noble[symbol].split() if self.shellre.match(o)]
         valence = [self.shellre.match(o).group('n', 'o', 'e')
                    for o in citems if self.shellre.match(o)]
 
