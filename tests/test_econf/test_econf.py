@@ -14,8 +14,12 @@ def test_parse():
 
 def test_largest_core():
 
+    # test for Hydrogen case (no core)
+    ec = ElectronicConfiguration('1s')
+    assert ec.get_largest_core() is None
+
+    # test elements with core
     data = [
-        ('1s', None),                       # H
         ('[He] 2s2', 'He'),                 # Be
         ('[Ne] 3s2 3p2', 'Ne'),             # Si
         ('[Ar] 3d10 4s2 4p4', 'Ar'),        # Se
@@ -23,7 +27,7 @@ def test_largest_core():
         ('[Xe] 4f14 5d10 6s2 6p4', 'Xe'),   # Po
         ('[Rn] 7s2', 'Rn')]                 # Ra
 
-    for refconf, refcore in data:
-
+    for refconf, refsymbol in data:
         ec = ElectronicConfiguration(refconf)
-        assert refcore == ec.get_largest_core()
+        symbol, core = ec.get_largest_core()
+        assert refsymbol == symbol

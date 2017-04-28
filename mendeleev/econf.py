@@ -49,23 +49,40 @@ def shell_capactity(shell):
 class ElectronicConfiguration(object):
     '''Electronic configuration handler'''
 
-    def __init__(self, confstr, atomre=None, shellre=None):
+    noble = OrderedDict([
+        ('He', '1s2'),
+        ('Ne', '1s2 2s2 2p6'),
+        ('Ar', '1s2 2s2 2p6 3s2 3p6'),
+        ('Kr', '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6'),
+        ('Xe', '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6'),
+        ('Rn', '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6'),
+    ])
 
-        self._noble = OrderedDict([
-            ('He', '1s2'),
-            ('Ne', '1s2 2s2 2p6'),
-            ('Ar', '1s2 2s2 2p6 3s2 3p6'),
-            ('Kr', '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6'),
-            ('Xe', '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6'),
-            ('Rn', '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6'),
-        ])
+    def __init__(self, conf=None, atomre=None, shellre=None):
 
-        self.confstr = confstr
         self.atomre = atomre
         self.shellre = shellre
+        self.conf = conf
 
-        # parse the confstr and initialize core, valence and conf attributes
-        self.parse()
+    @property
+    def conf(self):
+        'Return the configuration'
+        return self._conf
+
+    @conf.setter
+    def conf(self, value):
+        'Setter method for initializing the configuration'
+
+        if isinstance(value, str):
+            self.confstr = value
+            self.parse(value)
+        elif isinstance(value, dict):
+            self._conf = OrderedDict(sorted(value.items(),
+                                            key=lambda x: (x[0][0] +
+                                                           get_l(x[0][1]),
+                                                           x[0][0])))
+        else:
+            raise ValueError('<conf> should be str or dict, got {}'.format(type(value)))
 
     @property
     def atomre(self):
@@ -93,6 +110,31 @@ class ElectronicConfiguration(object):
         else:
             self._shellre = re.compile(value)
 
+    def parse(self, string):
+        '''
+        Parse a ``string`` with electronic configuration into an
+        ``OrderedDict`` representation
+        '''
+
+        core = {}
+        citems = string.split()
+
+        if self.atomre.match(citems[0]):
+            symbol = str(self.atomre.match(citems[0]).group(1))
+            citems = citems[1:]
+            core = [self.shellre.match(o).group('n', 'o', 'e')
+                    for o in ElectronicConfiguration.noble[symbol].split()
+                    if self.shellre.match(o)]
+            core = OrderedDict([((int(n), o), (int(e) if e is not None else 1))
+                                for (n, o, e) in core])
+
+        valence = [self.shellre.match(o).group('n', 'o', 'e')
+                   for o in citems if self.shellre.match(o)]
+        valence = OrderedDict([((int(n), o), (int(e) if e is not None else 1))
+                               for (n, o, e) in valence])
+
+        self._conf = OrderedDict(list(core.items()) + list(valence.items()))
+
     def get_largest_core(self):
         '''
         Find the largest noble gas core possible for the current
@@ -102,43 +144,29 @@ class ElectronicConfiguration(object):
 
         confset = set(self.conf.items())
 
-        for s, conf in reversed(self._noble.items()):
+        for s, conf in reversed(ElectronicConfiguration.noble.items()):
 
             ec = ElectronicConfiguration(conf)
             nobleset = set(ec.conf.items())
 
             ans = confset.issuperset(nobleset)
             if ans:
-                return s
+                return (s, ec)
         else:
             return
 
-    def parse(self):
+    def get_valence(self):
         '''
-        Parse a string with electronic configuration into an OrderedDict
-        representation
+        Find the valence configuration i.e. remove the largest noble gas
+        core from the current configuration and return the result.
         '''
 
-        citems = self.confstr.split()
+        core_symbol, core_conf = self.get_largest_core()
 
-        core = {}
+        valence = OrderedDict(set(self.conf.items()) -
+                              set(core_conf.conf.items()))
 
-        if self.atomre.match(citems[0]):
-            symbol = str(self.atomre.match(citems[0]).group(1))
-            citems = citems[1:]
-            core = [self.shellre.match(o).group('n', 'o', 'e')
-                    for o in self._noble[symbol].split() if self.shellre.match(o)]
-        valence = [self.shellre.match(o).group('n', 'o', 'e')
-                   for o in citems if self.shellre.match(o)]
-
-        self.core = OrderedDict([((int(n), o), (int(e)
-                                 if e is not None else 1))
-                                 for (n, o, e) in core])
-        self.valence = OrderedDict([((int(n), o), (int(e)
-                                    if e is not None else 1))
-                                    for (n, o, e) in valence])
-        self.conf = OrderedDict(list(self.core.items()) +
-                                list(self.valence.items()))
+        return ElectronicConfiguration(valence)
 
     def sort(self, inplace=True):
 
