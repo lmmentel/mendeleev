@@ -123,6 +123,8 @@ The following data are currently available:
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | gas_basicity              | float | Gas basicity                                         | kJ/mol   | [8]_        |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
+| geochemical_class         | str   | Geochemical classification                           |          | [43]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
 | group                     | int   | Group in periodic table                              |          |             |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | heat_of_formation         | float | Heat of formation                                    | kJ/mol   | [8]_        |
@@ -189,6 +191,7 @@ The following data are currently available:
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | vdw_radius_uff            | float | Van der Waals radius from the UFF                    | pm       | [23]_       |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
+
 
 Isotopes
 ========
@@ -345,6 +348,8 @@ Isotopes
 .. [42] Rahm, M., Hoffmann, R., & Ashcroft, N. W. (2016). Atomic and Ionic Radii of Elements 1-96.
    Chemistry - A European Journal, 22(41), 14625–14632.
    `doi: 10.1002/chem.201602949 <http://doi.org/10.1002/chem.201602949>`_
+.. [43] White, W. M. (2013). Geochemistry. Wiley.
+   `URL: https://books.google.no/books?id=QPH1nY8WztkC <https://books.google.no/books?id=QPH1nY8WztkC>`_
 
 
 ************

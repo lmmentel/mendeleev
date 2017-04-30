@@ -121,6 +121,8 @@ class Element(Base):
         Fusion heat in kJ/mol
       gas_basicity : Float
         Gas basicity
+      geochemical_class : String
+        Geochemical classification of the elements
       group : int
         Group in periodic table
       heat_of_formation : float
@@ -212,6 +214,7 @@ class Element(Base):
     evaporation_heat = Column(Float)
     fusion_heat = Column(Float)
     gas_basicity = Column(Float)
+    geochemical_class = Column(String)
     group_id = Column(Integer, ForeignKey("groups.group_id"))
     group = relationship("Group", uselist=False)
     heat_of_formation = Column(Float)
