@@ -1,4 +1,6 @@
 
+from __future__ import print_function
+
 import numpy as np
 import pandas as pd
 from sqlalchemy.dialects import sqlite
@@ -99,14 +101,16 @@ def add_plot_columns(elements):
 
 
 def get_app_data():
+    'write a file with the neutral data'
 
-    # import mendeleev
-    # ver = mendeleev.__version___
+    import mendeleev
+    version = mendeleev.__version__
 
     data = get_neutral_data()
     data = add_plot_columns(data)
-
-    data.to_pickle('neutral.pkl')
+    fname = 'neutral_{0:s}.pkl'.format(version)
+    data.to_pickle(fname)
+    print('wrote file: ', fname)
 
 
 def estimate(x, attribute, group=18, deg=1, kind='linear'):
