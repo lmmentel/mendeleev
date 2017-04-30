@@ -123,6 +123,8 @@ class Element(Base):
         Gas basicity
       geochemical_class : String
         Geochemical classification of the elements
+      goldschmidt_class : String
+        Goldschmidt classification of the elements
       group : int
         Group in periodic table
       heat_of_formation : float
@@ -215,6 +217,7 @@ class Element(Base):
     fusion_heat = Column(Float)
     gas_basicity = Column(Float)
     geochemical_class = Column(String)
+    goldschmidt_class = Column(String)
     group_id = Column(Integer, ForeignKey("groups.group_id"))
     group = relationship("Group", uselist=False)
     heat_of_formation = Column(Float)

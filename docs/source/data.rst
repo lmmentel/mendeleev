@@ -72,6 +72,8 @@ The followig data are currently available:
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | geochemical_class         | str   | Geochemical classification                           |          | [43]_       |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
+| goldschmidt_class         | str   | Goldschmidt classification                           |          | [43]_, [44]_|
++---------------------------+-------+------------------------------------------------------+----------+-------------+
 | group                     | int   | Group in periodic table                              |          |             |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | heat_of_formation         | float | Heat of formation                                    | kJ/mol   | [8]_        |
@@ -392,3 +394,5 @@ References
    `doi: 10.1002/chem.201602949 <http://doi.org/10.1002/chem.201602949>`_
 .. [43] White, W. M. (2013). Geochemistry. Wiley.
    `URL: https://books.google.no/books?id=QPH1nY8WztkC <https://books.google.no/books?id=QPH1nY8WztkC>`_
+.. [44] Wikipedia. (2017). Goldschmidt classification --- Wikipedia{,} The Free Encyclopedia.
+   Retrieved April 30, 2017, from `https://en.wikipedia.org/w/index.php?title=Goldschmidt_classification&oldid=775842423 <https://en.wikipedia.org/w/index.php?title=Goldschmidt_classification&oldid=775842423>`_
