@@ -151,6 +151,10 @@ The following data are currently available:
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | melting_point             | float | Melting temperature                                  | K        |             |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
+| metallic_radius           | float | Single-bond metallic radius                          | pm       | [45]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
+| metallic_radius_c12       | float | Metallic radius with 12 nearest neighbors            | pm       | [45]_       |
++---------------------------+-------+------------------------------------------------------+----------+-------------+
 | molcas_gv_color           | str   | Element color in MOCAS GV convention                 | HEX      | [26]_       |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | name                      | str   | Name in English                                      |          |             |
@@ -193,6 +197,7 @@ The following data are currently available:
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
 | vdw_radius_uff            | float | Van der Waals radius from the UFF                    | pm       | [23]_       |
 +---------------------------+-------+------------------------------------------------------+----------+-------------+
+
 
 
 Isotopes
@@ -354,7 +359,8 @@ Isotopes
    `URL: https://books.google.no/books?id=QPH1nY8WztkC <https://books.google.no/books?id=QPH1nY8WztkC>`_
 .. [44] Wikipedia. (2017). Goldschmidt classification --- Wikipedia{,} The Free Encyclopedia.
    Retrieved April 30, 2017, from `https://en.wikipedia.org/w/index.php?title=Goldschmidt_classification&oldid=775842423 <https://en.wikipedia.org/w/index.php?title=Goldschmidt_classification&oldid=775842423>`_
-
+.. [45] Kyle & Laby Tables of Physical & Chemical constants. (2017). 3.7.5 Atomic radii.
+   Retrieved April 30, 2017 from `http://www.kayelaby.npl.co.uk/chemistry/3_7/3_7_5.html <http://www.kayelaby.npl.co.uk/chemistry/3_7/3_7_5.html>`_
 
 ************
 Installation

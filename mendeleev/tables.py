@@ -143,6 +143,13 @@ class Element(Base):
         of the element to 1/12 of the mass of an atom of 12C
       melting_point : float
         Melting temperature in K
+      metallic_radius : Float
+        Single-bond metallic radius or metallic radius, have been
+        calculated by Pauling using interatomic distances and an
+        equation relating such distances with bond number
+      metallic_radius_c12 : Float
+        Metallic radius obtained by Pauling with an assumed number of
+        nearest neighbours equal to 12
       molcas_gv_color : str
         Color of an atom in HEX from MOLCAS GV http://www.molcas.org/GV/
       name : str
@@ -227,6 +234,8 @@ class Element(Base):
     lattice_constant = Column(Float)
     lattice_structure = Column(String)
     melting_point = Column(Float)
+    metallic_radius = Column(Float)
+    metallic_radius_c12 = Column(Float)
     molcas_gv_color = Column(String)
     name = Column(String)
     period = Column(Integer)
