@@ -1,9 +1,0 @@
-
-# TODO
-
-* add methods to easily plot correlations between the different properties
-* parse data from http://reference.wolfram.com/language/ref/ElementData.html
-* similarity measures for elements,
-
-# DONE
-* add methods to plot heatmaps of various properties including lanthanides
