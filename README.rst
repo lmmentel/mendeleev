@@ -383,7 +383,7 @@ the package from `my anaconda channel <https://anaconda.org/lmmentel/mendeleev>`
 
 .. code-block:: bash
 
-   conda install -c lmmentel mendeleev=0.3.1
+   conda install -c lmmentel mendeleev=0.3.2
 
 
 *****
@@ -642,7 +642,7 @@ Here's the reference in the `BibLaTeX <https://www.ctan.org/pkg/biblatex?lang=en
       author = {Mentel, Łukasz},
       title = {{mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes},
       url = {https://bitbucket.org/lukaszmentel/mendeleev},
-      version = {0.3.1},
+      version = {0.3.2},
       date = {2014--},
   }
 
@@ -652,7 +652,7 @@ or the older `BibTeX <http://www.bibtex.org/>`_ format
 
    @misc{mendeleev2014,
       auhor = {Mentel, Łukasz},
-      title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 0.3.1},
+      title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 0.3.2},
       howpublished = {\url{https://bitbucket.org/lukaszmentel/mendeleev}},
       year  = {2014--},
    }

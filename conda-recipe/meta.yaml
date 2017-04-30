@@ -1,10 +1,10 @@
 package:
   name: mendeleev
-  version: "0.3.1"
+  version: "0.3.2"
 
 source:
   hg_url: https://lukaszmentel@bitbucket.org/lukaszmentel/mendeleev
-  hg_tag: v0.3.1
+  hg_tag: v0.3.2
 
 build:
   # noarch_python: True
