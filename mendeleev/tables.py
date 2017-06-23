@@ -226,7 +226,7 @@ class Element(Base):
     geochemical_class = Column(String)
     goldschmidt_class = Column(String)
     group_id = Column(Integer, ForeignKey("groups.group_id"))
-    group = relationship("Group", uselist=False)
+    group = relationship("Group", uselist=False, lazy='subquery')
     heat_of_formation = Column(Float)
     is_monoisotopic = Column(Boolean)
     is_radioactive = Column(Boolean)
@@ -241,7 +241,7 @@ class Element(Base):
     period = Column(Integer)
     proton_affinity = Column(Float)
     _series_id = Column("series_id", Integer, ForeignKey("series.id"))
-    _series = relationship("Series", uselist=False)
+    _series = relationship("Series", uselist=False, lazy='subquery')
     series = association_proxy("_series", "name")
     specific_heat = Column(Float)
     symbol = Column(String)
@@ -256,11 +256,11 @@ class Element(Base):
     vdw_radius_uff = Column(Float)
     vdw_radius_mm3 = Column(Float)
 
-    ionic_radii = relationship("IonicRadius")
-    _ionization_energies = relationship("IonizationEnergy")
-    _oxidation_states = relationship("OxidationState")
-    isotopes = relationship("Isotope")
-    screening_constants = relationship('ScreeningConstant')
+    ionic_radii = relationship("IonicRadius", lazy='subquery')
+    _ionization_energies = relationship("IonizationEnergy", lazy='subquery')
+    _oxidation_states = relationship("OxidationState", lazy='subquery')
+    isotopes = relationship("Isotope", lazy='subquery')
+    screening_constants = relationship('ScreeningConstant', lazy='subquery')
 
     @reconstructor
     def init_on_load(self):
