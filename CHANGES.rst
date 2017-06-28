@@ -2,6 +2,31 @@
 mendeleev Changelog
 *******************
 
+v0.3.4 (28-06-2017)
+===================
+
+* Fixed python2.7 compatibility issue
+* Added double and triple bond covalent radii from Pyykko
+* Corrected minor error in the documentation
+* Replaced lazy loading with eager in db querries
+
+v0.3.3 (16-05-2017)
+===================
+
+* Corrected the coordination of Br5+ ion in the ionic radii table
+
+v0.3.2 (01-05-2017)
+===================
+
+* Added metallic radii
+* Added Goldschmidt and geochemical classifications
+* Corrected the docs configuration
+* Added CAS number
+* Added atomic radii by Rahm et al.
+* Created a conda recipe
+* Added a citation information to the readme
+* Electronic configuration code was split into a separate module
+
 v0.3.1 (25-01-2017)
 ===================
 
