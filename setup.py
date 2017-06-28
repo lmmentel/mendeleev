@@ -11,10 +11,10 @@ MAIN_PACKAGE = "mendeleev"
 DESCRIPTION = "Python API with a database of atomic properties for elements in the periodic table"
 LICENSE = "MIT"
 URL = "https://bitbucket.org/lukaszmentel/mendeleev"
-DOWNLOAD_URL = 'https://bitbucket.org/lukaszmentel/mendeleev/get/v0.3.3.tar.gz'
+DOWNLOAD_URL = 'https://bitbucket.org/lukaszmentel/mendeleev/get/v0.3.4.tar.gz'
 AUTHOR = "Lukasz Mentel"
 EMAIL = "lmmentel@gmail.com"
-VERSION = '0.3.3'
+VERSION = '0.3.4'
 KEYWORDS = ['periodic', 'table', 'elements', 'atomic', 'properties',
             'mendeleev']
 
