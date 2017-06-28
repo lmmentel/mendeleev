@@ -1,5 +1,6 @@
 
 import re
+import six
 import math
 from collections import OrderedDict
 
@@ -73,9 +74,9 @@ class ElectronicConfiguration(object):
     def conf(self, value):
         'Setter method for initializing the configuration'
 
-        if isinstance(value, str):
+        if isinstance(value, six.string_types):
             self.confstr = value
-            self.parse(value)
+            self.parse(str(value))
         elif isinstance(value, dict):
             self._conf = OrderedDict(sorted(value.items(),
                                             key=lambda x: (x[0][0] +

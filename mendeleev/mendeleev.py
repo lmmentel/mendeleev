@@ -88,9 +88,9 @@ def get_element(ids):
 
     if isinstance(ids, six.string_types):
         if len(ids) <= 3 and ids.lower() != "tin":
-            return session.query(Element).filter(Element.symbol == ids).one()
+            return session.query(Element).filter(Element.symbol == str(ids)).one()
         else:
-            return session.query(Element).filter(Element.name == ids).one()
+            return session.query(Element).filter(Element.name == str(ids)).one()
     elif isinstance(ids, int):
         return session.query(Element).filter(Element.atomic_number == ids).one()
     else:
