@@ -88,11 +88,16 @@ class Element(Base):
         Covalent radii revisited. Dalton Transactions, (21), 2832.
         doi:10.1039/b801115j
       covalent_radius_pyykko : float
-        Covalent radius in pm Pyykkö, P., & Atsumi, M. (2009). Molecular
-        Single-Bond Covalent Radii for Elements 1-118. Chemistry - A European
-        Journal, 15(1), 186–197. doi:10.1002/chem.200800987
+        Single bond covalent radius in pm Pyykkö, P., & Atsumi, M. (2009).
+        Molecular Single-Bond Covalent Radii for Elements 1-118.
+        Chemistry - A European Journal, 15(1), 186–197.
+        doi:10.1002/chem.200800987
+      covalent_radius_pyykko_double : float
+        Double bond covalent radius in pm from P. Pyykkö et al.
+      covalent_radius_pyykko_triple : float
+        Triple bond covalent radius in pm from P. Pyykkö et al.
       covalent_radius_slater : float
-        Covalent radius in pm from
+        Covalent radius in pm from Slater
       cpk_color : str
         CPK color of the atom in HEX,
         see http://jmol.sourceforge.net/jscolors/#color_U
@@ -208,6 +213,8 @@ class Element(Base):
     covalent_radius_bragg = Column(Float)
     covalent_radius_cordero = Column(Float)
     covalent_radius_pyykko = Column(Float)
+    covalent_radius_pyykko_double = Column(Float)
+    covalent_radius_pyykko_triple = Column(Float)
     covalent_radius_slater = Column(Float)
     c6 = Column(Float)
     c6_gb = Column(Float)
