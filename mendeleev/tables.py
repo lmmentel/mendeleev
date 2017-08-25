@@ -682,7 +682,7 @@ class Element(Base):
 
 class IonicRadius(Base):
     '''
-    Effective ionic radii and crystal radii in pm retrieved from [1].
+    Effective ionic radii and crystal radii in pm retrieved from [1]_.
 
     .. [1] Shannon, R. D. (1976). Revised effective ionic radii and systematic
        studies of interatomic distances in halides and chalcogenides. Acta
