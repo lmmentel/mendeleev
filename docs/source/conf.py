@@ -18,7 +18,8 @@ if sys.version_info.major == 3:
 else:
     from mock import Mock as Mock     # if python ver 2.7
 
-MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma',
+MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma', 'bokeh', 'bokeh.plotting',
+                'bokeh.models',
                 'seaborn',
                 'matplotlib', 'matplotlib.pyplot', 'matplotlib.colors',
                 'matplotlib.cm',
