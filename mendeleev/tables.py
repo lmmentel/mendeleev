@@ -79,7 +79,7 @@ class Element(Base):
         C_6 dispersion coefficient in a.u. from Gould, T., & Bučko, T. (2016).
         JCTC, 12(8), 3603–3613. http://doi.org/10.1021/acs.jctc.6b00361
       cas : str
-        Chemical Abstracts Serice identifier
+        Chemical Abstracts Service identifier
       covalent_radius_bragg : float
         Covalent radius in pm from
       covalent_radius_cordero : float
@@ -154,11 +154,11 @@ class Element(Base):
         equation relating such distances with bond number
       metallic_radius_c12 : Float
         Metallic radius obtained by Pauling with an assumed number of
-        nearest neighbours equal to 12
+        nearest neighbors equal to 12
       molcas_gv_color : str
         Color of an atom in HEX from MOLCAS GV http://www.molcas.org/GV/
       name : str
-        Name in english
+        Name in English
       period : int
         Period in periodic table
       proton_affinity : Float
@@ -222,6 +222,9 @@ class Element(Base):
     density = Column(Float)
     description = Column(String)
     dipole_polarizability = Column(Float)
+    discoverers = Column(String)
+    discovery_location = Column(String)
+    discovery_year = Column(Integer)
     electron_affinity = Column(Float)
     en_allen = Column(Float)
     en_ghosh = Column(Float)
