@@ -165,18 +165,24 @@ class Element(Base):
         Color of an atom in HEX from MOLCAS GV http://www.molcas.org/GV/
       name : str
         Name in English
+      name_origin: str
+        Origin of the name
       period : int
         Period in periodic table
       proton_affinity : Float
         Proton affinity
       series : int
         Index to chemical series
+      sources: str
+        Sources of the element
       specific_heat : float
         Specific heat in J/g mol @ 20 C
       symbol : str of length 1 or 2
         Chemical symbol
       thermal_conductivity : float
         Thermal conductivity in @/m K @25 C
+      uses: str
+        Uses of the element
       vdw_radius : float
         Van der Waals radius in pm from W. M. Haynes, Handbook of Chemistry and
         Physics 95th Edition, CRC Press, New York, 2014, ISBN-10: 1482208679,
@@ -254,14 +260,17 @@ class Element(Base):
     metallic_radius_c12 = Column(Float)
     molcas_gv_color = Column(String)
     name = Column(String)
+    name_origin = Column(String)
     period = Column(Integer)
     proton_affinity = Column(Float)
     _series_id = Column("series_id", Integer, ForeignKey("series.id"))
     _series = relationship("Series", uselist=False, lazy='subquery')
     series = association_proxy("_series", "name")
+    sources = Column(String)
     specific_heat = Column(Float)
     symbol = Column(String)
     thermal_conductivity = Column(Float)
+    uses = Column(String)
     vdw_radius = Column(Float)
     vdw_radius_alvarez = Column(Float)
     vdw_radius_bondi = Column(Float)
