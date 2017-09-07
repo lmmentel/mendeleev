@@ -23,4 +23,5 @@ def upgrade():
 
 def downgrade():
 
-    op.drop_column('elements', 'c6_gb')
+    with op.batch_alter_table("elements") as batch_op:
+        batch_op.drop_column('c6_gb')
