@@ -110,6 +110,12 @@ class Element(Base):
         experimental and calculated static dipole polarizabilities for the
         electronic ground states of the neutral elements (in atomic units)",
         February 11, 2014
+      discoverers: str
+        The discoverers of the element
+      discovery_location: str
+        The location where the element was discovered
+      discovery_year: int
+        The year the element was discovered
       electron_affinity : float
         Electron affinity in eV
       en_allen : float
