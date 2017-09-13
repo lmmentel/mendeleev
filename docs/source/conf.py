@@ -26,7 +26,7 @@ MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma', 'bokeh', 'bokeh.plotting',
                 'scipy', 'scipy.optimize', 'scipy.interpolate',
                 'scipy.constants', 'pandas',
                 'sqlalchemy', 'sqlalchemy.orm', 'sqlalchemy.dialects',
-                'sqlalchemy.ext', 'sqlalchemy.ext.association_proxy',
+                'sqlalchemy.ext', 'sqlalchemy.ext.associationproxy',
                 'sqlalchemy.ext.declarative', 'sqlalchemy.ext.hybrid',
                 'IPython', 'IPython.lib', 'IPython.lib.pretty']
 
