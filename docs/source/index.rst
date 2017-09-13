@@ -24,7 +24,7 @@ Contents
    Installation <install>
    Tutorials <tutorials>
    Electronegativity <electronegativity>
-   API Reference <_reference/modules>
+   API Reference <code>
    License <license_link>
 
 
