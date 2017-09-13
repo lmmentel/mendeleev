@@ -64,21 +64,56 @@ def get_engine():
 def element(ids):
     '''
     Based on the type of the `ids` identifier return either an
-    :py:class:`Element <mendeleev.tables.Element>` object from the database, or
-    a list of :py:class:`Element <mendeleev.tables.Element>` objects if the
-    `ids` is a list or a tuple of identifiers. Valid identifiers for an element
-    are: *name*, *symbol*, *atomic number*.
+    :py:class:`Element <mendeleev.tables.Element>` object from the
+    database, or a list of :py:class:`Element <mendeleev.tables.Element>`
+    objects if the `ids` is a list or a tuple of identifiers. Valid
+    identifiers for an element are: *name*, *symbol*, and
+    *atomic number*.
+
+    Args:
+        ids (str): element identifier
+
+    Raises:
+        ValueError: when the identifier is not a list/tuple, int or str
+
+    Example:
+        The element can be identified by symbol
+
+        >>> from mendeleev import element
+        >>> si = element('Si')
+        >>> si.atomic_number
+        14
+
+        by the atomic number
+
+        >>> al = element(13)
+        >>> al.name
+        'Aluminum'
+
+        or by the name
+
+        >>> o = element('Oxygen')
+        >>> o.symbol
+        'O'
+
+        Mutiple elements can be instantiated simultaneously through as
+        combination of identifiers
+
+        >>> c, h, o = element(['C', 'Hydrogen', 8])
+        >>> print(c.name, h.name, o.name)
+        Carbon Hydrogen Oxygen
+
     '''
 
     if isinstance(ids, (list, tuple)):
-        return [get_element(i) for i in ids]
+        return [_get_element(i) for i in ids]
     elif isinstance(ids, (six.string_types, int)):
-        return get_element(ids)
+        return _get_element(ids)
     else:
         raise ValueError("Expected a <list>, <tuple>, <str> or <int>, got: {0:s}".format(type(ids)))
 
 
-def get_element(ids):
+def _get_element(ids):
     '''
     Return an element from the database based on the `ids` identifier passed.
     Valid identifiers for an element are: *name*, *symbol*, *atomic number*.
@@ -111,6 +146,13 @@ def get_table(tablename, **kwargs):
     Returns:
       df: pandas.DataFrame
         Pandas DataFrame with the contents of the table
+
+    Example:
+        >>> from mendeleev import get_table
+        >>> df = get_table('elements')
+        >>> type(df)
+        pandas.core.frame.DataFrame
+
     '''
 
     tables = ['elements', 'isotopes', 'ionicradii', 'ionizationenergies',
@@ -309,7 +351,7 @@ def clielement():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('element',
-                        help='Element identifier: symbol, name or atomic number')
+        help='Element identifier: symbol, name or atomic number')
     args = parser.parse_args()
 
     e = element(args.element)
