@@ -2,13 +2,27 @@
 mendeleev Changelog
 *******************
 
+v0.3.6 (17-09-2017)
+====================
+
+* Added API documentation
+* Corrected the sphinx configuration
+* Updated the documentation
+
+v0.3.5 (07-09-2017)
+====================
+
+* Added a module with functions to scrape data from `ciaaw.org <http://ciaaw.org/>`_
+* Added new `Element` attributes, `name_origin`, `uses` and `sources`
+* Added new `Element` attributes related to the discovery: `discoverers`, `discovery_location`, `discovery_year`
+
 v0.3.4 (28-06-2017)
 ===================
 
 * Fixed python2.7 compatibility issue
 * Added double and triple bond covalent radii from Pyykko
 * Corrected minor error in the documentation
-* Replaced lazy loading with eager in db querries
+* Replaced lazy loading with eager in db queries
 
 v0.3.3 (16-05-2017)
 ===================
