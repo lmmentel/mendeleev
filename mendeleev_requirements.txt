@@ -1,8 +1,9 @@
 bokeh
+bs4
 matplotlib
 numpy
 pandas
 pyfiglet
-scipy
 seaborn
+six
 sqlalchemy
