@@ -26,6 +26,7 @@ Contents
    Electronegativity <electronegativity>
    API Reference <code>
    License <license_link>
+   Changes <changes_link>
 
 
 ******
