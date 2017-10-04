@@ -22,9 +22,10 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
-__version__ = '0.3.6'
+from mendeleev import get_all_elements
 
-from .mendeleev import *
-from .tables import *
-from .elements import *
+_elements = {x.symbol: x for x in get_all_elements()}
 
+globals().update(_elements)
+
+__all__ = list(_elements.keys())
