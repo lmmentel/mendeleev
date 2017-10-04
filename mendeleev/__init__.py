@@ -27,4 +27,3 @@ __version__ = '0.3.6'
 from .mendeleev import *
 from .tables import *
 from .elements import *
-
