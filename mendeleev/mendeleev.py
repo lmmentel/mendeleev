@@ -132,6 +132,15 @@ def _get_element(ids):
         raise ValueError("Expecting a <str> or <int>, got: {0:s}".format(type(ids)))
 
 
+def get_all_elements():
+    'Get all elements as a list'
+
+    session = get_session()
+    elements = session.query(Element).all()
+    session.close()
+    return elements
+
+
 def get_table(tablename, **kwargs):
     '''
     Return a table from the database as `pandas <http://pandas.pydata.org/>`_
