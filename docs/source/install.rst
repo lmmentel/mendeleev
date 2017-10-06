@@ -1,5 +1,7 @@
+
+************
 Installation
-============
+************
 
 The package can be installed using `pip <https://pypi.python.org/pypi/pip>`_
 
