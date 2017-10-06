@@ -1,9 +1,10 @@
+*********
 Tutorials
-=========
+*********
 
 
-Jupyter (formerly IPython) notebooks
-------------------------------------
+Jupyter notebooks
+=================
 
 A series of short tutorials is available as `Jupyter <https://jupyter.org/>`_
 (former `IPython notebook <http://ipython.org/notebook.html>`_) notebooks that
