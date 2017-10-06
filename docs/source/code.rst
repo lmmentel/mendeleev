@@ -57,10 +57,14 @@ for getting the session or the engine:
 .. autofunction:: mendeleev.mendeleev.get_engine
 
 
+Classes
+=======
+
+
 .. _element-class:
 
 Element
-=======
+-------
 
 .. currentmodule:: mendeleev.tables
 
@@ -70,7 +74,7 @@ Element
 .. _ionicradius-class:
 
 IonicRadius
-===========
+-----------
 
 .. currentmodule:: mendeleev.tables
 
@@ -80,7 +84,7 @@ IonicRadius
 .. _ionizationenergy-class:
 
 IonizationEnergy
-================
+----------------
 
 .. currentmodule:: mendeleev.tables
 
@@ -90,7 +94,7 @@ IonizationEnergy
 .. _isotope-class:
 
 Isotope
-=======
+-------
 
 .. currentmodule:: mendeleev.tables
 
@@ -100,7 +104,7 @@ Isotope
 .. _screeningconstant-class:
 
 ScreeningConstant
-=================
+-----------------
 
 .. currentmodule:: mendeleev.tables
 
@@ -110,7 +114,7 @@ ScreeningConstant
 .. _series-class:
 
 Series
-======
+------
 
 .. currentmodule:: mendeleev.tables
 
@@ -120,7 +124,7 @@ Series
 .. _group-class:
 
 Group
-=====
+-----
 
 .. currentmodule:: mendeleev.tables
 
@@ -130,9 +134,20 @@ Group
 .. _oxidationstate-class:
 
 OxidationState
-==============
+--------------
 
 .. currentmodule:: mendeleev.tables
 
 .. autoclass:: mendeleev.tables.OxidationState
+   :members:
+
+
+.. _econf-class:
+
+ElectronicConfiguration
+-----------------------
+
+.. currentmodule:: mendeleev.econf
+
+.. autoclass:: mendeleev.econf.ElectronicConfiguration
    :members:
