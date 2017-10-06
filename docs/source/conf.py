@@ -27,10 +27,6 @@ MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma', 'bokeh', 'bokeh.plotting',
                 'scipy.constants', 'pandas',
                 'IPython', 'IPython.lib', 'IPython.lib.pretty']
 
-                # 'sqlalchemy', 'sqlalchemy.orm', 'sqlalchemy.dialects',
-                # 'sqlalchemy.ext', 'sqlalchemy.ext.associationproxy',
-                # 'sqlalchemy.ext.declarative', 'sqlalchemy.ext.hybrid',
-
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = Mock()
 
@@ -60,8 +56,8 @@ autosummary_generate = True
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx', 'sphinx.ext.todo',
               'sphinx.ext.autosummary', 'sphinx.ext.viewcode', 'sphinx.ext.coverage',
-              'sphinx.ext.doctest', 'sphinx.ext.ifconfig', 'sphinx.ext.mathbase',
-              'sphinx.ext.mathjax']
+              'sphinx.ext.doctest', 'sphinx.ext.ifconfig', 'sphinx.ext.mathjax',
+              'sphinxcontrib.bibtex']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
