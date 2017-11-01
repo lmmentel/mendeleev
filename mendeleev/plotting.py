@@ -197,7 +197,7 @@ def periodic_plot(df, attribute='atomic_weight', title='Periodic Table',
 
     source = ColumnDataSource(data=elements)
 
-    TOOLS = "resize,hover,save"
+    TOOLS = "hover,save,reset"
 
     p = figure(title=title,
                tools=TOOLS,
