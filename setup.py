@@ -31,7 +31,7 @@ CLASSIFIERS = ['Development Status :: 3 - Alpha',
                'Topic :: Scientific/Engineering :: Physics']
 
 
-DEPENDENCIES = ['numpy', 'pandas', 'sqlalchemy']
+DEPENDENCIES = ['numpy', 'pandas', 'sqlalchemy', 'pyfiglet']
 
 
 def readme():
