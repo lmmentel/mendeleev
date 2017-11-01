@@ -18,8 +18,8 @@ if sys.version_info.major == 3:
 else:
     from mock import Mock as Mock     # if python ver 2.7
 
-MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma', 'bokeh', 'bokeh.plotting',
-                'bokeh.models',
+MOCK_MODULES = ['argparse', 'bokeh', 'bokeh.models', 'bokeh.plotting',
+                'numpy', 'numpy.ma',
                 'seaborn',
                 'matplotlib', 'matplotlib.pyplot', 'matplotlib.colors',
                 'matplotlib.cm',
@@ -54,7 +54,7 @@ autosummary_generate = True
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx', 'sphinx.ext.todo',
-              'sphinx.ext.autosummary', 'sphinx.ext.viewcode', 'sphinx.ext.coverage',
+              'sphinx.ext.viewcode', 'sphinx.ext.coverage',
               'sphinx.ext.doctest', 'sphinx.ext.ifconfig', 'sphinx.ext.mathjax',
               'sphinxcontrib.bibtex', 'nbsphinx']
 
