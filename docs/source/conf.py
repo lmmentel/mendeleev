@@ -24,8 +24,7 @@ MOCK_MODULES = ['argparse', 'numpy', 'numpy.ma', 'bokeh', 'bokeh.plotting',
                 'matplotlib', 'matplotlib.pyplot', 'matplotlib.colors',
                 'matplotlib.cm',
                 'scipy', 'scipy.optimize', 'scipy.interpolate',
-                'scipy.constants', 'pandas',
-                'IPython', 'IPython.lib', 'IPython.lib.pretty']
+                'scipy.constants', 'pandas']
 
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = Mock()
@@ -57,7 +56,7 @@ autosummary_generate = True
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx', 'sphinx.ext.todo',
               'sphinx.ext.autosummary', 'sphinx.ext.viewcode', 'sphinx.ext.coverage',
               'sphinx.ext.doctest', 'sphinx.ext.ifconfig', 'sphinx.ext.mathjax',
-              'sphinxcontrib.bibtex']
+              'sphinxcontrib.bibtex', 'nbsphinx']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -96,7 +95,7 @@ release = '0.3.6'  # Is set by calling `setup.py docs`
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build']
+exclude_patterns = ['_build', '**.ipynb_checkpoints']
 
 # The reST default role (used for this markup: `text`) to use for all documents.
 # default_role = None
