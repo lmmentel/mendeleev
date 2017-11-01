@@ -2,6 +2,16 @@
 mendeleev Changelog
 *******************
 
+v0.3.7 ()
+---------
+
+* The elements can now be directly imported from :doc:`mendeleev </index>` by symbols.
+* Added `sphinxcontrib.bibtex <http://sphinxcontrib-bibtex.readthedocs.io/en/latest/>`_ extension
+  to the docs to handle `BibTeX <http://www.bibtex.org/>`_ style references to improve
+  handling of the bibliographic entries.
+* Added `nbsphinx <https://nbsphinx.readthedocs.io>`_ to include `Jupyter Notebook <http://jupyter.org/>`_
+  tutorials in the docs.
+
 v0.3.6 (17-09-2017)
 --------------------
 
