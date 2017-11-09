@@ -1,8 +1,13 @@
 
+'''
+Class abstracting the elctronic configuration
+'''
+
 import re
-import six
 import math
 from collections import OrderedDict
+
+import six
 
 ORBITALS = ('s', 'p', 'd', 'f', 'g', 'h', 'i', 'j', 'k')
 SHELLS = ('K', 'L', 'M', 'N', 'O', 'P', 'Q')
@@ -162,7 +167,7 @@ class ElectronicConfiguration(object):
         core from the current configuration and return the result.
         '''
 
-        core_symbol, core_conf = self.get_largest_core()
+        _, core_conf = self.get_largest_core()
 
         valence = OrderedDict(set(self.conf.items()) -
                               set(core_conf.conf.items()))
@@ -170,7 +175,7 @@ class ElectronicConfiguration(object):
         return ElectronicConfiguration(valence)
 
     def sort(self, inplace=True):
-
+        'Sort the occupations OD'
         if inplace:
             self.conf = OrderedDict(sorted(self.conf.items(),
                                            key=lambda x: (x[0][0] +
@@ -181,12 +186,13 @@ class ElectronicConfiguration(object):
                                       x[0][0])))
 
     def electrons_per_shell(self):
+        'Return number of electrons per shell as dict'
 
         return {s: sum([v for k, v in self.conf.items() if k[0] == n])
                 for n, s in zip(range(1, self.max_n() + 1), SHELLS)}
 
     def shell2int(self):
-
+        'configuration as list of tuples (n, l, e)'
         return [(x[0], get_l(x[1]), x[2]) for x in self.conf]
 
     def max_n(self):
@@ -208,6 +214,7 @@ class ElectronicConfiguration(object):
                         for x in self.conf.keys() if x[0] == n])]
 
     def last_subshell(self, wrt='order'):
+        'Return the valence shell'
 
         if wrt.lower() == 'order':
             return list(self.conf.items())[-1]
@@ -256,7 +263,7 @@ class ElectronicConfiguration(object):
 
         for _ in range(n):
 
-            if len(newec.conf) == 0:
+            if not newec.conf:
                 raise ValueError('Cannot ionize further, no more electrons!')
 
             (n, o), ne = newec.last_subshell()
@@ -395,6 +402,7 @@ def get_spin_strings(sodict, average=True):
 
 
 def print_spin_occupations(sodict, average=True):
+    'Pretty format for the spin occupations'
 
     alphas = []
     betas = []
