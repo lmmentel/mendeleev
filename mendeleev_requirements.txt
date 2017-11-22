@@ -7,6 +7,9 @@ pyfiglet
 seaborn
 six
 sqlalchemy
+sphinx
+nbsphinx
+sphinx-rtd-theme
 sphinxcontrib-bibtex
 pybtex
 pybtex-docutils
