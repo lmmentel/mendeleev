@@ -1,5 +1,6 @@
 bokeh
 bs4
+ipython
 matplotlib
 numpy
 pandas
