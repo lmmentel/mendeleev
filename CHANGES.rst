@@ -2,8 +2,8 @@
 mendeleev Changelog
 *******************
 
-v0.3.7 ()
----------
+v0.4.0 (22-11-2017)
+-------------------
 
 * The elements can now be directly imported from :doc:`mendeleev </index>` by symbols.
 * Added `sphinxcontrib.bibtex <http://sphinxcontrib-bibtex.readthedocs.io/en/latest/>`_ extension
