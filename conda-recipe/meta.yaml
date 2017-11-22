@@ -21,12 +21,13 @@ channels:
 
 requirements:
   build:
-    - python {{ python }}
+    - python
     - setuptools
     - numpy
     - sqlalchemy
     - pandas
     - pyfiglet
+    - six
 
   run:
     - python
