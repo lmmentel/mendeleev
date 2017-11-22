@@ -7,21 +7,15 @@ Overview
 ========
 
 This package provides an API for accessing various properties of elements from
-the periodic table of elements.
-
-- string properties
-- numerical properties
-- electronic configuration
-- electronegativities
-- plotting
-- webapp
-- database link to data
+the periodic table of elements. 
 
 
 The repository is hosted on `bitbucket <https://bitbucket.org/lukaszmentel/mendeleev>`_.
 
 Contributing
 ============
+
+All contributions are welcome!
 
 If you would like to suggest an improvement or report a bug or data inconsistency please consider creating an
 `issue on bitbucket <https://bitbucket.org/lukaszmentel/mendeleev/issues>`_.
