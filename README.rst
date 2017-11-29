@@ -1,10 +1,22 @@
-#################
-mendeleev package
-#################
+
+.. Installation_ | Documentation_  | Usage_ | Contributing_ | License_ | `Getting help`_
+
+##################
+mendeleev_ package
+##################
 
 .. image:: https://readthedocs.org/projects/mendeleev/badge/
    :target: https://mendeleev.readthedocs.org
    :alt: Documentation Status
+
+.. image:: https://img.shields.io/pypi/v/mendeleev.svg?style=flat-square&label=PYPI%20version
+   :target: https://pypi.python.org/pypi/mendeleev
+   :alt: Latest version released on PyPi
+
+.. image:: https://img.shields.io/badge/License-MIT-yellow.svg
+   :target: https://opensource.org/licenses/MIT
+   :alt: MIT license
+
 
 This package provides a convenient python API for accessing various properties
 of elements, ions and isotopes in the periodic table of elements.
@@ -28,7 +40,7 @@ available as `jupyter notebooks <http://jupyter.org/>`_.
 Interactive web app
 *******************
 
-If you would like to explore the data available in `mendeleev <http://mendeleev.readthedocs.org/en/latest/>`_
+If you would like to explore the data available in mendeleev_
 check out the interactive web app at `mendeleev.herokuapp.com <http://mendeleev.herokuapp.com/>`_
 where you can create your own periodic tables and visualize the relations between various properties
 of elements.
@@ -384,6 +396,7 @@ Isotopes
    Chemistry - A European Journal, 11(12), 3511–3520.
    `doi:10.1002/chem.200401299 <http://doi.org/10.1002/chem.200401299>`_
 
+.. _Installation:
 
 ************
 Installation
@@ -688,4 +701,7 @@ Funding
 
 This project is supported by the RCN (The Research Council of Norway) project
 number 239193.
+
+
+.. _mendeleev: http://mendeleev.readthedocs.org
 
