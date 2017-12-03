@@ -50,7 +50,8 @@ of elements.
 Data
 ****
 
-A compre
+A comprehensive list of the available data together with appropriate references are available in the
+`documentation <mendeleev_>`_. Here the most important entries are listed: 
 
 
 Basic properties
@@ -181,8 +182,20 @@ Documentation is hosted on `Read the Docs <http://mendeleev.readthedocs.org/en/l
 Usage
 *****
 
-The simple interface to the data is through the ``element`` method that returns
-the ``Element`` objects::
+The simplest way of accessing the element data is by importing elements directly from
+the `mendeleev` package by their symbols. For example consider iron (Fe)::
+
+   >>> from mendeleev import Fe
+   >>> Fe.name
+   'Iron'
+   >>> Fe.atomic_number
+   26
+   >>> Fe.thermal_conductivity
+   80.4
+
+
+Another, more flexible way is through the ``element`` method that returns
+the ``Element`` object::
 
    >>> from mendeleev import element
 
@@ -219,65 +232,6 @@ returns a list of ``Element`` objects
    >>> c.name, h.name, o.name
    ('Carbon', 'Hydrogen', 'Oxygen')
 
-Composite Attributes
-====================
-
-Currently four of the attributes are more complex object than ``str``, ``int``
-or ``float``, those are:
-
-* ``oxistates``, returns a list of oxidation states
-* ``ionenergies``, returns a dictionary of ionization energies
-* ``isotopes``, returns a list of ``Isotope`` objects
-* ``ionic_radii`` returns a list of ``IonicRadius`` objects
-
-Oxidation states
-----------------
-
-For examples ``oxistates`` returns a list of oxidation states for
-a given element
-
-.. code-block:: python
-
-   >>> fe = element('Fe')
-   >>> fe.oxistates
-   [6, 3, 2, 0, -2]
-
-Ionization energies
--------------------
-
-The ``ionenergies`` returns a dictionary with ionization energies as values and
-degrees of ionization as keys.
-
-.. code-block:: python
-
-   >>> fe = element('Fe')
-   >>> fe.ionenergies
-   {1: 7.9024678,
-    2: 16.1992,
-    3: 30.651,
-    4: 54.91,
-    5: 75.0,
-    6: 98.985,
-    7: 125.0,
-    8: 151.06,
-    9: 233.6,
-    10: 262.1,
-    11: 290.9,
-    12: 330.81,
-    13: 361.0,
-    14: 392.2,
-    15: 456.2,
-    16: 489.312,
-    17: 1262.7,
-    18: 1357.8,
-    19: 1460.0,
-    20: 1575.6,
-    21: 1687.0,
-    22: 1798.43,
-    23: 1950.4,
-    24: 2045.759,
-    25: 8828.1875,
-    26: 9277.681}
 
 Isotopes
 --------
@@ -303,122 +257,155 @@ following attributes per isotope
 The columns represent the attributes ``atomic_number``, ``mass``,
 ``abundance`` and ``mass_number`` respectively.
 
-Ionic radii
------------
+Tables and the database
+=======================
 
-Another composite attribute is ``ionic_radii`` which returns a list of
-``IonicRadius`` object with the following attributes
-
-* ``atomic_number``, atomic number of the ion
-* ``charge``, charge of the ion
-* ``econf``, electronic configuration of the ion
-* ``coordination``, coordination type of the ion
-* ``spin``, spin state of the ion (*HS* or *LS*)
-* ``crystal_radius``
-* ``ionic_radius``
-* ``origin``, source of the data
-* ``most_reliable``, recommended value
-
-.. code-block:: python
-
-   >>> fe = element('Fe')
-   >>> for ir in fe.ionic_radii:
-   ...     print(ir)
-   charge=   2, coordination=IV   , crystal_radius= 0.770, ionic_radius= 0.630
-   charge=   2, coordination=IVSQ , crystal_radius= 0.780, ionic_radius= 0.640
-   charge=   2, coordination=VI   , crystal_radius= 0.750, ionic_radius= 0.610
-   charge=   2, coordination=VI   , crystal_radius= 0.920, ionic_radius= 0.780
-   charge=   2, coordination=VIII , crystal_radius= 1.060, ionic_radius= 0.920
-   charge=   3, coordination=IV   , crystal_radius= 0.630, ionic_radius= 0.490
-   charge=   3, coordination=V    , crystal_radius= 0.720, ionic_radius= 0.580
-   charge=   3, coordination=VI   , crystal_radius= 0.690, ionic_radius= 0.550
-   charge=   3, coordination=VI   , crystal_radius= 0.785, ionic_radius= 0.645
-   charge=   3, coordination=VIII , crystal_radius= 0.920, ionic_radius= 0.780
-   charge=   4, coordination=VI   , crystal_radius= 0.725, ionic_radius= 0.585
-   charge=   6, coordination=IV   , crystal_radius= 0.390, ionic_radius= 0.250
-
+mendeleev_ offers also methods for accessing whole tables of data, e.g. table 
+with the data on all isotopes and methods for interacting directly with the
+database engine, for more details see the `API documentation <https://mendeleev.readthedocs.io/en/stable/code.html#accessing-data>`_
+and `this tutorial <https://mendeleev.readthedocs.io/en/stable/notebooks/02_tables.html>`_.
 
 CLI utility
 ===========
 
 For those who work in the terminal there is a simple command line interface
 (CLI) for printing the information about a given element. The script name is
-`element.py` and it accepts either the symbol or name of the element as an
-argument and prints the data about it. For example, to print the properties of
-silicon type
+`element.py` and it accepts either the symbol or name of the element or it's
+atomic number as an argument and prints the data about it. For example, to
+print the properties of silicon type
 
 .. code-block:: bash
 
-   $ element.py Si
-      _  _  _  _      _
-    _(_)(_)(_)(_)_   (_)
-   (_)          (_)_  _
-   (_)_  _  _  _  (_)(_)
-     (_)(_)(_)(_)_   (_)
-    _           (_)  (_)
-   (_)_  _  _  _(_)_ (_)
-     (_)(_)(_)(_) (_)(_)(_)
+    $ element.py Si
+                                _  _  _  _      _          
+                              _(_)(_)(_)(_)_   (_)         
+                             (_)          (_)_  _          
+                             (_)_  _  _  _  (_)(_)         
+                               (_)(_)(_)(_)_   (_)         
+                              _           (_)  (_)         
+                             (_)_  _  _  _(_)_ (_) _       
+                               (_)(_)(_)(_) (_)(_)(_)      
+                                                           
+                                                           
 
+    Description
+    ===========
 
+      Metalloid element belonging to group 14 of the periodic table. It is
+      the second most abundant element in the Earth's crust, making up 25.7%
+      of it by weight. Chemically less reactive than carbon. First
+      identified by Lavoisier in 1787 and first isolated in 1823 by
+      Berzelius.
 
-   Description
-   ===========
+    Sources
+    =======
 
-     Metalloid element belonging to group 14 of the periodic table. It is
-     the second most abundant element in the Earth's crust, making up 25.7%
-     of it by weight. Chemically less reactive than carbon. First
-     identified by Lavoisier in 1787 and first isolated in 1823 by
-     Berzelius.
+      Makes up major portion of clay, granite, quartz (SiO2), and sand.
+      Commercial production depends on a reaction between sand (SiO2) and
+      carbon at a temperature of around 2200 °C.
 
-   Properties
-   ==========
+    Uses
+    ====
 
-   Annotation
-   Atomic number                       14
-   Atomic radius                      132
-   Atomic volume                     12.1
-   Block                                p
-   Boiling point                     2628
-   Covalent radius 2008               111
-   Covalent radius 2009               116
-   Cpk color                      #daa520
-   Density                           2.33
-   Dipole polarizability            37.31
-   Electron affinity              1.38952
-   Electronic configuration  [Ne] 3s2 3p2
-   En allen                         11.33
-   En pauling                         1.9
-   Evaporation heat                   383
-   Fusion heat                       50.6
-   Gas basicity                     814.1
-   Group id                            14
-   Heat of formation                  450
-   Jmol color                     #f0c8a0
-   Lattice constant                  5.43
-   Lattice structure                  DIA
-   Mass                           28.0855
-   Melting point                     1683
-   Name                           Silicon
-   Period                               3
-   Proton affinity                    837
-   Series id                            5
-   Specific heat                    0.703
-   Symbol                              Si
-   Thermal conductivity               149
-   Vdw radius                         210
+      Used in glass as silicon dioxide (SiO2). Silicon carbide (SiC) is one
+      of the hardest substances known and used in polishing. Also the
+      crystalline form is used in semiconductors.
+
+    Properties
+    ==========
+
+    Abundance crust                                         282000
+    Abundance sea                                              2.2
+    Annotation                                                    
+    Atomic number                                               14
+    Atomic radius                                              132
+    Atomic radius rahm                                         232
+    Atomic volume                                             12.1
+    Atomic weight                                           28.085
+    Atomic weight uncertainty                                  NaN
+    Block                                                        p
+    Boiling point                                             2628
+    C6                                                         305
+    C6 gb                                                      308
+    Cas                                                  7440-21-3
+    Covalent radius bragg                                      117
+    Covalent radius cordero                                    111
+    Covalent radius pyykko                                     116
+    Covalent radius pyykko double                              107
+    Covalent radius pyykko triple                              102
+    Covalent radius slater                                     110
+    Cpk color                                              #daa520
+    Density                                                   2.33
+    Dipole polarizability                                    37.31
+    Discoverers                                     Jöns Berzelius
+    Discovery location                                      Sweden
+    Discovery year                                            1824
+    Electron affinity                                      1.38952
+    Electronic configuration                          [Ne] 3s2 3p2
+    En allen                                                 11.33
+    En ghosh                                              0.178503
+    En pauling                                                 1.9
+    Evaporation heat                                           383
+    Fusion heat                                               50.6
+    Gas basicity                                             814.1
+    Geochemical class                                        major
+    Goldschmidt class                                    litophile
+    Group id                                                    14
+    Heat of formation                                          450
+    Is monoisotopic                                           None
+    Is radioactive                                           False
+    Jmol color                                             #f0c8a0
+    Lattice constant                                          5.43
+    Lattice structure                                          DIA
+    Melting point                                             1683
+    Metallic radius                                            117
+    Metallic radius c12                                        138
+    Molcas gv color                                        #f0c8a0
+    Name                                                   Silicon
+    Name origin                    Latin: silex, silicus, (flint).
+    Period                                                       3
+    Proton affinity                                            837
+    Series id                                                    5
+    Specific heat                                            0.703
+    Symbol                                                      Si
+    Thermal conductivity                                       149
+    Vdw radius                                                 210
+    Vdw radius alvarez                                         219
+    Vdw radius batsanov                                        210
+    Vdw radius bondi                                           210
+    Vdw radius dreiding                                        427
+    Vdw radius mm3                                             229
+    Vdw radius rt                                              NaN
+    Vdw radius truhlar                                         NaN
+    Vdw radius uff                                           429.5
+
 
 
 ************
 Contributing
 ************
 
-Contributions are always welcome! 
+All contributions are welcome! 
 
-`issues <https://bitbucket.org/lukaszmentel/mendeleev/issues>`_
+Issues_
+=======
 
-`pull request <https://bitbucket.org/lukaszmentel/mendeleev/pull-requests/>`_ 
+Feel free to submit issues_ with:
 
-contact
+- data updates and recommendations
+- enhancement requests and new useful features
+- code bugs
+- data or citation inconsistencies 
+
+`Pull requests <pull request_>`_
+================================
+
+
+- fork the repo on `bitbucket <source_>`_
+- clone the project to your own machine
+- commit changes to your own branch
+- push your work back up to your fork
+- submit a `pull request`_ so that your changes can be reviewed
 
 
 *******
@@ -471,5 +458,7 @@ number 239193.
 
 
 .. _conda: https://conda.io/docs/intro.html
+.. _issues: https://bitbucket.org/lukaszmentel/mendeleev/issues
 .. _mendeleev: http://mendeleev.readthedocs.org
-
+.. _pull request: https://bitbucket.org/lukaszmentel/mendeleev/pull-requests
+.. _source: https://bitbucket.org/lukaszmentel/mendeleev
