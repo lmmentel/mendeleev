@@ -17,6 +17,8 @@ mendeleev_ package
    :target: https://opensource.org/licenses/MIT
    :alt: MIT license
 
+.. image:: https://anaconda.org/conda-forge/github3.py/badges/installer/conda.svg
+   :target: https://anaconda.org/lmmentel/mendeleev
 
 This package provides a convenient python API for accessing various properties
 of elements, ions and isotopes in the periodic table of elements.
@@ -57,7 +59,7 @@ A comprehensive list of the available data together with appropriate references 
 Basic properties
 ================
 
-- atomic number 
+- atomic number
 - atomic weight
 - block
 - cas
