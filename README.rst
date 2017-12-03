@@ -412,11 +412,20 @@ silicon type
 Contributing
 ************
 
+Contributions are always welcome! 
+
 `issues <https://bitbucket.org/lukaszmentel/mendeleev/issues>`_
 
 `pull request <https://bitbucket.org/lukaszmentel/mendeleev/pull-requests/>`_ 
 
 contact
+
+
+*******
+License
+*******
+
+MIT, see `LICENSE <https://bitbucket.org/lukaszmentel/mendeleev/src/tip/LICENSE>`_
 
 
 ******
@@ -453,20 +462,12 @@ or the older `BibTeX <http://www.bibtex.org/>`_ format
    }
 
 
-
 *******
 Funding
 *******
 
 This project is supported by the RCN (The Research Council of Norway) project
 number 239193.
-
-
-*******
-License
-*******
-
-MIT
 
 
 .. _conda: https://conda.io/docs/intro.html
