@@ -44,6 +44,11 @@ def clielement():
         help='Element identifier: symbol, name or atomic number')
     args = parser.parse_args()
 
+    try:
+        args.element = int(args.element)
+    except ValueError:
+        pass
+
     e = element(args.element)
 
     f = Figlet('dotmatrix', justify='center')
