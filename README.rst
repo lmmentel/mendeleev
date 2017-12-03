@@ -1,5 +1,5 @@
 
-.. Installation_ | Documentation_  | Usage_ | Contributing_ | License_ | `Getting help`_
+Installation_ | Documentation_  | Usage_ | Contributing_ | License_
 
 ##################
 mendeleev_ package
@@ -50,23 +50,7 @@ of elements.
 Data
 ****
 
-Following electronegativity scales are available either as stored values or
-computed on request from other properties:
-
-Electronegativity scales
-========================
-
-* Allen
-* Allred & Rochow
-* Cottrell & Sutton
-* Ghosh
-* Gordy
-* Li & Xue
-* Nagle
-* Martynov & Batsanov
-* Mulliken
-* Pauling
-* Sanderson
+A compre
 
 
 Basic properties
@@ -100,10 +84,25 @@ Size related properties
 - covalent radius (Bragg, Cordero, Pyykko, Slater)
 - ionic radius
 - metallic radius
-- can der Waals radius (Alvarez, Batsanov, Bondi, Dreiding, MM3, RT, Truhlar, UFF)
+- van der Waals radius (Alvarez, Batsanov, Bondi, Dreiding, MM3, RT, Truhlar, UFF)
 
-Descriptive
-===========
+Electronegativity scales
+========================
+
+- Allen
+- Allred & Rochow
+- Cottrell & Sutton
+- Ghosh
+- Gordy
+- Li & Xue
+- Nagle
+- Martynov & Batsanov
+- Mulliken
+- Pauling
+- Sanderson
+
+Descriptive properties
+======================
 
 - discoverers
 - discovery location
@@ -117,7 +116,7 @@ Physical properties
 ===================
 
 - boiling point
-- C6
+- C<sub>6</sub>
 - density
 - dipole polarizability
 - electron affinity
@@ -138,11 +137,9 @@ Isotope properties
 - abundance
 - g_factor
 - half_life
-- half_life_unit
-- is_radioactive
+- radioactivity
 - mass
-- mass_number
-- mass_uncertainty
+- mass number
 - spin
 - quadrupole_moment
 
@@ -150,6 +147,8 @@ Isotope properties
 ************
 Installation
 ************
+
+The preferred isntalltion method is with ``
 
 The package can be installed using `pip <https://pypi.python.org/pypi/pip>`_
 
@@ -170,6 +169,13 @@ the package from `my anaconda channel <https://anaconda.org/lmmentel/mendeleev>`
 
    conda install -c lmmentel mendeleev=0.4.0
 
+
+*************
+Documentation
+*************
+
+
+Documentation is hosted on `Read the Docs <http://mendeleev.readthedocs.org/en/latest/>`_.
 
 *****
 Usage
@@ -331,9 +337,9 @@ Another composite attribute is ``ionic_radii`` which returns a list of
    charge=   4, coordination=VI   , crystal_radius= 0.725, ionic_radius= 0.585
    charge=   6, coordination=IV   , crystal_radius= 0.390, ionic_radius= 0.250
 
-***********
+
 CLI utility
-***********
+===========
 
 For those who work in the terminal there is a simple command line interface
 (CLI) for printing the information about a given element. The script name is
@@ -402,18 +408,22 @@ silicon type
    Vdw radius                         210
 
 
-*************
-Documentation
-*************
+************
+Contributing
+************
 
+`issues <https://bitbucket.org/lukaszmentel/mendeleev/issues>`_
 
-Documentation can be found `here <http://mendeleev.readthedocs.org/en/latest/>`_.
+`pull request <https://bitbucket.org/lukaszmentel/mendeleev/pull-requests/>`_ 
+
+contact
+
 
 ******
 Citing
 ******
 
-If you use *mendeleev* in a scientific publication, please consider citing the software as
+If you use mendeleev_ in a scientific publication, please consider citing the software as
 
 |    L. M. Mentel, *mendeleev* - A Python resource for properties of chemical elements, ions and isotopes. , 2014-- . Available at: `https://bitbucket.org/lukaszmentel/mendeleev <https://bitbucket.org/lukaszmentel/mendeleev>`_.
 
@@ -452,5 +462,13 @@ This project is supported by the RCN (The Research Council of Norway) project
 number 239193.
 
 
+*******
+License
+*******
+
+MIT
+
+
+.. _conda: https://conda.io/docs/intro.html
 .. _mendeleev: http://mendeleev.readthedocs.org
 
