@@ -320,7 +320,7 @@ class ElectronicConfiguration(object):
         '''
         Calculate the screening constant using the approach introduced by
         Slater in Slater, J. C. (1930). Atomic Shielding Constants. Physical
-        Review, 36(1), 57–64.
+        Review, 36(1), 57-64.
         `doi:10.1103/PhysRev.36.57 <http://www.dx.doi.org/10.1103/PhysRev.36.57>`_
 
         Args:
