@@ -1,0 +1,30 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+numpy = "*"
+pandas = "*"
+six = "*"
+sqlalchemy = "*"
+colorama = "*"
+pyfiglet = "*"
+
+
+[dev-packages]
+
+"e1839a8" = {path = ".", editable = true}
+ipython = "*"
+jupyter = "*"
+bokeh = "*"
+sphinx = "*"
+nbsphinx = "*"
+sphinx-rtd-theme = "*"
+sphinxcontrib-bibtex = "*"
+pybtex = "*"
+pybtex-docutils = "*"
+missingno = "*"
