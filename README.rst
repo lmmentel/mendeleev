@@ -391,17 +391,17 @@ All contributions are welcome!
 Issues_
 =======
 
-Feel free to submit issues_ with:
+Feel free to submit issues_ regarding:
 
 - data updates and recommendations
 - enhancement requests and new useful features
 - code bugs
-- data or citation inconsistencies 
+- data or citation inconsistencies or errors
 
 `Pull requests <pull request_>`_
 ================================
 
-
+- before stating to work on your pull request please `submit an issue <issues_>`_ first
 - fork the repo on `bitbucket <source_>`_
 - clone the project to your own machine
 - commit changes to your own branch
