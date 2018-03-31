@@ -530,7 +530,7 @@ Example::
 .. _sanderson_en:
 
 Sanderson
-==========
+=========
 
 Sanderson :cite:`Sanderson1951,Sanderson1952` established his scale of electronegativity based on the
 stability ratio:
