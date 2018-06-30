@@ -154,6 +154,8 @@ class Element(Base):
       mass : float
         Relative atomic mass. Ratio of the average mass of atoms
         of the element to 1/12 of the mass of an atom of 12C
+      mendeleev_number : int
+        Mendeleev number
       melting_point : float
         Melting temperature in K
       metallic_radius : Float
@@ -258,6 +260,7 @@ class Element(Base):
     lattice_constant = Column(Float)
     lattice_structure = Column(String)
     melting_point = Column(Float)
+    mendeleev_number = Column(Integer)
     metallic_radius = Column(Float)
     metallic_radius_c12 = Column(Float)
     molcas_gv_color = Column(String)
