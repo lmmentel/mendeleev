@@ -137,7 +137,9 @@ class Element(Base):
       goldschmidt_class : String
         Goldschmidt classification of the elements
       group : int
-        Group in periodic table
+        Group number
+      group_id : Group
+        Group details
       heat_of_formation : float
         Heat of formation in kJ/mol
       is_monoisotopic : bool
