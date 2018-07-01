@@ -2,6 +2,12 @@
 mendeleev Changelog
 *******************
 
+Latest
+------
+
+* Added ``mendeleev_number`` attribute to elements.
+
+
 v0.4.0 (22-11-2017)
 -------------------
 
