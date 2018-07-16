@@ -2,12 +2,22 @@
 mendeleev Changelog
 *******************
 
-Latest
-------
+v0.4.3 (16-07-2018)
+-------------------
 
 * Added ``mendeleev_number`` attribute to elements.
-* Added footnotes to the data documentation. 
+* Added footnotes to the data documentation.
 
+v0.4.2 (26-12-2018)
+-------------------
+
+* Fixed issue #3: encoding issue in econf.py.
+
+v0.4.1 (03-12-2017)
+-------------------
+
+* Corrected passing integers to the CLI script.
+* Various documentation readability and structure improvements.
 
 v0.4.0 (22-11-2017)
 -------------------
