@@ -30,5 +30,6 @@ build/**
 *.ind
 *.out
 *.fdb_latexmk
+.DS_Store
 mendeleev.sublime-workspace
 mendeleev.sublime-project
