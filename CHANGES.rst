@@ -6,6 +6,7 @@ Latest
 ------
 
 * Added ``mendeleev_number`` attribute to elements.
+* Added footnotes to the data documentation. 
 
 
 v0.4.0 (22-11-2017)
