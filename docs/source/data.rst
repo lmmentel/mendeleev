@@ -289,6 +289,13 @@ The bulk of the radii data was taken from Ref. :cite:`Alvarez2013`, but the
 radii for noble gasses were update according to the values in Ref.
 :cite:`Vogt2014`.
 
+Mendeleev numbers
+-----------------
+
+Mendeleev numbers were mostly taken from :cite:`Villars2004` but the range was extended
+to cover the whole periodic table following the prescription in the article of increasing
+the numbers going from top to bottom in each group and group by group from left to right
+in the periodic table.
 
 *****************
 Electronegativity
