@@ -10,6 +10,7 @@ docs/source/_reference/**
 dist/**
 build/**
 .cache/**
+.pytest_cache/**
 *.x
 *.a
 *.so
