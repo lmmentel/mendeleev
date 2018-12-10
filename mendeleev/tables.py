@@ -66,7 +66,7 @@ class Element(Base):
       atomic_weight : float
         Relative atomic weight as the ratio of the average mass of atoms
         of the element to 1/12 of the mass of an atom of 12C
-      block : int
+      block : str
         Block in periodic table, s, p, d, f
       boiling_point : float
         Boiling temperature in K
