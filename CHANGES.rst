@@ -2,6 +2,11 @@
 mendeleev Changelog
 *******************
 
+v0.4.4 (10.12.2018)
+-------------------
+
+* fix `issues/6/type-of-block-is-wrong <https://bitbucket.org/lukaszmentel/mendeleev/issues/6/type-of-block-is-wrong>`_
+
 v0.4.3 (16-07-2018)
 -------------------
 
