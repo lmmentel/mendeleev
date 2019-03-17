@@ -2,6 +2,13 @@
 mendeleev Changelog
 *******************
 
+v.0.4.5 (17.03.2018)
+--------------------
+
+* update dipole polarizability value to the latest recommended (2018)
+* fix `issues/8/typeerror-on-some-of-the-element <https://bitbucket.org/lukaszmentel/mendeleev/issues/8/typeerror-on-some-of-the-element>`_
+
+
 v0.4.4 (10.12.2018)
 -------------------
 
