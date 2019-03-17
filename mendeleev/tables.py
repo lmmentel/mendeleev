@@ -172,6 +172,8 @@ class Element(Base):
         Origin of the name
       period : int
         Period in periodic table
+      pettifor_number: int
+        Pettifor scale
       proton_affinity : Float
         Proton affinity
       series : int
@@ -267,6 +269,7 @@ class Element(Base):
     name = Column(String)
     name_origin = Column(String)
     period = Column(Integer)
+    pettifor_number = Column(Integer)
     proton_affinity = Column(Float)
     _series_id = Column("series_id", Integer, ForeignKey("series.id"))
     _series = relationship("Series", uselist=False, lazy='subquery')
