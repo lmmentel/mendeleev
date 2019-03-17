@@ -894,8 +894,12 @@ class Isotope(Base):
 
     def __str__(self):
 
-        return "{0:5d} {1:5d} {2:10.5f}".format(
-            self.atomic_number, self.mass_number, self.mass)
+        if self.mass is None:
+            return "{0:5d} {1:5d} NA".format(
+                self.atomic_number, self.mass_number)
+        else:
+            return "{0:5d} {1:5d} {2:10.5f}".format(
+                self.atomic_number, self.mass_number, self.mass)
 
     def __repr__(self):
 
