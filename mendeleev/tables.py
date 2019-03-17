@@ -106,10 +106,9 @@ class Element(Base):
       description : str
         Short description of the element
       dipole_polarizability : float
-        Dipole polarizability in atomic units from P. Schwerdtfeger "Table of
-        experimental and calculated static dipole polarizabilities for the
-        electronic ground states of the neutral elements (in atomic units)",
-        February 11, 2014
+        Dipole polarizability in atomic units
+      dipole_polarizability_unc:  float
+        Uncertainty of the dipole polarizability
       discoverers: str
         The discoverers of the element
       discovery_location: str
@@ -238,6 +237,7 @@ class Element(Base):
     density = Column(Float)
     description = Column(String)
     dipole_polarizability = Column(Float)
+    dipole_polarizability_unc = Column(Float)
     discoverers = Column(String)
     discovery_location = Column(String)
     discovery_year = Column(Integer)
