@@ -129,11 +129,13 @@ class Element(Base):
         Evaporation heat in kJ/mol
       fusion_heat : float
         Fusion heat in kJ/mol
-      gas_basicity : Float
+      gas_basicity : float
         Gas basicity
-      geochemical_class : String
+      geochemical_class : str
         Geochemical classification of the elements
-      goldschmidt_class : String
+      glawe_number: int
+        Glawe number (scale)
+      goldschmidt_class : str
         Goldschmidt classification of the elements
       group : int
         Group number
@@ -172,6 +174,8 @@ class Element(Base):
         Origin of the name
       period : int
         Period in periodic table
+      pettifor_number: int
+        Pettifor scale
       proton_affinity : Float
         Proton affinity
       series : int
@@ -250,6 +254,7 @@ class Element(Base):
     fusion_heat = Column(Float)
     gas_basicity = Column(Float)
     geochemical_class = Column(String)
+    glawe_number = Column(Integer)
     goldschmidt_class = Column(String)
     group_id = Column(Integer, ForeignKey("groups.group_id"))
     group = relationship("Group", uselist=False, lazy='subquery')
@@ -267,6 +272,7 @@ class Element(Base):
     name = Column(String)
     name_origin = Column(String)
     period = Column(Integer)
+    pettifor_number = Column(Integer)
     proton_affinity = Column(Float)
     _series_id = Column("series_id", Integer, ForeignKey("series.id"))
     _series = relationship("Series", uselist=False, lazy='subquery')
