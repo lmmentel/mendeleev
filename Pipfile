@@ -10,9 +10,10 @@ six = "*"
 sqlalchemy = "*"
 colorama = "*"
 pyfiglet = "*"
+pygments = "*"
 
 [dev-packages]
-"e1839a8" = {path = ".", editable = true}
+e1839a8 = {path = ".",editable = true}
 ipython = "*"
 jupyter = "*"
 bokeh = "*"
@@ -29,3 +30,5 @@ bumpversion = "*"
 twine = "*"
 plotly = "*"
 jupyterlab = "*"
+pygments = "*"
+ipykernel = "*"
