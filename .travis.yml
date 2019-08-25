@@ -4,30 +4,12 @@ python:
 - '3.6'
 - '3.7'
 
-# Setup anaconda
-before_install:
-  - wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-  - chmod +x miniconda.sh
-  - ./miniconda.sh -b
-  - export PATH=$HOME/miniconda3/bin:$PATH
-  - conda update --yes -q conda
-  - conda config --set always_yes true
-  - conda config --set anaconda_upload no
-
 install:
   - pip install .
   - pip install pytest
-  - conda install -q python=$TRAVIS_PYTHON_VERSION pip requests conda-build jinja2 anaconda-client 
-  # install additional packages with conda and pip
-  - conda build conda-recipe
-  - conda install --use-local $PACKAGENAME
 
 script:
   - pytest tests
-
-after_success:
-# Change permissions for Anaconda deployment script
-  - chmod +x ./deploy_anaconda.sh
 
 deploy:
   - provider: pypi
@@ -37,9 +19,3 @@ deploy:
     on:
       tags: true
     skip_existing: true
-  # Deploy to Anaconda.org
-  - provider: script
-    script: ./deploy_anaconda.sh
-    on:
-      tags: true
-    skip_cleanup: true
