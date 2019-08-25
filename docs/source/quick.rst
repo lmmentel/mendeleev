@@ -10,7 +10,7 @@ This package provides an API for accessing various properties of elements from
 the periodic table of elements. 
 
 
-The repository is hosted on `bitbucket <https://bitbucket.org/lukaszmentel/mendeleev>`_.
+The repository is hosted on `github <https://github.com/lmmentel/mendeleev>`_.
 
 Contributing
 ============
@@ -18,7 +18,7 @@ Contributing
 All contributions are welcome!
 
 If you would like to suggest an improvement or report a bug or data inconsistency please consider creating an
-`issue on bitbucket <https://bitbucket.org/lukaszmentel/mendeleev/issues>`_.
+`issue on github <https://github.com/lmmentel/mendeleev/issues>`_.
 I would be especially grateful for references to possible data updates and sources and recommendations of new data.
 
 
@@ -27,7 +27,7 @@ Citing
 
 If you use *mendeleev* in a scientific publication, please consider citing the software as
 
-|    L. M. Mentel, *mendeleev* - A Python resource for properties of chemical elements, ions and isotopes. , 2014-- . Available at: `https://bitbucket.org/lukaszmentel/mendeleev <https://bitbucket.org/lukaszmentel/mendeleev>`_.
+|    L. M. Mentel, *mendeleev* - A Python resource for properties of chemical elements, ions and isotopes. , 2014-- . Available at: `https://github.com/lmmentel/mendeleev <https://github.com/lmmentel/mendeleev>`_.
 
 
 
@@ -38,7 +38,7 @@ Here's the reference in the `BibLaTeX <https://www.ctan.org/pkg/biblatex?lang=en
    @software{mendeleev2014,
       author = {Mentel, Łukasz},
       title = {{mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes},
-      url = {https://bitbucket.org/lukaszmentel/mendeleev},
+      url = {https://github.com/lmmentel/mendeleev},
       version = {0.3.6},
       date = {2014--},
   }
@@ -50,7 +50,7 @@ or the older `BibTeX <http://www.bibtex.org/>`_ format
    @misc{mendeleev2014,
       auhor = {Mentel, Łukasz},
       title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 0.3.6},
-      howpublished = {\url{https://bitbucket.org/lukaszmentel/mendeleev}},
+      howpublished = {\url{https://github.com/lmmentel/mendeleev}},
       year  = {2014--},
    }
 
