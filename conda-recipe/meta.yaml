@@ -3,8 +3,8 @@ package:
   version: "0.4.5"
 
 source:
-  hg_url: https://github.com/lmmentel/mendeleev
-  hg_tag: v0.4.5
+  git_url: https://github.com/lmmentel/mendeleev
+  git_rev: v0.4.5
 
 build:
   noarch: python
@@ -43,11 +43,15 @@ test:
   imports:
     - mendeleev
 
+  source_files:
+    - tests
+
   commands:
     # You can put test commands to be run here.  Use this to test that the
     # entry points work.
 
     - element.py --help
+    - pytest tests
 
   # You can also put a file called run_test.py in the recipe that will be run
   # at test time.
