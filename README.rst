@@ -21,9 +21,9 @@ mendeleev_ package
    :target: https://anaconda.org/lmmentel/mendeleev
 
 
-| **Important** This package has been migrated from bitbucket.
-|
-| The bitbucket repo is no longer being maintaned and development will continue at github
+    **Important** This package has been migrated from bitbucket.
+
+    The bitbucket repo is no longer being maintaned and development will continue at github
 
 
 This package provides a convenient python API for accessing various properties
