@@ -10,8 +10,8 @@ from setuptools import setup, find_packages
 MAIN_PACKAGE = "mendeleev"
 DESCRIPTION = "Python API with a database of atomic properties for elements in the periodic table"
 LICENSE = "MIT"
-URL = "https://bitbucket.org/lukaszmentel/mendeleev"
-DOWNLOAD_URL = 'https://bitbucket.org/lukaszmentel/mendeleev/get/v0.4.5.tar.gz'
+URL = "https://github.com/lmmentel/mendeleev"
+DOWNLOAD_URL = 'https://github.com/lmmentel/mendeleev/archive/master.zip'
 AUTHOR = "Lukasz Mentel"
 EMAIL = "lmmentel@gmail.com"
 VERSION = '0.4.5'
