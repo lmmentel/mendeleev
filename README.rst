@@ -6,19 +6,22 @@ mendeleev_ package
 ##################
 
 .. image:: https://readthedocs.org/projects/mendeleev/badge/
-   :target: https://mendeleev.readthedocs.org
-   :alt: Documentation Status
+    :target: https://mendeleev.readthedocs.org
+    :alt: Documentation Status
 
 .. image:: https://img.shields.io/pypi/v/mendeleev.svg?style=flat-square&label=PYPI%20version
-   :target: https://pypi.python.org/pypi/mendeleev
-   :alt: Latest version released on PyPi
+    :target: https://pypi.python.org/pypi/mendeleev
+    :alt: Latest version released on PyPi
 
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
-   :target: https://opensource.org/licenses/MIT
-   :alt: MIT license
+    :target: https://opensource.org/licenses/MIT
+    :alt: MIT license
 
 .. image:: https://anaconda.org/conda-forge/github3.py/badges/installer/conda.svg
-   :target: https://anaconda.org/lmmentel/mendeleev
+    :target: https://anaconda.org/lmmentel/mendeleev
+
+.. image:: https://travis-ci.org/lmmentel/mendeleev.svg?branch=master
+    :target: https://travis-ci.org/lmmentel/mendeleev
 
 #########################################################
 Important! This package has been migrated from bitbucket.
