@@ -48,6 +48,16 @@ where you can create your own periodic tables and visualize the relations betwee
 of elements.
 
 
+.. image:: docs/source/img/mendeleevapp_periodic.png
+    :width: 800px
+    :align: center
+    :alt: Periodic table view
+
+.. image:: docs/source/img/mendeleevapp_correlations.png
+    :width: 800px
+    :align: center
+    :alt: Correlations view
+
 ****
 Data
 ****
