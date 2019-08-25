@@ -4,18 +4,42 @@ python:
 - '3.6'
 - '3.7'
 
+# Setup anaconda
+before_install:
+  - wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+  - chmod +x miniconda.sh
+  - ./miniconda.sh -b
+  - export PATH=$HOME/miniconda3/bin:$PATH
+  - conda update --yes -q conda
+  - conda config --set always_yes true
+  - conda config --set anaconda_upload no
+
 install:
-- pip install .
-- pip install pytest
+  - pip install .
+  - pip install pytest
+  - conda install -q python=$TRAVIS_PYTHON_VERSION pip requests conda-build jinja2 anaconda-client 
+  # install additional packages with conda and pip
+  - conda build conda-recipes
+  - conda install --use-local $PACKAGENAME
 
 script:
-- pytest tests
+  - pytest tests
+
+after_success:
+# Change permissions for Anaconda deployment script
+  - chmod +x ./deploy_anaconda.sh
 
 deploy:
-  provider: pypi
-  user: lmentel
-  password:
-    secure: LxqLiGdGc3epTcrU7LDFonbo5zcpuwHt7zqNYfGwR81GAGkK3jLTGaZdnbd7Ny4sDu4I1ke1ZBw5tWa1Yn8rxJ4zhm2bhfwVBLzVSycEBl1fzFJEehzYjg/er+uvC4s7C95fLjwo+MNCbTcpqKZOISjoKiZ2tNgYxjUFygeIeP2nXtMEZF83juuIHVbEv9SFvHkf25eCqhTN3kbFeE3WDATHwXMyBY31bIWgLC++VIsqr9lr3SS9OO0GXuSJlylRZw2nj+ADQhPg4gHbRb5272zCXdhjJGhep97OrKCfG76pq6S1LvPoJW9uQSl2inx9Y5qdxHFE3yu/MTnUuOqeMkL8qhcvYbAYnCL4dPEtIl9TS9pznWJWzTIXW8fLpjxWcKlr496Rl9NmmnJzoADS591goRp1kenwgOO6+Xj/qWH/NZlH5dikmB1t4SDlsc9kc5ZBpGc3pEdgIdGCgoR0D7aNKLaQr9hE+bIBAjcE0qAfOwjyJhEJhBsX9GPwB3ycZ6l+VYAVd7HHoxmIIAAvSXlGlvxruI9Ct8O4m8jY3WlI3HfuGrSFyue78LzRBEwv/GLHosNs4KpbkVZkf7oEtJ2WKCgXX8LRpL2I/yc5jEuo2dW+aQ0FKu5L1sloSAAB3ts5uGczhPEAGJ8Awj17Je7AGXj0X7okHHq+E045Ft4=
-  on:
-    tags: true
-  skip_existing: true
+  - provider: pypi
+    user: lmentel
+    password:
+      secure: LxqLiGdGc3epTcrU7LDFonbo5zcpuwHt7zqNYfGwR81GAGkK3jLTGaZdnbd7Ny4sDu4I1ke1ZBw5tWa1Yn8rxJ4zhm2bhfwVBLzVSycEBl1fzFJEehzYjg/er+uvC4s7C95fLjwo+MNCbTcpqKZOISjoKiZ2tNgYxjUFygeIeP2nXtMEZF83juuIHVbEv9SFvHkf25eCqhTN3kbFeE3WDATHwXMyBY31bIWgLC++VIsqr9lr3SS9OO0GXuSJlylRZw2nj+ADQhPg4gHbRb5272zCXdhjJGhep97OrKCfG76pq6S1LvPoJW9uQSl2inx9Y5qdxHFE3yu/MTnUuOqeMkL8qhcvYbAYnCL4dPEtIl9TS9pznWJWzTIXW8fLpjxWcKlr496Rl9NmmnJzoADS591goRp1kenwgOO6+Xj/qWH/NZlH5dikmB1t4SDlsc9kc5ZBpGc3pEdgIdGCgoR0D7aNKLaQr9hE+bIBAjcE0qAfOwjyJhEJhBsX9GPwB3ycZ6l+VYAVd7HHoxmIIAAvSXlGlvxruI9Ct8O4m8jY3WlI3HfuGrSFyue78LzRBEwv/GLHosNs4KpbkVZkf7oEtJ2WKCgXX8LRpL2I/yc5jEuo2dW+aQ0FKu5L1sloSAAB3ts5uGczhPEAGJ8Awj17Je7AGXj0X7okHHq+E045Ft4=
+    on:
+      tags: true
+    skip_existing: true
+  # Deploy to Anaconda.org
+  - provider: script
+    script: ./deploy_anaconda.sh
+    on:
+      tags: true
+    skip_cleanup: true
