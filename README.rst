@@ -20,6 +20,10 @@ mendeleev_ package
 .. image:: https://anaconda.org/conda-forge/github3.py/badges/installer/conda.svg
    :target: https://anaconda.org/lmmentel/mendeleev
 
+.. important:: This package has been migrated from bitbucket
+
+   The bitbucket repo is no longer being maintaned.
+
 This package provides a convenient python API for accessing various properties
 of elements, ions and isotopes in the periodic table of elements.
 
