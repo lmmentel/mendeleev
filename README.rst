@@ -20,6 +20,16 @@ mendeleev_ package
 .. image:: https://anaconda.org/conda-forge/github3.py/badges/installer/conda.svg
    :target: https://anaconda.org/lmmentel/mendeleev
 
+#########################################################
+Important! This package has been migrated from bitbucket.
+#########################################################
+
+The bitbucket repo is no longer being maintaned and development will continue at github.
+
+########
+Overview
+########
+
 This package provides a convenient python API for accessing various properties
 of elements, ions and isotopes in the periodic table of elements.
 
@@ -178,7 +188,7 @@ You can also install the most recent version from the repository:
 
 .. code-block:: bash
 
-   pip install https://bitbucket.org/lukaszmentel/mendeleev/get/tip.tar.gz
+   pip install git+https://github.com/lmmentel/mendeleev.git
 
 
 
@@ -412,7 +422,7 @@ Feel free to submit issues_ regarding:
 ================================
 
 - before stating to work on your pull request please `submit an issue <issues_>`_ first
-- fork the repo on `bitbucket <source_>`_
+- fork the repo on `github <source_>`_
 - clone the project to your own machine
 - commit changes to your own branch
 - push your work back up to your fork
@@ -423,7 +433,7 @@ Feel free to submit issues_ regarding:
 License
 *******
 
-MIT, see `LICENSE <https://bitbucket.org/lukaszmentel/mendeleev/src/tip/LICENSE>`_
+MIT, see `LICENSE <https://github.com/lmmentel/mendeleev/blob/master/LICENSE>`_
 
 
 ******
@@ -432,7 +442,7 @@ Citing
 
 If you use mendeleev_ in a scientific publication, please consider citing the software as
 
-|    L. M. Mentel, *mendeleev* - A Python resource for properties of chemical elements, ions and isotopes. , 2014-- . Available at: `https://bitbucket.org/lukaszmentel/mendeleev <https://bitbucket.org/lukaszmentel/mendeleev>`_.
+|    L. M. Mentel, *mendeleev* - A Python resource for properties of chemical elements, ions and isotopes. , 2014-- . Available at: `https://github.com/lmmentel/mendeleev <https://github.com/lmmentel/mendeleev>`_.
 
 
 
@@ -443,7 +453,7 @@ Here's the reference in the `BibLaTeX <https://www.ctan.org/pkg/biblatex?lang=en
    @software{mendeleev2014,
       author = {Mentel, Łukasz},
       title = {{mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes},
-      url = {https://bitbucket.org/lukaszmentel/mendeleev},
+      url = {https://github.com/lmmentel/mendeleev},
       version = {0.4.5},
       date = {2014--},
   }
@@ -455,7 +465,7 @@ or the older `BibTeX <http://www.bibtex.org/>`_ format
    @misc{mendeleev2014,
       auhor = {Mentel, Łukasz},
       title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 0.4.5},
-      howpublished = {\url{https://bitbucket.org/lukaszmentel/mendeleev}},
+      howpublished = {\url{https://github.com/lmmentel/mendeleev}},
       year  = {2014--},
    }
 
@@ -469,7 +479,7 @@ number 239193.
 
 
 .. _conda: https://conda.io/docs/intro.html
-.. _issues: https://bitbucket.org/lukaszmentel/mendeleev/issues
+.. _issues: https://github.com/lmmentel/mendeleev/issues
 .. _mendeleev: http://mendeleev.readthedocs.org
-.. _pull request: https://bitbucket.org/lukaszmentel/mendeleev/pull-requests
-.. _source: https://bitbucket.org/lukaszmentel/mendeleev
+.. _pull request: https://github.com/lmmentel/mendeleev/pulls
+.. _source: https://github.com/lmmentel/mendeleev
