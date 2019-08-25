@@ -900,17 +900,23 @@ class Isotope(Base):
 
     def __str__(self):
 
+        afmt = '5.3f'
+        mfmt = '10.5f'
+
         if self.mass is None:
-            return "{0:5d} {1:5d} NA".format(
-                self.atomic_number, self.mass_number)
-        else:
-            return "{0:5d} {1:5d} {2:10.5f}".format(
-                self.atomic_number, self.mass_number, self.mass)
+            mfmt = ''
+
+        if self.abundance is None:
+            afmt = ''
+
+        return "{0:5d} {1:5d} {2:{mfmt}} {3:{afmt}}".format(
+            self.atomic_number, self.mass_number, self.mass,
+            self.abundance, mfmt=mfmt, afmt=afmt)
 
     def __repr__(self):
 
-        return "<Isotope(Z={}, A={}, mass={})>".format(
-            self.atomic_number, self.mass_number, self.mass)
+        return "<Isotope(Z={}, A={}, mass={}, abundance={})>".format(
+            self.atomic_number, self.mass_number, self.mass, self.abundance)
 
 
 class ScreeningConstant(Base):
