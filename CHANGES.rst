@@ -2,17 +2,25 @@
 mendeleev Changelog
 *******************
 
-v.0.4.5 (17.03.2018)
+v0.5.0 (25.08.2019)
+-------------------
+
+* Migrate the package from bitbucket to github
+* Add Pettifor scale: ``pettifor_number`` attribute
+* Add Glawe scale: ``glawe_number`` attribute
+* Restore default printing of isotopic abundancies, fix issue #9
+* Correct the oxidation states for Xe, fix issue #10 
+
+v0.4.5 (17.03.2018)
 --------------------
 
-* update dipole polarizability value to the latest recommended (2018)
-* fix `issues/8/typeerror-on-some-of-the-element <https://bitbucket.org/lukaszmentel/mendeleev/issues/8/typeerror-on-some-of-the-element>`_
-
+* Update dipole polarizability value to the latest recommended (2018)
+* Fix `issues/8/typeerror-on-some-of-the-element <https://bitbucket.org/lukaszmentel/mendeleev/issues/8/typeerror-on-some-of-the-element>`_
 
 v0.4.4 (10.12.2018)
 -------------------
 
-* fix `issues/6/type-of-block-is-wrong <https://bitbucket.org/lukaszmentel/mendeleev/issues/6/type-of-block-is-wrong>`_
+* Fix `issues/6/type-of-block-is-wrong <https://bitbucket.org/lukaszmentel/mendeleev/issues/6/type-of-block-is-wrong>`_
 
 v0.4.3 (16-07-2018)
 -------------------
