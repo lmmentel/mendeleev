@@ -19,7 +19,7 @@ install:
   - pip install pytest
   - conda install -q python=$TRAVIS_PYTHON_VERSION pip requests conda-build jinja2 anaconda-client 
   # install additional packages with conda and pip
-  - conda build conda-recipes
+  - conda build conda-recipe
   - conda install --use-local $PACKAGENAME
 
 script:
