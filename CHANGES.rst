@@ -2,6 +2,11 @@
 mendeleev Changelog
 *******************
 
+v0.5.1 (26.08.2019)
+-------------------
+
+* Fix `issue #3 <https://github.com/lmmentel/mendeleev/issues/3>`_, ``get_table('elements')`` throwing an error 
+
 v0.5.0 (25.08.2019)
 -------------------
 
