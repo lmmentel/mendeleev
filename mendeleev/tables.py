@@ -655,10 +655,7 @@ class Element(Base):
         neff = {1: 0.85, 2: 1.99, 3: 2.89, 4: 3.45, 5: 3.85, 6: 4.36, 7: 4.99}
         RY = 13.605693009
 
-        if charge == 0:
-            Ie = self.electron_affinity
-        elif charge > 0:
-            Ie = self.ionenergies.get(charge, None)
+        Ie = self.ionenergies.get(charge, None)
 
         crs = [(IR.coordination, IR.spin, getattr(IR, radius))
                for IR in self.ionic_radii if IR.charge == charge]
