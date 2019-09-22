@@ -171,8 +171,9 @@ def get_table(tablename, **kwargs):
 
     '''
 
-    tables = ['elements', 'isotopes', 'ionicradii', 'ionizationenergies',
-              'groups', 'series', 'oxidationstates']
+    tables = ['elements', 'groups', 'isotopes', 'ionicradii',
+              'ionizationenergies', 'oxidationstates',
+              'screeningconstants', 'series']
 
     if tablename in tables:
         engine = get_engine()
