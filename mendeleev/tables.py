@@ -650,7 +650,7 @@ class Element(Base):
         '''
 
         if charge is None or not isinstance(charge, int) or charge == 0:
-            raise ValueError('charge should be a nonzero  initeger')
+            raise ValueError('charge should be a nonzero initeger, got: {}'.format(charge))
 
         neff = {1: 0.85, 2: 1.99, 3: 2.89, 4: 3.45, 5: 3.85, 6: 4.36, 7: 4.99}
         RY = 13.605693009
