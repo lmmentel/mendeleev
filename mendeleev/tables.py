@@ -788,7 +788,7 @@ class IonizationEnergy(Base):
 
     def __str__(self):
 
-        return "{1:5d} {2:10.5f}".format(self.degree, self.energy)
+        return "{0:5d} {1:10.5f}".format(self.degree, self.energy)
 
     def __repr__(self):
 
