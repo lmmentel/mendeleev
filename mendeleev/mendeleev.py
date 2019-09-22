@@ -35,7 +35,7 @@ from sqlalchemy.dialects import sqlite
 
 import six
 
-from .tables import Base, Element, IonizationEnergy
+from .tables import Element, IonizationEnergy
 
 __all__ = ['get_engine', 'get_session', 'element', 'get_table']
 
