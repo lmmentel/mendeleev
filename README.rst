@@ -27,7 +27,7 @@ mendeleev_ package
     :target: https://lgtm.com/projects/g/lmmentel/mendeleev/alerts/
     :alt: Total alerts
 
-..image:: https://img.shields.io/lgtm/grade/python/g/lmmentel/mendeleev.svg?logo=lgtm&logoWidth=18
+.. image:: https://img.shields.io/lgtm/grade/python/g/lmmentel/mendeleev.svg?logo=lgtm&logoWidth=18
     :target: https://lgtm.com/projects/g/lmmentel/mendeleev/context:python
     :alt: Language grade: Python
 
