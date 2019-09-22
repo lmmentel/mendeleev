@@ -28,7 +28,6 @@ import argparse
 import textwrap
 import colorama
 from pyfiglet import Figlet
-from colorama import Fore
 from mendeleev import element, get_table
 
 
@@ -65,21 +64,21 @@ def clielement():
 
     # print the data
 
-    print(Fore.RED + symbol)
+    print(colorama.Fore.RED + symbol)
 
     if e.description is not None:
-        print(Fore.BLUE + 'Description\n===========\n')
+        print(colorama.Fore.BLUE + 'Description\n===========\n')
         print('\n'.join(['  ' + s for s in textwrap.wrap(e.description, 70)]))
 
     if e.sources is not None:
-        print(Fore.BLUE + '\nSources\n=======\n')
+        print(colorama.Fore.BLUE + '\nSources\n=======\n')
         print('\n'.join(['  ' + s for s in textwrap.wrap(e.sources, 70)]))
 
     if e.uses is not None:
-        print(Fore.BLUE + '\nUses\n====\n')
+        print(colorama.Fore.BLUE + '\nUses\n====\n')
         print('\n'.join(['  ' + s for s in textwrap.wrap(e.uses, 70)]))
 
-    print(Fore.GREEN + '\nProperties\n==========\n')
+    print(colorama.Fore.GREEN + '\nProperties\n==========\n')
     print(et.to_string(justify='left', header=False))
 
 

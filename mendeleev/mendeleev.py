@@ -35,8 +35,10 @@ from sqlalchemy.dialects import sqlite
 
 import six
 
-from .tables import Base, Element, IonizationEnergy
+from .tables import Element, IonizationEnergy
 
+__all__ = ['get_all_elements', 'get_attr_for_group', 'get_engine',
+           'get_session', 'get_table', 'element']
 
 DBNAME = "elements.db"
 

@@ -23,7 +23,6 @@ def parse_rowspan_table(table):
     rowspan = []
 
     for no, tr in enumerate(allRows):
-        tmp = []
         for td_no, data in enumerate(tr.find_all('td')):
             if data.has_attr("rowspan"):
                 rowspan.append((no, td_no, int(data["rowspan"]),

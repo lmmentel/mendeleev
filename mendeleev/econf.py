@@ -158,8 +158,6 @@ class ElectronicConfiguration(object):
             ans = confset.issuperset(nobleset)
             if ans:
                 return (s, ec)
-        else:
-            return
 
     def get_valence(self):
         '''
