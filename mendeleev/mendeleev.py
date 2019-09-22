@@ -37,8 +37,8 @@ import six
 
 from .tables import Element, IonizationEnergy
 
-__all__ = ['get_all_elements', 'get_engine', 'get_session', 'element',
-           'get_table']
+__all__ = ['get_all_elements', 'get_attr_for_group', 'get_engine',
+           'get_session', 'get_table', 'element']
 
 DBNAME = "elements.db"
 
