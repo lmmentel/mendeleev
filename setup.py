@@ -36,7 +36,7 @@ DEPENDENCIES = ['numpy', 'pandas', 'sqlalchemy', 'colorama', 'pyfiglet']
 
 def readme():
     '''Return the contents of the README.rst file.'''
-    with open('README.rst') as freadme:
+    with open('README.rst', encoding='utf8') as freadme:
         return freadme.read()
 
 
