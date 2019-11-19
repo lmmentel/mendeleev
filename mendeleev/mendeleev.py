@@ -35,8 +35,10 @@ from sqlalchemy.dialects import sqlite
 
 import six
 
-from .tables import Base, Element, IonizationEnergy
+from .tables import Element, IonizationEnergy
 
+__all__ = ['get_all_elements', 'get_attr_for_group', 'get_engine',
+           'get_session', 'get_table', 'element']
 
 DBNAME = "elements.db"
 
@@ -169,8 +171,9 @@ def get_table(tablename, **kwargs):
 
     '''
 
-    tables = ['elements', 'isotopes', 'ionicradii', 'ionizationenergies',
-              'groups', 'series', 'oxidationstates']
+    tables = ['elements', 'groups', 'isotopes', 'ionicradii',
+              'ionizationenergies', 'oxidationstates',
+              'screeningconstants', 'series']
 
     if tablename in tables:
         engine = get_engine()

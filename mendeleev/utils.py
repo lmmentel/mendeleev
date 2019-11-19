@@ -7,6 +7,7 @@ from sqlalchemy.dialects import sqlite
 
 from mendeleev import (element, get_table, get_engine, get_session,
                        get_attr_for_group)
+from mendeleev import __version__ as version
 
 from .tables import IonizationEnergy
 
@@ -102,9 +103,6 @@ def add_plot_columns(elements):
 
 def get_app_data():
     'write a file with the neutral data'
-
-    import mendeleev
-    version = mendeleev.__version__
 
     data = get_neutral_data()
     data = add_plot_columns(data)

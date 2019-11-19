@@ -23,6 +23,14 @@ mendeleev_ package
 .. image:: https://travis-ci.org/lmmentel/mendeleev.svg?branch=master
     :target: https://travis-ci.org/lmmentel/mendeleev
 
+.. image:: https://img.shields.io/lgtm/alerts/g/lmmentel/mendeleev.svg?logo=lgtm&logoWidth=18
+    :target: https://lgtm.com/projects/g/lmmentel/mendeleev/alerts/
+    :alt: Total alerts
+
+.. image:: https://img.shields.io/lgtm/grade/python/g/lmmentel/mendeleev.svg?logo=lgtm&logoWidth=18
+    :target: https://lgtm.com/projects/g/lmmentel/mendeleev/context:python
+    :alt: Language grade: Python
+
 .. image:: https://pepy.tech/badge/mendeleev
     :target: https://pepy.tech/project/mendeleev
 
