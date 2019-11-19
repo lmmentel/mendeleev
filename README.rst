@@ -23,6 +23,10 @@ mendeleev_ package
 .. image:: https://travis-ci.org/lmmentel/mendeleev.svg?branch=master
     :target: https://travis-ci.org/lmmentel/mendeleev
 
+.. image:: https://pepy.tech/badge/mendeleev
+    :target: https://pepy.tech/project/mendeleev
+
+
 #########################################################
 Important! This package has been migrated from bitbucket.
 #########################################################
@@ -76,7 +80,7 @@ Data
 ****
 
 A comprehensive list of the available data together with appropriate references are available in the
-`documentation <mendeleev_>`_. Here the most important entries are listed: 
+`documentation <mendeleev_>`_. Here the most important entries are listed:
 
 
 Basic properties
@@ -99,7 +103,7 @@ Basic properties
 Standardized colors schemes
 ===========================
 
-- cpk_color 
+- cpk_color
 - jmol_color
 - molcas_gv_color
 
@@ -155,7 +159,7 @@ Physical properties
 - proton affinity
 - specific heat
 - thermal conductivity
-- nuclear screening constants (Slater & Clementi) 
+- nuclear screening constants (Slater & Clementi)
 
 Isotope properties
 ==================
@@ -174,8 +178,8 @@ Isotope properties
 Installation
 ************
 
-The preferred installation method is with conda_ and you can install 
-the package from `my anaconda channel <https://anaconda.org/lmmentel/mendeleev>`_ by 
+The preferred installation method is with conda_ and you can install
+the package from `my anaconda channel <https://anaconda.org/lmmentel/mendeleev>`_ by
 
 .. code-block:: bash
 
@@ -284,7 +288,7 @@ The columns represent the attributes ``atomic_number``, ``mass``,
 Tables and the database
 =======================
 
-mendeleev_ offers also methods for accessing whole tables of data, e.g. table 
+mendeleev_ offers also methods for accessing whole tables of data, e.g. table
 with the data on all isotopes and methods for interacting directly with the
 database engine, for more details see the `API documentation <https://mendeleev.readthedocs.io/en/stable/code.html#accessing-data>`_
 and `this tutorial <https://mendeleev.readthedocs.io/en/stable/notebooks/02_tables.html>`_.
@@ -301,16 +305,16 @@ print the properties of silicon type
 .. code-block:: bash
 
     $ element.py Si
-                                _  _  _  _      _          
-                              _(_)(_)(_)(_)_   (_)         
-                             (_)          (_)_  _          
-                             (_)_  _  _  _  (_)(_)         
-                               (_)(_)(_)(_)_   (_)         
-                              _           (_)  (_)         
-                             (_)_  _  _  _(_)_ (_) _       
-                               (_)(_)(_)(_) (_)(_)(_)      
-                                                           
-                                                           
+                                _  _  _  _      _
+                              _(_)(_)(_)(_)_   (_)
+                             (_)          (_)_  _
+                             (_)_  _  _  _  (_)(_)
+                               (_)(_)(_)(_)_   (_)
+                              _           (_)  (_)
+                             (_)_  _  _  _(_)_ (_) _
+                               (_)(_)(_)(_) (_)(_)(_)
+
+
 
     Description
     ===========
@@ -340,7 +344,7 @@ print the properties of silicon type
 
     Abundance crust                                         282000
     Abundance sea                                              2.2
-    Annotation                                                    
+    Annotation
     Atomic number                                               14
     Atomic radius                                              132
     Atomic radius rahm                                         232
@@ -409,7 +413,7 @@ print the properties of silicon type
 Contributing
 ************
 
-All contributions are welcome! 
+All contributions are welcome!
 
 Issues_
 =======
