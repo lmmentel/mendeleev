@@ -2,6 +2,12 @@
 mendeleev Changelog
 *******************
 
+v0.5.2 (29.01.2020)
+-------------------
+
+* Fix a ``UnicodeDecodeError`` from README.md while installing on windows.
+* Code quality improvements based on `lgtm.com <https://lgtm.com/projects/g/lmmentel/mendeleev/context:python>`_
+
 v0.5.1 (26.08.2019)
 -------------------
 
