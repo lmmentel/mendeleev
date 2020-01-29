@@ -31,6 +31,10 @@ mendeleev_ package
     :target: https://lgtm.com/projects/g/lmmentel/mendeleev/context:python
     :alt: Language grade: Python
 
+.. image:: https://pepy.tech/badge/mendeleev
+    :target: https://pepy.tech/project/mendeleev
+
+
 #########################################################
 Important! This package has been migrated from bitbucket.
 #########################################################
