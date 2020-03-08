@@ -6,6 +6,7 @@ Tutorials
 
    notebooks/01_intro_to_mendeleev.ipynb
    notebooks/02_tables.ipynb
+   notebooks/03_plotting.ipynb
 
 
 Jupyter notebooks

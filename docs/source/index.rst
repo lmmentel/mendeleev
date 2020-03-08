@@ -15,8 +15,7 @@ the periodic table of elements.
 
 
 .. toctree::
-   :caption: Table of Contents
-   :maxdepth: 2
+   :caption: Contents
 
    Quick overview <quick>
    Installation <install>
@@ -26,11 +25,7 @@ the periodic table of elements.
    License <license_link>
 
 .. toctree::
-   :caption: Changelog
-   :maxdepth: 2
-
    Changes <changes_link>
-
 
 
 Indices and tables
