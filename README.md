@@ -12,7 +12,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/lmmentel/mendeleev">
-    <img src="docs/source/img/name_and_logo.png" alt="Logo" width="200">
+    <img src="docs/source/img/name_and_logo.png" alt="Logo" width="300">
   </a>
 
   <h3 align="center">Pythonic periodic table of elements</h3>
