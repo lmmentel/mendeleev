@@ -111,11 +111,10 @@ width="800px"}
 
 The preferred installation method is with
 [conda](https://conda.io/docs/intro.html) and you can install the
-package from [my anaconda
-channel](https://anaconda.org/lmmentel/mendeleev) by
+package from the [conda-forge](https://conda-forge.org/) channel by
 
 ``` {.sourceCode .bash}
-conda install -c lmmentel mendeleev=0.5.2
+conda install -c conda-forge mendeleev=0.5.2
 ```
 
 The package can also be installed using
@@ -123,6 +122,11 @@ The package can also be installed using
 
 ``` {.sourceCode .bash}
 pip install mendeleev
+```
+or [pipenv](https://pipenv.readthedocs.io/en/latest/)
+
+``` {.sourceCode .bash}
+pipenv install mendeleev
 ```
 
 You can also install the most recent version from the repository:
@@ -133,8 +137,7 @@ pip install git+https://github.com/lmmentel/mendeleev.git
 
 ## Documentation
 
-Documentation is hosted on [Read the
-Docs](http://mendeleev.readthedocs.org/en/latest/).
+Full documentation is hosted on [Read the Docs](http://mendeleev.readthedocs.org/en/latest/).
 
 ## Data
 
