@@ -5,7 +5,7 @@
     <img src="docs/source/img/name_and_logo.png" alt="Logo" width="200">
   </a>
 
-  <h3 align="center">Unifai Time Series Data Mining</h3>
+  <h3 align="center">Pythonic periodic table of elements</h3>
 
   <p align="center">
     A package with a convenient python API for accessing various properties
