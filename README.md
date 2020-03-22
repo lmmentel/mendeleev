@@ -170,8 +170,8 @@ important entries are listed:
 
 ### Size related properties
 
--   atomic radius
--   covalent radius (Bragg, Cordero, Pyykko, Slater)
+-   atomic radius (Slater, Rahm)
+-   covalent radius (Bragg, Cordero, Pyykko)
 -   ionic radius
 -   metallic radius
 -   van der Waals radius (Alvarez, Batsanov, Bondi, Dreiding, MM3, RT,

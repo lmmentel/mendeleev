@@ -96,8 +96,6 @@ class Element(Base):
         Double bond covalent radius in pm from P. Pyykkö et al.
       covalent_radius_pyykko_triple : float
         Triple bond covalent radius in pm from P. Pyykkö et al.
-      covalent_radius_slater : float
-        Covalent radius in pm from Slater
       cpk_color : str
         CPK color of the atom in HEX,
         see http://jmol.sourceforge.net/jscolors/#color_U
@@ -234,7 +232,6 @@ class Element(Base):
     covalent_radius_pyykko = Column(Float)
     covalent_radius_pyykko_double = Column(Float)
     covalent_radius_pyykko_triple = Column(Float)
-    covalent_radius_slater = Column(Float)
     c6 = Column(Float)
     c6_gb = Column(Float)
     cpk_color = Column(String)
