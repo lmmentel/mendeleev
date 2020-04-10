@@ -208,7 +208,7 @@ class Element(Base):
         Van der Waals radius from MM3 in pm
       oxistates : list
         Oxidation states
-      ionenergy : dict
+      ionenergies : dict
         Ionization energies in eV parsed from
         http://physics.nist.gov/cgi-bin/ASD/ie.pl on April 13, 2015
     '''
