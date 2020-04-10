@@ -82,11 +82,11 @@ html_theme_options = {
 
     # Specify a base_url used to generate sitemap.xml. If not
     # specified, then no sitemap will be built.
-    'base_url': 'https://project.github.io/project',
+    'base_url': 'https://mendeleev.readthedocs.io/en/stable/',
 
     # Set the color and the accent color
-    'color_primary': 'teal',
-    'color_accent': 'cyan',
+    'color_primary': 'deep-orange',
+    'color_accent': 'orange',
 
     # Set the repo location to get a badge with stats
     'repo_url': 'https://github.com/lmmentel/mendeleev/',
