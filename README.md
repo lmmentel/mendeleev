@@ -34,10 +34,15 @@ of elements, ions and isotopes in the periodic table of elements.
 
 # Important!
 
+Version 0.5.1 will be the latest version to support Python2.7.
+
+
 **This package has been migrated from bitbucket.**
 
 **The bitbucket repo is no longer being maintaned and development will
 continue at github.**
+
+
 
 --- 
 
