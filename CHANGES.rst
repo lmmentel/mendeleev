@@ -2,6 +2,14 @@
 mendeleev Changelog
 *******************
 
+v0.6.0 (10.04.2020)
+-------------------
+
+* Add `Ion` class to handle atomic ions.
+* Add Github templates for bug reports, feature requests and pull requests.
+* Update the values of `atomic_radius_rahm` according to corrigendum, (`PR #13 <https://github.com/lmmentel/mendeleev/pull/13>`_).
+* Switch the default documentation theme to material with `sphinx-material <https://github.com/bashtage/sphinx-material/>`_.
+
 v0.5.2 (29.01.2020)
 -------------------
 
