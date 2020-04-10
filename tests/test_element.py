@@ -15,7 +15,7 @@ def session():
     return get_session()
 
 
-def test_querry(session):
+def test_query(session):
 
     si = session.query(Element).filter(Element.symbol == 'Si').one()
     assert si.name == 'Silicon'
