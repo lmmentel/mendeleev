@@ -84,10 +84,8 @@ enables you to create customized periodic tables displaying various
 properties.
 
 ![peridic_table](docs/source/_static/img/mendeleev_periodic_series.png)
-
-The `mendeleev` package also supplies convenient tools for dealing with
-electronic configurations, calculating functions of atomic properties,
-exploring the periodic trends in the periodic tables. If you want to
+Django Extensions is free and always will be. It is development and maintained by developers in an Open Source manner. Any support is welcome. You could help by writing documentation, pull-requests, report issues and/or translations.
+iodic trends in the periodic tables. If you want to
 look at some examples there are a few
 [tutorials](http://mendeleev.readthedocs.io/en/stable/tutorials.html)
 available as [jupyter notebooks](http://jupyter.org/).
@@ -426,7 +424,8 @@ Vdw radius uff                                           429.5
 
 ## Contributing
 
-All contributions are welcome!
+`mendeleev` is free and always will be. It is developed and maintained by developers in an Open Source manner.
+**Any contributions are welcome**. You could help by writing documentation, pull-requests, report issues or suggesting new features.
 
 ### [Issues](https://github.com/lmmentel/mendeleev/issues)
 
