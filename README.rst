@@ -52,7 +52,7 @@ Moreover it provides an easy to use interface to `pandas <http://pandas.pydata.o
 and convenient visualization functionality through `bokeh <http://bokeh.pydata.org/en/latest/>`_
 that enables you to create customized periodic tables displaying various properties.
 
-.. image:: docs/source/img/mendeleev_periodic_series.png
+.. image:: docs/source/_static/img/mendeleev_periodic_series.png
     :width: 800px
     :align: center
     :alt: alternate text
@@ -73,12 +73,12 @@ where you can create your own periodic tables and visualize the relations betwee
 of elements.
 
 
-.. image:: docs/source/img/mendeleevapp_periodic.png
+.. image:: docs/source/_static/img/mendeleevapp_periodic.png
     :width: 800px
     :align: center
     :alt: Periodic table view
 
-.. image:: docs/source/img/mendeleevapp_correlations.png
+.. image:: docs/source/_static/img/mendeleevapp_correlations.png
     :width: 800px
     :align: center
     :alt: Correlations view

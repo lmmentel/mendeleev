@@ -12,7 +12,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/lmmentel/mendeleev">
-    <img src="docs/source/img/name_and_logo.png" alt="Logo" width="300">
+    <img src="docs/source/_static/img/name_and_logo.png" alt="Logo" width="300">
   </a>
 
   <h3 align="center">Pythonic periodic table of elements</h3>
@@ -83,8 +83,7 @@ functionality through [bokeh](http://bokeh.pydata.org/en/latest/) that
 enables you to create customized periodic tables displaying various
 properties.
 
-![alternate text](docs/source/img/mendeleev_periodic_series.png){.align-center
-width="800px"}
+![peridic_table](docs/source/_static/img/mendeleev_periodic_series.png)
 
 The `mendeleev` package also supplies convenient tools for dealing with
 electronic configurations, calculating functions of atomic properties,
@@ -101,11 +100,9 @@ web app at [mendeleev.herokuapp.com](http://mendeleev.herokuapp.com/)
 where you can create your own periodic tables and visualize the
 relations between various properties of elements.
 
-![Periodic table view](docs/source/img/mendeleevapp_periodic.png){.align-center
-width="800px"}
+![Periodic table view](docs/source/_static/img/mendeleevapp_periodic.png)
 
-![Correlations view](docs/source/img/mendeleevapp_correlations.png){.align-center
-width="800px"}
+![Correlations view](docs/source/_static/img/mendeleevapp_correlations.png)
 
 ## Installation
 
@@ -148,19 +145,19 @@ important entries are listed:
 
 ### Basic properties
 
--   atomic number
--   atomic weight
--   block
--   cas
--   electrons
--   electronic configuration
--   group
--   name
--   neutrons
--   period
--   protons
--   series
--   symbol
+- atomic number
+- atomic weight
+- block
+- cas
+- electrons
+- electronic configuration
+- group
+- name
+- neutrons
+- period
+- protons
+- series
+- symbol
 
 ### Standardized colors schemes
 

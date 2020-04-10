@@ -4,14 +4,18 @@
 Welcome to mendeleev's documentation
 ************************************
 
+.. raw:: html
+
+   <img src="_static/img/name_and_logo.png" alt="Logo" style="display: block;margin-left: auto;margin-right: auto;"> 
+
 
 This package provides an API for accessing various properties of elements from
 the periodic table of elements.
 
-.. image:: img/mendeleev_periodic_series.png
-    :width: 1000px
-    :align: center
-    :alt: alternate text
+.. image:: _static/img/mendeleev_periodic_series.png
+   :width: 1000px
+   :align: center
+   :alt: Periodic table
 
 
 .. toctree::
