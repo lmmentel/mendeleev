@@ -1,6 +1,6 @@
 
 '''
-Class abstracting the elctronic configuration
+Class abstracting the electronic configuration
 '''
 
 import re
@@ -306,7 +306,7 @@ class ElectronicConfiguration(object):
 
     def spin_only_magnetic_moment(self):
         '''
-        Return the magnetic moment insluding only spin of the electrons
+        Return the magnetic moment including only spin of the electrons
         and not the angular momentum
         '''
 
