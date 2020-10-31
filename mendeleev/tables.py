@@ -115,6 +115,8 @@ class Element(Base):
         The year the element was discovered
       electron_affinity : float
         Electron affinity in eV
+      electrophilicity: float
+        Parr's electrophilicity index
       en_allen : float
         Allen's scale of electronegativity (Configurational energy)
       en_ghosh : float
@@ -361,7 +363,7 @@ class Element(Base):
 
         if len(self.isotopes) > 0:
             lwithabu = [i for i in self.isotopes if i.abundance is not None]
-            if len(lwithabu) > 0:
+            if lwithabu:
                 return max(lwithabu, key=attrgetter('abundance')).mass_number
             else:
                 return self.isotopes[0].mass_number
@@ -400,9 +402,9 @@ class Element(Base):
 
         .. math::
 
-           \eta = \\frac{I - A}{2}
+           \eta = \\frac{IE - EA}{2}
 
-        where I is the ionization energy and A is the electron affinity
+        where IE is the ionization energy and EA is the electron affinity
 
         Args:
           charge: int
@@ -483,8 +485,7 @@ class Element(Base):
 
         if o is None:
             # take the shell with max `l` for a given `n`
-            o = ORBITALS[max([get_l(x[1])
-                         for x in self.ec.conf.keys() if x[0] == n])]
+            o = ORBITALS[max(get_l(x[1]) for x in self.ec.conf.keys() if x[0] == n)]
         else:
             if o not in ORBITALS:
                 raise ValueError('<s> should be one of {}'.format(", ".join(ORBITALS)))
@@ -500,6 +501,23 @@ class Element(Base):
                 return sc
         else:
             raise ValueError('<method> should be one of {}'.format("slater, clementi"))
+
+    def electrophilicity(self):
+        """
+        Calculate electrophilicity index
+
+        .. math::
+
+           \\omega = \\frac{\\mu}{2\eta}
+        """
+
+        ip = self.ionenergies[1]
+        ea = self.electron_affinity
+
+        if ip is not None and ea is not None:
+            return (ip + ea)**2 / (8.0 * (ip - ea))
+        else:
+            return None
 
     def electronegativity(self, scale='pauling', charge=0):
         '''
@@ -574,12 +592,9 @@ class Element(Base):
             raise ValueError('Charge has to be a non-negative integer, got: {}'.format(charge))
 
         if ip is not None:
-            if ea is not None:
-                if ea < 0.0 and useNegativeEA:
-                    return (ip + ea) * 0.5
-                else:
-                    return ip * 0.5
-            elif ea is None and missingIsZero:
+            if ea is not None and ea < 0.0 and useNegativeEA:
+                return (ip + ea) * 0.5
+            elif ea is not None or missingIsZero:
                 return ip * 0.5
         else:
             return None

@@ -30,49 +30,50 @@ of elements, ions and isotopes in the periodic table of elements.
   </p>
 </p>
 
---- 
 
-# Important!
+<!-- TABLE OF CONTENTS -->
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [About the project](#about-the-project)
+  - [Interactive web app](#interactive-web-app)
+- [Installation](#installation)
+- [Documentation](#documentation)
+- [Data](#data)
+  - [Basic properties](#basic-properties)
+  - [Standardized colors schemes](#standardized-colors-schemes)
+  - [Size related properties](#size-related-properties)
+  - [Electronegativity scales](#electronegativity-scales)
+  - [Descriptive properties](#descriptive-properties)
+  - [Physical properties](#physical-properties)
+  - [Computed properties](#computed-properties)
+  - [Isotope properties](#isotope-properties)
+- [Getting started](#getting-started)
+  - [Lists of elements](#lists-of-elements)
+    - [Isotopes](#isotopes)
+  - [Accesing data tables and the database](#accesing-data-tables-and-the-database)
+  - [Command line interface utility](#command-line-interface-utility)
+- [Contributing](#contributing)
+  - [Issues](#issues)
+  - [Pull requests](#pull-requests)
+- [License](#license)
+- [Citing](#citing)
+- [Funding](#funding)
+
+---
+
+source: [https://github.com/lmmentel/mendeleev](https://github.com/lmmentel/mendeleev)
+
+---
+
+<h2> Important! </h2>
 
 Version 0.5.1 will be the latest version to support Python2.7.
-
 
 **This package has been migrated from bitbucket.**
 
 **The bitbucket repo is no longer being maintaned and development will
 continue at github.**
-
-
-
---- 
-
-<!-- TABLE OF CONTENTS -->
-## Table of Contents
-
-* [About the project](#about-the-project)
-  * [Interactive web app](#interactive-web-app)
-* [Documentation](#documentation)
-* [Installation](#installation)
-* [Data](#data)
-  * [Basic properties](#basic-properties)
-  * [Standardized colors schemes](#standardized-colors-schemes)
-  * [Size related properties](#size-related-properties)
-  * [Electronegativity scales](#electronegativity-scales)
-  * [Descriptive properties](#descriptive-properties)
-  * [Physical properties](#physical-properties)
-  * [Isotope properties](#isotope-properties)
-* [Getting started](#getting-started)
-  * [Lists of elements](#lists-of-elements)
-  * [Accesing data tables and the database](#accesing-data-tables-and-the-database)
-  * [Command line interface utility](#command-line-interface-utility)
-* [Contributing](#contributing)
-* [License](#license)
-* [Citing](#citing)
-* [Funding](#funding)
-
----
-
-source: [https://github.com/lmmentel/mendeleev](https://github.com/lmmentel/mendeleev)
 
 ---
 
@@ -218,6 +219,12 @@ important entries are listed:
 -   specific heat
 -   thermal conductivity
 -   nuclear screening constants (Slater & Clementi)
+
+### Computed properties
+
+-   hardness
+-   softness
+-   electrophilicity
 
 ### Isotope properties
 
