@@ -2,6 +2,12 @@
 mendeleev Changelog
 *******************
 
+v0.6.1 (03.11.2020)
+-------------------
+
+* Add `electrophilicity` index.
+* Pin `sqlalchemy` version to prevent further issues with old versions, see `Issue #22 <https://github.com/lmmentel/mendeleev/issues/22>`_
+
 v0.6.0 (10.04.2020)
 -------------------
 
