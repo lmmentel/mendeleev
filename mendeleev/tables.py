@@ -1,28 +1,28 @@
 # -*- coding: utf-8 -*-
 
-#The MIT License (MIT)
+# The MIT License (MIT)
 #
-#Copyright (c) 2015 Lukasz Mentel
+# Copyright (c) 2015 Lukasz Mentel
 #
-#Permission is hereby granted, free of charge, to any person obtaining a copy
-#of this software and associated documentation files (the "Software"), to deal
-#in the Software without restriction, including without limitation the rights
-#to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#copies of the Software, and to permit persons to whom the Software is
-#furnished to do so, subject to the following conditions:
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 #
-#The above copyright notice and this permission notice shall be included in all
-#copies or substantial portions of the Software.
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
 #
-#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-#SOFTWARE.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
-'''tables module specifying the database model'''
+"""tables module specifying the database model"""
 
 import math
 from operator import attrgetter
@@ -37,15 +37,22 @@ from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 from .econf import ElectronicConfiguration, get_l, ORBITALS
 
 
-__all__ = ['Element', 'IonizationEnergy', 'IonicRadius', 'OxidationState',
-           'Isotope', 'Series', 'ScreeningConstant']
+__all__ = [
+    "Element",
+    "IonizationEnergy",
+    "IonicRadius",
+    "OxidationState",
+    "Isotope",
+    "Series",
+    "ScreeningConstant",
+]
 
 
 Base = declarative_base()
 
 
 class Element(Base):
-    '''
+    """
     Chemical element.
 
     Attributes:
@@ -213,9 +220,9 @@ class Element(Base):
       ionenergies : dict
         Ionization energies in eV parsed from
         http://physics.nist.gov/cgi-bin/ASD/ie.pl on April 13, 2015
-    '''
+    """
 
-    __tablename__ = 'elements'
+    __tablename__ = "elements"
 
     abundance_crust = Column(Float)
     abundance_sea = Column(Float)
@@ -248,7 +255,7 @@ class Element(Base):
     en_allen = Column(Float)
     en_ghosh = Column(Float)
     en_pauling = Column(Float)
-    econf = Column('electronic_configuration', String)
+    econf = Column("electronic_configuration", String)
     evaporation_heat = Column(Float)
     fusion_heat = Column(Float)
     gas_basicity = Column(Float)
@@ -256,7 +263,7 @@ class Element(Base):
     glawe_number = Column(Integer)
     goldschmidt_class = Column(String)
     group_id = Column(Integer, ForeignKey("groups.group_id"))
-    group = relationship("Group", uselist=False, lazy='subquery')
+    group = relationship("Group", uselist=False, lazy="subquery")
     heat_of_formation = Column(Float)
     is_monoisotopic = Column(Boolean)
     is_radioactive = Column(Boolean)
@@ -274,7 +281,7 @@ class Element(Base):
     pettifor_number = Column(Integer)
     proton_affinity = Column(Float)
     _series_id = Column("series_id", Integer, ForeignKey("series.id"))
-    _series = relationship("Series", uselist=False, lazy='subquery')
+    _series = relationship("Series", uselist=False, lazy="subquery")
     series = association_proxy("_series", "name")
     sources = Column(String)
     specific_heat = Column(Float)
@@ -291,113 +298,114 @@ class Element(Base):
     vdw_radius_uff = Column(Float)
     vdw_radius_mm3 = Column(Float)
 
-    ionic_radii = relationship("IonicRadius", lazy='subquery')
-    _ionization_energies = relationship("IonizationEnergy", lazy='subquery')
-    _oxidation_states = relationship("OxidationState", lazy='subquery')
-    isotopes = relationship("Isotope", lazy='subquery')
-    screening_constants = relationship('ScreeningConstant', lazy='subquery')
+    ionic_radii = relationship("IonicRadius", lazy="subquery")
+    _ionization_energies = relationship("IonizationEnergy", lazy="subquery")
+    _oxidation_states = relationship("OxidationState", lazy="subquery")
+    isotopes = relationship("Isotope", lazy="subquery")
+    screening_constants = relationship("ScreeningConstant", lazy="subquery")
 
     @reconstructor
     def init_on_load(self):
-        'Initialize the ElectronicConfiguration class as attribute of self'
+        "Initialize the ElectronicConfiguration class as attribute of self"
 
         self.ec = ElectronicConfiguration(self.econf)
 
     @hybrid_property
     def ionenergies(self):
-        '''
+        """
         Return a dict with ionization degree as keys and ionization energies
         in eV as values.
-        '''
+        """
 
         return {ie.degree: ie.energy for ie in self._ionization_energies}
 
     @hybrid_property
     def oxistates(self):
-        '''Return the oxidation states as a list of ints'''
+        """Return the oxidation states as a list of ints"""
 
         return [os.oxidation_state for os in self._oxidation_states]
 
     @hybrid_property
     def sconst(self):
-        '''
+        """
         Return a dict with screening constants with tuples (n, s) as keys and
-        screening constants as values'''
+        screening constants as values"""
 
         return {(x.n, x.s): x.screening for x in self.screening_constants}
 
     @hybrid_property
     def electrons(self):
-        '''Return the number of electrons.'''
+        """Return the number of electrons."""
 
         return self.atomic_number
 
     @hybrid_property
     def neutrons(self):
-        '''
+        """
         Return the number of neutrons of the most abundant natural stable
         isotope.
-        '''
+        """
 
         return self.mass_number - self.protons
 
     @hybrid_property
     def protons(self):
-        '''Return the number of protons.'''
+        """Return the number of protons."""
 
         return self.atomic_number
 
     @hybrid_property
     def mass(self):
-        '''
+        """
         Return the `atomic_weight` if defined or mass number otherwise.
-        '''
+        """
 
         return self.atomic_weight
 
     @hybrid_property
     def mass_number(self):
-        '''
+        """
         Return the mass number of the most abundant natural stable isotope
-        '''
+        """
 
         if len(self.isotopes) > 0:
             lwithabu = [i for i in self.isotopes if i.abundance is not None]
             if lwithabu:
-                return max(lwithabu, key=attrgetter('abundance')).mass_number
+                return max(lwithabu, key=attrgetter("abundance")).mass_number
             else:
                 return self.isotopes[0].mass_number
         else:
             return int(self.atomic_weight)
 
     def mass_str(self):
-        '''String representation of atomic weight'''
+        """String representation of atomic weight"""
 
         if self.atomic_weight_uncertainty is None:
             if self.is_radioactive:
-                return '[{aw:.0f}]'.format(aw=self.atomic_weight)
+                return "[{aw:.0f}]".format(aw=self.atomic_weight)
             else:
-                return '{aw:.3f}'.format(aw=self.atomic_weight)
+                return "{aw:.3f}".format(aw=self.atomic_weight)
         else:
-            dec = np.abs(np.floor(np.log10(np.abs(self.atomic_weight_uncertainty)))).astype(int)
-            if dec > 5:
-                dec = 5
+            dec = np.abs(
+                np.floor(np.log10(np.abs(self.atomic_weight_uncertainty)))
+            ).astype(int)
+            dec = min(dec, 5)
             if self.is_radioactive:
-                return '[{aw:.{dec}f}]'.format(aw=self.atomic_weight, dec=dec)
+                return "[{aw:.{dec}f}]".format(aw=self.atomic_weight, dec=dec)
             else:
-                return '{aw:.{dec}f}'.format(aw=self.atomic_weight, dec=dec)
+                return "{aw:.{dec}f}".format(aw=self.atomic_weight, dec=dec)
 
     @hybrid_property
     def covalent_radius(self):
-        '''
+        """
         Return the default covalent radius which is covalent_radius_pyykko
-        '''
+        """
 
         return self.covalent_radius_pyykko
 
     @hybrid_method
     def hardness(self, charge=0):
-        '''
+        """
         Return the absolute hardness, calculated as
 
         .. math::
@@ -409,25 +417,32 @@ class Element(Base):
         Args:
           charge: int
             Charge of the cation for which the hardness will be calculated
-        '''
+        """
 
         if charge == 0:
-            if self.ionenergies.get(1, None) is not None and self.electron_affinity is not None:
+            if (
+                self.ionenergies.get(1, None) is not None
+                and self.electron_affinity is not None
+            ):
                 return (self.ionenergies[1] - self.electron_affinity) * 0.5
             else:
                 return None
         elif charge > 0:
-            if self.ionenergies.get(charge + 1, None) is not None and\
-               self.ionenergies.get(charge, None) is not None:
+            if (
+                self.ionenergies.get(charge + 1, None) is not None
+                and self.ionenergies.get(charge, None) is not None
+            ):
                 return (self.ionenergies[charge + 1] - self.ionenergies[charge]) * 0.5
             else:
                 return None
         elif charge < 0:
-            raise ValueError('Charge has to be a non-negative integer, got: {}'.format(charge))
+            raise ValueError(
+                "Charge has to be a non-negative integer, got: {}".format(charge)
+            )
 
     @hybrid_method
     def softness(self, charge=0):
-        '''
+        """
         Return the absolute softness, calculated as
 
         .. math::
@@ -439,7 +454,7 @@ class Element(Base):
         Args:
           charge: int
             Charge of the cation for which the hardness will be calculated
-        '''
+        """
 
         eta = self.hardness(charge=charge)
 
@@ -448,8 +463,8 @@ class Element(Base):
         else:
             return 1.0 / (2.0 * eta)
 
-    def zeff(self, n=None, o=None, method='slater', alle=False):
-        '''
+    def zeff(self, n=None, o=None, method="slater", alle=False):
+        """
         Return the effective nuclear charge for ``(n, s)``
 
         Args:
@@ -474,33 +489,32 @@ class Element(Base):
             Use all the valence electrons, i.e. calculate screening for an
             extra electron when method='slater', if method='clementi' this
             option is ignored
-        '''
+        """
 
         # identify th valence s,p vs d,f
         if n is None:
             n = self.ec.max_n()
         else:
             if not isinstance(n, int):
-                raise ValueError('<n> should be an integer, got: {}'.format(type(n)))
+                raise ValueError("<n> should be an integer, got: {}".format(type(n)))
 
         if o is None:
             # take the shell with max `l` for a given `n`
             o = ORBITALS[max(get_l(x[1]) for x in self.ec.conf.keys() if x[0] == n)]
         else:
             if o not in ORBITALS:
-                raise ValueError('<s> should be one of {}'.format(", ".join(ORBITALS)))
+                raise ValueError("<s> should be one of {}".format(", ".join(ORBITALS)))
 
-        if method.lower() == 'slater':
-            return self.atomic_number - self.ec.slater_screening(n=n, o=o,
-                                                                 alle=alle)
-        elif method.lower() == 'clementi':
+        if method.lower() == "slater":
+            return self.atomic_number - self.ec.slater_screening(n=n, o=o, alle=alle)
+        elif method.lower() == "clementi":
             sc = self.sconst.get((n, o), None)
             if sc is not None:
                 return self.atomic_number - self.sconst.get((n, o), None)
             else:
                 return sc
         else:
-            raise ValueError('<method> should be one of {}'.format("slater, clementi"))
+            raise ValueError("<method> should be one of {}".format("slater, clementi"))
 
     def electrophilicity(self):
         """
@@ -515,12 +529,12 @@ class Element(Base):
         ea = self.electron_affinity
 
         if ip is not None and ea is not None:
-            return (ip + ea)**2 / (8.0 * (ip - ea))
+            return (ip + ea) ** 2 / (8.0 * (ip - ea))
         else:
             return None
 
-    def electronegativity(self, scale='pauling', charge=0):
-        '''
+    def electronegativity(self, scale="pauling", charge=0):
+        """
         Calculate the electronegativity using one of the methods
 
         Args:
@@ -537,41 +551,41 @@ class Element(Base):
            - `nagle`
            - `pauling`
            - `sanderson`
-        '''
+        """
 
         # TODO:
         #        add an option to convert the value to Pauling units
         #        pu : bool
         #            Convert to Pauling's units
 
-        if scale == 'allen':
+        if scale == "allen":
             return self.en_allen
-        elif scale == 'allred-rochow':
+        elif scale == "allred-rochow":
             return self.zeff(alle=True) / math.pow(self.covalent_radius, 2)
-        elif scale == 'cottrell-sutton':
+        elif scale == "cottrell-sutton":
             return math.sqrt(self.zeff(alle=True) / self.covalent_radius)
-        elif scale == 'gordy':
+        elif scale == "gordy":
             return self.zeff(alle=True) / self.covalent_radius
-        elif scale == 'li-xue':
+        elif scale == "li-xue":
             return self.en_li_xue(charge=charge)
-        elif scale == 'martynov-batsanov':
+        elif scale == "martynov-batsanov":
             return self.en_martynov_batsanov()
-        elif scale == 'mulliken':
+        elif scale == "mulliken":
             return self.en_mulliken()
-        elif scale == 'nagle':
+        elif scale == "nagle":
             if self.dipole_polarizability is not None:
                 return math.pow(self.nvalence() / self.dipole_polarizability, 1.0 / 3.0)
             else:
                 return None
-        elif scale == 'pauling':
+        elif scale == "pauling":
             return self.en_pauling
-        elif scale == 'sanderson':
+        elif scale == "sanderson":
             return self.calc_en_sanderson()
         else:
-            raise ValueError('unknown <scale> value: {}'.format(scale))
+            raise ValueError("unknown <scale> value: {}".format(scale))
 
     def en_mulliken(self, charge=0, missingIsZero=False, useNegativeEA=False):
-        '''
+        """
         Return the absolute electronegativity (Mulliken scale), calculated as
 
         .. math::
@@ -580,7 +594,7 @@ class Element(Base):
 
         where :math:`I` is the ionization energy and :math:`A` is the electron
         affinity
-        '''
+        """
 
         if charge == 0:
             ip = self.ionenergies.get(1, None)
@@ -589,7 +603,9 @@ class Element(Base):
             ip = self.ionenergies.get(charge + 1, None)
             ea = self.ionenergies.get(charge, None)
         else:
-            raise ValueError('Charge has to be a non-negative integer, got: {}'.format(charge))
+            raise ValueError(
+                "Charge has to be a non-negative integer, got: {}".format(charge)
+            )
 
         if ip is not None:
             if ea is not None and ea < 0.0 and useNegativeEA:
@@ -599,9 +615,8 @@ class Element(Base):
         else:
             return None
 
-    def en_calc(self, radius='covalent_radius_pyykko', rpow=1, apow=1,
-                **zeffkwargs):
-        '''
+    def en_calc(self, radius="covalent_radius_pyykko", rpow=1, apow=1, **zeffkwargs):
+        """
         Calculate the electronegativity from a general formula
 
         .. math::
@@ -613,7 +628,7 @@ class Element(Base):
         - :math:`Z_{\\text{eff}}` is the effective nuclear charge
         - :math:`r` is the covalent radius
         - :math:`\\alpha,\\beta` parameters
-        '''
+        """
 
         zeff = self.zeff(**zeffkwargs)
         r = getattr(self, radius)
@@ -621,7 +636,7 @@ class Element(Base):
         return math.pow(zeff / math.pow(r, rpow), apow)
 
     def en_martynov_batsanov(self):
-        '''
+        """
         Calculates the electronegativity value according to Martynov and
         Batsanov as the average of the ionization energies of the valence
         electrons
@@ -632,18 +647,20 @@ class Element(Base):
 
         where: :math:`n_{v}` is the number of valence electrons and
         :math:`I_{k}` is the :math:`k` th ionization potential.
-        '''
+        """
 
-        ionenergies = [self.ionenergies.get(i, None)
-                       for i in range(1, self.nvalence(method='simple') + 1)]
+        ionenergies = [
+            self.ionenergies.get(i, None)
+            for i in range(1, self.nvalence(method="simple") + 1)
+        ]
 
         if all(ionenergies):
             return np.sqrt(np.array(ionenergies).mean())
         else:
             return None
 
-    def en_li_xue(self, charge=0, radius='crystal_radius'):
-        '''
+    def en_li_xue(self, charge=0, radius="crystal_radius"):
+        """
         Calculate the electronegativity of an atom according to the definition
         of Li and Xue
 
@@ -659,18 +676,23 @@ class Element(Base):
                 A dictionary with electronegativities as values and
                 coordination string as keys or tuple of coordination and spin
                 if the ion is LS or HS
-        '''
+        """
 
         if charge is None or not isinstance(charge, int) or charge == 0:
-            raise ValueError('charge should be a nonzero initeger, got: {}'.format(charge))
+            raise ValueError(
+                "charge should be a nonzero initeger, got: {}".format(charge)
+            )
 
         neff = {1: 0.85, 2: 1.99, 3: 2.89, 4: 3.45, 5: 3.85, 6: 4.36, 7: 4.99}
         RY = 13.605693009
 
         Ie = self.ionenergies.get(charge, None)
 
-        crs = [(IR.coordination, IR.spin, getattr(IR, radius))
-               for IR in self.ionic_radii if IR.charge == charge]
+        crs = [
+            (IR.coordination, IR.spin, getattr(IR, radius))
+            for IR in self.ionic_radii
+            if IR.charge == charge
+        ]
 
         out = {}
         for coord, spin, cr in crs:
@@ -683,8 +705,8 @@ class Element(Base):
 
         return out
 
-    def calc_en_sanderson(self, radius='covalent_radius_pyykko'):
-        '''Sanderson electronegativity
+    def calc_en_sanderson(self, radius="covalent_radius_pyykko"):
+        """Sanderson electronegativity
 
         .. math::
 
@@ -693,7 +715,7 @@ class Element(Base):
         Args:
             radius : str
                 Radius to use in the calcualtion
-        '''
+        """
 
         from mendeleev.utils import estimate
 
@@ -703,7 +725,7 @@ class Element(Base):
         return math.pow(rng / r, 3)
 
     def nvalence(self, method=None):
-        '''Return the number of valence electrons'''
+        """Return the number of valence electrons"""
 
         return self.ec.nvalence(self.block, method=method)
 
@@ -713,13 +735,18 @@ class Element(Base):
     def __repr__(self):
         return "%s(\n%s)" % (
             (self.__class__.__name__),
-            ' '.join(["\t%s=%r,\n" % (key, getattr(self, key))
-                      for key in sorted(self.__dict__.keys())
-                      if not key.startswith('_')]))
+            " ".join(
+                [
+                    "\t%s=%r,\n" % (key, getattr(self, key))
+                    for key in sorted(self.__dict__.keys())
+                    if not key.startswith("_")
+                ]
+            ),
+        )
 
 
 class IonicRadius(Base):
-    '''
+    """
     Effective ionic radii and crystal radii in pm retrieved from [1]_.
 
     .. [1] Shannon, R. D. (1976). Revised effective ionic radii and systematic
@@ -746,12 +773,12 @@ class IonicRadius(Base):
         Source of the data
       most_reliable : bool
         Most reliable value (see reference)
-    '''
+    """
 
-    __tablename__ = 'ionicradii'
+    __tablename__ = "ionicradii"
 
     id = Column(Integer, primary_key=True)
-    atomic_number = Column(Integer, ForeignKey('elements.atomic_number'))
+    atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
     charge = Column(Integer)
     econf = Column(String)
     coordination = Column(String)
@@ -763,19 +790,24 @@ class IonicRadius(Base):
 
     def __str__(self):
         out = ["{0}={1:>4d}", "{0}={1:5s}", "{0}={1:>6.3f}", "{0}={1:>6.3f}"]
-        keys = ['charge', 'coordination', 'crystal_radius', 'ionic_radius']
+        keys = ["charge", "coordination", "crystal_radius", "ionic_radius"]
         return ", ".join([o.format(k, getattr(self, k)) for o, k in zip(out, keys)])
 
     def __repr__(self):
         return "%s(\n%s)" % (
             (self.__class__.__name__),
-            ' '.join(["\t%s=%r,\n" % (key, getattr(self, key))
-                      for key in sorted(self.__dict__.keys())
-                      if not key.startswith('_')]))
+            " ".join(
+                [
+                    "\t%s=%r,\n" % (key, getattr(self, key))
+                    for key in sorted(self.__dict__.keys())
+                    if not key.startswith("_")
+                ]
+            ),
+        )
 
 
 class IonizationEnergy(Base):
-    '''
+    """
     Ionization energy of an element
 
     Attributes:
@@ -786,12 +818,12 @@ class IonizationEnergy(Base):
       energy : float
         Ionization energy in eV parsed from
         http://physics.nist.gov/cgi-bin/ASD/ie.pl on April 13, 2015
-    '''
+    """
 
-    __tablename__ = 'ionizationenergies'
+    __tablename__ = "ionizationenergies"
 
     id = Column(Integer, primary_key=True)
-    atomic_number = Column(Integer, ForeignKey('elements.atomic_number'))
+    atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
     degree = Column(Integer)
     energy = Column(Float)
 
@@ -802,11 +834,12 @@ class IonizationEnergy(Base):
     def __repr__(self):
 
         return "<IonizationEnergy(atomic_number={a:5d}, degree={d:3d}, energy={e:10.5f})>".format(
-            a=self.atomic_number, d=self.degree, e=self.energy)
+            a=self.atomic_number, d=self.degree, e=self.energy
+        )
 
 
 class OxidationState(Base):
-    '''
+    """
     Oxidation states of an element
 
     Attributes:
@@ -814,9 +847,9 @@ class OxidationState(Base):
         Atomic number
       oxidation_state : int
         Oxidation state
-    '''
+    """
 
-    __tablename__ = 'oxidationstates'
+    __tablename__ = "oxidationstates"
 
     id = Column(Integer, primary_key=True)
     atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
@@ -825,13 +858,14 @@ class OxidationState(Base):
     def __repr__(self):
 
         return "<OxidationState(atomic_number={a:5d}, oxidation_state={o:5d})>".format(
-            a=self.atomic_number, o=self.oxidation_state)
+            a=self.atomic_number, o=self.oxidation_state
+        )
 
 
 class Group(Base):
-    '''Name of the group in the periodic table.'''
+    """Name of the group in the periodic table."""
 
-    __tablename__ = 'groups'
+    __tablename__ = "groups"
 
     group_id = Column(Integer, primary_key=True)
     symbol = Column(String)
@@ -839,12 +873,11 @@ class Group(Base):
 
     def __repr__(self):
 
-        return "<Group(symbol={s:s}, name={n:s})>".format(
-            s=self.symbol, n=self.name)
+        return "<Group(symbol={s:s}, name={n:s})>".format(s=self.symbol, n=self.name)
 
 
 class Series(Base):
-    '''
+    """
     Name of the series in the periodic table.
 
     Attributes:
@@ -855,9 +888,9 @@ class Series(Base):
         obtained from
         `ColorBrewer <http://colorbrewer2.org/?type=qualitative&scheme=Paired&n=10>`_
         the qualitative 10-class paired colormap
-    '''
+    """
 
-    __tablename__ = 'series'
+    __tablename__ = "series"
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -865,12 +898,11 @@ class Series(Base):
 
     def __repr__(self):
 
-        return "<Series(name={n:s}, color={c:s})>".format(n=self.name,
-                                                          c=self.color)
+        return "<Series(name={n:s}, color={c:s})>".format(n=self.name, c=self.color)
 
 
 class Isotope(Base):
-    '''
+    """
     Isotope
 
     Attributes:
@@ -890,7 +922,7 @@ class Isotope(Base):
         Mass number of the isotope
       mass_uncertainty : float
         Uncertainty of the mass
-    '''
+    """
 
     __tablename__ = "isotopes"
 
@@ -909,27 +941,33 @@ class Isotope(Base):
 
     def __str__(self):
 
-        afmt = '5.3f'
-        mfmt = '10.5f'
+        afmt = "5.3f"
+        mfmt = "10.5f"
 
         if self.mass is None:
-            mfmt = ''
+            mfmt = ""
 
         if self.abundance is None:
-            afmt = ''
+            afmt = ""
 
         return "{0:5d} {1:5d} {2:{mfmt}} {3:{afmt}}".format(
-            self.atomic_number, self.mass_number, self.mass,
-            self.abundance, mfmt=mfmt, afmt=afmt)
+            self.atomic_number,
+            self.mass_number,
+            self.mass,
+            self.abundance,
+            mfmt=mfmt,
+            afmt=afmt,
+        )
 
     def __repr__(self):
 
         return "<Isotope(Z={}, A={}, mass={}, abundance={})>".format(
-            self.atomic_number, self.mass_number, self.mass, self.abundance)
+            self.atomic_number, self.mass_number, self.mass, self.abundance
+        )
 
 
 class ScreeningConstant(Base):
-    '''
+    """
     Nuclear screening constants from Clementi, E., & Raimondi, D. L. (1963).
     Atomic Screening Constants from SCF Functions. The Journal of Chemical
     Physics, 38(11), 2686.  `doi:10.1063/1.1733573
@@ -947,9 +985,9 @@ class ScreeningConstant(Base):
         Subshell label, (s, p, d, ...)
       screening : float
         Screening constant
-    '''
+    """
 
-    __tablename__ = 'screeningconstants'
+    __tablename__ = "screeningconstants"
 
     id = Column(Integer, primary_key=True)
     atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
@@ -960,9 +998,11 @@ class ScreeningConstant(Base):
     def __str__(self):
 
         return "{0:4d} {1:3d} {2:s} {3:10.4f}".format(
-            self.atomic_number, self.n, self.s, self.screening)
+            self.atomic_number, self.n, self.s, self.screening
+        )
 
     def __repr__(self):
 
         return "<ScreeningConstant(Z={0:4d}, n={1:3d}, s={2:s}, screening={3:10.4f})>".format(
-            self.atomic_number, self.n, self.s, self.screening)
+            self.atomic_number, self.n, self.s, self.screening
+        )
