@@ -14,7 +14,7 @@ URL = "https://github.com/lmmentel/mendeleev"
 DOWNLOAD_URL = 'https://github.com/lmmentel/mendeleev/archive/master.zip'
 AUTHOR = "Lukasz Mentel"
 EMAIL = "lmmentel@gmail.com"
-VERSION = '0.6.0'
+VERSION = '0.6.1'
 KEYWORDS = ['periodic', 'table', 'elements', 'atomic', 'properties',
             'mendeleev']
 

@@ -20,4 +20,4 @@ the package from `my anaconda channel <https://anaconda.org/lmmentel/mendeleev>`
 
 .. code-block:: bash
 
-   conda install -c lmmentel mendeleev=0.6.0
+   conda install -c lmmentel mendeleev=0.6.1
