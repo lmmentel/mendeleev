@@ -511,7 +511,7 @@ class Element(Base):
            \\omega = \\frac{\\mu}{2\eta}
         """
 
-        ip = self.ionenergies[1]
+        ip = self.ionenergies.get(1, None)
         ea = self.electron_affinity
 
         if ip is not None and ea is not None:
