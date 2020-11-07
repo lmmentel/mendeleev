@@ -1,4 +1,3 @@
-
 from statistics import mean
 from mendeleev import element
 
@@ -8,8 +7,16 @@ class Ion:
     A class for dealing with atomic ions
     """
 
-    __element_attributes__ = ['atomic_number', 'block', 'group', 'series', 'period', 'mass', 'symbol']
-    
+    __element_attributes__ = [
+        "atomic_number",
+        "block",
+        "group",
+        "series",
+        "period",
+        "mass",
+        "symbol",
+    ]
+
     def __init__(self, label, q=1):
 
         self._element = element(label)
@@ -22,20 +29,24 @@ class Ion:
     @q.setter
     def q(self, value):
         if value == 0:
-            raise ValueError('expecting change other than 0, got {}'.format(value))
+            raise ValueError("expecting change other than 0, got {}".format(value))
         elif value > self.Z:
-                raise ValueError('ionic charge ({}) cannot be larger than atomic number ({})'.format(value, self.Z))
+            raise ValueError(
+                "ionic charge ({}) cannot be larger than atomic number ({})".format(
+                    value, self.Z
+                )
+            )
         else:
             self._q = int(value)
 
     @property
     def Z(self):
         return self._element.atomic_number
-            
+
     @property
     def charge(self):
         return self._q
-        
+
     @property
     def electrons(self):
         return self.Z - self.q
@@ -48,7 +59,7 @@ class Ion:
     @property
     def ie(self):
         return self._element.ionenergies[self.q + 1]
-    
+
     @property
     def ea(self):
         return self._element.ionenergies[self.q]
@@ -66,7 +77,7 @@ class Ion:
             "+": u"\u207A",
             "-": u"\u207B",
             "0": u"\u2070",
-            "1": u"\u00B9",    
+            "1": u"\u00B9",
             "2": u"\u00B2",
             "3": u"\u00B3",
             "4": u"\u2074",
@@ -103,11 +114,13 @@ class Ion:
         return self.q / radius
 
     def __getattr__(self, name):
-        
+
         if name in Ion.__element_attributes__:
             return getattr(self._element, name)
         else:
-            raise AttributeError("'{}' is not na attribute of '{}'".format(name, self.__class__.__name__))
+            raise AttributeError(
+                "'{}' is not na attribute of '{}'".format(name, self.__class__.__name__)
+            )
 
     def __repr__(self):
         return self.unicode_ion_symbol()
