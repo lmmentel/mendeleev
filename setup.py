@@ -31,7 +31,7 @@ CLASSIFIERS = ['Development Status :: 3 - Alpha',
                'Topic :: Scientific/Engineering :: Physics']
 
 
-DEPENDENCIES = ['numpy', 'pandas', 'sqlalchemy', 'colorama', 'pyfiglet']
+DEPENDENCIES = ['numpy', 'pandas', 'sqlalchemy>=1.3.0', 'colorama', 'pyfiglet']
 
 
 def readme():
@@ -55,6 +55,7 @@ def setup_package():
           license=LICENSE,
           long_description=readme(),
           classifiers=CLASSIFIERS,
+          setup_requires=['wheel'],
           packages=find_packages(exclude=['tests', 'tests.*']),
           entry_points={
                 'console_scripts': [
