@@ -67,13 +67,12 @@ def test_isotopes_str(symbol):
 
     e = element(symbol)
     for i in e.isotopes:
-        str(e)
-        repr(e)
+        str(i)
+        repr(i)
 
 
 @pytest.mark.parametrize("symbol", SYMBOLS)
-def test_isotopes_repr(symbol):
+def test_electrophilicity(symbol):
 
     e = element(symbol)
-    for i in e.isotopes:
-        repr(e)
+    e.electrophilicity()
