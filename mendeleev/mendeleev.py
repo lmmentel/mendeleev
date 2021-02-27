@@ -187,12 +187,11 @@ def get_table(tablename, **kwargs):
         "series",
     ]
 
-    if tablename in tables:
-        engine = get_engine()
-        dframe = pd.read_sql(tablename, engine, **kwargs)
-        return dframe
-    else:
+    if tablename not in tables:
         raise ValueError("Table should be one of: {}".format(", ".join(tables)))
+
+    engine = get_engine()
+    return pd.read_sql(tablename, engine, **kwargs)
 
 
 def get_attr_for_group(attr, group=18):
