@@ -24,7 +24,6 @@
 
 """tables module specifying the database model"""
 
-import math
 from operator import attrgetter
 import numpy as np
 
@@ -34,6 +33,18 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
+from .electronegativity import (
+    allred_rochow,
+    cottrell_sutton,
+    gordy,
+    nagle,
+    li_xue,
+    martynov_batsanov,
+    mulliken,
+    sanderson,
+)
+
+# from .queries import estimate_from_group
 from .econf import ElectronicConfiguration, get_l, ORBITALS
 
 
@@ -491,7 +502,7 @@ class Element(Base):
             option is ignored
         """
 
-        # identify th valence s,p vs d,f
+        # identify the valence s,p vs d,f
         if n is None:
             n = self.ec.max_n()
         else:
@@ -533,13 +544,15 @@ class Element(Base):
         else:
             return None
 
-    def electronegativity(self, scale="pauling", charge=0):
+    def electronegativity(self, scale: str = "pauling", **kwargs):
         """
         Calculate the electronegativity using one of the methods
 
         Args:
-          scale : str
-           Name of the electronegativity scale, one of
+            scale : Name of the electronegativity scale, one of
+            kwargs: keyword arguments that are passed to compute a specific electronegativity
+
+        Avalable scales are:
 
            - `allen`
            - `allred-rochow`
@@ -553,38 +566,113 @@ class Element(Base):
            - `sanderson`
         """
 
-        # TODO:
-        #        add an option to convert the value to Pauling units
-        #        pu : bool
-        #            Convert to Pauling's units
+        scales = {
+            "allen": self.electronegativity_allen,
+            "allred-rochow": self.electronegativity_allred_rochow,
+            "cottrell-sutton": self.electronegativity_cottrell_sutton,
+            "gordy": self.electronegativity_gordy,
+            "li-xue": self.electronegativity_li_xue,
+            "martynov-batsanov": self.electronegativity_martynov_batsanov,
+            "mulliken": self.electronegativity_mulliken,
+            "nagle": self.electronegativity_nagle,
+            "pauling": self.electronegativity_pauling,
+            "sanderson": self.electronegativity_sanderson,
+        }
 
-        if scale == "allen":
-            return self.en_allen
-        elif scale == "allred-rochow":
-            return self.zeff(alle=True) / math.pow(self.covalent_radius, 2)
-        elif scale == "cottrell-sutton":
-            return math.sqrt(self.zeff(alle=True) / self.covalent_radius)
-        elif scale == "gordy":
-            return self.zeff(alle=True) / self.covalent_radius
-        elif scale == "li-xue":
-            return self.en_li_xue(charge=charge)
-        elif scale == "martynov-batsanov":
-            return self.en_martynov_batsanov()
-        elif scale == "mulliken":
-            return self.en_mulliken()
-        elif scale == "nagle":
-            if self.dipole_polarizability is not None:
-                return math.pow(self.nvalence() / self.dipole_polarizability, 1.0 / 3.0)
-            else:
-                return None
-        elif scale == "pauling":
-            return self.en_pauling
-        elif scale == "sanderson":
-            return self.calc_en_sanderson()
+        if scale not in scales:
+            raise ValueError(
+                f"scale: '{scale}' not found, available scales are: {', '.join(scales.keys())}"
+            )
+
+        return scales[scale](**kwargs)
+
+    def electronegativity_allen(self):
+        "Allen's electronegativity"
+        return self.en_allen
+
+    def electronegativity_allred_rochow(self, radius="covalent_radius_pyykko"):
+        "Allred-Rochow's electronegativity"
+        return allred_rochow(self.zeff(), getattr(self, radius))
+
+    def electronegativity_cottrell_sutton(self, radius="covalent_radius_pyykko"):
+        "Cottrell-Sutton's electronegativity"
+        return cottrell_sutton(self.zeff(), getattr(self, radius))
+
+    def electronegativity_gordy(self, radius="covalent_radius_pyykko"):
+        "Gordy's electronegativity"
+        return gordy(self.zeff(), getattr(self, radius))
+
+    def electronegativity_li_xue(
+        self, charge: int = 1, radius: str = "crystal_radius"
+    ) -> float:
+        """
+        Calculate the electronegativity of an atom according to the definition
+        of Li and Xue
+
+        Args:
+            charge : int
+                Charge of the ion
+            radius : str
+                Type of radius to be used in the calculation, either
+                `crystal_radius` as recommended in the paper or `ionic_radius`
+
+        Returns:
+            out : dict
+                A dictionary with electronegativities as values and
+                coordination string as keys or tuple of coordination and spin
+                if the ion is LS or HS
+        """
+
+        if (not isinstance(charge, int)) or (charge == 0):
+            raise ValueError(
+                "charge should be a nonzero initeger, got: {}".format(charge)
+            )
+
+        if radius not in ["ionic_radius", "crystal_radius"]:
+            raise ValueError(
+                f"radius: '{radius}' not found, available values are: 'ionic_radius', 'crystal_radius'"
+            )
+
+        ie = self.ionenergies.get(charge, None)
+
+        radii = [
+            (ir.coordination, ir.spin, getattr(ir, radius))
+            for ir in self.ionic_radii
+            if ir.charge == charge
+        ]
+
+        return {
+            (coordination_number, spin): li_xue(ie, crystal_radius, self.ec.max_n())
+            for coordination_number, spin, crystal_radius in radii
+        }
+
+    def electronegativity_martynov_batsanov(self):
+        """
+        Calculates the electronegativity value according to Martynov and
+        Batsanov as the average of the ionization energies of the valence
+        electrons
+
+        .. math::
+
+           \chi_{MB} = \sqrt{\\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
+
+        where: :math:`n_{v}` is the number of valence electrons and
+        :math:`I_{k}` is the :math:`k` th ionization potential.
+        """
+
+        ionenergies = [
+            self.ionenergies.get(i, None)
+            for i in range(1, self.nvalence(method="simple") + 1)
+        ]
+
+        if all(ionenergies):
+            return martynov_batsanov(ionenergies)
         else:
-            raise ValueError("unknown <scale> value: {}".format(scale))
+            return None
 
-    def en_mulliken(self, charge=0, missingIsZero=False, useNegativeEA=False):
+    def electronegativity_mulliken(
+        self, charge=0, missingIsZero=False, useNegativeEA=False
+    ):
         """
         Return the absolute electronegativity (Mulliken scale), calculated as
 
@@ -606,123 +694,26 @@ class Element(Base):
             raise ValueError(
                 "Charge has to be a non-negative integer, got: {}".format(charge)
             )
+        return mulliken(ip, ea)
 
-        if ip is not None:
-            if ea is not None and ea < 0.0 and useNegativeEA:
-                return (ip + ea) * 0.5
-            elif ea is not None or missingIsZero:
-                return ip * 0.5
-        else:
-            return None
+    def electronegativity_nagle(self):
+        "Nagle's electronegativity"
+        return nagle(self.nvalence(), self.dipole_polarizability)
 
-    def en_calc(self, radius="covalent_radius_pyykko", rpow=1, apow=1, **zeffkwargs):
+    def electronegativity_pauling(self):
+        "Pauling's electronegativity"
+        return self.en_pauling
+
+    def electronegativity_sanderson(self, radius="covalent_radius_pyykko"):
         """
-        Calculate the electronegativity from a general formula
-
-        .. math::
-
-           \chi = \left(\\frac{Z_{\\text{eff}}}{r^{\\beta}}\\right)^{\\alpha}
-
-        where
-
-        - :math:`Z_{\\text{eff}}` is the effective nuclear charge
-        - :math:`r` is the covalent radius
-        - :math:`\\alpha,\\beta` parameters
-        """
-
-        zeff = self.zeff(**zeffkwargs)
-        r = getattr(self, radius)
-
-        return math.pow(zeff / math.pow(r, rpow), apow)
-
-    def en_martynov_batsanov(self):
-        """
-        Calculates the electronegativity value according to Martynov and
-        Batsanov as the average of the ionization energies of the valence
-        electrons
-
-        .. math::
-
-           \chi_{MB} = \sqrt{\\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
-
-        where: :math:`n_{v}` is the number of valence electrons and
-        :math:`I_{k}` is the :math:`k` th ionization potential.
-        """
-
-        ionenergies = [
-            self.ionenergies.get(i, None)
-            for i in range(1, self.nvalence(method="simple") + 1)
-        ]
-
-        if all(ionenergies):
-            return np.sqrt(np.array(ionenergies).mean())
-        else:
-            return None
-
-    def en_li_xue(self, charge=0, radius="crystal_radius"):
-        """
-        Calculate the electronegativity of an atom according to the definition
-        of Li and Xue
+        Sanderson electronegativity
 
         Args:
-            charge : int
-                Charge of the ion
-            radius : str
-                Type of radius to be used in the calculation, either
-                `crystal_radius` as recommended in the paper or `ionic_radius`
-
-        Returns:
-            out : dict
-                A dictionary with electronegativities as values and
-                coordination string as keys or tuple of coordination and spin
-                if the ion is LS or HS
+            radius : radius to use in the calculation
         """
-
-        if charge is None or not isinstance(charge, int) or charge == 0:
-            raise ValueError(
-                "charge should be a nonzero initeger, got: {}".format(charge)
-            )
-
-        neff = {1: 0.85, 2: 1.99, 3: 2.89, 4: 3.45, 5: 3.85, 6: 4.36, 7: 4.99}
-        RY = 13.605693009
-
-        Ie = self.ionenergies.get(charge, None)
-
-        crs = [
-            (IR.coordination, IR.spin, getattr(IR, radius))
-            for IR in self.ionic_radii
-            if IR.charge == charge
-        ]
-
-        out = {}
-        for coord, spin, cr in crs:
-            # the 100.0 factor converts picometers to Angstroms
-            eneg = neff[self.ec.max_n()] * math.sqrt(Ie / RY) * 100.0 / cr
-            if len(spin) < 1:
-                out[coord] = eneg
-            else:
-                out[(coord, spin)] = eneg
-
-        return out
-
-    def calc_en_sanderson(self, radius="covalent_radius_pyykko"):
-        """Sanderson electronegativity
-
-        .. math::
-
-           \chi = \\frac{AD}{AD_{\\text{ng}}}
-
-        Args:
-            radius : str
-                Radius to use in the calcualtion
-        """
-
-        from mendeleev.utils import estimate
-
-        r = getattr(self, radius)
-        rng = estimate(self.atomic_number, radius)
-
-        return math.pow(rng / r, 3)
+        # estimate the radius of a corresponding noble gas
+        noble_gas_radius = estimate_from_group(self.atomic_number, radius)
+        return sanderson(getattr(self, radius), noble_gas_radius)
 
     def nvalence(self, method=None):
         """Return the number of valence electrons"""
@@ -741,6 +732,77 @@ class Element(Base):
                 if not key.startswith("_")
             ),
         )
+
+
+from typing import Any, List, Tuple
+from .db import get_session
+
+
+def fetch_attrs_for_group(attrs: List[str], group: int = 18) -> Tuple[List[Any]]:
+    """
+    A convenience function for getting a specified attribute for all
+    the memebers of a given group.
+
+    Args:
+        attr : Attribute of `Element` to retrieve for all group members
+
+    Returns:
+        data : dict
+            Dictionary with nobel gas atomic numbers as keys and values of the
+            `attr` as values
+    """
+
+    session = get_session()
+    members = (
+        session.query(Element)
+        .filter(Element.group_id == group)
+        .order_by(Element.atomic_number)
+        .all()
+    )
+
+    results = tuple([getattr(member, attr) for member in members] for attr in attrs)
+    session.close()
+    return results
+
+
+import numpy as np
+
+# from .selectors import fetch_attrs_for_group
+
+
+def estimate_from_group(
+    atomic_number, attr_name, group: int = 18, deg: int = 1
+) -> float:
+    """
+    Evaluate a value `attribute` for element by interpolation or
+    extrapolation of the data points from elements from `group`.
+
+    Args:
+        atomic_number: value for which the property will be evaluated
+        attr_name: attribute to be estimated
+        group: periodic table group number
+        deg: degree of the polynomial used in the extrapolation beyond
+            the provided data points
+    """
+
+    xref, yref = fetch_attrs_for_group(["atomic_number", attr_name], group=group)
+
+    x = atomic_number
+    xref = np.array(xref)
+    yref = np.array(yref)
+    if xref.min() <= x <= xref.max():
+        return np.interp([x], xref, yref)
+
+    if x < xref.min():
+        xslice = xref[:3]
+        yslice = yref[:3]
+    elif x > xref.max():
+        xslice = xref[-3:]
+        yslice = yref[-3:]
+
+    fit = np.polyfit(xslice, yslice, deg)
+    fn = np.poly1d(fit)
+    return fn(x)
 
 
 class IonicRadius(Base):
