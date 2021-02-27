@@ -368,14 +368,14 @@ class Element(Base):
         Return the mass number of the most abundant natural stable isotope
         """
 
-        if len(self.isotopes) > 0:
-            lwithabu = [i for i in self.isotopes if i.abundance is not None]
-            if lwithabu:
-                return max(lwithabu, key=attrgetter("abundance")).mass_number
-            else:
-                return self.isotopes[0].mass_number
-        else:
+        if len(self.isotopes) <= 0:
             return int(self.atomic_weight)
+
+        lwithabu = [i for i in self.isotopes if i.abundance is not None]
+        if lwithabu:
+            return max(lwithabu, key=attrgetter("abundance")).mass_number
+        else:
+            return self.isotopes[0].mass_number
 
     def mass_str(self):
         """String representation of atomic weight"""
@@ -734,13 +734,11 @@ class Element(Base):
 
     def __repr__(self):
         return "%s(\n%s)" % (
-            (self.__class__.__name__),
+            self.__class__.__name__,
             " ".join(
-                [
-                    "\t%s=%r,\n" % (key, getattr(self, key))
-                    for key in sorted(self.__dict__.keys())
-                    if not key.startswith("_")
-                ]
+                "\t%s=%r,\n" % (key, getattr(self, key))
+                for key in sorted(self.__dict__.keys())
+                if not key.startswith("_")
             ),
         )
 
@@ -791,17 +789,15 @@ class IonicRadius(Base):
     def __str__(self):
         out = ["{0}={1:>4d}", "{0}={1:5s}", "{0}={1:>6.3f}", "{0}={1:>6.3f}"]
         keys = ["charge", "coordination", "crystal_radius", "ionic_radius"]
-        return ", ".join([o.format(k, getattr(self, k)) for o, k in zip(out, keys)])
+        return ", ".join(o.format(k, getattr(self, k)) for o, k in zip(out, keys))
 
     def __repr__(self):
         return "%s(\n%s)" % (
-            (self.__class__.__name__),
+            self.__class__.__name__,
             " ".join(
-                [
-                    "\t%s=%r,\n" % (key, getattr(self, key))
-                    for key in sorted(self.__dict__.keys())
-                    if not key.startswith("_")
-                ]
+                "\t%s=%r,\n" % (key, getattr(self, key))
+                for key in sorted(self.__dict__.keys())
+                if not key.startswith("_")
             ),
         )
 
