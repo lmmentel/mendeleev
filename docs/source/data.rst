@@ -99,7 +99,7 @@ The followig data are currently available:
 +-------------------------------+-------+------------------------------------------------------+----------+-----------------------------------------------------+
 | ionenergy                     | tuple | Ionization energies                                  | eV       | :cite:`NIST-ASD`                                    |
 +-------------------------------+-------+------------------------------------------------------+----------+-----------------------------------------------------+
-| ionic_radii                   | list  | Ionic and crystal radii in pm                        | pm       | :cite:`Shannon1976`                                 |
+| ionic_radii                   | list  | Ionic and crystal radii in pm\ [#f9]_                | pm       | :cite:`Shannon1976,Lundberg2016`                    |
 +-------------------------------+-------+------------------------------------------------------+----------+-----------------------------------------------------+
 | is_monoisotopic               | bool  | Is the element monoisotopic                          |          |                                                     |
 +-------------------------------+-------+------------------------------------------------------+----------+-----------------------------------------------------+
@@ -283,6 +283,11 @@ Isotopes
    - 237Np, 239Pu, 243Am magnetic moment data from :cite:`haynes2014crc`, section 11-2
    - In quadrupole moment data - a typo for Ac-227: sign should be +
 
+.. [#f9] **Ionic radii for Actinoid (III) ions**
+
+   Ionic raddi values for 3+ Actinoids were with coordination number 9 were taken
+   from :cite:`Lundberg2016`. In addition ``crystal_radius`` values were computed
+   by adding 14 pm to the ``ionic_radius`` values according to :cite:`Shannon1976`.
 
 .. **Sanderson electronegativity**
 
