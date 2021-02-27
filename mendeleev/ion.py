@@ -98,11 +98,11 @@ class Ion:
     def ionic_potential(self, radius_most_reliable: bool = True) -> float:
         """
         Calculate the ionic potential
-        
+
         Args:
             radius_most_reliable : flag to use the most reliable ionic radius,
                 default is `True`
-        
+
         Returns:
             ionic potential
         """

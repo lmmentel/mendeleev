@@ -163,14 +163,13 @@ def estimate(x, attribute, group=18, deg=1, kind="linear"):
 
     if xref.min() <= x <= xref.max():
         return np.interp([x], xref, yref)
-    else:
-        if x < xref.min():
-            xslice = xref[:3]
-            yslice = yref[:3]
-        elif x > xref.max():
-            xslice = xref[-3:]
-            yslice = yref[-3:]
+    if x < xref.min():
+        xslice = xref[:3]
+        yslice = yref[:3]
+    elif x > xref.max():
+        xslice = xref[-3:]
+        yslice = yref[-3:]
 
-        fit = np.polyfit(xslice, yslice, deg)
-        fn = np.poly1d(fit)
-        return fn(x)
+    fit = np.polyfit(xslice, yslice, deg)
+    fn = np.poly1d(fit)
+    return fn(x)

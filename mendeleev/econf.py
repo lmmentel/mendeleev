@@ -374,10 +374,7 @@ class ElectronicConfiguration(object):
         "Return a string with the configuration"
 
         return " ".join(
-            [
-                "{n:d}{s:s}{e:d}".format(n=k[0], s=k[1], e=v)
-                for k, v in self.conf.items()
-            ]
+            "{n:d}{s:s}{e:d}".format(n=k[0], s=k[1], e=v) for k, v in self.conf.items()
         )
 
     def __repr__(self):
@@ -421,23 +418,22 @@ def print_spin_occupations(sodict, average=True):
         if average:
             fmt = "10.8f"
             a = ", ".join(
-                ["{0:{fmt}}".format(x, fmt=fmt) for x in [occ["alpha"] / nss] * nss]
+                "{0:{fmt}}".format(x, fmt=fmt) for x in [occ["alpha"] / nss] * nss
             )
+
             b = ", ".join(
-                ["{0:{fmt}}".format(x, fmt=fmt) for x in [occ["beta"] / nss] * nss]
+                "{0:{fmt}}".format(x, fmt=fmt) for x in [occ["beta"] / nss] * nss
             )
+
         else:
             a = ", ".join(
-                [
-                    "{0:3.1f}".format(x)
-                    for x in [1] * occ["alpha"] + [0] * (nss - occ["alpha"])
-                ]
+                "{0:3.1f}".format(x)
+                for x in [1] * occ["alpha"] + [0] * (nss - occ["alpha"])
             )
+
             b = ", ".join(
-                [
-                    "{0:3.1f}".format(x)
-                    for x in [1] * occ["beta"] + [0] * (nss - occ["beta"])
-                ]
+                "{0:3.1f}".format(x)
+                for x in [1] * occ["beta"] + [0] * (nss - occ["beta"])
             )
 
         alphas.append(a)
