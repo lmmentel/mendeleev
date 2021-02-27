@@ -60,8 +60,7 @@ def get_engine(dbpath=None):
 
     if not dbpath:
         dbpath = get_package_dbpath()
-    engine = create_engine("sqlite:///{path:s}".format(path=dbpath), echo=False)
-    return engine
+    return create_engine("sqlite:///{path:s}".format(path=dbpath), echo=False)
 
 
 def get_session(dbpath=None):
