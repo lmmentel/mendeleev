@@ -58,110 +58,40 @@ def fetch_table(table: str, **kwargs) -> pd.DataFrame:
     return pd.read_sql(table, engine, **kwargs)
 
 
-def fetch_neutral_data() -> pd.DataFrame:
+def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
     """
-    Get extensive set of data from multiple database tables as pandas.DataFrame
+    Fetch electronegativity scales for all elements as a pandas DataFrame
+
+    Args:
+        scales:
     """
-
-    elements = fetch_table("elements")
-    series = fetch_table("series")
-    groups = fetch_table("groups")
-
-    elements = pd.merge(
-        elements,
-        series,
-        left_on="series_id",
-        right_on="id",
-        how="left",
-        suffixes=("", "_series"),
-    )
-    elements = pd.merge(
-        elements,
-        groups,
-        left_on="group_id",
-        right_on="group_id",
-        how="left",
-        suffixes=("", "_group"),
-    )
-
-    elements.rename(columns={"color": "series_colors"}, inplace=True)
-
-    en_scales = [
-        "allred-rochow",
-        "cottrell-sutton",
-        "gordy",
-        "martynov-batsanov",
-        "mulliken",
-        "nagle",
-        "sanderson",
-    ]
-
-    for scale in en_scales:
-        elements["en_" + scale] = [
-            element(row.symbol).electronegativity(scale=scale)
-            for i, row in elements.iterrows()
-        ]
-
-    for attr in ["hardness", "softness"]:
-        elements[attr] = [
-            getattr(element(row.symbol), attr)() for i, row in elements.iterrows()
-        ]
-
-    elements["mass"] = [
-        element(row.symbol).mass_str() for i, row in elements.iterrows()
-    ]
-
-    elements.loc[:, "zeff_slater"] = elements.apply(
-        lambda x: get_zeff(x["atomic_number"], method="slater"), axis=1
-    )
-    elements.loc[:, "zeff_clementi"] = elements.apply(
-        lambda x: get_zeff(x["atomic_number"], method="clementi"), axis=1
-    )
 
     session = get_session()
     engine = get_engine()
 
-    query = (
-        session.query(IonizationEnergy)
-        .filter(IonizationEnergy.degree == 1)
-        .filter(IonizationEnergy.atomic_number.in_(list(range(1, 119))))
-    )
-    out = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
-    out = out[["atomic_number", "energy"]]
-    out.columns = ["atomic_number", "ionization_energy"]
-    elements = pd.merge(elements, out, on="atomic_number", how="left")
+    query = session.query(Element.atomic_number).order_by("atomic_number")
+    df = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
 
-    return elements
+    scales = [
+        "allen",
+        "allred-rochow",
+        "cottrell-sutton",
+        "gordy",
+        "li-xue",
+        "martynov-batsanov",
+        "mulliken",
+        "nagle",
+        "pauling",
+        "sanderson",
+    ]
 
-
-def fetch_ionic_radii(radius: str = "ionic_radius") -> pd.DataFrame:
-    """
-    Fetch a pandas DataFrame with ionic radii for all the elements.
-
-    Args:
-      radius: The radius to be returned either `ionic_radius` or `crystal_radius`
-
-    Returns:
-      df: DataFrame
-        Pandas DataFrame with atomic numbers, symbols and ionic radii for all
-        coordinations
-    """
-
-    if radius not in ["ionic_radius", "crystal_radius"]:
-        raise ValueError('wrong values, should be "ionic_radius" or "crystal_radius"')
-
-    ir = fetch_table("ionicradii")
-    ir = ir[ir.spin != "HS"]
-    # create new temporary pseudo multiindex
-    ir["idx"] = ir.atomic_number.astype(str) + "(" + ir.charge.astype(str) + ")"
-    df = ir.pivot(index="idx", columns="coordination", values="ionic_radius")
-    # get back the atomic_number and charge columns from idx
-    df["atomic_number"] = df.index.str.extract(r"^(\d+)")
-    df["charge"] = df.index.str.extract(r"^\d+\((-?\d+)\)")
-    df.reset_index(inplace=True)
-    df.drop("idx", axis=1, inplace=True)
-
-    return df
+    for scale in scales:
+        scale_name = "-".join(s.capitalize() for s in scale.split("-"))
+        df.loc[:, scale_name] = [
+            element(int(row.atomic_number)).electronegativity(scale=scale)
+            for _, row in df.iterrows()
+        ]
+    return df.set_index("atomic_number")
 
 
 def fetch_ionization_energies(degree: Union[List[int], int] = 1) -> pd.DataFrame:
@@ -212,6 +142,89 @@ def fetch_ionization_energies(degree: Union[List[int], int] = 1) -> pd.DataFrame
         )
 
     return df.set_index("atomic_number")
+
+
+def fetch_neutral_data() -> pd.DataFrame:
+    """
+    Get extensive set of data from multiple database tables as pandas.DataFrame
+    """
+
+    elements = fetch_table("elements")
+    series = fetch_table("series")
+    groups = fetch_table("groups")
+
+    elements = pd.merge(
+        elements,
+        series,
+        left_on="series_id",
+        right_on="id",
+        how="left",
+        suffixes=("", "_series"),
+    )
+    elements = pd.merge(
+        elements,
+        groups,
+        left_on="group_id",
+        right_on="group_id",
+        how="left",
+        suffixes=("", "_group"),
+    )
+
+    elements.rename(columns={"color": "series_colors"}, inplace=True)
+
+    for attr in ["hardness", "softness"]:
+        elements[attr] = [
+            getattr(element(row.symbol), attr)() for _, row in elements.iterrows()
+        ]
+
+    elements["mass"] = [
+        element(row.symbol).mass_str() for _, row in elements.iterrows()
+    ]
+
+    elements.loc[:, "zeff_slater"] = elements.apply(
+        lambda x: get_zeff(x["atomic_number"], method="slater"), axis=1
+    )
+    elements.loc[:, "zeff_clementi"] = elements.apply(
+        lambda x: get_zeff(x["atomic_number"], method="clementi"), axis=1
+    )
+
+    ens = fetch_electronegativities()
+    elements = pd.merge(elements, ens.reset_index(), on="atomic_number", how="left")
+
+    ies = fetch_ionization_energies(degree=1)
+    elements = pd.merge(elements, ies.reset_index(), on="atomic_number", how="left")
+
+    return elements
+
+
+def fetch_ionic_radii(radius: str = "ionic_radius") -> pd.DataFrame:
+    """
+    Fetch a pandas DataFrame with ionic radii for all the elements.
+
+    Args:
+      radius: The radius to be returned either `ionic_radius` or `crystal_radius`
+
+    Returns:
+      df: DataFrame
+        Pandas DataFrame with atomic numbers, symbols and ionic radii for all
+        coordinations
+    """
+
+    if radius not in ["ionic_radius", "crystal_radius"]:
+        raise ValueError('wrong values, should be "ionic_radius" or "crystal_radius"')
+
+    ir = fetch_table("ionicradii")
+    ir = ir[ir.spin != "HS"]
+    # create new temporary pseudo multiindex
+    ir["idx"] = ir.atomic_number.astype(str) + "(" + ir.charge.astype(str) + ")"
+    df = ir.pivot(index="idx", columns="coordination", values="ionic_radius")
+    # get back the atomic_number and charge columns from idx
+    df["atomic_number"] = df.index.str.extract(r"^(\d+)")
+    df["charge"] = df.index.str.extract(r"^\d+\((-?\d+)\)")
+    df.reset_index(inplace=True)
+    df.drop("idx", axis=1, inplace=True)
+
+    return df
 
 
 def add_plot_columns(elements: pd.DataFrame) -> pd.DataFrame:
