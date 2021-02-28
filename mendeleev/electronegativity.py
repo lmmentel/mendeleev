@@ -71,7 +71,7 @@ def li_xue(ionization_energy: float, radius: float, valence_pqn: int) -> float:
     """
 
     return (
-        n_effective(valence_pqn, surce="zhang")
+        n_effective(valence_pqn, source="zhang")
         * math.sqrt(ionization_energy / RY)
         * 100.0
         / radius
