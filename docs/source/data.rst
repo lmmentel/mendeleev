@@ -3,7 +3,8 @@
 Data
 ****
 
-To find out how to fetch data in bulk, check out the documentation about :ref:`data access <notebooks/02_data_access.ipynb>`.
+To find out how to fetch data in bulk, check out the documentation about
+:doc:`data access <notebooks/bulk_data_access.ipynb>`.
 
 Elements
 ========
@@ -291,3 +292,6 @@ Isotopes
    from :cite:`Lundberg2016`. In addition ``crystal_radius`` values were computed
    by adding 14 pm to the ``ionic_radius`` values according to :cite:`Shannon1976`.
 
+
+.. bibliography::
+   :style: plain

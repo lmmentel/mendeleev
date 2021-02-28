@@ -21,7 +21,7 @@ the periodic table of elements.
 .. toctree::
    :caption: Contents
 
-   Quick overview <quick>
+   Overview <quick>
    Installation <install>
    Tutorials <tutorials>
    Data <data>
