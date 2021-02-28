@@ -1,5 +1,5 @@
 """
-Electronegativity scales
+Electronegativity scale formulas
 """
 
 import math
@@ -7,9 +7,8 @@ from typing import List
 
 import numpy as np
 
+from .utils import n_effective
 
-# effective principal quantum number
-NEFF = {1: 0.85, 2: 1.99, 3: 2.89, 4: 3.45, 5: 3.85, 6: 4.36, 7: 4.99}
 
 # Rydberg constant
 RY = 13.605693009
@@ -71,7 +70,12 @@ def li_xue(ionization_energy: float, radius: float, valence_pqn: int) -> float:
         electronegativity
     """
 
-    return NEFF[valence_pqn] * math.sqrt(ionization_energy / RY) * 100.0 / radius
+    return (
+        n_effective(valence_pqn, surce="zhang")
+        * math.sqrt(ionization_energy / RY)
+        * 100.0
+        / radius
+    )
 
 
 def martynov_batsanov(ionization_energies: List[float]) -> float:
