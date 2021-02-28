@@ -4,9 +4,11 @@ Tutorials
 
 .. toctree::
 
-   notebooks/01_intro_to_mendeleev.ipynb
-   notebooks/02_tables.ipynb
-   notebooks/03_plotting.ipynb
+   notebooks/quick_start.ipynb
+   notebooks/bulk_data_access.ipynb
+   notebooks/electronic_configuration.ipynb
+   notebooks/ions.ipynb
+   notebooks/plotting.ipynb
 
 
 Jupyter notebooks

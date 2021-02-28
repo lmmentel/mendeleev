@@ -25,7 +25,9 @@ the periodic table of elements.
    Installation <install>
    Tutorials <tutorials>
    Data <data>
+   Electronegativity <electronegativity>
    API Reference <code>
+   Bibliography <bibliography>
    License <license_link>
 
 .. toctree::
