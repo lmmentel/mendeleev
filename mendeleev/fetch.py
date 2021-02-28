@@ -203,29 +203,22 @@ def fetch_ionic_radii(radius: str = "ionic_radius") -> pd.DataFrame:
     Fetch a pandas DataFrame with ionic radii for all the elements.
 
     Args:
-      radius: The radius to be returned either `ionic_radius` or `crystal_radius`
+        radius: The radius to be returned either `ionic_radius` or `crystal_radius`
 
     Returns:
-      df: DataFrame
-        Pandas DataFrame with atomic numbers, symbols and ionic radii for all
-        coordinations
+        df: Pandas DataFrame with atomic numbers, symbols and ionic radii for all
+            coordinations
     """
 
     if radius not in ["ionic_radius", "crystal_radius"]:
-        raise ValueError('wrong values, should be "ionic_radius" or "crystal_radius"')
+        raise ValueError(
+            "radius '{radius}', not found, available radii are: 'ionic_radius', 'crystal_radius'"
+        )
 
     ir = fetch_table("ionicradii")
-    ir = ir[ir.spin != "HS"]
-    # create new temporary pseudo multiindex
-    ir["idx"] = ir.atomic_number.astype(str) + "(" + ir.charge.astype(str) + ")"
-    df = ir.pivot(index="idx", columns="coordination", values="ionic_radius")
-    # get back the atomic_number and charge columns from idx
-    df["atomic_number"] = df.index.str.extract(r"^(\d+)")
-    df["charge"] = df.index.str.extract(r"^\d+\((-?\d+)\)")
-    df.reset_index(inplace=True)
-    df.drop("idx", axis=1, inplace=True)
-
-    return df
+    return ir.pivot_table(
+        columns="coordination", values=radius, index=["atomic_number", "charge"]
+    )
 
 
 def add_plot_columns(elements: pd.DataFrame) -> pd.DataFrame:
