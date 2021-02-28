@@ -7,7 +7,7 @@ import textwrap
 import colorama
 from pyfiglet import Figlet
 from mendeleev import element
-from mendelev.fetch import fetch_table
+from mendeleev.fetch import fetch_table
 
 
 def clielement():
