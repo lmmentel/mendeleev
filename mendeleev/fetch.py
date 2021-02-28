@@ -7,7 +7,7 @@ from mendeleev import element
 from mendeleev import __version__ as version
 
 from .db import get_engine, get_session
-from .tables import Element, IonizationEnergy
+from .models import Element, IonizationEnergy
 
 
 def get_zeff(an, method="slater") -> float:

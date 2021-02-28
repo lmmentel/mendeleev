@@ -22,7 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""tables module specifying the database model"""
+"""module specifying the database models"""
 
 from operator import attrgetter
 import numpy as np
