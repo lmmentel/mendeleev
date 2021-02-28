@@ -1,7 +1,6 @@
-
-
 import pytest
-from mendeleev import get_session, Element, element, get_all_elements
+from mendeleev import Element, element, get_all_elements
+from mendeleev.db import get_session
 
 
 ALL_ELEMENTS = {x.symbol: x for x in get_all_elements()}
@@ -17,14 +16,14 @@ def session():
 
 def test_query(session):
 
-    si = session.query(Element).filter(Element.symbol == 'Si').one()
-    assert si.name == 'Silicon'
+    si = session.query(Element).filter(Element.symbol == "Si").one()
+    assert si.name == "Silicon"
 
 
 def test_element():
 
-    si = element('Si')
-    assert si.name == 'Silicon'
+    si = element("Si")
+    assert si.name == "Silicon"
 
 
 @pytest.mark.parametrize("atomic_number", list(range(1, 119)))
