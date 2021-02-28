@@ -1,6 +1,7 @@
 import pytest
 import pandas as pd
 from mendeleev.fetch import (
+    fetch_electronegativities,
     fetch_ionic_radii,
     fetch_ionization_energies,
     fetch_neutral_data,
@@ -49,3 +50,9 @@ def test_fetch_ionization_energies(degree, cols):
     df = fetch_ionization_energies(degree)
     assert isinstance(df, pd.DataFrame)
     assert all(col in df.columns for col in cols)
+
+
+def test_fetch_electronegativities():
+
+    df = fetch_electronegativities()
+    assert isinstance(df, pd.DataFrame)

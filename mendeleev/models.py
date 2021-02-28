@@ -522,27 +522,8 @@ class Element(Base):
         else:
             return None
 
-    def electronegativity(self, scale: str = "pauling", **kwargs):
-        """
-        Calculate the electronegativity using one of the methods
-
-        Args:
-            scale : Name of the electronegativity scale, one of
-            kwargs: keyword arguments that are passed to compute a specific electronegativity
-
-        Avalable scales are:
-
-           - `allen`
-           - `allred-rochow`
-           - `cottrell-sutton`
-           - `gordy`
-           - `li-xue`
-           - `martynov-batsanov`
-           - `mulliken`
-           - `nagle`
-           - `pauling`
-           - `sanderson`
-        """
+    def electronegativity_scales(self, name: str = None):
+        "Available electronegativity scales"
 
         scales = {
             "allen": self.electronegativity_allen,
@@ -557,12 +538,27 @@ class Element(Base):
             "sanderson": self.electronegativity_sanderson,
         }
 
-        if scale not in scales:
-            raise ValueError(
-                f"scale: '{scale}' not found, available scales are: {', '.join(scales.keys())}"
-            )
+        if name:
+            if name in scales:
+                return scales[name]
+            else:
+                raise ValueError(
+                    f"scale: '{name}' not found, available scales are: {', '.join(scales.keys())}"
+                )
 
-        return scales[scale](**kwargs)
+        return list(sorted(scales.keys()))
+
+    def electronegativity(self, scale: str = "pauling", **kwargs):
+        """
+        Calculate the electronegativity using one of the methods
+
+        Args:
+            scale : Name of the electronegativity scale, one of
+            kwargs: keyword arguments that are passed to compute a specific electronegativity
+
+        """
+
+        return self.electronegativity_scales(name=scale)(**kwargs)
 
     def electronegativity_allen(self):
         "Allen's electronegativity"
