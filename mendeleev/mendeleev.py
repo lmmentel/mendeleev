@@ -1,77 +1,20 @@
 # -*- coding: utf-8 -*-
 
-# The MIT License (MIT)
-#
-# Copyright (c) 2015 Lukasz Mentel
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-from __future__ import print_function
-
-import os
-
-import numpy as np
-import pandas as pd
-
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.dialects import sqlite
+from typing import Union
 
 import six
 
-from .tables import Element, IonizationEnergy
+from .db import get_session
+from .tables import Element
+
 
 __all__ = [
     "get_all_elements",
-    "get_attr_for_group",
-    "get_engine",
-    "get_session",
-    "get_table",
     "element",
 ]
 
-DBNAME = "elements.db"
 
-
-def get_package_dbpath():
-    """Return the default database path"""
-
-    return os.path.join(os.path.abspath(os.path.dirname(__file__)), DBNAME)
-
-
-def get_engine(dbpath=None):
-    """Return the db engine"""
-
-    if not dbpath:
-        dbpath = get_package_dbpath()
-    return create_engine("sqlite:///{path:s}".format(path=dbpath), echo=False)
-
-
-def get_session(dbpath=None):
-    """Return the database session connection."""
-
-    engine = get_engine(dbpath=dbpath)
-    db_session = sessionmaker(bind=engine, autoflush=False, autocommit=False)
-    return db_session()
-
-
-def element(ids):
+def element(ids: Union[int, str]) -> Element:
     """
     Based on the type of the `ids` identifier return either an
     :py:class:`Element <mendeleev.tables.Element>` object from the
@@ -153,70 +96,6 @@ def get_all_elements():
     return elements
 
 
-def get_table(tablename, **kwargs):
-    """
-    Return a table from the database as `pandas <http://pandas.pydata.org/>`_
-    `DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
-
-    Args:
-      tablename: str
-        Name of the table from the database
-      kwargs:
-        A dictionary of keyword arguments to pass to the `pandas.read_qsl`
-
-    Returns:
-      df: pandas.DataFrame
-        Pandas DataFrame with the contents of the table
-
-    Example:
-        >>> from mendeleev import get_table
-        >>> df = get_table('elements')
-        >>> type(df)
-        pandas.core.frame.DataFrame
-
-    """
-
-    tables = [
-        "elements",
-        "groups",
-        "isotopes",
-        "ionicradii",
-        "ionizationenergies",
-        "oxidationstates",
-        "screeningconstants",
-        "series",
-    ]
-
-    if tablename not in tables:
-        raise ValueError("Table should be one of: {}".format(", ".join(tables)))
-
-    engine = get_engine()
-    return pd.read_sql(tablename, engine, **kwargs)
-
-
-def get_attr_for_group(attr, group=18):
-    """
-    A convenience function for getting a specified attribute for all
-    the memebers of a given group.
-
-    Args:
-        attr : str
-            Attribute of `Element` to retrieve for all the noble gasses
-
-    Returns:
-        data : dict
-            Dictionary with nobel gas atomic numbers as keys and values of the
-            `attr` as values
-    """
-
-    session = get_session()
-    ngs = session.query(Element).filter(Element.group_id == group).all()
-    x = np.array([ng.atomic_number for ng in ngs])
-    y = np.array([getattr(ng, attr) for ng in ngs])
-    session.close()
-    return x, y
-
-
 def ids_to_attr(ids, attr="atomic_number"):
     """
     Convert the element ids: atomic numbers, symbols, element names or a
@@ -238,102 +117,6 @@ def ids_to_attr(ids, attr="atomic_number"):
         return [getattr(e, attr) for e in element(ids)]
     else:
         return [getattr(element(ids), attr)]
-
-
-def get_ips(ids=None, deg=1):
-    """
-    Return a pandas DataFrame with ionization energies for a set of elements.
-
-    Args:
-      ids: list, str or int
-        A list of atomic number, symbols, element names of a combination of the
-        above. If nothing is specified all elements are selected.
-      deg: int or list of int
-        Degree of ionization, either as int or a list of ints. If a list is
-        passed then the output will contain ionization energies corresponding
-        to particalr degrees in columns.
-
-    Returns:
-      df: DataFrame
-        Pandas DataFrame with atomic numbers, symbols and ionization energies
-    """
-
-    session = get_session()
-    engine = get_engine()
-
-    if ids is None:
-        atns = list(range(1, 119))
-    else:
-        atns = ids_to_attr(ids, attr="atomic_number")
-
-    query = session.query(Element.atomic_number, Element.symbol).filter(
-        Element.atomic_number.in_(atns)
-    )
-    df = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
-
-    if isinstance(deg, (list, tuple)):
-        if all(isinstance(d, int) for d in deg):
-            for d in deg:
-                query = (
-                    session.query(IonizationEnergy)
-                    .filter(IonizationEnergy.degree == d)
-                    .filter(IonizationEnergy.atomic_number.in_((atns)))
-                )
-                out = pd.read_sql_query(
-                    query.statement.compile(dialect=sqlite.dialect()), engine
-                )
-                out = out[["atomic_number", "energy"]]
-                out.columns = ["atomic_number", "IP{0:d}".format(d)]
-                df = pd.merge(df, out, on="atomic_number", how="left")
-        else:
-            raise ValueError("deg should be a list of ints")
-    elif isinstance(deg, int):
-        query = (
-            session.query(IonizationEnergy)
-            .filter(IonizationEnergy.degree == deg)
-            .filter(IonizationEnergy.atomic_number.in_((atns)))
-        )
-        out = pd.read_sql_query(
-            query.statement.compile(dialect=sqlite.dialect()), engine
-        )
-        out = out[["atomic_number", "energy"]]
-        out.columns = ["atomic_number", "IP{0:d}".format(deg)]
-        df = pd.merge(df, out, on="atomic_number", how="left")
-    else:
-        raise ValueError("deg should be an int or a list or tuple of ints")
-
-    return df
-
-
-def get_ionic_radii(values="ionic_radius"):
-    """
-    Return a pandas DataFrame with ionic radii for a set of elements.
-
-    Args:
-      values : str
-        The values to be returned either `ionic_radius` or `crystal_radius`
-
-    Returns:
-      df: DataFrame
-        Pandas DataFrame with atomic numbers, symbols and ionic radii for all
-        coordinations
-    """
-
-    if values not in ["ionic_radius", "crystal_radius"]:
-        raise ValueError('wrong values, should be "ionic_radius" or "crystal_radius"')
-
-    ir = get_table("ionicradii")
-    ir = ir[ir.spin != "HS"]
-    # create new temporary pseudo multiindex
-    ir["idx"] = ir.atomic_number.astype(str) + "(" + ir.charge.astype(str) + ")"
-    df = ir.pivot(index="idx", columns="coordination", values="ionic_radius")
-    # get back the atomic_number and charge columns from idx
-    df["atomic_number"] = df.index.str.extract(r"^(\d+)")
-    df["charge"] = df.index.str.extract(r"^\d+\((-?\d+)\)")
-    df.reset_index(inplace=True)
-    df.drop("idx", axis=1, inplace=True)
-
-    return df
 
 
 def deltaN(id1, id2, charge1=0, charge2=0, missingIsZero=True):
@@ -371,34 +154,3 @@ def deltaN(id1, id2, charge1=0, charge2=0, missingIsZero=True):
         )
     else:
         return None
-
-
-def attributes(elem, names, fmt="8.3f"):
-    """
-    Return a list of strings of all the attributes of ``elem`` specified in
-    ``names``
-    """
-
-    return [
-        "\t{0:s} = {1:{fmt}}".format(
-            name.replace("_", " ").capitalize(), getattr(elem, name), fmt=fmt
-        )
-        for name in names
-    ]
-
-
-def n_eff(n):
-    """Return the effective principal quantum number
-
-    Args:
-        n : (int)
-            Principal quantum number
-
-    .. note::
-       The values are taken from J. A. Pople, D. L. Beveridge,
-       "Approximate Molecular Orbital Theory", McGraw-Hill, 1970
-    """
-
-    values = {1: 1.0, 2: 2.0, 3: 3.0, 4: 3.7, 5: 4.0, 6: 4.2}
-
-    return values.get(n, None)
