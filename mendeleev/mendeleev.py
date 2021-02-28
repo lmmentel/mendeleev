@@ -5,7 +5,7 @@ from typing import Union
 import six
 
 from .db import get_session
-from .tables import Element
+from .models import Element
 
 
 __all__ = [
@@ -17,8 +17,8 @@ __all__ = [
 def element(ids: Union[int, str]) -> Element:
     """
     Based on the type of the `ids` identifier return either an
-    :py:class:`Element <mendeleev.tables.Element>` object from the
-    database, or a list of :py:class:`Element <mendeleev.tables.Element>`
+    :py:class:`Element <mendeleev.models.Element>` object from the
+    database, or a list of :py:class:`Element <mendeleev.models.Element>`
     objects if the `ids` is a list or a tuple of identifiers. Valid
     identifiers for an element are: *name*, *symbol*, and
     *atomic number*.
