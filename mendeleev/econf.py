@@ -2,11 +2,12 @@
 Class abstracting the elctronic configuration
 """
 
-import re
-import math
 from collections import OrderedDict
+import math
+import re
 
 import six
+
 
 ORBITALS = ("s", "p", "d", "f", "g", "h", "i", "j", "k")
 SHELLS = ("K", "L", "M", "N", "O", "P", "Q")
