@@ -6,7 +6,8 @@ import argparse
 import textwrap
 import colorama
 from pyfiglet import Figlet
-from mendeleev import element, get_table
+from mendeleev import element
+from mendelev.fetch import fetch_table
 
 
 def clielement():
@@ -32,7 +33,7 @@ def clielement():
     f = Figlet("dotmatrix", justify="center")
     symbol = f.renderText(e.symbol)
 
-    table = get_table("elements")
+    table = fetch_table("elements")
     et = table[table["symbol"] == e.symbol].transpose()
     et.drop("description", inplace=True)
     et.drop("sources", inplace=True)
