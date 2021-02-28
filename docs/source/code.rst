@@ -36,7 +36,6 @@ database as `pandas <http://pandas.pydata.org/>`_
 tables are available:
                          
 - :ref:`elements <element-class>`
-- :ref:`ions <ion-class>`
 - :ref:`groups <group-class>`
 - :ref:`ionicradii <ionicradius-class>`
 - :ref:`ionizationenergies <ionizationenergy-class>`
@@ -176,11 +175,20 @@ ElectronicConfiguration
 Modules
 =======
 
+electronegativity module
+------------------------
+
 .. automodule:: mendeleev.electronegativity
    :members:
 
+plotting module
+---------------
+
 .. automodule:: mendeleev.plotting
    :members:
+
+utils module
+------------
 
 .. automodule:: mendeleev.utils
    :members:
