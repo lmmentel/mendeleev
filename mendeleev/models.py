@@ -676,7 +676,9 @@ class Element(Base):
 
     def electronegativity_nagle(self):
         "Nagle's electronegativity"
-        return nagle(self.nvalence(), self.dipole_polarizability)
+
+        if self.dipole_polarizability is not None:
+            return nagle(self.nvalence(), self.dipole_polarizability)
 
     def electronegativity_pauling(self):
         "Pauling's electronegativity"
