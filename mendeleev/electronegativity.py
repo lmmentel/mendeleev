@@ -92,10 +92,11 @@ def martynov_batsanov(ionization_energies: List[float]) -> float:
 
     .. math::
 
-        \chi_{MB} = \sqrt{\\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
+       \chi_{MB} = \sqrt{\\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
 
-    where: :math:`n_{v}` is the number of valence electrons and
-    :math:`I_{k}` is the :math:`k` th ionization potential.
+    where:
+    - :math:`n_{v}` is the number of valence electrons and
+    - :math:`I_{k}` is the :math:`k` th ionization potential.
     """
 
     return np.sqrt(np.array(ionization_energies).mean())
@@ -116,7 +117,7 @@ def mulliken(
 
     .. math::
 
-        \chi = \\frac{I + A}{2}
+       \chi = \\frac{I + A}{2}
 
     where :math:`I` is the ionization energy and :math:`A` is the electron
     affinity
@@ -169,7 +170,7 @@ def generic(zeff: float, radius: float, rpow=1, apow=1):
 
         \chi = \left(\\frac{Z_{\\text{eff}}}{r^{\\beta}}\\right)^{\\alpha}
 
-    where
+    where:
 
     - :math:`Z_{\\text{eff}}` is the effective nuclear charge
     - :math:`r` is the covalent radius
