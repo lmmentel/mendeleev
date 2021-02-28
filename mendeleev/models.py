@@ -529,6 +529,7 @@ class Element(Base):
             "allen": self.electronegativity_allen,
             "allred-rochow": self.electronegativity_allred_rochow,
             "cottrell-sutton": self.electronegativity_cottrell_sutton,
+            "ghosh": self.electronegativity_ghosh,
             "gordy": self.electronegativity_gordy,
             "li-xue": self.electronegativity_li_xue,
             "martynov-batsanov": self.electronegativity_martynov_batsanov,
@@ -575,6 +576,10 @@ class Element(Base):
     def electronegativity_gordy(self, radius="covalent_radius_pyykko"):
         "Gordy's electronegativity"
         return gordy(self.zeff(), getattr(self, radius))
+
+    def electronegativity_ghosh(self):
+        "Ghosh's electronegativity"
+        return self.en_ghosh
 
     def electronegativity_li_xue(
         self, charge: int = 1, radius: str = "crystal_radius"

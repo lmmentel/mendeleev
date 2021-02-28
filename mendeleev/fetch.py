@@ -76,6 +76,7 @@ def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
         "allen",
         "allred-rochow",
         "cottrell-sutton",
+        "ghosh",
         "gordy",
         "li-xue",
         "martynov-batsanov",
