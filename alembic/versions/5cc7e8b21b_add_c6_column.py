@@ -7,8 +7,8 @@ Create Date: 2015-11-28 19:41:29.197572
 """
 
 # revision identifiers, used by Alembic.
-revision = '5cc7e8b21b'
-down_revision = '4b8324491495'
+revision = "5cc7e8b21b"
+down_revision = "4b8324491495"
 branch_labels = None
 depends_on = None
 
@@ -18,8 +18,9 @@ import sqlalchemy as sa
 
 def upgrade():
 
-    op.add_column('elements', sa.Column('c6', sa.Float))
+    op.add_column("elements", sa.Column("c6", sa.Float))
+
 
 def downgrade():
 
-    op.drop_column('elements', 'c6')
+    op.drop_column("elements", "c6")
