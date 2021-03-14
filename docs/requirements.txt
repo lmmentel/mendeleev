@@ -1,4 +1,5 @@
 ipython
+ipykernel
 sphinx
 nbsphinx
 sphinxcontrib-bibtex
