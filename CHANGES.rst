@@ -2,6 +2,17 @@
 mendeleev Changelog
 *******************
 
+v0.7.0 (14.03.2021)
+-------------------
+
+* Update ionic and crytal radii for III+ actinoids.
+* Refactor electronegativity calculations for easier calculation and retrieval of scales.
+* Add `fetch.py` module with methods for accessing bulk data.
+* Add tutorials on fetching data and electronic configuration.
+* `tables.py` is renamed to `models.py`.
+* Switch from `pipenv` to `poetry` for development.
+* Switch from travis CI to github actions and extend testing matrix to Win and MacOS.
+
 v0.6.1 (03.11.2020)
 -------------------
 
