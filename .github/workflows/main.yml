@@ -1,4 +1,4 @@
-name: Python package
+name: Test and build mendeleev package
 
 on:
   push:
