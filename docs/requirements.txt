@@ -1,3 +1,4 @@
+bokeh
 ipython
 ipykernel
 sphinx
