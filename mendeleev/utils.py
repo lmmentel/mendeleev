@@ -2,9 +2,13 @@ from typing import Union, Tuple
 import math
 
 
-def coeffs(a, b=2) -> Tuple[int]:
+def coeffs(a: int, b: int = 2) -> Tuple[int]:
     """
-    Return oxide coefficients from oxidation states
+    Return stoichometric coefficients from oxidation states
+
+    Args:
+        a: oxidation state of the first element
+        b: oxidation state  of the second element
     """
     lcm = abs(a * b) // math.gcd(a, b)
     return lcm // a, lcm // b
