@@ -8,8 +8,8 @@ API Reference
 Accessing data
 ==============
 
-Elements
---------
+Individual Elements
+-------------------
 
 The easiest way to access individual elements is simply by importing them from
 the :doc:`mendeleev </index>` directly using their symbols::
@@ -25,14 +25,14 @@ since it accepts element names, atomic numbers and symbols as well as their comb
 
 .. autofunction:: element
 
-Tables
-------
+Fetching data in bulk
+---------------------
 
 .. currentmodule:: mendeleev.fetch
 
 If you want a whole set of data you can retrieve one of the tables from the
 database as `pandas <http://pandas.pydata.org/>`_
-`DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_ through the :py:func:`get_table <mendeleev.mendeleev.get_table>`. The following
+`DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_ through the :py:func:`fetch_table`. The following
 tables are available:
                          
 - :ref:`elements <element-class>`
@@ -50,7 +50,15 @@ tables are available:
 
 .. autofunction:: fetch_ionic_radii
 
+
+
+Computed properties
+-------------------
+
+Some properties need to be computed rather than directly retrieved from the database. :doc:`electronegativity`
+
 .. autofunction:: fetch_electronegativities
+
 
 
 Database session and engine

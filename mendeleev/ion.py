@@ -4,7 +4,7 @@ from mendeleev import element
 
 class Ion:
     """
-    A class for dealing with atomic ions
+    Class representating atomic ions
     """
 
     __element_attributes__ = [
@@ -68,7 +68,7 @@ class Ion:
     def radius(self):
         return [r for r in self._element.ionic_radii if r.charge == self.charge]
 
-    def unicode_ion_symbol(self):
+    def unicode_ion_symbol(self) -> str:
         """
         Return a unicode string symbol of the ion
         """
@@ -103,8 +103,6 @@ class Ion:
             radius_most_reliable : flag to use the most reliable ionic radius,
                 default is `True`
 
-        Returns:
-            ionic potential
         """
 
         if radius_most_reliable:

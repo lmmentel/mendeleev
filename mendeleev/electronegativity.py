@@ -81,14 +81,13 @@ def martynov_batsanov(ionization_energies: List[float]) -> float:
     Args:
         ionization_energies: ionization energies for the valence electrons
 
-    Return:
-        e: electronegativity value
 
     .. math::
 
        \chi_{MB} = \sqrt{\\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
 
     where:
+
     - :math:`n_{v}` is the number of valence electrons and
     - :math:`I_{k}` is the :math:`k` th ionization potential.
     """
@@ -99,8 +98,8 @@ def martynov_batsanov(ionization_energies: List[float]) -> float:
 def mulliken(
     ionization_energy: float,
     electron_affinity: float,
-    missingIsZero=False,
-    useNegativeEA=False,
+    missing_is_zero: bool = False,
+    allow_negative_ea: bool = False,
 ) -> float:
     """
     Return the absolute electronegativity (Mulliken scale), calculated as
@@ -108,19 +107,27 @@ def mulliken(
     Args:
         ionization_energy: ionization energy
         electron_affinity: electron affinity
+        missing_is_zero: missing values are substituted with zero
+        allow_negative_ea: if `True` negative EA values will be allowed
 
     .. math::
 
        \chi = \\frac{I + A}{2}
 
-    where :math:`I` is the ionization energy and :math:`A` is the electron
-    affinity
+    where:
+
+    - :math:`I` is the ionization energy,
+    - :math:`A` is the electron affinity
     """
 
     if ionization_energy is not None:
-        if electron_affinity is not None and electron_affinity < 0.0 and useNegativeEA:
+        if (
+            electron_affinity is not None
+            and electron_affinity < 0.0
+            and allow_negative_ea
+        ):
             return (ionization_energy + electron_affinity) * 0.5
-        elif electron_affinity is not None or missingIsZero:
+        elif electron_affinity is not None or missing_is_zero:
             return ionization_energy * 0.5
     else:
         return None
@@ -157,9 +164,15 @@ def sanderson(radius: float, noble_gas_radius: float) -> float:
     return math.pow(noble_gas_radius / radius, 3)
 
 
-def generic(zeff: float, radius: float, rpow=1, apow=1):
+def generic(zeff: float, radius: float, rpow: float = 1, apow: float = 1) -> float:
     """
     Calculate the electronegativity from a general formula
+
+    Args:
+        zeff: effective nuclear charge
+        radius: radius value for the element
+        rpow: power to raise the radius to (see equation below)
+        apow: power to raise the fraction to (see equation below)
 
     .. math::
 

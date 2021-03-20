@@ -19,16 +19,14 @@ def get_zeff(an, method="slater") -> float:
 
 def fetch_table(table: str, **kwargs) -> pd.DataFrame:
     """
-    Return a table from the database as `pandas <http://pandas.pydata.org/>`_
-    `DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
+    Return a table from the database as :py:class:`pandas.DataFrame`
 
     Args:
       table: Name of the table from the database
-      kwargs: A dictionary of keyword arguments to pass to the `pandas.read_qsl`
+      kwargs: A dictionary of keyword arguments to pass to the :py:func:`pandas.read_qsl`
 
     Returns:
-      df: pandas.DataFrame
-        Pandas DataFrame with the contents of the table
+      df (pandas.DataFrame): Pandas DataFrame with the contents of the table
 
     Example:
         >>> from mendeleev.fetch import fetch_table
@@ -60,10 +58,13 @@ def fetch_table(table: str, **kwargs) -> pd.DataFrame:
 
 def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
     """
-    Fetch electronegativity scales for all elements as a pandas DataFrame
+    Fetch electronegativity scales for all elements as :py:class:`pandas.DataFrame`
 
     Args:
-        scales:
+        scales: list of scale names, defaults to all available scales
+
+    Returns:
+      df (pandas.DataFrame): Pandas DataFrame with the contents of the table
     """
 
     session = get_session()
@@ -97,7 +98,8 @@ def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
 
 def fetch_ionization_energies(degree: Union[List[int], int] = 1) -> pd.DataFrame:
     """
-    Fetch a pandas DataFrame with ionization energies for all elements indexed by atomic_number
+    Fetch a :py:class:`pandas.DataFrame` with ionization energies for all elements
+    indexed by atomic number.
 
     Args:
         degree: Degree of ionization, either as int or a list of ints. If a list is
@@ -105,7 +107,7 @@ def fetch_ionization_energies(degree: Union[List[int], int] = 1) -> pd.DataFrame
             to particalr degrees in columns.
 
     Returns:
-        df: pandas DataFrame with ionization energies, indexed by `index_by`
+        df (pandas.DataFrame): ionization energies, indexed by atomic number
     """
 
     # validate degree
@@ -206,8 +208,8 @@ def fetch_ionic_radii(radius: str = "ionic_radius") -> pd.DataFrame:
         radius: The radius to be returned either `ionic_radius` or `crystal_radius`
 
     Returns:
-        df: Pandas DataFrame with atomic numbers, symbols and ionic radii for all
-            coordinations
+        df (pandas.DataFrame): a table with atomic numbers, symbols and ionic radii for all
+            coordination numbers
     """
 
     if radius not in ["ionic_radius", "crystal_radius"]:

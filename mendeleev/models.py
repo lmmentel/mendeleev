@@ -2,7 +2,7 @@
 
 """module specifying the database models"""
 
-from typing import Any, List, Tuple
+from typing import Any, Dict, List, Tuple
 from operator import attrgetter
 
 import numpy as np
@@ -45,171 +45,96 @@ class Element(Base):
     """
     Chemical element.
 
-    Attributes:
-      abundance_crust : float
-        Abundance in the earth's crust in mg/kg
-      abundance_sea : float
-        Abundance in the seas in mg/L
-      annotation : str
-        Annotations regarding the data
-      atomic_number : int
-        Atomic number
-      atomic_radius : float
-        Atomic radius in pm
-      atomic_radius_rahm : float
-        Atomic radius by Rahm et al. in pm
-      atomic_volume : float
-        Atomic volume in cm3/mol
-      atomic_weight : float
-        Relative atomic weight as the ratio of the average mass of atoms
-        of the element to 1/12 of the mass of an atom of 12C
-      block : str
-        Block in periodic table, s, p, d, f
-      boiling_point : float
-        Boiling temperature in K
-      c6 : float
-        C_6 dispersion coefficient in a.u. from X. Chu & A. Dalgarno, J. Chem. Phys.,
-        121(9), 4083–4088 (2004) doi:10.1063/1.1779576, and the value for
-        Hydrogen was taken from K. T. Tang, J. M. Norbeck and P. R. Certain,
-        J. Chem. Phys. 64, 3063 (1976), doi:10.1063/1.432569
-      c6_gb : float
-        C_6 dispersion coefficient in a.u. from Gould, T., & Bučko, T. (2016).
-        JCTC, 12(8), 3603–3613. http://doi.org/10.1021/acs.jctc.6b00361
-      cas : str
-        Chemical Abstracts Service identifier
-      covalent_radius_bragg : float
-        Covalent radius in pm from
-      covalent_radius_cordero : float
-        Covalent radius in pm from Cordero, B., Gómez, V., Platero-Prats, A.
-        E., Revés, M., Echeverría, J., Cremades, E., … Alvarez, S. (2008).
-        Covalent radii revisited. Dalton Transactions, (21), 2832.
-        doi:10.1039/b801115j
-      covalent_radius_pyykko : float
-        Single bond covalent radius in pm Pyykkö, P., & Atsumi, M. (2009).
-        Molecular Single-Bond Covalent Radii for Elements 1-118.
-        Chemistry - A European Journal, 15(1), 186–197.
-        doi:10.1002/chem.200800987
-      covalent_radius_pyykko_double : float
-        Double bond covalent radius in pm from P. Pyykkö et al.
-      covalent_radius_pyykko_triple : float
-        Triple bond covalent radius in pm from P. Pyykkö et al.
-      cpk_color : str
-        CPK color of the atom in HEX,
-        see http://jmol.sourceforge.net/jscolors/#color_U
-      density : float
-        Density at 295K in g/cm3
-      description : str
-        Short description of the element
-      dipole_polarizability : float
-        Dipole polarizability in atomic units
-      dipole_polarizability_unc:  float
-        Uncertainty of the dipole polarizability
-      discoverers: str
-        The discoverers of the element
-      discovery_location: str
-        The location where the element was discovered
-      discovery_year: int
-        The year the element was discovered
-      electron_affinity : float
-        Electron affinity in eV
-      electrophilicity: float
-        Parr's electrophilicity index
-      en_allen : float
-        Allen's scale of electronegativity (Configurational energy)
-      en_ghosh : float
-        Ghosh's scale of enectronegativity
-      en_pauling : float
-        Pauling's scale of electronegativity
-      econf : str
-        Ground state electron configuration
-      evaporation_heat : float
-        Evaporation heat in kJ/mol
-      fusion_heat : float
-        Fusion heat in kJ/mol
-      gas_basicity : float
-        Gas basicity
-      geochemical_class : str
-        Geochemical classification of the elements
-      glawe_number: int
-        Glawe number (scale)
-      goldschmidt_class : str
-        Goldschmidt classification of the elements
-      group : int
-        Group number
-      group_id : Group
-        Group details
-      heat_of_formation : float
-        Heat of formation in kJ/mol
-      is_monoisotopic : bool
-        A flag marking if the element is monoisotopic
-      jmol_color : str
-        Color of the atom as used in Jmol, in HEX,
-        see http://jmol.sourceforge.net/jscolors/#color_U
-      lattice_constant : float
-        Lattice constant in ang
-      lattice_structure : str
-        Lattice structure code
-      mass : float
-        Relative atomic mass. Ratio of the average mass of atoms
-        of the element to 1/12 of the mass of an atom of 12C
-      mendeleev_number : int
-        Mendeleev number
-      melting_point : float
-        Melting temperature in K
-      metallic_radius : Float
-        Single-bond metallic radius or metallic radius, have been
-        calculated by Pauling using interatomic distances and an
-        equation relating such distances with bond number
-      metallic_radius_c12 : Float
-        Metallic radius obtained by Pauling with an assumed number of
-        nearest neighbors equal to 12
-      molcas_gv_color : str
-        Color of an atom in HEX from MOLCAS GV http://www.molcas.org/GV/
-      name : str
-        Name in English
-      name_origin: str
-        Origin of the name
-      period : int
-        Period in periodic table
-      pettifor_number: int
-        Pettifor scale
-      proton_affinity : Float
-        Proton affinity
-      series : int
-        Index to chemical series
-      sources: str
-        Sources of the element
-      specific_heat : float
-        Specific heat in J/g mol @ 20 C
-      symbol : str of length 1 or 2
-        Chemical symbol
-      thermal_conductivity : float
-        Thermal conductivity in @/m K @25 C
-      uses: str
-        Uses of the element
-      vdw_radius : float
-        Van der Waals radius in pm from W. M. Haynes, Handbook of Chemistry and
-        Physics 95th Edition, CRC Press, New York, 2014, ISBN-10: 1482208679,
-        ISBN-13: 978-1482208672.
-      vdw_radius_bondi : float
-        Van der Waals radius according to Bondi in pm
-      vdw_radius_truhlar : float
-        Van der Waals radius according to Truhlar in pm
-      vdw_radius_rt : float
-        Van der Waals radius according to Rowland and Taylor in pm
-      vdw_radius_batsanov : float
-        Van der Waals radius according to Batsanov in pm
-      vdw_radius_dreiding : float
-        Van der Waals radius from the DREIDING force field in pm
-      vdw_radius_uff : float
-        Van der Waals radius from the UFF in pm
-      vdw_radius_mm3 : float
-        Van der Waals radius from MM3 in pm
-      oxistates : list
-        Oxidation states
-      ionenergies : dict
-        Ionization energies in eV parsed from
-        http://physics.nist.gov/cgi-bin/ASD/ie.pl on April 13, 2015
+    For full list of available data with references see :doc:`data`.
+
+    Args:
+        abundance_crust (float): Abundance in the earth's crust in mg/kg
+        abundance_sea (float): Abundance in the seas in mg/L
+        annotation (str): Annotations regarding the data
+        atomic_number (int): Atomic number
+        atomic_radius (float): Atomic radius in pm
+        atomic_radius_rahm (float): Atomic radius by Rahm et al. in pm
+        atomic_volume (float): Atomic volume in cm3/mol
+        atomic_weight (float): Relative atomic weight as the ratio of the average mass of atoms
+            of the element to 1/12 of the mass of an atom of 12C
+        block (str): Block in periodic table, s, p, d, f
+        boiling_point (float): Boiling temperature in K
+        c6 (float): C_6 dispersion coefficient in a.u. from X. Chu & A. Dalgarno, J. Chem. Phys.,
+            121(9), 4083–4088 (2004) doi:10.1063/1.1779576, and the value for
+            Hydrogen was taken from K. T. Tang, J. M. Norbeck and P. R. Certain,
+            J. Chem. Phys. 64, 3063 (1976), doi:10.1063/1.432569
+        c6_gb (float): C_6 dispersion coefficient in a.u. from Gould, T., & Bučko, T. (2016).
+            JCTC, 12(8), 3603–3613. http://doi.org/10.1021/acs.jctc.6b00361
+        cas (str): Chemical Abstracts Service identifier
+        covalent_radius_bragg (float): Covalent radius in pm from
+        covalent_radius_cordero (float): Covalent radius in pm from Cordero, B., Gómez, V., Platero-Prats, A.
+            E., Revés, M., Echeverría, J., Cremades, E., … Alvarez, S. (2008).
+            Covalent radii revisited. Dalton Transactions, (21), 2832.
+            doi:10.1039/b801115j
+        covalent_radius_pyykko (float): Single bond covalent radius in pm Pyykkö, P., & Atsumi, M. (2009).
+            Molecular Single-Bond Covalent Radii for Elements 1-118.
+            Chemistry - A European Journal, 15(1), 186–197.
+            doi:10.1002/chem.200800987
+        covalent_radius_pyykko_double (float): Double bond covalent radius in pm from P. Pyykkö et al.
+        covalent_radius_pyykko_triple (float): Triple bond covalent radius in pm from P. Pyykkö et al.
+        cpk_color (str): CPK color of the atom in HEX, see http://jmol.sourceforge.net/jscolors/#color_U
+        density (float): Density at 295K in g/cm3
+        description (str): Short description of the element
+        dipole_polarizability (float): Dipole polarizability in atomic units
+        dipole_polarizability_unc (float): Uncertainty of the dipole polarizability
+        discoverers (str): The discoverers of the element
+        discovery_location (str): The location where the element was discovered
+        discovery_year (int): The year the element was discovered
+        electron_affinity (float): Electron affinity in eV
+        electrophilicity (float): Parr's electrophilicity index
+        econf (str): Ground state electron configuration
+        evaporation_heat (float): Evaporation heat in kJ/mol
+        fusion_heat (float): Fusion heat in kJ/mol
+        gas_basicity (float): Gas basicity
+        geochemical_class (str): Geochemical classification of the elements
+        glawe_number (int): Glawe number (scale)
+        goldschmidt_class (str): Goldschmidt classification of the elements
+        group_id (int): Group number
+        heat_of_formation (float): Heat of formation in kJ/mol
+        is_monoisotopic (bool): A flag marking if the element is monoisotopic
+        jmol_color (str): Color of the atom as used in Jmol, in HEX,
+            see http://jmol.sourceforge.net/jscolors/#color_U
+        lattice_constant (float): Lattice constant in ang
+        lattice_structure (str): Lattice structure code
+        mass (float): Relative atomic mass. Ratio of the average mass of atoms
+            of the element to 1/12 of the mass of an atom of 12C
+        mendeleev_number (int): Mendeleev number
+         melting_point (float): Melting temperature in K
+        metallic_radius (float): Single-bond metallic radius or metallic radius, have been
+            calculated by Pauling using interatomic distances and an
+            equation relating such distances with bond number
+         metallic_radius_c12 (float): Metallic radius obtained by Pauling with an assumed number of
+            nearest neighbors equal to 12
+        molcas_gv_color (str): Color of an atom in HEX from MOLCAS GV http://www.molcas.org/GV/
+        name (str): Name in English
+        name_origin (str): Origin of the name
+        period (int): Period in periodic table
+        pettifor_number (int): Pettifor scale
+        proton_affinity (Float): Proton affinity
+        series (int): Index to chemical series
+        sources (str): Sources of the element
+        specific_heat (float): Specific heat in J/g mol @ 20 C
+        symbol (str): Chemical symbol
+        thermal_conductivity (float): Thermal conductivity in @/m K @25 C
+        uses (str): Uses of the element
+        vdw_radius (float): Van der Waals radius in pm from W. M. Haynes, Handbook of Chemistry and
+            Physics 95th Edition, CRC Press, New York, 2014, ISBN-10: 1482208679,
+            ISBN-13: 978-1482208672.
+        vdw_radius_bondi (float): Van der Waals radius according to Bondi in pm
+        vdw_radius_truhlar (float): Van der Waals radius according to Truhlar in pm
+        vdw_radius_rt (float): Van der Waals radius according to Rowland and Taylor in pm
+        vdw_radius_batsanov (float): Van der Waals radius according to Batsanov in pm
+        vdw_radius_dreiding (float): Van der Waals radius from the DREIDING force field in pm
+        vdw_radius_uff (float): Van der Waals radius from the UFF in pm
+        vdw_radius_mm3 (float): Van der Waals radius from MM3 in pm
+        oxistates (list): Oxidation states
+        ionenergies (dict): Ionization energies in eV parsed from
+            http://physics.nist.gov/cgi-bin/ASD/ie.pl on April 13, 2015
     """
 
     __tablename__ = "elements"
@@ -301,7 +226,7 @@ class Element(Base):
         self.ec = ElectronicConfiguration(self.econf)
 
     @hybrid_property
-    def ionenergies(self):
+    def ionenergies(self) -> Dict[int, float]:
         """
         Return a dict with ionization degree as keys and ionization energies
         in eV as values.
@@ -310,13 +235,13 @@ class Element(Base):
         return {ie.degree: ie.energy for ie in self._ionization_energies}
 
     @hybrid_property
-    def oxistates(self):
+    def oxistates(self) -> List[int]:
         """Return the oxidation states as a list of ints"""
 
         return [os.oxidation_state for os in self._oxidation_states]
 
     @hybrid_property
-    def sconst(self):
+    def sconst(self) -> Dict[Tuple[int], float]:
         """
         Return a dict with screening constants with tuples (n, s) as keys and
         screening constants as values"""
@@ -324,13 +249,13 @@ class Element(Base):
         return {(x.n, x.s): x.screening for x in self.screening_constants}
 
     @hybrid_property
-    def electrons(self):
+    def electrons(self) -> int:
         """Return the number of electrons."""
 
         return self.atomic_number
 
     @hybrid_property
-    def neutrons(self):
+    def neutrons(self) -> int:
         """
         Return the number of neutrons of the most abundant natural stable
         isotope.
@@ -339,13 +264,13 @@ class Element(Base):
         return self.mass_number - self.protons
 
     @hybrid_property
-    def protons(self):
+    def protons(self) -> int:
         """Return the number of protons."""
 
         return self.atomic_number
 
     @hybrid_property
-    def mass(self):
+    def mass(self) -> float:
         """
         Return the `atomic_weight` if defined or mass number otherwise.
         """
@@ -353,7 +278,7 @@ class Element(Base):
         return self.atomic_weight
 
     @hybrid_property
-    def mass_number(self):
+    def mass_number(self) -> int:
         """
         Return the mass number of the most abundant natural stable isotope
         """
@@ -367,7 +292,7 @@ class Element(Base):
         else:
             return self.isotopes[0].mass_number
 
-    def mass_str(self):
+    def mass_str(self) -> str:
         """String representation of atomic weight"""
 
         if self.atomic_weight_uncertainty is None:
@@ -386,7 +311,7 @@ class Element(Base):
                 return "{aw:.{dec}f}".format(aw=self.atomic_weight, dec=dec)
 
     @hybrid_property
-    def covalent_radius(self):
+    def covalent_radius(self) -> float:
         """
         Return the default covalent radius which is covalent_radius_pyykko
         """
@@ -394,19 +319,22 @@ class Element(Base):
         return self.covalent_radius_pyykko
 
     @hybrid_method
-    def hardness(self, charge=0):
+    def hardness(self, charge: int = 0) -> float:
         """
         Return the absolute hardness, calculated as
+
+        Args:
+          charge:  Charge of the cation for which the hardness will be calculated
 
         .. math::
 
            \eta = \\frac{IE - EA}{2}
 
-        where IE is the ionization energy and EA is the electron affinity
+        where:
 
-        Args:
-          charge: int
-            Charge of the cation for which the hardness will be calculated
+        - :math:`IE` is the ionization energy,
+        - :math`EA` is the electron affinity
+
         """
 
         if charge == 0:
@@ -431,19 +359,21 @@ class Element(Base):
             )
 
     @hybrid_method
-    def softness(self, charge=0):
+    def softness(self, charge: int = 0) -> float:
         """
         Return the absolute softness, calculated as
+
+        Args:
+          charge: Charge of the cation for which the hardness will be calculated
 
         .. math::
 
            S = \\frac{1}{2\eta}
 
-        where :math:`\eta` is the absolute hardness
+        where :
 
-        Args:
-          charge: int
-            Charge of the cation for which the hardness will be calculated
+        - :math:`\eta` is the absolute hardness
+
         """
 
         eta = self.hardness(charge=charge)
@@ -453,32 +383,34 @@ class Element(Base):
         else:
             return 1.0 / (2.0 * eta)
 
-    def zeff(self, n=None, o=None, method="slater", alle=False):
+    def zeff(
+        self, n: int = None, o: str = None, method: str = "slater", alle: bool = False
+    ) -> float:
         """
         Return the effective nuclear charge for ``(n, s)``
 
         Args:
-          method : str
-            Method to calculate the screening constant, the choices are
-              - `slater`, for Slater's method as in Slater, J. C. (1930).
-                Atomic Shielding Constants. Physical Review, 36(1), 57–64.
-                `doi:10.1103/PhysRev.36.57 <http://www.dx.doi.org/10.1103/PhysRev.36.57>`_
-              - `clementi` for values of screening constants from Clementi, E.,
-                & Raimondi, D. L. (1963). Atomic Screening Constants from SCF
-                Functions. The Journal of Chemical Physics, 38(11), 2686.
-                `doi:10.1063/1.1733573 <http://www.dx.doi.org/10.1063/1.1733573>`_
-                and Clementi, E. (1967). Atomic Screening Constants from SCF
-                Functions. II. Atoms with 37 to 86 Electrons. The Journal of
-                Chemical Physics, 47(4), 1300.
-                `doi:10.1063/1.1712084 <http://www.dx.doi.org/10.1063/1.1712084>`_
-          n : int
-            Principal quantum number
-          o : str
-            Orbital label, (s, p, d, ...)
-          alle : bool
-            Use all the valence electrons, i.e. calculate screening for an
-            extra electron when method='slater', if method='clementi' this
-            option is ignored
+            method: Method to calculate the screening constant, the choices are
+
+                - `slater`, for Slater's method as in Slater, J. C. (1930).
+                    Atomic Shielding Constants. Physical Review, 36(1), 57–64.
+                    `doi:10.1103/PhysRev.36.57 <http://www.dx.doi.org/10.1103/PhysRev.36.57>`_
+                - `clementi` for values of screening constants from Clementi, E.,
+                    & Raimondi, D. L. (1963). Atomic Screening Constants from SCF
+                    Functions. The Journal of Chemical Physics, 38(11), 2686.
+                    `doi:10.1063/1.1733573 <http://www.dx.doi.org/10.1063/1.1733573>`_
+                    and Clementi, E. (1967). Atomic Screening Constants from SCF
+                    Functions. II. Atoms with 37 to 86 Electrons. The Journal of
+                    Chemical Physics, 47(4), 1300.
+                    `doi:10.1063/1.1712084 <http://www.dx.doi.org/10.1063/1.1712084>`_
+
+            n: Principal quantum number
+
+            o: Orbital label, (s, p, d, ...)
+
+            alle: Use all the valence electrons, i.e. calculate screening for an
+                extra electron when method='slater', if method='clementi' this
+                option is ignored
         """
 
         # identify the valence s,p vs d,f
@@ -506,7 +438,7 @@ class Element(Base):
         else:
             raise ValueError("<method> should be one of {}".format("slater, clementi"))
 
-    def electrophilicity(self):
+    def electrophilicity(self) -> float:
         """
         Calculate electrophilicity index
 
@@ -523,7 +455,7 @@ class Element(Base):
         else:
             return None
 
-    def electronegativity_scales(self, name: str = None):
+    def electronegativity_scales(self, name: str = None) -> List[str]:
         "Available electronegativity scales"
 
         scales = {
@@ -550,7 +482,7 @@ class Element(Base):
 
         return list(sorted(scales.keys()))
 
-    def electronegativity(self, scale: str = "pauling", **kwargs):
+    def electronegativity(self, scale: str = "pauling", **kwargs) -> float:
         """
         Calculate the electronegativity using one of the methods
 
@@ -562,23 +494,25 @@ class Element(Base):
 
         return self.electronegativity_scales(name=scale)(**kwargs)
 
-    def electronegativity_allen(self):
+    def electronegativity_allen(self) -> float:
         "Allen's electronegativity"
         return self.en_allen
 
-    def electronegativity_allred_rochow(self, radius="covalent_radius_pyykko"):
+    def electronegativity_allred_rochow(self, radius="covalent_radius_pyykko") -> float:
         "Allred-Rochow's electronegativity"
         return allred_rochow(self.zeff(), getattr(self, radius))
 
-    def electronegativity_cottrell_sutton(self, radius="covalent_radius_pyykko"):
+    def electronegativity_cottrell_sutton(
+        self, radius="covalent_radius_pyykko"
+    ) -> float:
         "Cottrell-Sutton's electronegativity"
         return cottrell_sutton(self.zeff(), getattr(self, radius))
 
-    def electronegativity_gordy(self, radius="covalent_radius_pyykko"):
+    def electronegativity_gordy(self, radius="covalent_radius_pyykko") -> float:
         "Gordy's electronegativity"
         return gordy(self.zeff(), getattr(self, radius))
 
-    def electronegativity_ghosh(self):
+    def electronegativity_ghosh(self) -> float:
         "Ghosh's electronegativity"
         return self.en_ghosh
 
@@ -590,15 +524,12 @@ class Element(Base):
         of Li and Xue
 
         Args:
-            charge : int
-                Charge of the ion
-            radius : str
-                Type of radius to be used in the calculation, either
+            charge : charge of the ion
+            radius : type of radius to be used in the calculation, either
                 `crystal_radius` as recommended in the paper or `ionic_radius`
 
         Returns:
-            out : dict
-                A dictionary with electronegativities as values and
+            out (dict): dictionary with electronegativities as values and
                 coordination string as keys or tuple of coordination and spin
                 if the ion is LS or HS
         """
@@ -626,7 +557,7 @@ class Element(Base):
             for coordination_number, spin, crystal_radius in radii
         }
 
-    def electronegativity_martynov_batsanov(self):
+    def electronegativity_martynov_batsanov(self) -> float:
         """
         Calculates the electronegativity value according to Martynov and
         Batsanov as the average of the ionization energies of the valence
@@ -636,8 +567,11 @@ class Element(Base):
 
            \chi_{MB} = \sqrt{\\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
 
-        where: :math:`n_{v}` is the number of valence electrons and
-        :math:`I_{k}` is the :math:`k` th ionization potential.
+        where:
+
+        - :math:`n_{v}` is the number of valence electrons
+        - :math:`I_{k}` is the :math:`k` th ionization potential.
+
         """
 
         ionenergies = [
@@ -651,10 +585,18 @@ class Element(Base):
             return None
 
     def electronegativity_mulliken(
-        self, charge=0, missingIsZero=False, useNegativeEA=False
-    ):
+        self,
+        charge: int = 0,
+        missing_is_zero: bool = False,
+        allow_negative_ea: bool = False,
+    ) -> float:
         """
         Return the absolute electronegativity (Mulliken scale), calculated as
+
+        Args:
+            charge: charge of the ion
+            missing_is_zero: missing values are substituted with zero
+            allow_negative_ea: if `True` negative EA values will be allowed
 
         .. math::
 
@@ -674,19 +616,21 @@ class Element(Base):
             raise ValueError(
                 "Charge has to be a non-negative integer, got: {}".format(charge)
             )
-        return mulliken(ip, ea)
+        return mulliken(
+            ip, ea, missing_is_zero=missing_is_zero, allow_negative_ea=allow_negative_ea
+        )
 
-    def electronegativity_nagle(self):
+    def electronegativity_nagle(self) -> float:
         "Nagle's electronegativity"
 
         if self.dipole_polarizability is not None:
             return nagle(self.nvalence(), self.dipole_polarizability)
 
-    def electronegativity_pauling(self):
+    def electronegativity_pauling(self) -> float:
         "Pauling's electronegativity"
         return self.en_pauling
 
-    def electronegativity_sanderson(self, radius="covalent_radius_pyykko"):
+    def electronegativity_sanderson(self, radius="covalent_radius_pyykko") -> float:
         """
         Sanderson electronegativity
 
@@ -697,7 +641,7 @@ class Element(Base):
         noble_gas_radius = estimate_from_group(self.atomic_number, radius)
         return sanderson(getattr(self, radius), noble_gas_radius)
 
-    def nvalence(self, method=None):
+    def nvalence(self, method=None) -> int:
         """
         Return the number of valence electrons
         """
@@ -737,8 +681,7 @@ def fetch_attrs_for_group(attrs: List[str], group: int = 18) -> Tuple[List[Any]]
         attr : Attribute of `Element` to retrieve for all group members
 
     Returns:
-        data : dict
-            Dictionary with nobel gas atomic numbers as keys and values of the
+        data (dict): Dictionary with noble gas atomic numbers as keys and values of the
             `attr` as values
     """
 
@@ -799,25 +742,16 @@ class IonicRadius(Base):
        Crystallographica Section A.
        `doi:10.1107/S0567739476001551 <http://www.dx.doi.org/10.1107/S0567739476001551>`_
 
-    Attributes:
-      atomic_number : int
-        Atomic number
-      charge : int
-        Charge of the ion
-      econf : str
-        Electronic configuration of the ion
-      coordination : str
-        Type of coordination
-      spin : str
-        Spin state: HS - high spin, LS - low spin
-      crystal_radius : float
-        Crystal radius in pm
-      ionic_radius : float
-        Ionic radius in pm
-      origin : str
-        Source of the data
-      most_reliable : bool
-        Most reliable value (see reference)
+    Args:
+        atomic_number (int): Atomic number
+        charge (int):  Charge of the ion
+        econf (str): Electronic configuration of the ion
+        coordination (str): Type of coordination
+        spin (str): Spin state: HS - high spin, LS - low spin
+        crystal_radius (float): Crystal radius in pm
+        ionic_radius (float): Ionic radius in pm
+        origin (str): Source of the data
+        most_reliable (bool): Most reliable value (see reference)
     """
 
     __tablename__ = "ionicradii"
@@ -853,14 +787,11 @@ class IonizationEnergy(Base):
     """
     Ionization energy of an element
 
-    Attributes:
-      atomic_number : int
-        Atomic number
-      degree : int
-        Degree of ionization with respect to neutral atom
-      energy : float
-        Ionization energy in eV parsed from
-        http://physics.nist.gov/cgi-bin/ASD/ie.pl on April 13, 2015
+    Args:
+        atomic_number (int): Atomic number
+        degree (int): Degree of ionization with respect to neutral atom
+        energy (float): Ionization energy in eV parsed from
+            http://physics.nist.gov/cgi-bin/ASD/ie.pl on April 13, 2015
     """
 
     __tablename__ = "ionizationenergies"
@@ -885,11 +816,9 @@ class OxidationState(Base):
     """
     Oxidation states of an element
 
-    Attributes:
-      atomic_number : int
-        Atomic number
-      oxidation_state : int
-        Oxidation state
+    Args:
+      atomic_number (int): Atomic number
+      oxidation_state (int): Oxidation state
     """
 
     __tablename__ = "oxidationstates"
@@ -906,7 +835,14 @@ class OxidationState(Base):
 
 
 class Group(Base):
-    """Name of the group in the periodic table."""
+    """
+    Name of the group in the periodic table.
+
+    Args:
+        group_id (int): group number
+        symbol: (str): group symbol
+        name (str): group name
+    """
 
     __tablename__ = "groups"
 
@@ -923,14 +859,11 @@ class Series(Base):
     """
     Name of the series in the periodic table.
 
-    Attributes:
-      name : str
-        Name of the series
-      color : str
-        The HEX representation of a color of the series, the colors were
-        obtained from
-        `ColorBrewer <http://colorbrewer2.org/?type=qualitative&scheme=Paired&n=10>`_
-        the qualitative 10-class paired colormap
+    Args:
+        name (str): Name of the series
+        color (str): The HEX representation of a color of the series, the colors were
+            obtained from `ColorBrewer <http://colorbrewer2.org/?type=qualitative&scheme=Paired&n=10>`_
+            the qualitative 10-class paired colormap
     """
 
     __tablename__ = "series"
@@ -948,23 +881,15 @@ class Isotope(Base):
     """
     Isotope
 
-    Attributes:
-      abundance : float
-        Abundance of the isotope
-      atomic_number : int
-        Atomic number
-      half_life : float
-        Half life time
-      half_life_unit : str
-        Unit for the half life time
-      is_radioactive : bool
-        A flag marking wheather the isotope is radioactive
-      mass : float
-        Mass of the isotope
-      mass_number : int
-        Mass number of the isotope
-      mass_uncertainty : float
-        Uncertainty of the mass
+    Args:
+        abundance (float): Abundance of the isotope
+        atomic_number (int): Atomic number
+        half_life (float): Half life time
+        half_life_unit (str): Unit for the half life time
+        is_radioactive (bool): A flag marking wheather the isotope is radioactive
+        mass (float): Mass of the isotope
+        mass_number (int): Mass number of the isotope
+        mass_uncertainty (float): Uncertainty of the mass value
     """
 
     __tablename__ = "isotopes"
@@ -1019,15 +944,11 @@ class ScreeningConstant(Base):
     The Journal of Chemical Physics, 47(4), 1300.  `doi:10.1063/1.1712084
     <http://www.dx.doi.org/10.1063/1.1712084>`_
 
-    Attributes:
-      atomic_number : int
-        Atomic number
-      n : int
-        Principal quantum number
-      s : str
-        Subshell label, (s, p, d, ...)
-      screening : float
-        Screening constant
+    Args::
+        atomic_number (int): Atomic number
+        n (int): Principal quantum number
+        s (str): Subshell label, (s, p, d, ...)
+        screening (float): Screening constant
     """
 
     __tablename__ = "screeningconstants"
