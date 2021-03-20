@@ -3,6 +3,7 @@ name: Test and build mendeleev package
 on:
   push:
     branches: [master]
+    tags: [v*]
   pull_request:
     branches: [master]
 
@@ -59,3 +60,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@master
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
+          verbose: true
