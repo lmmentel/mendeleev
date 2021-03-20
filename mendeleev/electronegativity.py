@@ -59,15 +59,9 @@ def li_xue(ionization_energy: float, radius: float, valence_pqn: int) -> float:
     of Li and Xue
 
     Args:
-        charge : int
-            Charge of the ion
-        radius : str
-            Type of radius to be used in the calculation, either
-            `crystal_radius` as recommended in the paper or `ionic_radius`
+        charge: Charge of the ion
+        radius: Type of radius to be used in the calculation, either `crystal_radius` as recommended in the paper or `ionic_radius`
         valence_pqn: valence principal quantum number
-
-    Returns:
-        electronegativity
     """
 
     return (
@@ -146,12 +140,13 @@ def nagle(nvalence: int, polarizability: float) -> float:
 
 
 def sanderson(radius: float, noble_gas_radius: float) -> float:
-    """Sanderson electronegativity
+    """
+    Calculate Sanderson's electronegativity
 
     Args:
         radius: radius value for the element
         noble_gas_radius: value of the radius of a hypothetical noble gas with
-            the atomic number of element for which electronegativity is calculated
+        the atomic number of element for which electronegativity is calculated
 
     .. math::
 
