@@ -289,3 +289,9 @@ latex_documents = [
 
 # -- External mapping ------------------------------------------------------------
 python_version = ".".join(map(str, sys.version_info[0:2]))
+
+
+intersphinx_mapping = {
+    "python": ("http://docs.python.org/", None),
+    "pandas": ("http://pandas.pydata.org/pandas-docs/dev", None),
+}
