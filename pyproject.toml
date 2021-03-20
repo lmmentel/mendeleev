@@ -3,6 +3,10 @@ name = "mendeleev"
 version = "v0.7.0"
 description = "Pythonic periodic table of elements"
 authors = ["Lukasz Mentel <lmmentel@gmail.com>"]
+maintainers = ["Lukasz Mentel <lmmentel@gmail.com>"]
+readme = "README.md"
+documentation = "https://mendeleev.readthedocs.io"
+repository = "https://github.com/lmmentel/mendeleev"
 license = "MIT"
 
 [tool.poetry.dependencies]
