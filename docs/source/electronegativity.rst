@@ -271,7 +271,7 @@ Fetching all electronegativities
 ================================
 
 If you want to fetch all the available scales for all elements you can use the
-:ref:`fetch_electronegativities <mendeleev.fetch.fetch_electronegativities>` function,
+:py:func:`fetch_electronegativities <mendeleev.fetch.fetch_electronegativities>` function,
 that collect all the values into a ``DataFrame``.
 
 
