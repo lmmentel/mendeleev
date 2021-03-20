@@ -1,8 +1,8 @@
-from typing import Union
+from typing import Union, Tuple
 import math
 
 
-def coeffs(a, b=2):
+def coeffs(a, b=2) -> Tuple[int]:
     """
     Return oxide coefficients from oxidation states
     """
