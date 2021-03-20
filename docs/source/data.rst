@@ -4,7 +4,7 @@ Data
 ****
 
 To find out how to fetch data in bulk, check out the documentation about
-:doc:`data access <notebooks/bulk_data_access.ipynb>`.
+:doc:`data access <notebooks/bulk_data_access>`.
 
 Elements
 ========
@@ -291,7 +291,3 @@ Isotopes
    Ionic raddi values for 3+ Actinoids were with coordination number 9 were taken
    from :cite:`Lundberg2016`. In addition ``crystal_radius`` values were computed
    by adding 14 pm to the ``ionic_radius`` values according to :cite:`Shannon1976`.
-
-
-.. bibliography::
-   :style: plain
