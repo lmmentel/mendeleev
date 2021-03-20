@@ -15,9 +15,11 @@ Tutorials
 Jupyter notebooks
 =================
 
-A series of short tutorials is available as `Jupyter <https://jupyter.org/>`_
-notebooks that present the main functionality and provide real-life examples
+All tutorials are available as `Jupyter <https://jupyter.org/>`_
+notebooks on `binder <https://mybinder.org/>`_ where you can explore the examples interactively:
 
-* `Introduction <https://nbviewer.jupyter.org/github/lmmentel/mendeleev/blob/master/docs/source/notebooks/01_intro_to_mendeleev.ipynb>`_
-* `Gettin tables <https://nbviewer.jupyter.org/github/lmmentel/mendeleev/blob/master/docs/source/notebooks/02_tables.ipynb>`_
-* `Plotting periodic tables <https://nbviewer.jupyter.org/github/lmmentel/mendeleev/blob/master/docs/source/notebooks/03_plotting.ipynb>`_
+* `Quick start <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fquick_start.ipynb>`_
+* `Bulk data access <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fbulk_data_access.ipynb>`_
+* `Electronic Configuration <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Felectronic_configuration.ipynb>`_
+* `Ions <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fions.ipynb>`_
+* `Plotting <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fplotting.ipynb>`_
