@@ -24,6 +24,7 @@ from .electronegativity import (
 )
 from .db import get_session
 from .econf import ElectronicConfiguration, get_l, ORBITALS
+from .utils import coeffs
 
 
 __all__ = [
@@ -697,9 +698,21 @@ class Element(Base):
         return sanderson(getattr(self, radius), noble_gas_radius)
 
     def nvalence(self, method=None):
-        """Return the number of valence electrons"""
+        """
+        Return the number of valence electrons
+        """
 
         return self.ec.nvalence(self.block, method=method)
+
+    def oxides(self) -> List[str]:
+        """
+        Return a lsit of possible oxides based on the oxidation number
+        """
+
+        oxide_coeffs = [coeffs(ox) for ox in self.oxistates if ox > 0]
+        # convert to strings and replace 1 with empty string
+        normal_coeffs = [[str(c) if c != 1 else "" for c in t] for t in oxide_coeffs]
+        return [f"{self.symbol}{cme}O{co}" for cme, co in normal_coeffs]
 
     def __str__(self):
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)

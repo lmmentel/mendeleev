@@ -1,4 +1,13 @@
 from typing import Union
+import math
+
+
+def coeffs(a, b=2):
+    """
+    Return oxide coefficients from oxidation states
+    """
+    lcm = abs(a * b) // math.gcd(a, b)
+    return lcm // a, lcm // b
 
 
 def n_effective(n: int, source: str = "slater") -> Union[float, None]:
