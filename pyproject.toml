@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mendeleev"
-version = "0.6.1"
+version = "v0.7.0"
 description = "Pythonic periodic table of elements"
 authors = ["Lukasz Mentel <lmmentel@gmail.com>"]
 license = "MIT"
@@ -31,6 +31,7 @@ nbsphinx = "^0.8.2"
 ipython = "^7.0"
 ipykernel = "^5.5.0"
 seaborn = "^0.11.1"
+build = "^0.3.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
