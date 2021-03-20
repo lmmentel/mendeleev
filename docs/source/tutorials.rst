@@ -3,6 +3,7 @@ Tutorials
 *********
 
 .. toctree::
+   :maxdepth: 2
 
    notebooks/quick_start.ipynb
    notebooks/bulk_data_access.ipynb

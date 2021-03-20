@@ -20,6 +20,7 @@ the periodic table of elements.
 
 .. toctree::
    :caption: Contents
+   :maxdepth: 2
 
    Overview <quick>
    Installation <install>
@@ -28,10 +29,8 @@ the periodic table of elements.
    Electronegativity <electronegativity>
    API Reference <code>
    Bibliography <bibliography>
-   License <license_link>
-
-.. toctree::
    Changes <changes_link>
+   License <license_link>
 
 
 Indices and tables
