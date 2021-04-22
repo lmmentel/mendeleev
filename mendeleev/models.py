@@ -104,11 +104,11 @@ class Element(Base):
         mass (float): Relative atomic mass. Ratio of the average mass of atoms
             of the element to 1/12 of the mass of an atom of 12C
         mendeleev_number (int): Mendeleev number
-         melting_point (float): Melting temperature in K
+        melting_point (float): Melting temperature in K
         metallic_radius (float): Single-bond metallic radius or metallic radius, have been
             calculated by Pauling using interatomic distances and an
             equation relating such distances with bond number
-         metallic_radius_c12 (float): Metallic radius obtained by Pauling with an assumed number of
+        metallic_radius_c12 (float): Metallic radius obtained by Pauling with an assumed number of
             nearest neighbors equal to 12
         molcas_gv_color (str): Color of an atom in HEX from MOLCAS GV http://www.molcas.org/GV/
         name (str): Name in English
