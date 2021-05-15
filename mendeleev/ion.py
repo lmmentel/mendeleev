@@ -117,7 +117,7 @@ class Ion:
             return getattr(self._element, name)
         else:
             raise AttributeError(
-                "'{}' is not na attribute of '{}'".format(name, self.__class__.__name__)
+                "'{}' is not an attribute of '{}'".format(name, self.__class__.__name__)
             )
 
     def __repr__(self):
