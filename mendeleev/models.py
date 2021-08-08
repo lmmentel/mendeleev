@@ -416,16 +416,14 @@ class Element(Base):
         # identify the valence s,p vs d,f
         if n is None:
             n = self.ec.max_n()
-        else:
-            if not isinstance(n, int):
-                raise ValueError("<n> should be an integer, got: {}".format(type(n)))
+        elif not isinstance(n, int):
+            raise ValueError("<n> should be an integer, got: {}".format(type(n)))
 
         if o is None:
             # take the shell with max `l` for a given `n`
             o = ORBITALS[max(get_l(x[1]) for x in self.ec.conf.keys() if x[0] == n)]
-        else:
-            if o not in ORBITALS:
-                raise ValueError("<s> should be one of {}".format(", ".join(ORBITALS)))
+        elif o not in ORBITALS:
+            raise ValueError("<s> should be one of {}".format(", ".join(ORBITALS)))
 
         if method.lower() == "slater":
             return self.atomic_number - self.ec.slater_screening(n=n, o=o, alle=alle)
