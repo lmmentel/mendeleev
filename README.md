@@ -141,16 +141,15 @@ pip install git+https://github.com/lmmentel/mendeleev.git
 
 Full documentation is hosted on [Read the Docs](http://mendeleev.readthedocs.org/en/latest/).
 
-There are also tutorials available as `Jupyter <https://jupyter.org/>`_
-notebooks on `binder <https://mybinder.org/>`_ where you can explore the examples interactively:
+There are also tutorials available as [Jupyter](https://jupyter.org/)
+notebooks on [binder](https://mybinder.org/) where you can explore the examples interactively:
 
-* `Quick start <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fquick_start.ipynb>`_
-* `Bulk data access <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fbulk_data_access.ipynb>`_
-* `Electronic Configuration <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Felectronic_configuration.ipynb>`_
-* `Ions <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fions.ipynb>`_
-* `Visualizations <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fvisualizations.ipynb>`_
-* `Advanced visualizations <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fadvanced_visualizations.ipynb>`_
-
+- [Quick start](https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fquick_start.ipynb)
+- [Bulk data access](https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fbulk_data_access.ipynb)
+- [Electronic Configuration](https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Felectronic_configuration.ipynb)
+- [Ions](https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fions.ipynb)
+- [Visualizations](https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fvisualizations.ipynb)
+- [Advanced visualizations](https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fadvanced_visualizations.ipynb)
 
 ## Data
 
