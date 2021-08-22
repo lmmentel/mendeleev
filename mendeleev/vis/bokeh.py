@@ -12,15 +12,14 @@ from .utils import colormap_column
 def periodic_table_bokeh(
     elements: pd.DataFrame,
     attribute: str = "atomic_weight",
-    title: str = "Periodic Table",
-    width: int = 1000,
+    cmap: str = "RdBu_r",
+    colorby: str = "color",
+    decimals: int = 3,
     height: int = 800,
     missing: str = "#ffffff",
-    decimals: int = 3,
-    colorby: str = "color",
-    output: str = None,
-    cmap: str = "RdBu_r",
+    title: str = "Periodic Table",
     wide_layout: bool = False,
+    width: int = 1200,
 ):
     """
     Use Bokeh to plot the periodic table data contained in the `df`
@@ -28,15 +27,14 @@ def periodic_table_bokeh(
     Args:
         elements : Pandas DataFrame with the data about elements
         attribute : Name of the attribute to be displayed
-        title : Title to appear above the periodic table
-        colorby : Name of the column containig the colors
-        width : Width of the figure in pixels
-        height : Height of the figure in pixels
-        decimals : Number of decimals to be displayed in the bottom row of each cell
-        missing : Hex code of the color to be used for the missing values
-        output : Name of the output file to store the plot, should end in .html
         cmap : Colormap to use, see matplotlib colormaps
+        colorby : Name of the column containig the colors
+        decimals : Number of decimals to be displayed in the bottom row of each cell
+        height : Height of the figure in pixels
+        missing : Hex code of the color to be used for the missing values
+        title : Title to appear above the periodic table
         wide_layout: wide layout variant of the periodic table
+        width : Width of the figure in pixels
     """
 
     # additional columns for positioning of the text
@@ -58,9 +56,9 @@ def periodic_table_bokeh(
         elements[ac] = elements[attribute]
 
     if colorby == "attribute":
-        temp = colormap_column(elements, attribute, cmap=cmap, missing=missing)
-        elements = pd.merge(elements, temp, left_index=True, right_index=True)
-        colorby = "cmap"
+        colored = colormap_column(elements, attribute, cmap=cmap, missing=missing)
+        elements.loc[:, "attribute_color"] = colored
+        colorby = "attribute_color"
 
     # bokeh configuration
 
@@ -68,7 +66,7 @@ def periodic_table_bokeh(
 
     TOOLS = "hover,save,reset"
 
-    p = figure(
+    fig = figure(
         title=title,
         tools=TOOLS,
         x_axis_location="above",
@@ -80,19 +78,19 @@ def periodic_table_bokeh(
         toolbar_sticky=False,
     )
 
-    p.rect("x", "y", 0.9, 0.9, source=source, color=colorby, fill_alpha=0.6)
+    fig.rect("x", "y", 0.9, 0.9, source=source, color=colorby, fill_alpha=0.6)
 
     # adjust the ticks and axis bounds
-    p.yaxis.bounds = (1, 7)
-    p.axis[1].ticker.num_minor_ticks = 0
+    fig.yaxis.bounds = (1, 7)
+    fig.axis[1].ticker.num_minor_ticks = 0
     if wide_layout:
         # Turn off tick labels
-        p.axis[0].major_label_text_font_size = "0pt"
+        fig.axis[0].major_label_text_font_size = "0pt"
         # Turn off tick marks
-        p.axis[0].major_tick_line_color = None  # turn off major ticks
-        p.axis[0].ticker.num_minor_ticks = 0  # turn off minor ticks
+        fig.axis[0].major_tick_line_color = None  # turn off major ticks
+        fig.axis[0].ticker.num_minor_ticks = 0  # turn off minor ticks
     else:
-        p.axis[0].ticker = FixedTicker(ticks=list(range(1, 19)))
+        fig.axis[0].ticker = FixedTicker(ticks=list(range(1, 19)))
 
     text_props = {
         "source": source,
@@ -102,7 +100,7 @@ def periodic_table_bokeh(
         "text_baseline": "middle",
     }
 
-    p.text(
+    fig.text(
         x="x",
         y="y",
         text="symbol",
@@ -110,15 +108,15 @@ def periodic_table_bokeh(
         text_font_size="15pt",
         **text_props
     )
-    p.text(
+    fig.text(
         x="x", y="y_anumber", text="atomic_number", text_font_size="9pt", **text_props
     )
-    p.text(x="x", y="y_name", text="name", text_font_size="6pt", **text_props)
-    p.text(x="x", y="y_prop", text=ac, text_font_size="7pt", **text_props)
+    fig.text(x="x", y="y_name", text="name", text_font_size="6pt", **text_props)
+    fig.text(x="x", y="y_prop", text=ac, text_font_size="7pt", **text_props)
 
-    p.grid.grid_line_color = None
+    fig.grid.grid_line_color = None
 
-    hover = p.select(dict(type=HoverTool))
+    hover = fig.select(dict(type=HoverTool))
     hover.tooltips = OrderedDict(
         [
             ("name", "@name"),
@@ -133,7 +131,4 @@ def periodic_table_bokeh(
         ]
     )
 
-    if output:
-        output_file(output)
-
-    show(p)
+    return fig
