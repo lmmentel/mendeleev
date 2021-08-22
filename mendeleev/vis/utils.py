@@ -11,7 +11,7 @@ def add_tile_coordinates(
     x_attr: str = "group_id",
     y_attr: str = "period",
     show_fblock: bool = True,
-    long_version: bool = False,
+    wide_layout: bool = False,
 ) -> pd.DataFrame:
     """
     Calculate coordinates for the tile centers
@@ -20,7 +20,7 @@ def add_tile_coordinates(
         df: dataframe
         x_attr: attribute to use as x coordinate
         y_attr: attribute to use as y coordinate
-        long_version : Show the long version of the periodic table with the f block between
+        wide_layout : Show the long version of the periodic table with the f block between
             the s and d blocks
         show_fblock : Show the elements from the f block
     """
@@ -45,7 +45,7 @@ def add_tile_coordinates(
             + 3
         )
 
-        if long_version:
+        if wide_layout:
             mask = (
                 (elements["x"] > 2)
                 & (elements["block"] != "f")
@@ -64,7 +64,7 @@ def create_vis_dataframe(
     x_attr: str = "group_id",
     y_attr: str = "period",
     show_f_block: bool = True,
-    long_version: bool = False,
+    wide_layout: bool = False,
 ):
     """
     Base DataFrame for visualizations
@@ -72,9 +72,10 @@ def create_vis_dataframe(
     Args:
         x_attr: attribute to use as x coordinate
         y_attr: attribute to use as y coordinate
-        long_version : Show the long version of the periodic table with the f block between
+        show_f_block : show the elements from the f block
+        wide_layout : show the long version of the periodic table with the f block between
             the s and d blocks
-        show_f_block : Show the elements from the f block
+
     """
     elements = fetch_table("elements")
     series = fetch_table("series")
@@ -90,7 +91,7 @@ def create_vis_dataframe(
         x_attr=x_attr,
         y_attr=y_attr,
         show_fblock=show_f_block,
-        long_version=long_version,
+        wide_layout=wide_layout,
     )
 
 

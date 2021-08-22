@@ -20,7 +20,7 @@ def periodic_table_bokeh(
     colorby: str = "color",
     output: str = None,
     cmap: str = "RdBu_r",
-    long_version: bool = False,
+    wide_layout: bool = False,
 ):
     """
     Use Bokeh to plot the periodic table data contained in the `df`
@@ -36,7 +36,7 @@ def periodic_table_bokeh(
         missing : Hex code of the color to be used for the missing values
         output : Name of the output file to store the plot, should end in .html
         cmap : Colormap to use, see matplotlib colormaps
-
+        wide_layout: wide layout variant of the periodic table
     """
 
     # additional columns for positioning of the text
@@ -85,7 +85,7 @@ def periodic_table_bokeh(
     # adjust the ticks and axis bounds
     p.yaxis.bounds = (1, 7)
     p.axis[1].ticker.num_minor_ticks = 0
-    if long_version:
+    if wide_layout:
         # Turn off tick labels
         p.axis[0].major_label_text_font_size = "0pt"
         # Turn off tick marks
