@@ -6,7 +6,7 @@
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/lmmentel/mendeleev.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lmmentel/mendeleev/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/lmmentel/mendeleev.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lmmentel/mendeleev/context:python)
 [![image](https://pepy.tech/badge/mendeleev)](https://pepy.tech/project/mendeleev)
-
+[![DOI](https://zenodo.org/badge/204296088.svg)](https://zenodo.org/badge/latestdoi/204296088)
 
 
 <!-- PROJECT LOGO -->
