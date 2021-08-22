@@ -50,10 +50,21 @@ def periodic_table_plotly(
     attribute: str = "atomic_weight",
     height: int = 800,
     width: int = 1200,
-    long_version: bool = False,
+    decimals: int = 3,
+    title: str = "Periodic Table",
+    wide_layout: bool = False,
 ) -> go.Figure:
     """
-    Create a periodic table visualization as a plotly.Figure
+    Create a periodic table visualization with plotly.Figure
+
+    Args:
+        elements : Pandas DataFrame with the data about elements
+        attribute : Name of the attribute to be displayed
+        title : Title to appear above the periodic table
+        width : Width of the figure in pixels
+        height : Height of the figure in pixels
+        decimals : Number of decimals to be displayed in the bottom row of each cell
+        wide_layout: wide layout variant of the periodic table
     """
     fig = go.Figure()
 
@@ -82,7 +93,7 @@ def periodic_table_plotly(
 
     ac = "display_attribute"
     if is_float_dtype(elements[attribute]):
-        elements[ac] = elements[attribute].round(decimals=3)
+        elements[ac] = elements[attribute].round(decimals=decimals)
     else:
         elements[ac] = elements[attribute]
 
@@ -98,7 +109,7 @@ def periodic_table_plotly(
         )
     )
 
-    if long_version:
+    if wide_layout:
         tickvals = None
         xrange = [0.5, 32.5]
         yrange = [7.5, 0.5]
@@ -111,6 +122,7 @@ def periodic_table_plotly(
         template="plotly_white",
         height=height,
         width=width,
+        title=title,
         xaxis={
             "range": xrange,
             "showgrid": False,
