@@ -96,25 +96,25 @@ def create_vis_dataframe(
 
 
 def colormap_column(
-    df: pd.DataFrame, column: str, cmap: str = "RdBu_r", missing: str = "#ffffff"
+    elements: pd.DataFrame, column: str, cmap: str = "RdBu_r", missing: str = "#ffffff"
 ):
     """
-    Return a new DataFrame with the same size (and index) as `df` with a column
+    Return a new DataFrame with the same size (and index) as `elements` with a column
     `cmap` containing HEX color mapping from `cmap` colormap.
 
     Args:
-        df : DataFrame with the data
+        elements : DataFrame with the data
         column : Name of the column to be color mapped
         cmap : Name of the colormap, see matplotlib.org
         missing : HEX color for the missing values (NaN or None)
     """
 
     colormap = plt.get_cmap(cmap)
-    cnorm = colors.Normalize(vmin=df[column].min(), vmax=df[column].max())
+    cnorm = colors.Normalize(vmin=elements[column].min(), vmax=elements[column].max())
     scalarmap = cmx.ScalarMappable(norm=cnorm, cmap=colormap)
-    out = pd.DataFrame(index=df.index)
-    mask = df[column].isnull()
-    rgba = scalarmap.to_rgba(df[column])
+    out = pd.DataFrame(index=elements.index)
+    mask = elements[column].isnull()
+    rgba = scalarmap.to_rgba(elements[column])
     out.loc[:, "cmap"] = [colors.rgb2hex(row) for row in rgba]
     out.loc[mask, "cmap"] = missing
 
