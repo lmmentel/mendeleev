@@ -1,5 +1,7 @@
 bokeh
+jupyter_bokek
 seaborn
+plotly
 ipython
 ipykernel
 sphinx
