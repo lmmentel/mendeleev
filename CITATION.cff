@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Mentel"
+  given-names: "Łukasz"
+  orcid: "https://orcid.org/0000-0001-9986-1262"
+title: "mendeleev - A Python package with properties of chemical elements, ions, isotopes and methods to manipulate and visualize peridic table."
+version: 0.7.0
+date-released: 2021-03-20
+url: "https://github.com/lmmentel/mendeleev"
