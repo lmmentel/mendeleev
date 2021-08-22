@@ -2,6 +2,17 @@
 mendeleev Changelog
 *******************
 
+v0.8.0 (22.08.2021)
+-------------------
+
+* Enable plotting peridic tables with `plotly <>`_ as well as `bokeh <>`_ backends
+  through ``mendeleev.vis.plotly.periodic_table_plotly`` and ``mendeleev.vis.bokeh.periodic_table_bokeh``
+  functions.
+* Add `mendeleev.vis.periodic_table` function for convenient periodic table plotting wrapping both plotting
+  backends.
+* Refactored the ``mendeleev.vis`` module so it can be wasily extended with plotting backends.
+* Add ``CITATION.cff`` file.  
+
 v0.7.0 (20.03.2021)
 -------------------
 
