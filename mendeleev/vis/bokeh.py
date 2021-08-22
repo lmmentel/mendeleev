@@ -3,7 +3,7 @@ from collections import OrderedDict
 import pandas as pd
 from pandas.api.types import is_float_dtype
 
-from bokeh.plotting import figure, show, output_file
+from bokeh.plotting import figure
 from bokeh.models import HoverTool, ColumnDataSource, FixedTicker
 
 from .utils import colormap_column
