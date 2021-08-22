@@ -4,7 +4,7 @@ authors:
 - family-names: "Mentel"
   given-names: "Łukasz"
   orcid: "https://orcid.org/0000-0001-9986-1262"
-title: "mendeleev - A Python package with properties of chemical elements, ions, isotopes and methods to manipulate and visualize peridic table."
+title: "mendeleev - A Python package with properties of chemical elements, ions, isotopes and methods to manipulate and visualize periodic table."
 version: 0.8.0
 date-released: 2021-03-20
 url: "https://github.com/lmmentel/mendeleev"
