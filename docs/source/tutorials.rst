@@ -9,7 +9,8 @@ Tutorials
    notebooks/bulk_data_access.ipynb
    notebooks/electronic_configuration.ipynb
    notebooks/ions.ipynb
-   notebooks/plotting.ipynb
+   notebooks/visualizations.ipynb
+   notebooks/advanced_visualizations.ipynb
 
 
 Jupyter notebooks
@@ -22,4 +23,5 @@ notebooks on `binder <https://mybinder.org/>`_ where you can explore the example
 * `Bulk data access <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fbulk_data_access.ipynb>`_
 * `Electronic Configuration <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Felectronic_configuration.ipynb>`_
 * `Ions <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fions.ipynb>`_
-* `Plotting <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fplotting.ipynb>`_
+* `Visualizations <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fvisualizations.ipynb>`_
+* `Advanced visualizations <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fadvanced_visualizations.ipynb>`_
