@@ -6,5 +6,6 @@ authors:
   orcid: "https://orcid.org/0000-0001-9986-1262"
 title: "mendeleev - A Python package with properties of chemical elements, ions, isotopes and methods to manipulate and visualize periodic table."
 version: 0.8.0
+doi: 10.5281/zenodo.5233823
 date-released: 2021-03-20
 url: "https://github.com/lmmentel/mendeleev"
