@@ -189,10 +189,10 @@ electronegativity module
 .. automodule:: mendeleev.electronegativity
    :members:
 
-plotting module
----------------
+vis module
+----------
 
-.. automodule:: mendeleev.plotting
+.. automodule:: mendeleev.vis
    :members:
 
 utils module
