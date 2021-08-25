@@ -5,7 +5,7 @@ mendeleev Changelog
 v0.8.0 (22.08.2021)
 -------------------
 
-* Enable plotting periodic tables with `plotly <https://plotly.com/>`_ as well as `bokeh <https://bokeh.org/>`_ backends
+* Enable visualizations of periodic tables with `plotly <https://plotly.com/>`_ as well as `bokeh <https://bokeh.org/>`_ backends
   through ``mendeleev.vis.plotly.periodic_table_plotly`` and ``mendeleev.vis.bokeh.periodic_table_bokeh``
   functions.
 * Add ``mendeleev.vis.periodic_table`` function for convenient periodic table plotting wrapping both plotting
