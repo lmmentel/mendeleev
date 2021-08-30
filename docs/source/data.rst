@@ -54,7 +54,7 @@ The followig data are currently available:
 +-------------------------------+-------+------------------------------------------------------+----------+-----------------------------------------------------+
 | cpk_color                     | str   | Element color in CPK convention                      | HEX      | :cite:`wiki-cpk`                                    |
 +-------------------------------+-------+------------------------------------------------------+----------+-----------------------------------------------------+
-| density                       | float | Density at 295K                                      | g/cm3    |                                                     |
+| density                       | float | Density at 295K\ [#f10]_                             | g/cm3    | :cite:`haynes2014crc`                               |
 +-------------------------------+-------+------------------------------------------------------+----------+-----------------------------------------------------+
 | description                   | str   | Short description of the element                     |          |                                                     |
 +-------------------------------+-------+------------------------------------------------------+----------+-----------------------------------------------------+
@@ -291,3 +291,49 @@ Isotopes
    Ionic raddi values for 3+ Actinoids were with coordination number 9 were taken
    from :cite:`Lundberg2016`. In addition ``crystal_radius`` values were computed
    by adding 14 pm to the ``ionic_radius`` values according to :cite:`Shannon1976`.
+
+.. [#10] **Densities**
+
+   Density values for solids and liquids are always in units of grams per cubic
+   centimeter and can be assumed to refer to temperatures near room temperature
+   unless otherwise stated Values for gases are the calculated ideal gas densities
+   at 25 °C and 101 325 kPa. 
+   
+   Original values for gasses are converted from g/L to g/cm3.
+
+   For elements where several allotropes exist, the density corresponding to the
+   most abundand are reported (for full list refer to :cite:`haynes2014crc`), namely:
+
+   - Antimony (gray)
+   - Berkelium (α form)
+   - Carbon (graphite)
+   - Phosphorus (white)
+   - Selenium (gray)
+   - Sulfur (rhombic)
+   - Tin (white)
+
+   For elements where experimental data is not available, theoretical estimates taken
+   from :cite:`enwiki:1039678864` are used, namely for:
+
+   - Astatine
+   - Francium
+   - Einsteinium
+   - Fermium
+   - Mendelevium
+   - Nobelium
+   - Lawrencium
+   - Rutherfordium
+   - Dubnium
+   - Seaborgium
+   - Bohrium
+   - Hassium
+   - Meitnerium
+   - Darmstadtium
+   - Roentgenium
+   - Copernicium
+   - Nihonium
+   - Flerovium
+   - Moscovium
+   - Livermorium
+   - Tennessine
+   - Oganesson
