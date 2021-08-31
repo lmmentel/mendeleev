@@ -2,7 +2,7 @@ from typing import Union, Tuple
 import math
 
 
-def coeffs(a: int, b: int = 2) -> Tuple[int]:
+def coeffs(a: int, b: int = 2) -> Tuple[int, int]:
     """
     Return stoichometric coefficients from oxidation states
 
@@ -43,4 +43,4 @@ def n_effective(n: int, source: str = "slater") -> Union[float, None]:
             f"source '{source}' not found, available sources are: {', '.join(numbers.keys())}"
         )
 
-    return numbers.get(source).get(n, None)
+    return numbers.get(source).get(n)

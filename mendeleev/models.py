@@ -2,7 +2,7 @@
 
 """module specifying the database models"""
 
-from typing import Any, Dict, List, Tuple
+from typing import Any, Callable, Dict, List, Tuple, Union
 from operator import attrgetter
 
 import numpy as np
@@ -241,7 +241,7 @@ class Element(Base):
         return [os.oxidation_state for os in self._oxidation_states]
 
     @hybrid_property
-    def sconst(self) -> Dict[Tuple[int], float]:
+    def sconst(self) -> Dict[Tuple[int, int], float]:
         """
         Return a dict with screening constants with tuples (n, s) as keys and
         screening constants as values"""
@@ -319,7 +319,7 @@ class Element(Base):
         return self.covalent_radius_pyykko
 
     @hybrid_method
-    def hardness(self, charge: int = 0) -> float:
+    def hardness(self, charge: int = 0) -> Union[float, None]:
         """
         Return the absolute hardness, calculated as
 
@@ -359,7 +359,7 @@ class Element(Base):
             )
 
     @hybrid_method
-    def softness(self, charge: int = 0) -> float:
+    def softness(self, charge: int = 0) -> Union[float, None]:
         """
         Return the absolute softness, calculated as
 
@@ -385,7 +385,7 @@ class Element(Base):
 
     def zeff(
         self, n: int = None, o: str = None, method: str = "slater", alle: bool = False
-    ) -> float:
+    ) -> Union[float, None]:
         """
         Return the effective nuclear charge for ``(n, s)``
 
@@ -436,7 +436,7 @@ class Element(Base):
         else:
             raise ValueError("<method> should be one of {}".format("slater, clementi"))
 
-    def electrophilicity(self) -> float:
+    def electrophilicity(self) -> Union[float, None]:
         """
         Calculate electrophilicity index
 
@@ -453,7 +453,7 @@ class Element(Base):
         else:
             return None
 
-    def electronegativity_scales(self, name: str = None) -> List[str]:
+    def electronegativity_scales(self, name: str = None) -> Union[Callable, List[str]]:
         "Available electronegativity scales"
 
         scales = {
@@ -516,7 +516,7 @@ class Element(Base):
 
     def electronegativity_li_xue(
         self, charge: int = 1, radius: str = "crystal_radius"
-    ) -> float:
+    ) -> Dict[Tuple[str, str], float]:
         """
         Calculate the electronegativity of an atom according to the definition
         of Li and Xue
