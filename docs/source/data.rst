@@ -292,14 +292,14 @@ Isotopes
    from :cite:`Lundberg2016`. In addition ``crystal_radius`` values were computed
    by adding 14 pm to the ``ionic_radius`` values according to :cite:`Shannon1976`.
 
-.. [#10] **Densities**
+.. [#f10] **Densities**
 
    Density values for solids and liquids are always in units of grams per cubic
    centimeter and can be assumed to refer to temperatures near room temperature
-   unless otherwise stated Values for gases are the calculated ideal gas densities
-   at 25 °C and 101 325 kPa. 
+   unless otherwise stated. Values for gases are the calculated ideal gas densities
+   at 25°C and 101.325 kPa. 
    
-   Original values for gasses are converted from g/L to g/cm3.
+   Original values for gasses are converted from g/L to g/cm\ :sup:`3`.
 
    For elements where several allotropes exist, the density corresponding to the
    most abundand are reported (for full list refer to :cite:`haynes2014crc`), namely:
