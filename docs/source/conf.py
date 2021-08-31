@@ -295,3 +295,16 @@ intersphinx_mapping = {
     "python": ("http://docs.python.org/", None),
     "pandas": ("http://pandas.pydata.org/pandas-docs/dev", None),
 }
+
+# mathjax downgrade to version to get plotly working in nbsphinx
+mathjax_path = (
+    "https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+)
+mathjax2_config = {
+    "tex2jax": {
+        "inlineMath": [["$", "$"], ["\\(", "\\)"]],
+        "processEscapes": True,
+        "ignoreClass": "document",
+        "processClass": "math|output_area",
+    }
+}
