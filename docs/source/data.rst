@@ -296,7 +296,7 @@ Isotopes
 
    Density values for solids and liquids are always in units of grams per cubic
    centimeter and can be assumed to refer to temperatures near room temperature
-   unless otherwise stated Values for gases are the calculated ideal gas densities
+   unless otherwise stated. Values for gases are the calculated ideal gas densities
    at 25 °C and 101 325 kPa. 
    
    Original values for gasses are converted from g/L to g/cm3.
