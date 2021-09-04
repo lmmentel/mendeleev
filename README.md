@@ -491,7 +491,7 @@ Here\'s the reference in the
    author = {Mentel, Łukasz},
    title = {{mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes},
    url = {https://github.com/lmmentel/mendeleev},
-   version = {0.8.0},
+   version = {0.9.0},
    date = {2014--},
 ```
 
@@ -502,7 +502,7 @@ or the older [BibTeX](http://www.bibtex.org/) format
 ``` {.sourceCode .latex}
 @misc{mendeleev2014,
    auhor = {Mentel, Łukasz},
-   title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 0.8.0},
+   title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 0.9.0},
    howpublished = {\url{https://github.com/lmmentel/mendeleev}},
    year  = {2014--},
 }
