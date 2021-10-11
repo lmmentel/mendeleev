@@ -113,10 +113,11 @@ relations between various properties of elements.
 
 The preferred installation method is with
 [conda](https://conda.io/docs/intro.html) and you can install the
-package from the [conda-forge](https://conda-forge.org/) channel by
+package from the [my Anaconda channel](https://anaconda.org/lmmentel/mendeleev)
+channel by
 
 ``` {.sourceCode .bash}
-conda install -c conda-forge mendeleev=0.5.2
+conda install -c lmmentel mendeleev=0.9.0
 ```
 
 The package can also be installed using
