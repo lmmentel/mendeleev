@@ -5,7 +5,7 @@ mendeleev Changelog
 v0.9.0 (24.09.2021)
 -------------------
 
-* Corect density data with *CRC Handbook of Chemistry and Physics* as the data source `PR#39 <https://github.com/lmmentel/mendeleev/pull/39>`_
+* Correct density data with *CRC Handbook of Chemistry and Physics* as the data source `PR#39 <https://github.com/lmmentel/mendeleev/pull/39>`_
   that fixes `issue #38 <https://github.com/lmmentel/mendeleev/issues/38>`_.
 * Fix plotly based visualizations not rendering at `https://mendeleev.readthedocs.io <https://mendeleev.readthedocs.io>`_.
 * Add DOI number.
