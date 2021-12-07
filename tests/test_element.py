@@ -75,3 +75,18 @@ def test_electrophilicity(symbol):
 
     e = element(symbol)
     e.electrophilicity()
+
+
+def test__eq__():
+
+    elements = get_all_elements()
+    for e in elements:
+        clone = element(e.symbol)
+        assert clone == e
+
+
+def test__ne__():
+
+    elements = get_all_elements()
+    for e1, e2 in zip(elements[:-1], elements[1:]):
+        assert e1 != e2
