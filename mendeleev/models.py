@@ -320,7 +320,7 @@ class Element(Base):
 
     @hybrid_method
     def hardness(self, charge: int = 0) -> Union[float, None]:
-        """
+        r"""
         Return the absolute hardness, calculated as
 
         Args:
@@ -328,7 +328,7 @@ class Element(Base):
 
         .. math::
 
-           \eta = \\frac{IE - EA}{2}
+           \eta = \frac{IE - EA}{2}
 
         where:
 
@@ -360,7 +360,7 @@ class Element(Base):
 
     @hybrid_method
     def softness(self, charge: int = 0) -> Union[float, None]:
-        """
+        r"""
         Return the absolute softness, calculated as
 
         Args:
@@ -368,7 +368,7 @@ class Element(Base):
 
         .. math::
 
-           S = \\frac{1}{2\eta}
+           S = \frac{1}{2\eta}
 
         where :
 
@@ -437,12 +437,12 @@ class Element(Base):
             raise ValueError("<method> should be one of {}".format("slater, clementi"))
 
     def electrophilicity(self) -> Union[float, None]:
-        """
+        r"""
         Calculate electrophilicity index
 
         .. math::
 
-           \\omega = \\frac{\\mu}{2\eta}
+           \omega = \frac{\mu}{2\eta}
         """
 
         ip = self.ionenergies.get(1, None)
@@ -556,14 +556,14 @@ class Element(Base):
         }
 
     def electronegativity_martynov_batsanov(self) -> float:
-        """
+        r"""
         Calculates the electronegativity value according to Martynov and
         Batsanov as the average of the ionization energies of the valence
         electrons
 
         .. math::
 
-           \chi_{MB} = \sqrt{\\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
+           \chi_{MB} = \sqrt{\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
 
         where:
 
@@ -588,7 +588,7 @@ class Element(Base):
         missing_is_zero: bool = False,
         allow_negative_ea: bool = False,
     ) -> float:
-        """
+        r"""
         Return the absolute electronegativity (Mulliken scale), calculated as
 
         Args:
@@ -598,7 +598,7 @@ class Element(Base):
 
         .. math::
 
-           \chi = \\frac{I + A}{2}
+           \chi = \frac{I + A}{2}
 
         where :math:`I` is the ionization energy and :math:`A` is the electron
         affinity
