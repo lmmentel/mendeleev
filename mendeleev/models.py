@@ -657,29 +657,14 @@ class Element(Base):
         return [f"{self.symbol}{cme}O{co}" for cme, co in normal_coeffs]
 
     def __hash__(self):
-        """Custom has function to allow comparisons
-
-        This drops allt he nested, related objects since SQLAlchemy use a custom
-        unhashable `InstrumentedList`.
-        """
-        to_drop = [
-            "_ionization_energies",
-            "_oxidation_states",
-            "_sa_instance_state",
-            "_series",
-            "_series_id",
-            "ec",
-            "group",
-            "ionic_radii",
-            "isotopes",
-            "screening_constants",
-        ]
-        hashable = [(k, v) for k, v in self.__dict__.items() if k not in to_drop]
-        return hash(tuple(sorted(hashable)))
+        # Allow Element objects as keys in dictionaries. Same atomic
+        # number means all other properties are equal too.
+        return hash(self.atomic_number)
 
     def __eq__(self, other):
-        """Overwrite the defalt comparison"""
-        return hash(self) == hash(other)
+        # Allow comparing Element objects for equality. Same atomic
+        # number means all other properties are equal too.
+        return isinstance(other, Element) and self.atomic_number == other.atomic_number
 
     def __str__(self):
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
