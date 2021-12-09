@@ -659,7 +659,7 @@ class Element(Base):
     def __hash__(self):
         # Allow Element objects as keys in dictionaries. Same atomic
         # number means all other properties are equal too.
-        return hash(self.atomic_number)
+        return self.atomic_number
 
     def __eq__(self, other):
         # Allow comparing Element objects for equality. Same atomic
