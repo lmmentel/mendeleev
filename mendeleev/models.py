@@ -656,12 +656,11 @@ class Element(Base):
         normal_coeffs = [[str(c) if c != 1 else "" for c in t] for t in oxide_coeffs]
         return [f"{self.symbol}{cme}O{co}" for cme, co in normal_coeffs]
 
-    def __hash__(self):
-        """Custom has function to allow comparisons
+    def __eq__(self, other):
+        # Custom equality function to allow comparisons
 
-        This drops allt he nested, related objects since SQLAlchemy use a custom
-        unhashable `InstrumentedList`.
-        """
+        # This drops all the nested, related objects since SQLAlchemy
+        # use a custom unhashable `InstrumentedList`.
         to_drop = [
             "_ionization_energies",
             "_oxidation_states",
@@ -674,12 +673,11 @@ class Element(Base):
             "isotopes",
             "screening_constants",
         ]
-        hashable = [(k, v) for k, v in self.__dict__.items() if k not in to_drop]
-        return hash(tuple(sorted(hashable)))
-
-    def __eq__(self, other):
-        """Overwrite the defalt comparison"""
-        return hash(self) == hash(other)
+        for k, v in self.__dict__.items():
+            if k not in to_drop:
+                if v != getattr(other, k):
+                    return False
+        return True
 
     def __str__(self):
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
