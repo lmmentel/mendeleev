@@ -10,9 +10,9 @@ repository = "https://github.com/lmmentel/mendeleev"
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = ">=3.6.2,<4.0"
+python = ">=3.7,<4.0"
 colorama = "^0.4.4"
-numpy = "^1.19.5"
+numpy = "^1.21"
 pyfiglet = "^0.8.post1"
 Pygments = "^2.8.0"
 pandas = ">=0.25.0"
