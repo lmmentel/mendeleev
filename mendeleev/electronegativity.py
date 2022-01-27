@@ -73,7 +73,7 @@ def li_xue(ionization_energy: float, radius: float, valence_pqn: int) -> float:
 
 
 def martynov_batsanov(ionization_energies: List[float]) -> float:
-    """
+    r"""
     Calculates the electronegativity value according to Martynov and
     Batsanov as the average of the ionization energies of the valence
     electrons
@@ -84,7 +84,7 @@ def martynov_batsanov(ionization_energies: List[float]) -> float:
 
     .. math::
 
-       \chi_{MB} = \sqrt{\\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
+       \chi_{MB} = \sqrt{\frac{1}{n_{v}}\sum^{n_{v}}_{k=1} I_{k}}
 
     where:
 
@@ -101,7 +101,7 @@ def mulliken(
     missing_is_zero: bool = False,
     allow_negative_ea: bool = False,
 ) -> float:
-    """
+    r"""
     Return the absolute electronegativity (Mulliken scale), calculated as
 
     Args:
@@ -112,7 +112,7 @@ def mulliken(
 
     .. math::
 
-       \chi = \\frac{I + A}{2}
+       \chi = \frac{I + A}{2}
 
     where:
 
@@ -147,7 +147,7 @@ def nagle(nvalence: int, polarizability: float) -> float:
 
 
 def sanderson(radius: float, noble_gas_radius: float) -> float:
-    """
+    r"""
     Calculate Sanderson's electronegativity
 
     Args:
@@ -157,7 +157,7 @@ def sanderson(radius: float, noble_gas_radius: float) -> float:
 
     .. math::
 
-        \chi = \\frac{AD}{AD_{\\text{ng}}}
+        \chi = \frac{AD}{AD_{\text{ng}}}
 
     """
 
@@ -165,7 +165,7 @@ def sanderson(radius: float, noble_gas_radius: float) -> float:
 
 
 def generic(zeff: float, radius: float, rpow: float = 1, apow: float = 1) -> float:
-    """
+    r"""
     Calculate the electronegativity from a general formula
 
     Args:
@@ -176,13 +176,13 @@ def generic(zeff: float, radius: float, rpow: float = 1, apow: float = 1) -> flo
 
     .. math::
 
-        \chi = \left(\\frac{Z_{\\text{eff}}}{r^{\\beta}}\\right)^{\\alpha}
+        \chi = \left(\frac{Z_{\text{eff}}}{r^{\beta}}\right)^{\alpha}
 
     where:
 
-    - :math:`Z_{\\text{eff}}` is the effective nuclear charge
+    - :math:`Z_{\text{eff}}` is the effective nuclear charge
     - :math:`r` is the covalent radius
-    - :math:`\\alpha,\\beta` parameters
+    - :math:`\alpha,\beta` parameters
     """
 
     return math.pow(zeff / math.pow(radius, rpow), apow)

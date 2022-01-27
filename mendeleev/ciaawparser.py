@@ -58,7 +58,7 @@ def ciaaw_atomic_masses():
     df.loc[:, "is_radioactive"] = df["A"].str.contains("*", regex=False)
     df.loc[:, "A"] = df["A"].str.extract("([0-9]+)", expand=False).astype(int)
 
-    df.loc[:, "AM wows"] = df["Atomic mass,ma/Da"].str.replace("\s", "")
+    df.loc[:, "AM wows"] = df["Atomic mass,ma/Da"].str.replace(r"\s", "")
     df[["AM lead", "AM decimals", "AM unc"]] = df["AM wows"].str.extract(
         r"(\d+)\.(\d+)\((\d+)\)", expand=True
     )
@@ -99,7 +99,7 @@ def ciaaw_atomic_weights():
 
     table = table.rename(columns={"Standard Atomic Weight": "SAW"})
     table.loc[:, "Z"] = table["Z"].astype(int)
-    table.loc[:, "SAW"] = table["SAW"].str.replace("\s", "")
+    table.loc[:, "SAW"] = table["SAW"].str.replace(r"\s", "")
     table[["SAW decimals", "SAW unc"]] = table["SAW"].str.extract(
         r"\d+\.(\d+)\((\d+)\)", expand=True
     )
@@ -133,7 +133,7 @@ def ciaaw_isotopic_abundances():
     abu = "Representative isotopic composition"
     ia.loc[:, "A"] = ia["A"].str.extract("([0-9]+)", expand=False).astype(int)
     ia.loc[:, "Z"] = ia["Z"].astype(int)
-    ia.loc[:, abu] = ia[abu].str.replace("\s", "")
+    ia.loc[:, abu] = ia[abu].str.replace(r"\s", "")
     ia.loc[:, "abundance"] = ia[abu].str.extract(r"(\d+\.\d+)\(", expand=False)
     ia.loc[:, "abundance"].fillna(
         ia[abu].str.extract(r"\[(\d+\.\d+),", expand=False), inplace=True
