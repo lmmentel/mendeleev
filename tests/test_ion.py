@@ -1,4 +1,5 @@
 import pytest
+from pytest import approx
 from mendeleev import element
 from mendeleev.ion import Ion
 
@@ -54,16 +55,16 @@ def test_forbidden_attribute(he):
 
 
 def test_ionic_potential(fe2):
-    assert pytest.approx(fe2.ionic_potential(), 2 / 78.0)
-    assert pytest.approx(fe2.ionic_potential(radius_most_reliable=False), 2 / 71.6)
+    assert fe2.ionic_potential() == approx(2 / 78.0)
+    assert fe2.ionic_potential(radius_most_reliable=False) == approx(2 / 71.6)
 
 
 def test_ea(fe2):
-    assert pytest.approx(fe2.ea, 16.1992)
+    assert approx(fe2.ea) == 16.1992
 
 
 def test_ie(fe2):
-    assert pytest.approx(fe2.ie, 30.651)
+    assert approx(fe2.ie) == 30.651
 
 
 def test_repr(fe2):
