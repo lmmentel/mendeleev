@@ -29,13 +29,10 @@ class Ion:
     @q.setter
     def q(self, value):
         if value == 0:
-            raise ValueError("expecting change other than 0, got {}".format(value))
+            raise ValueError(f"expecting change other than 0, got {value}")
         elif value > self.Z:
-            raise ValueError(
-                "ionic charge ({}) cannot be larger than atomic number ({})".format(
-                    value, self.Z
-                )
-            )
+            raise ValueError(f"ionic charge ({value}) cannot be larger than atomic number ({self.Z})")
+
         else:
             self._q = int(value)
 
@@ -54,7 +51,7 @@ class Ion:
     @property
     def name(self):
         sign = "+" if self.charge > 0 else "-"
-        return "{} {}{} ion".format(self._element.name, self.charge, sign)
+        return f"{self._element.name} {self.charge}{sign} ion"
 
     @property
     def ie(self):
@@ -116,9 +113,7 @@ class Ion:
         if name in Ion.__element_attributes__:
             return getattr(self._element, name)
         else:
-            raise AttributeError(
-                "'{}' is not an attribute of '{}'".format(name, self.__class__.__name__)
-            )
+            raise AttributeError(f"'{name}' is not an attribute of '{self.__class__.__name__}'")
 
     def __repr__(self):
         return self.unicode_ion_symbol()
