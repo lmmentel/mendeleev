@@ -110,15 +110,16 @@ class Element(Base):
             equation relating such distances with bond number
         metallic_radius_c12 (float): Metallic radius obtained by Pauling with an assumed number of
             nearest neighbors equal to 12
+        molar_heat_capacity (flaot): Molar heat capacity in J/mol K
         molcas_gv_color (str): Color of an atom in HEX from MOLCAS GV http://www.molcas.org/GV/
         name (str): Name in English
         name_origin (str): Origin of the name
         period (int): Period in periodic table
         pettifor_number (int): Pettifor scale
-        proton_affinity (Float): Proton affinity
+        proton_affinity (float): Proton affinity
         series (int): Index to chemical series
         sources (str): Sources of the element
-        specific_heat (float): Specific heat in J/g mol @ 20 C
+        specific_heat_capacity (float): Specific heat in J/g K @ 20 C
         symbol (str): Chemical symbol
         thermal_conductivity (float): Thermal conductivity in @/m K @25 C
         uses (str): Uses of the element
@@ -189,6 +190,7 @@ class Element(Base):
     mendeleev_number = Column(Integer)
     metallic_radius = Column(Float)
     metallic_radius_c12 = Column(Float)
+    molar_heat_capacity = Column(Float)
     molcas_gv_color = Column(String)
     name = Column(String)
     name_origin = Column(String)
@@ -199,7 +201,7 @@ class Element(Base):
     _series = relationship("Series", uselist=False, lazy="subquery")
     series = association_proxy("_series", "name")
     sources = Column(String)
-    specific_heat = Column(Float)
+    specific_heat_capacity = Column(Float)
     symbol = Column(String)
     thermal_conductivity = Column(Float)
     uses = Column(String)
@@ -224,6 +226,11 @@ class Element(Base):
         "Initialize the ElectronicConfiguration class as attribute of self"
 
         self.ec = ElectronicConfiguration(self.econf)
+
+    @hybrid_property
+    def specific_heat(self) -> float:
+        """Alias for `specific_heat_capacity` for backwards compatibility"""
+        return self.specific_heat_capacity
 
     @hybrid_property
     def ionenergies(self) -> Dict[int, float]:
