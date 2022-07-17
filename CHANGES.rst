@@ -2,13 +2,25 @@
 mendeleev Changelog
 *******************
 
+v0.10.0 (17.07.2022)
+-------------------
+
+* Corrected specific heat capacity values with *CRC Handbook of Chemistry and Physics* as the data source `Issue #60 <https://github.com/lmmentel/mendeleev/issues/60>`_
+* Renamed `specific_heat` attribute to `specific_heat_capacity` `PR #61 <https://github.com/lmmentel/mendeleev/pull/61>`_ (for backwards compatibility `specific_heat` will still work)
+* Added `molar_heat_capacity` property from *CRC Handbook of Chemistry and Physics* `PR #61 <https://github.com/lmmentel/mendeleev/pull/61>`_ 
+* Corrected wrong units in the docs for `specific_heat` `Issue #59 <https://github.com/lmmentel/mendeleev/issues/59>`_
+* Fixed usage of `pytest.approx` after api change `PR #62 <https://github.com/lmmentel/mendeleev/pull/62>`_
+* Refactored `format` call to f-strings `PR #62 <https://github.com/lmmentel/mendeleev/pull/62>`_
+* Updated locked dependencies to eliminate known vulnerabilities `PR #63 <https://github.com/lmmentel/mendeleev/pull/63>`_
+* Added python 3.10 to CI workflows to increase test coverage `PR #62 <https://github.com/lmmentel/mendeleev/pull/62>`_
+
 v0.9.0 (24.09.2021)
 -------------------
 
-* Correct density data with *CRC Handbook of Chemistry and Physics* as the data source `PR#39 <https://github.com/lmmentel/mendeleev/pull/39>`_
+* Correct density data with *CRC Handbook of Chemistry and Physics* as the data source `PR #39 <https://github.com/lmmentel/mendeleev/pull/39>`_
   that fixes `issue #38 <https://github.com/lmmentel/mendeleev/issues/38>`_.
-* Fix plotly based visualizations not rendering at `https://mendeleev.readthedocs.io <https://mendeleev.readthedocs.io>`_.
-* Add DOI number.
+* Fixed plotly based visualizations not rendering at `https://mendeleev.readthedocs.io <https://mendeleev.readthedocs.io>`_.
+* Added DOI number.
 
 v0.8.0 (22.08.2021)
 -------------------
