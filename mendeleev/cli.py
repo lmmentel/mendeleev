@@ -48,15 +48,15 @@ def clielement():
 
     if e.description is not None:
         print(colorama.Fore.BLUE + "Description\n===========\n")
-        print("\n".join("  " + s for s in textwrap.wrap(e.description, 70)))
+        print("\n".join(f"  {s}" for s in textwrap.wrap(e.description, 70)))
 
     if e.sources is not None:
         print(colorama.Fore.BLUE + "\nSources\n=======\n")
-        print("\n".join("  " + s for s in textwrap.wrap(e.sources, 70)))
+        print("\n".join(f"  {s}" for s in textwrap.wrap(e.sources, 70)))
 
     if e.uses is not None:
         print(colorama.Fore.BLUE + "\nUses\n====\n")
-        print("\n".join("  " + s for s in textwrap.wrap(e.uses, 70)))
+        print("\n".join(f"  {s}" for s in textwrap.wrap(e.uses, 70)))
 
     print(colorama.Fore.GREEN + "\nProperties\n==========\n")
     print(et.to_string(justify="left", header=False))
