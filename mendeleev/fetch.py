@@ -116,7 +116,7 @@ def fetch_ionization_energies(degree: Union[List[int], int] = 1) -> pd.DataFrame
             raise ValueError("degree should be a list of positive ints")
     elif isinstance(degree, int):
         if degree <= 0:
-            raise ValueError(f"degree should be positive")
+            raise ValueError("degree should be positive")
         degree = [degree]
     else:
         raise ValueError(
