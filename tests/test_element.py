@@ -77,7 +77,7 @@ def test_electrophilicity(symbol):
     e.electrophilicity()
 
 
-def test__eq__():
+def test_eq():
 
     elements = get_all_elements()
     for e in elements:
@@ -85,8 +85,17 @@ def test__eq__():
         assert clone == e
 
 
-def test__ne__():
+def test_ne():
 
     elements = get_all_elements()
     for e1, e2 in zip(elements[:-1], elements[1:]):
         assert e1 != e2
+
+    assert element(12) != "sample string"
+
+
+def test_hashable():
+
+    d = set([element(12)])
+    assert element(12) in d
+    assert element(13) not in d
