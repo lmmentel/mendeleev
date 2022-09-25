@@ -11,7 +11,7 @@ from mendeleev.fetch import (
 
 tables = [
     ("elements", 118),
-    ("isotopes", 406),
+    ("isotopes", 3557),
     ("ionicradii", 507),
     ("ionizationenergies", 5837),
     ("groups", 18),
