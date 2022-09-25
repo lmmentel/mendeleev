@@ -921,29 +921,49 @@ class Isotope(Base):
 
     Args:
         abundance (float): Abundance of the isotope
+        abundance_uncertainty (float): Abundance uncertainty
         atomic_number (int): Atomic number
+        discovery_year (int): Year the isotope was discovered
+        g_factor (float): Dimensionless magnetic moment
+        g_factor_uncertainty (float): Uncertainty for the `g_factor`
         half_life (float): Half life time
+        half_life_uncertainty (float): Uncertainty for the `half_life`
         half_life_unit (str): Unit for the half life time
         is_radioactive (bool): A flag marking wheather the isotope is radioactive
         mass (float): Mass of the isotope
         mass_number (int): Mass number of the isotope
         mass_uncertainty (float): Uncertainty of the mass value
+        parity (str): Parity, if present, it can be either `+` or `-`
+        quadrupole_moment (float): Quadrupole moment
+        quadrupole_moment_uncertainty (float): Uncertainty for the `quadrupole_moment`
+        spin (str): Nuclear spin
     """
 
     __tablename__ = "isotopes"
 
     id = Column(Integer, primary_key=True)
     abundance = Column(Float)
+    abundance_uncertainty = Column(Float) 
     atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
+    discovery_year = Column(Integer)
     g_factor = Column(Float)
+    g_factor_uncertainty = Column(Float)
     half_life = Column(Float)
+    half_life_uncertainty = Column(Float)
     half_life_unit = Column(String)
-    is_radioactive = Column(Boolean)
-    mass = Column(Float)
-    mass_number = Column(Integer)
-    mass_uncertainty = Column(Float)
-    spin = Column(Float)
+    is_radioactive = Column(Boolean, nullable=False)
+    mass = Column(Float, nullable=False)
+    mass_number = Column(Integer, nullable=False)
+    mass_uncertainty = Column(Float, nullable=False)
+    parity = Column(String)
     quadrupole_moment = Column(Float)
+    quadrupole_moment_uncertainty = Column(Float)
+    spin = Column(String)
+
+    @hybrid_property
+    def is_stable(self) -> bool:
+        """Flag to indicate whether the isotope is stable"""
+        return not self.is_radioactive
 
     def __str__(self):
 
