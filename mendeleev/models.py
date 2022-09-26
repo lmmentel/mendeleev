@@ -97,6 +97,7 @@ class Element(Base):
         goldschmidt_class (str): Goldschmidt classification of the elements
         group_id (int): Group number
         heat_of_formation (float): Heat of formation in kJ/mol
+        inchi (str): International Chemical Identifier
         is_monoisotopic (bool): A flag marking if the element is monoisotopic
         jmol_color (str): Color of the atom as used in Jmol, in HEX,
             see http://jmol.sourceforge.net/jscolors/#color_U
@@ -115,6 +116,7 @@ class Element(Base):
         molcas_gv_color (str): Color of an atom in HEX from MOLCAS GV http://www.molcas.org/GV/
         name (str): Name in English
         name_origin (str): Origin of the name
+        nist_webbook_url (str): URL for the NIST Chemistry WebBook
         period (int): Period in periodic table
         pettifor_number (int): Pettifor scale
         proton_affinity (float): Proton affinity
@@ -265,7 +267,7 @@ class Element(Base):
         return f"InchI=1S/{self.symbol}"
 
     @property
-    def nist_webbook_ulr(self) -> str:
+    def nist_webbook_url(self) -> str:
         """URL for the NIST Chemistry WebBook"""
         nist_root_url = "https://webbook.nist.gov/cgi/inchi/"
         return nist_root_url + urllib.parse.quote(self.inchi)
