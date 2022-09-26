@@ -191,23 +191,23 @@ Isotopes
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
 | Name                          | Type  | Comment                                              | Unit                 | Data Source             |
 +===============================+=======+======================================================+======================+=========================+
-| abundance                     | float | Relative Abundance                                   |                      | :cite:`iupac-abund`     |
+| abundance                     | float | Relative Abundance                                   |                      | :cite:`Kondev2021`      |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
-| abundance_uncertainty         | float | Uncertainty of relative abundance                    |                      | :cite:`iupac-abund`     |
+| abundance_uncertainty         | float | Uncertainty of relative abundance                    |                      | :cite:`Kondev2021`      |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
 | atomic_number                 | int   | Atomic number                                        |                      |                         |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
-| discovery_year                | int   | Year the isotope was discovered                      |                      |                         |
+| discovery_year                | int   | Year the isotope was discovered                      |                      | :cite:`Kondev2021`      |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
-| g_factor                      | float | Nuclear g-factor\ [#f8]_                             |                      | :cite:`Stone2014`       |
+| g_factor                      | float | Nuclear g-factor                                     |                      | :cite:`Stone2014`       |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
-| g_factor_uncertainty          | float | Uncertainty of the nuclear g-factor\ [#f8]_          |                      | :cite:`Stone2014`       |
+| g_factor_uncertainty          | float | Uncertainty of the nuclear g-factor                  |                      | :cite:`Stone2014`       |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
-| half_life                     | float | Half life of the isotope                             |                      | :cite:`Meija2016`       |
+| half_life                     | float | Half life of the isotope                             |                      | :cite:`Kondev2021`      |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
-| half_life_uncertainty         | float | Uncertainty of the half life                         |                      | :cite:`Meija2016`       |
+| half_life_uncertainty         | float | Uncertainty of the half life                         |                      | :cite:`Kondev2021`      |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
-| half_life_unit                | str   | Unit in which the half life is given                 |                      | :cite:`Meija2016`       |
+| half_life_unit                | str   | Unit in which the half life is given                 |                      | :cite:`Kondev2021`      |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
 | is_radioactive                | bool  | Is the isotope radioactive                           |                      | :cite:`iupac-masses`    |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
@@ -215,15 +215,15 @@ Isotopes
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
 | mass_number                   | int   | Mass number of the isotope                           |                      | :cite:`iupac-masses`    |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
-| mass_uncertainty              | float | Uncertainty of the atomic mass                       |                      | :cite:`iupac-masses`    |
+| mass_uncertainty              | float | Uncertainty of the atomic mass                       | Da                   | :cite:`iupac-masses`    |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
-| parity                        | str   | Parity, if present, it can be either `+` or `-`      |                      |                         |
+| parity                        | str   | Parity, if present, it can be either `+` or `-`      |                      | :cite:`Kondev2021`      |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
 | quadrupole_moment             | float | Nuclear electric quadrupole moment\ [#f8]_           | b [100 fm\ :sup:`2`] | :cite:`Stone2013`       |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
 | quadrupole_moment_uncertainty | float | Nuclear electric quadrupole moment\ [#f8]_           | b [100 fm\ :sup:`2`] | :cite:`Stone2013`       |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
-| spin                          | str   | Nuclear spin quantum number                          |                      |                         |
+| spin                          | str   | Nuclear spin quantum number                          |                      | :cite:`Kondev2021`      |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
 
 
@@ -297,16 +297,6 @@ Isotopes
    The bulk of the radii data was taken from Ref. :cite:`Alvarez2013`, but the
    radii for noble gasses were update according to the values in Ref.
    :cite:`Vogt2014`.
-
-.. [#f8] **Isotope g-factors and quadrupole moments**
-
-   The data regarding g-factors and electric quadrupole moments was parsed from
-   `easyspin webpage <http://easyspin.org/documentation/isotopetable.html>`_
-   (accessed 25.01.2017) where additional notes are mentioned:
-   
-   - Typo for Rh-103: Moment is factor of 10 too large
-   - 237Np, 239Pu, 243Am magnetic moment data from :cite:`haynes2014crc`, section 11-2
-   - In quadrupole moment data - a typo for Ac-227: sign should be +
 
 .. [#f9] **Ionic radii for Actinoid (III) ions**
 
