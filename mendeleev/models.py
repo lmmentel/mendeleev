@@ -256,6 +256,14 @@ class Element(Base):
         return {(x.n, x.s): x.screening for x in self.screening_constants}
 
     @hybrid_property
+    def inchi(self) -> str:
+        """International Chemical Identifier.
+        
+        See: https://en.wikipedia.org/wiki/International_Chemical_Identifier
+        """
+        return f"InchI=1S/{self.symbol}"
+
+    @hybrid_property
     def electrons(self) -> int:
         """Return the number of electrons."""
 
