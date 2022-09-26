@@ -4,6 +4,7 @@
 
 from typing import Any, Callable, Dict, List, Tuple, Union
 from operator import attrgetter
+import urllib.parse
 
 import numpy as np
 from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey
@@ -262,6 +263,12 @@ class Element(Base):
         See: https://en.wikipedia.org/wiki/International_Chemical_Identifier
         """
         return f"InchI=1S/{self.symbol}"
+
+    @property
+    def nist_webbook_ulr(self) -> str:
+        """URL for the NIST Chemistry WebBook"""
+        nist_root_url = "https://webbook.nist.gov/cgi/inchi/"
+        return nist_root_url + urllib.parse.quote(self.inchi)
 
     @hybrid_property
     def electrons(self) -> int:
