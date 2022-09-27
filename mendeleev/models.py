@@ -4,6 +4,7 @@
 
 from typing import Any, Callable, Dict, List, Tuple, Union
 from operator import attrgetter
+import urllib.parse
 
 import numpy as np
 from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey
@@ -60,11 +61,11 @@ class Element(Base):
         block (str): Block in periodic table, s, p, d, f
         boiling_point (float): Boiling temperature in K
         c6 (float): C_6 dispersion coefficient in a.u. from X. Chu & A. Dalgarno, J. Chem. Phys.,
-            121(9), 4083–4088 (2004) doi:10.1063/1.1779576, and the value for
+            121(9), 4083-4088 (2004) doi:10.1063/1.1779576, and the value for
             Hydrogen was taken from K. T. Tang, J. M. Norbeck and P. R. Certain,
             J. Chem. Phys. 64, 3063 (1976), doi:10.1063/1.432569
         c6_gb (float): C_6 dispersion coefficient in a.u. from Gould, T., & Bučko, T. (2016).
-            JCTC, 12(8), 3603–3613. http://doi.org/10.1021/acs.jctc.6b00361
+            JCTC, 12(8), 3603-3613. http://doi.org/10.1021/acs.jctc.6b00361
         cas (str): Chemical Abstracts Service identifier
         covalent_radius_bragg (float): Covalent radius in pm from
         covalent_radius_cordero (float): Covalent radius in pm from Cordero, B., Gómez, V., Platero-Prats, A.
@@ -73,7 +74,7 @@ class Element(Base):
             doi:10.1039/b801115j
         covalent_radius_pyykko (float): Single bond covalent radius in pm Pyykkö, P., & Atsumi, M. (2009).
             Molecular Single-Bond Covalent Radii for Elements 1-118.
-            Chemistry - A European Journal, 15(1), 186–197.
+            Chemistry - A European Journal, 15(1), 186-197.
             doi:10.1002/chem.200800987
         covalent_radius_pyykko_double (float): Double bond covalent radius in pm from P. Pyykkö et al.
         covalent_radius_pyykko_triple (float): Triple bond covalent radius in pm from P. Pyykkö et al.
@@ -96,6 +97,7 @@ class Element(Base):
         goldschmidt_class (str): Goldschmidt classification of the elements
         group_id (int): Group number
         heat_of_formation (float): Heat of formation in kJ/mol
+        inchi (str): International Chemical Identifier
         is_monoisotopic (bool): A flag marking if the element is monoisotopic
         jmol_color (str): Color of the atom as used in Jmol, in HEX,
             see http://jmol.sourceforge.net/jscolors/#color_U
@@ -114,6 +116,7 @@ class Element(Base):
         molcas_gv_color (str): Color of an atom in HEX from MOLCAS GV http://www.molcas.org/GV/
         name (str): Name in English
         name_origin (str): Origin of the name
+        nist_webbook_url (str): URL for the NIST Chemistry WebBook
         period (int): Period in periodic table
         pettifor_number (int): Pettifor scale
         proton_affinity (float): Proton affinity
@@ -254,6 +257,20 @@ class Element(Base):
         screening constants as values"""
 
         return {(x.n, x.s): x.screening for x in self.screening_constants}
+
+    @hybrid_property
+    def inchi(self) -> str:
+        """International Chemical Identifier.
+        
+        See: https://en.wikipedia.org/wiki/International_Chemical_Identifier
+        """
+        return f"InchI=1S/{self.symbol}"
+
+    @property
+    def nist_webbook_url(self) -> str:
+        """URL for the NIST Chemistry WebBook"""
+        nist_root_url = "https://webbook.nist.gov/cgi/inchi/"
+        return nist_root_url + urllib.parse.quote(self.inchi)
 
     @hybrid_property
     def electrons(self) -> int:
