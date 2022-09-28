@@ -248,7 +248,7 @@ class Element(Base):
     def oxistates(self) -> List[int]:
         """Return the oxidation states as a list of ints"""
 
-        return [os.oxidation_state for os in self._oxidation_states]
+        return self.oxidation_states()
 
     @hybrid_property
     def sconst(self) -> Dict[Tuple[int, int], float]:
@@ -261,7 +261,7 @@ class Element(Base):
     @hybrid_property
     def inchi(self) -> str:
         """International Chemical Identifier.
-        
+
         See: https://en.wikipedia.org/wiki/International_Chemical_Identifier
         """
         return f"InchI=1S/{self.symbol}"
@@ -401,6 +401,30 @@ class Element(Base):
         eta = self.hardness(charge=charge)
 
         return None if eta is None else 1.0 / (2.0 * eta)
+
+    def oxidation_states(self, category: str = "main") -> List[int]:
+        """
+        Utility method for accessing oxidation states.
+
+        Args:
+            category (str): Category of oxidation state, Either
+                - `main` - for main, most common, oxidataion states
+                - `extended` - for less common oxidation states
+                - `all` - all oxidation states
+        """
+        if category not in {"main", "extended", "all"}:
+            raise ValueError(
+                f"got {category}, but allowed values are: 'main', 'extended', 'all'"
+            )
+
+        if category == "all":
+            return [o.oxidation_state for o in self._oxidation_states]
+        else:
+            return [
+                o.oxidation_state
+                for o in self._oxidation_states
+                if o.category == category
+            ]
 
     def zeff(
         self, n: int = None, o: str = None, method: str = "slater", alle: bool = False
@@ -663,7 +687,7 @@ class Element(Base):
 
     def oxides(self) -> List[str]:
         """
-        Return a lsit of possible oxides based on the oxidation number
+        Return a list of possible oxides based on the oxidation number
         """
 
         oxide_coeffs = [coeffs(ox) for ox in self.oxistates if ox > 0]
@@ -857,6 +881,8 @@ class OxidationState(Base):
     Args:
       atomic_number (int): Atomic number
       oxidation_state (int): Oxidation state
+      category (str): Either `main` or `extended` flag to indicate
+        the type of oxidation state.
     """
 
     __tablename__ = "oxidationstates"
@@ -864,11 +890,16 @@ class OxidationState(Base):
     id = Column(Integer, primary_key=True)
     atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
     oxidation_state = Column(Integer)
+    category = Column(String)
 
     def __repr__(self):
-
-        return "<OxidationState(atomic_number={a:5d}, oxidation_state={o:5d})>".format(
-            a=self.atomic_number, o=self.oxidation_state
+        return ", ".join(
+            [
+                f"<OxidationState(id={self.id}",
+                f"atomic_number={self.atomic_number}",
+                f"oxidation_state={self.oxidation_state}",
+                f"{self.category=})>",
+            ]
         )
 
 
@@ -943,7 +974,7 @@ class Isotope(Base):
 
     id = Column(Integer, primary_key=True)
     abundance = Column(Float)
-    abundance_uncertainty = Column(Float) 
+    abundance_uncertainty = Column(Float)
     atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
     discovery_year = Column(Integer)
     g_factor = Column(Float)
