@@ -219,9 +219,9 @@ Isotopes
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
 | parity                        | str   | Parity, if present, it can be either `+` or `-`      |                      | :cite:`Kondev2021`      |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
-| quadrupole_moment             | float | Nuclear electric quadrupole moment\ [#f8]_           | b [100 fm\ :sup:`2`] | :cite:`Stone2013`       |
+| quadrupole_moment             | float | Nuclear electric quadrupole moment                   | b [100 fm\ :sup:`2`] | :cite:`Stone2013`       |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
-| quadrupole_moment_uncertainty | float | Nuclear electric quadrupole moment\ [#f8]_           | b [100 fm\ :sup:`2`] | :cite:`Stone2013`       |
+| quadrupole_moment_uncertainty | float | Nuclear electric quadrupole moment                   | b [100 fm\ :sup:`2`] | :cite:`Stone2013`       |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
 | spin                          | str   | Nuclear spin quantum number                          |                      | :cite:`Kondev2021`      |
 +-------------------------------+-------+------------------------------------------------------+----------------------+-------------------------+
