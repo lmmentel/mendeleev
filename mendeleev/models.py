@@ -897,7 +897,7 @@ class OxidationState(Base):
                 f"<OxidationState(id={self.id}",
                 f"atomic_number={self.atomic_number}",
                 f"oxidation_state={self.oxidation_state}",
-                f"{self.category=})>",
+                f"category={self.category})>",
             ]
         )
 
