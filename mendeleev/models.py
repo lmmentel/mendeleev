@@ -241,13 +241,11 @@ class Element(Base):
         Return a dict with ionization degree as keys and ionization energies
         in eV as values.
         """
-
         return {ie.degree: ie.energy for ie in self._ionization_energies}
 
     @hybrid_property
     def oxistates(self) -> List[int]:
-        """Return the oxidation states as a list of ints"""
-
+        """Return the main oxidation states as a list of integers"""
         return self.oxidation_states()
 
     @hybrid_property
@@ -497,6 +495,7 @@ class Element(Base):
             return None
 
     def electronegativity_scales(self, name: str = None) -> Union[Callable, List[str]]:
+        # sourcery skip: assign-if-exp
         "Available electronegativity scales"
 
         scales = {
