@@ -39,7 +39,7 @@ Here's the reference in the `BibLaTeX <https://www.ctan.org/pkg/biblatex?lang=en
       author = {Mentel, Łukasz},
       title = {{mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes},
       url = {https://github.com/lmmentel/mendeleev},
-      version = {0.10.0},
+      version = {0.11.0},
       date = {2014--},
   }
 
@@ -49,7 +49,7 @@ or the older `BibTeX <http://www.bibtex.org/>`_ format
 
    @misc{mendeleev2014,
       auhor = {Mentel, Łukasz},
-      title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 0.10.0},
+      title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 0.11.0},
       howpublished = {\url{https://github.com/lmmentel/mendeleev}},
       year  = {2014--},
    }
