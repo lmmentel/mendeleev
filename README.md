@@ -162,6 +162,7 @@ important entries are listed:
 ### Basic properties
 
 - atomic number
+- atomic volume
 - atomic weight
 - block
 - cas
@@ -170,6 +171,7 @@ important entries are listed:
 - group
 - name
 - neutrons
+- mass number
 - period
 - protons
 - series
@@ -206,31 +208,34 @@ important entries are listed:
 
 ### Descriptive properties
 
--   discoverers
--   discovery location
--   dipole year
--   description
--   name origin
--   sources
--   uses
+- discoverers
+- discovery location
+- discovery year
+- dipole year
+- description
+- name origin
+- sources
+- uses
 
 ### Physical properties
 
--   boiling point
--   C\<sub\>6\</sub\>
--   density
--   dipole polarizability
--   electron affinity
--   evaporation heat
--   gas basicity
--   ionization energies
--   lattice structure
--   melting point
--   oxidation states
--   proton affinity
--   specific heat
--   thermal conductivity
--   nuclear screening constants (Slater & Clementi)
+- boiling point
+- C\<sub\>6\</sub\>
+- density
+- dipole polarizability
+- electron affinity
+- evaporation heat
+- fusion heat
+- gas basicity
+- heat of formation
+- ionization energies
+- lattice constant
+- lattice structure
+- melting point
+- oxidation states
+- proton affinity
+- specific heat capacity
+- thermal conductivity
 
 ### Computed properties
 
@@ -238,16 +243,37 @@ important entries are listed:
 -   softness
 -   electrophilicity
 
+### Other properties
+
+- abundance in the Earth's crust
+- abundance in the sea
+- geochemical class
+- Glawe number
+- Goldschmidt class
+- InChI
+- is monoisotopic
+- is radioactive
+- isotopes
+- Mendeleev number
+- NIST WebBook URL
+- nuclear screening constants (Slater & Clementi)
+
 ### Isotope properties
 
--   abundance
--   g\_factor
--   half\_life
--   radioactivity
--   mass
--   mass number
--   spin
--   quadrupole\_moment
+- abundance
+- abundance uncertainty
+- discovery year
+- g-factor
+- g-factor uncertainty
+- half life
+- half life uncertainty
+- radioactivity
+- mass
+- mass number
+- parity
+- quadrupole moment
+- quadrupole moment uncertainty
+- spin
 
 ## Getting started
 
