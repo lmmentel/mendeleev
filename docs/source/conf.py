@@ -49,6 +49,7 @@ autosummary_generate = True
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     "sphinx_copybutton",
+    "sphinx_issues",  # linking github issues, prs, users
     "sphinx_material",
     "nbsphinx",
     "sphinx.ext.autodoc",
@@ -116,6 +117,9 @@ master_doc = "index"
 # General information about the project.
 project = u"mendeleev"
 copyright = u"2021, Lukasz Mentel"
+
+# Link to GitHub repo for github_issues extension
+issues_github_path = "lmmentel/mendeleev"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

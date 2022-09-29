@@ -11,3 +11,4 @@ pybtex
 pybtex-docutils
 sphinx-copybutton
 sphinx-material
+sphinx-issues

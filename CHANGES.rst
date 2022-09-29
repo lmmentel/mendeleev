@@ -2,6 +2,18 @@
 mendeleev Changelog
 *******************
 
+v0.11.0 (29.09.2022)
+--------------------
+
+* Update data.rst by :user:`Eben60` in :pr:`66`
+* Set discovery_location for Zinc to null by :user:`lmmentel` in :pr:`68`
+* Change "Oxidation states" to "Commonly occurring oxidation states" by :user:`Eben60` in :pr:`69`
+* Add International Chemical Identifier property by :user:`lmmentel` in :pr:`76`
+* Update data for isotopes by :user:`lmmentel` in :pr:`74`
+* Update oxidation states and add method to fetch values by :user:`lmmentel` in :pr:`77`
+* Documentation fixes by :user:`lmmentel` in :pr:`78`
+
+
 v0.10.0 (17.07.2022)
 --------------------
 
