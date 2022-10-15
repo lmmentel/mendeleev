@@ -1058,7 +1058,7 @@ class IsotopeDecayMode(Base):
     def __str__(self) -> str:
         return f"<IsotopeDecayMode(id={self.id}, " \
             f"isotope_id={self.isotope_id}, " \
-            f"mode={self.mode}, " \
+            f"mode='{self.mode}', " \
             f"intensity={self.intensity})>"
     
     def __repr__(self) -> str:
