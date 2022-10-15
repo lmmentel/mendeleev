@@ -4,6 +4,7 @@
 
 from typing import Any, Callable, Dict, List, Tuple, Union
 from operator import attrgetter
+import math
 import urllib.parse
 
 import numpy as np
@@ -945,6 +946,24 @@ class Series(Base):
         return "<Series(name={n:s}, color={c:s})>".format(n=self.name, c=self.color)
 
 
+def with_uncertainty(value: float, uncertainty: float, digits: int = 5) -> str:
+    """Format a value with uncertainty using scientific notation.
+    
+    Args:
+        value (float): value
+        uncertainty (float): uncertainty of the value
+        digits (int): number of digits after decimal point to print in case
+            uncertainty is `None`  
+    """
+    if value is None and uncertainty is None:
+        return "None"
+
+    if uncertainty is None or uncertainty == 0.0:
+        return "{0:.{1}f}".format(value, digits)
+    digits = -int(math.floor(math.log10(uncertainty)))
+    return "{0:.{2}f}({1:.0f})".format(value, uncertainty * 10**digits, digits)
+
+
 class Isotope(Base):
     """
     Isotope
@@ -996,20 +1015,18 @@ class Isotope(Base):
         return not self.is_radioactive
 
     def __str__(self):
-
-        mfmt = "" if self.mass is None else "10.5f"
-        afmt = "" if self.abundance is None else "5.3f"
-        return "{0:5d} {1:5d} {2:{mfmt}} {3:{afmt}}".format(
+        return "atomic_number={0:5d}, mass_number={1:5d}, mass={2:10s}, abundance={3:10s}".format(
             self.atomic_number,
             self.mass_number,
-            self.mass,
-            self.abundance,
-            mfmt=mfmt,
-            afmt=afmt,
+            with_uncertainty(self.mass, self.mass_uncertainty, digits=5),
+            with_uncertainty(self.abundance, self.abundance_uncertainty, digits=3),
         )
 
     def __repr__(self):
-        return f"<Isotope(Z={self.atomic_number}, A={self.mass_number}, mass={self.mass}, abundance={self.abundance})>"
+        return f"<Isotope(Z={self.atomic_number}, " \
+            f"A={self.mass_number}, " \
+            f"mass={with_uncertainty(self.mass, self.mass_uncertainty, 5)}, " \
+            f"abundance={with_uncertainty(self.abundance, self.abundance_uncertainty, 3)})>"
 
 
 class ScreeningConstant(Base):
