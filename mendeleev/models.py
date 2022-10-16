@@ -222,7 +222,7 @@ class Element(Base):
     ionic_radii = relationship("IonicRadius", lazy="subquery")
     _ionization_energies = relationship("IonizationEnergy", lazy="subquery")
     _oxidation_states = relationship("OxidationState", lazy="subquery")
-    isotopes = relationship("Isotope", lazy="subquery")
+    isotopes = relationship("Isotope", lazy="subquery", back_populates="element")
     screening_constants = relationship("ScreeningConstant", lazy="subquery")
 
     @reconstructor
@@ -1009,6 +1009,7 @@ class Isotope(Base):
     quadrupole_moment_uncertainty = Column(Float)
     spin = Column(String)
 
+    element = relationship("Element", lazy="joined", back_populates="isotopes")
     decay_modes = relationship("IsotopeDecayMode", lazy="subquery")
 
     @hybrid_property
@@ -1016,7 +1017,7 @@ class Isotope(Base):
         """Flag to indicate whether the isotope is stable"""
         return not self.is_radioactive
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "atomic_number={0:5d}, mass_number={1:5d}, mass={2:10s}, abundance={3:10s}".format(
             self.atomic_number,
             self.mass_number,
@@ -1024,11 +1025,13 @@ class Isotope(Base):
             with_uncertainty(self.abundance, self.abundance_uncertainty, digits=3),
         )
 
-    def __repr__(self):
-        return f"<Isotope(Z={self.atomic_number}, " \
-            f"A={self.mass_number}, " \
-            f"mass={with_uncertainty(self.mass, self.mass_uncertainty, 5)}, " \
-            f"abundance={with_uncertainty(self.abundance, self.abundance_uncertainty, 3)})>"
+    def __repr__(self) -> str:
+        return ", ".join([
+            f"<Isotope(Z={self.atomic_number}",
+            f"A={self.mass_number}",
+            f"mass={with_uncertainty(self.mass, self.mass_uncertainty, 5)}",
+            f"abundance={with_uncertainty(self.abundance, self.abundance_uncertainty, 3)})>",
+        ])
 
 
 class IsotopeDecayMode(Base):
@@ -1056,10 +1059,12 @@ class IsotopeDecayMode(Base):
     is_observed_intensity_unknown = Column(Boolean)
 
     def __str__(self) -> str:
-        return f"<IsotopeDecayMode(id={self.id}, " \
-            f"isotope_id={self.isotope_id}, " \
-            f"mode='{self.mode}', " \
+        return ", ".join([
+            f"<IsotopeDecayMode(id={self.id}",
+            f"isotope_id={self.isotope_id}",
+            f"mode='{self.mode}'",
             f"intensity={self.intensity})>"
+        ])
     
     def __repr__(self) -> str:
         return str(self)
