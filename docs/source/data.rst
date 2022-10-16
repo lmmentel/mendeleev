@@ -371,3 +371,41 @@ Isotope Decay Modes
    - Livermorium
    - Tennessine
    - Oganesson
+
+
+.. [#f11] **Isotope Decay Modes**
+
+   The different modes in the table are stores as ASCII representations
+   for comppatibility. The table below provides explanations behind the
+   symbols.
+
+   +---------+----------+-------------------------------+
+   | ASCII   | Unicode  | Description                   |
+   +=========+==========+===============================+
+   | A       | 𝛼        | 𝛼 emission                    |
+   | p       | p        | proton emission               |
+   | 2p      | 2p       | 2-proton emission             |
+   | n       | n        | neutron emission              |
+   | 2n      | 2n       | 2-neutron emission            |
+   | EC      | ε        | electron capture              |
+   | e+      | e⁺       | positron emission             |
+   | B+      | β⁺       | β⁺ decay (β⁺ = ε + e⁺)        |
+   | B-      | β⁻       | β⁻ decay                      |
+   | 2B-     | 2β⁻      | double β⁻ decay               |
+   | 2B+     | 2β⁺      | double β⁺ decay               |
+   | B-n     | β⁻n      | β⁻-delayed neutron emission   |
+   | B-2n    | β⁻2n     | β⁻-delayed 2-neutron emission |
+   | B-3n    | β⁻3n     | β⁻-delayed 3-neutron emission |
+   | B+p     | β⁺p      | β⁺-delayed proton emission    |
+   | B+2p    | β⁺2p     | β⁺-delayed 2-proton emission  |
+   | B+3p    | β⁺3p     | β⁺-delayed 3-proton emission  |
+   | B-A     | β⁻𝛼      | β⁻-delayed 𝛼 emission         |
+   | B+A     | β⁺𝛼      | β⁺-delayed 𝛼 emission         |
+   | B-d     | β⁻d      | β⁻-delayed deuteron emission  |
+   | B-t     | β⁻t      | β⁻-delayed triton emission    |
+   | IT      | IT       | internal transition           |
+   | SF      | SF       | spontaneous fission           |
+   | B+SF    | β⁺SF     | β⁺-delayed fission            |
+   | B-SF    | β⁻SF     | β⁻-delayed fission            |
+   | 24Ne    | 24NE     | heavy cluster emission        |
+   +---------+----------+-------------------------------+
