@@ -5,12 +5,13 @@ from typing import Union
 import six
 
 from .db import get_session
-from .models import Element
+from .models import Element, Isotope
 
 
 __all__ = [
     "get_all_elements",
     "element",
+    "isotope",
 ]
 
 
@@ -94,6 +95,27 @@ def get_all_elements():
     elements = session.query(Element).all()
     session.close()
     return elements
+
+
+def isotope(symbol_or_atn: Union[str, int], mass_number: int) -> Isotope:
+    """
+    Get an Isotope based on the element symbol and mass number or atomic number
+    and mass number.
+
+    Args:
+        symbol_or_atn (str or int): either element symbol or atomic number
+        mass_number (int): mass number of the isotope
+
+    Returns:
+        isotope (Isotope): isotope instance
+    """
+    session = get_session()
+    if isinstance(symbol_or_atn, int):
+        return session.query(Isotope).filter_by(atomic_number=symbol_or_atn, mass_number=mass_number).one()
+    elif isinstance(symbol_or_atn, str):
+        return session.query(Isotope).join(Element).filter(Element.symbol==symbol_or_atn, Isotope.mass_number==mass_number).one()
+    else:
+        raise ValueError("Expecting a <str> or <int>, got: {0:s}".format(type(symbol_or_atn)))
 
 
 def ids_to_attr(ids, attr="atomic_number"):
