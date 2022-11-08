@@ -1,14 +1,14 @@
 """create phase transition table
 
 Revision ID: e93dcf938eaf
-Revises: 93964245e992
+Revises: 4bff6db401a7
 Create Date: 2022-11-08 19:32:56.431200
 
 """
 
 # revision identifiers, used by Alembic.
 revision = "e93dcf938eaf"
-down_revision = "93964245e992"
+down_revision = "4bff6db401a7"
 branch_labels = None
 depends_on = None
 
