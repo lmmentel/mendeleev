@@ -9,6 +9,7 @@ v0.12.0 (9.10.2022)
 * Fix abundancies for isotopes with one naturally occurring isotope by :user:`lmmentel` in :pr:`80`
 * Add ``IsotopeDecayMode`` model and data by :user:`lmmentel` in :pr:`84`
 * Update boiling and melting point data and add triple point and critical temperature and pressure, by :user:`lmmentel` in :pr:`88`
+* Include compatibility with python 3.11.
 
 v0.11.0 (29.09.2022)
 --------------------
