@@ -154,7 +154,6 @@ class Element(Base):
     atomic_weight = Column(Float)
     atomic_weight_uncertainty = Column(Float)
     block = Column(String)
-    boiling_point = Column(Float)
     cas = Column(String)
     covalent_radius_bragg = Column(Float)
     covalent_radius_cordero = Column(Float)
@@ -190,7 +189,6 @@ class Element(Base):
     jmol_color = Column(String)
     lattice_constant = Column(Float)
     lattice_structure = Column(String)
-    melting_point = Column(Float)
     mendeleev_number = Column(Integer)
     metallic_radius = Column(Float)
     metallic_radius_c12 = Column(Float)
@@ -202,7 +200,6 @@ class Element(Base):
     pettifor_number = Column(Integer)
     proton_affinity = Column(Float)
     _series_id = Column("series_id", Integer, ForeignKey("series.id"))
-    _series = relationship("Series", uselist=False, lazy="subquery")
     series = association_proxy("_series", "name")
     sources = Column(String)
     specific_heat_capacity = Column(Float)
@@ -219,12 +216,14 @@ class Element(Base):
     vdw_radius_uff = Column(Float)
     vdw_radius_mm3 = Column(Float)
 
-    ionic_radii = relationship("IonicRadius", lazy="subquery")
     _ionization_energies = relationship("IonizationEnergy", lazy="subquery")
     _oxidation_states = relationship("OxidationState", lazy="subquery")
+    _series = relationship("Series", uselist=False, lazy="subquery")
+
+    ionic_radii = relationship("IonicRadius", lazy="subquery")
     isotopes = relationship("Isotope", lazy="subquery", back_populates="element")
-    screening_constants = relationship("ScreeningConstant", lazy="subquery")
     phase_transitions = relationship("PhaseTransition", lazy="subquery")
+    screening_constants = relationship("ScreeningConstant", lazy="subquery")
 
     @reconstructor
     def init_on_load(self):
@@ -265,6 +264,22 @@ class Element(Base):
         See: https://en.wikipedia.org/wiki/International_Chemical_Identifier
         """
         return f"InchI=1S/{self.symbol}"
+
+    @property
+    def boiling_point(self) -> Union[float, Dict[str, float]]:
+        """Boiling point"""
+        if len(self.phase_transitions) == 1:
+            return self.phase_transitions[0].boiling_point
+        else:
+            return {pt.allotrope: pt.boiling_point for pt in self.phase_transitions}
+
+    @property
+    def melting_point(self) -> Union[float, Dict[str, float]]:
+        """Melting point"""
+        if len(self.phase_transitions) == 1:
+            return self.phase_transitions[0].melting_point
+        else:
+            return {pt.allotrope: pt.melting_point for pt in self.phase_transitions}
 
     @property
     def nist_webbook_url(self) -> str:
