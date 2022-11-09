@@ -221,6 +221,8 @@ important entries are listed:
 
 - boiling point
 - C\<sub\>6\</sub\>
+- critical temperature
+- critical pressure
 - density
 - dipole polarizability
 - electron affinity
@@ -236,6 +238,8 @@ important entries are listed:
 - proton affinity
 - specific heat capacity
 - thermal conductivity
+- triple point temperature
+- triple point pressure
 
 ### Computed properties
 
