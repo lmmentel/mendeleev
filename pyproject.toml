@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mendeleev"
-version = "v0.11.0"
+version = "v0.12.0"
 description = "Pythonic periodic table of elements"
 authors = ["Lukasz Mentel <lmmentel@gmail.com>"]
 maintainers = ["Lukasz Mentel <lmmentel@gmail.com>"]
