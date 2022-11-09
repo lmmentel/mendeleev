@@ -154,7 +154,6 @@ class Element(Base):
     atomic_weight = Column(Float)
     atomic_weight_uncertainty = Column(Float)
     block = Column(String)
-    boiling_point = Column(Float)
     cas = Column(String)
     covalent_radius_bragg = Column(Float)
     covalent_radius_cordero = Column(Float)
@@ -190,7 +189,6 @@ class Element(Base):
     jmol_color = Column(String)
     lattice_constant = Column(Float)
     lattice_structure = Column(String)
-    melting_point = Column(Float)
     mendeleev_number = Column(Integer)
     metallic_radius = Column(Float)
     metallic_radius_c12 = Column(Float)
@@ -202,7 +200,6 @@ class Element(Base):
     pettifor_number = Column(Integer)
     proton_affinity = Column(Float)
     _series_id = Column("series_id", Integer, ForeignKey("series.id"))
-    _series = relationship("Series", uselist=False, lazy="subquery")
     series = association_proxy("_series", "name")
     sources = Column(String)
     specific_heat_capacity = Column(Float)
@@ -219,10 +216,13 @@ class Element(Base):
     vdw_radius_uff = Column(Float)
     vdw_radius_mm3 = Column(Float)
 
-    ionic_radii = relationship("IonicRadius", lazy="subquery")
     _ionization_energies = relationship("IonizationEnergy", lazy="subquery")
     _oxidation_states = relationship("OxidationState", lazy="subquery")
+    _series = relationship("Series", uselist=False, lazy="subquery")
+
+    ionic_radii = relationship("IonicRadius", lazy="subquery")
     isotopes = relationship("Isotope", lazy="subquery", back_populates="element")
+    phase_transitions = relationship("PhaseTransition", lazy="subquery")
     screening_constants = relationship("ScreeningConstant", lazy="subquery")
 
     @reconstructor
@@ -264,6 +264,22 @@ class Element(Base):
         See: https://en.wikipedia.org/wiki/International_Chemical_Identifier
         """
         return f"InchI=1S/{self.symbol}"
+
+    @property
+    def boiling_point(self) -> Union[float, Dict[str, float]]:
+        """Boiling point"""
+        if len(self.phase_transitions) == 1:
+            return self.phase_transitions[0].boiling_point
+        else:
+            return {pt.allotrope: pt.boiling_point for pt in self.phase_transitions}
+
+    @property
+    def melting_point(self) -> Union[float, Dict[str, float]]:
+        """Melting point"""
+        if len(self.phase_transitions) == 1:
+            return self.phase_transitions[0].melting_point
+        else:
+            return {pt.allotrope: pt.melting_point for pt in self.phase_transitions}
 
     @property
     def nist_webbook_url(self) -> str:
@@ -659,7 +675,6 @@ class Element(Base):
 
     def electronegativity_nagle(self) -> float:
         "Nagle's electronegativity"
-
         if self.dipole_polarizability is not None:
             return nagle(self.nvalence(), self.dipole_polarizability)
 
@@ -682,14 +697,12 @@ class Element(Base):
         """
         Return the number of valence electrons
         """
-
         return self.ec.nvalence(self.block, method=method)
 
     def oxides(self) -> List[str]:
         """
         Return a list of possible oxides based on the oxidation number
         """
-
         oxide_coeffs = [coeffs(ox) for ox in self.oxistates if ox > 0]
         # convert to strings and replace 1 with empty string
         normal_coeffs = [[str(c) if c != 1 else "" for c in t] for t in oxide_coeffs]
@@ -712,18 +725,19 @@ class Element(Base):
             "ionic_radii",
             "isotopes",
             "screening_constants",
+            "phase_transitions",
         ]
         hashable = [(k, v) for k, v in self.__dict__.items() if k not in to_drop]
         return hash(tuple(sorted(hashable)))
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """Overwrite the defalt comparison"""
         return hash(self) == hash(other)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "%s(\n%s)" % (
             self.__class__.__name__,
             " ".join(
@@ -829,12 +843,12 @@ class IonicRadius(Base):
     origin = Column(String)
     most_reliable = Column(Boolean)
 
-    def __str__(self):
+    def __str__(self) -> str:
         out = ["{0}={1:>4d}", "{0}={1:5s}", "{0}={1:>6.3f}", "{0}={1:>6.3f}"]
         keys = ["charge", "coordination", "crystal_radius", "ionic_radius"]
         return ", ".join(o.format(k, getattr(self, k)) for o, k in zip(out, keys))
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "%s(\n%s)" % (
             self.__class__.__name__,
             " ".join(
@@ -867,8 +881,7 @@ class IonizationEnergy(Base):
 
         return "{0:5d} {1:10.5f}".format(self.degree, self.energy)
 
-    def __repr__(self):
-
+    def __repr__(self) -> str:
         return "<IonizationEnergy(atomic_number={a:5d}, degree={d:3d}, energy={e:10.5f})>".format(
             a=self.atomic_number, d=self.degree, e=self.energy
         )
@@ -892,7 +905,7 @@ class OxidationState(Base):
     oxidation_state = Column(Integer)
     category = Column(String)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return ", ".join(
             [
                 f"<OxidationState(id={self.id}",
@@ -919,8 +932,7 @@ class Group(Base):
     symbol = Column(String)
     name = Column(String)
 
-    def __repr__(self):
-
+    def __repr__(self) -> str:
         return "<Group(symbol={s:s}, name={n:s})>".format(s=self.symbol, n=self.name)
 
 
@@ -941,19 +953,18 @@ class Series(Base):
     name = Column(String)
     color = Column(String)
 
-    def __repr__(self):
-
+    def __repr__(self) -> str:
         return "<Series(name={n:s}, color={c:s})>".format(n=self.name, c=self.color)
 
 
 def with_uncertainty(value: float, uncertainty: float, digits: int = 5) -> str:
     """Format a value with uncertainty using scientific notation.
-    
+
     Args:
         value (float): value
         uncertainty (float): uncertainty of the value
         digits (int): number of digits after decimal point to print in case
-            uncertainty is `None`  
+            uncertainty is `None`
     """
     if value is None and uncertainty is None:
         return "None"
@@ -961,7 +972,7 @@ def with_uncertainty(value: float, uncertainty: float, digits: int = 5) -> str:
     if uncertainty is None or uncertainty == 0.0:
         return "{0:.{1}f}".format(value, digits)
     digits = -int(math.floor(math.log10(uncertainty)))
-    return "{0:.{2}f}({1:.0f})".format(value, uncertainty * 10**digits, digits)
+    return "{0:.{2}f}({1:.0f})".format(value, uncertainty * 10 ** digits, digits)
 
 
 class Isotope(Base):
@@ -1026,12 +1037,14 @@ class Isotope(Base):
         )
 
     def __repr__(self) -> str:
-        return ", ".join([
-            f"<Isotope(Z={self.atomic_number}",
-            f"A={self.mass_number}",
-            f"mass={with_uncertainty(self.mass, self.mass_uncertainty, 5)}",
-            f"abundance={with_uncertainty(self.abundance, self.abundance_uncertainty, 3)})>",
-        ])
+        return ", ".join(
+            [
+                f"<Isotope(Z={self.atomic_number}",
+                f"A={self.mass_number}",
+                f"mass={with_uncertainty(self.mass, self.mass_uncertainty, 5)}",
+                f"abundance={with_uncertainty(self.abundance, self.abundance_uncertainty, 3)})>",
+            ]
+        )
 
 
 class IsotopeDecayMode(Base):
@@ -1059,13 +1072,15 @@ class IsotopeDecayMode(Base):
     is_observed_intensity_unknown = Column(Boolean)
 
     def __str__(self) -> str:
-        return ", ".join([
-            f"<IsotopeDecayMode(id={self.id}",
-            f"isotope_id={self.isotope_id}",
-            f"mode='{self.mode}'",
-            f"intensity={self.intensity})>"
-        ])
-    
+        return ", ".join(
+            [
+                f"<IsotopeDecayMode(id={self.id}",
+                f"isotope_id={self.isotope_id}",
+                f"mode='{self.mode}'",
+                f"intensity={self.intensity})>",
+            ]
+        )
+
     def __repr__(self) -> str:
         return str(self)
 
@@ -1095,14 +1110,44 @@ class ScreeningConstant(Base):
     s = Column(String)
     screening = Column(Float)
 
-    def __str__(self):
-
+    def __str__(self) -> str:
         return "{0:4d} {1:3d} {2:s} {3:10.4f}".format(
             self.atomic_number, self.n, self.s, self.screening
         )
 
-    def __repr__(self):
-
+    def __repr__(self) -> str:
         return "<ScreeningConstant(Z={0:4d}, n={1:3d}, s={2:s}, screening={3:10.4f})>".format(
             self.atomic_number, self.n, self.s, self.screening
         )
+
+
+class PhaseTransition(Base):
+    """Phase Transition Conditions
+
+    Args:
+        atomic_number (int): Atomic number
+        boiling_point (float): Boiling point in K
+        melting_point (float): Melting points in K
+        critical_temperature (float): Critical temperature in K
+        critical_pressure (float): Critical pressure in MPa
+        triple_point_temperature (float): Temperature in K of the triple point
+        triple_point_pressure (float): Pressure in kPa of the triple point
+    """
+
+    __tablename__ = "phasetransitions"
+
+    id = Column(Integer, primary_key=True)
+    atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
+    boiling_point = Column(Float)
+    melting_point = Column(Float)
+    critical_temperature = Column(Float)
+    critical_pressure = Column(Float)
+    triple_point_temperature = Column(Float)
+    triple_point_pressure = Column(Float)
+    allotrope = Column(String)
+
+    def __str__(self) -> str:
+        return f"{self.atomic_number} Tm={self.melting_point} Tb={self.boiling_point}"
+
+    def __repr__(self) -> str:
+        return str(self)
