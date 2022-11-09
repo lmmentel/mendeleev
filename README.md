@@ -67,17 +67,6 @@ source: [https://github.com/lmmentel/mendeleev](https://github.com/lmmentel/mend
 
 ---
 
-<h2> Important! </h2>
-
-Version 0.5.1 will be the latest version to support Python2.7.
-
-**This package has been migrated from bitbucket.**
-
-**The bitbucket repo is no longer being maintaned and development will
-continue at github.**
-
----
-
 ## About the project
 
 This package provides a convenient python API for accessing various
