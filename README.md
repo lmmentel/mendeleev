@@ -1,7 +1,7 @@
 [![Documentation Status](https://readthedocs.org/projects/mendeleev/badge/)](https://mendeleev.readthedocs.org)
 [![Latest version released on PyPi](https://img.shields.io/pypi/v/mendeleev.svg?style=flat-square&label=PYPI%20version)](https://pypi.python.org/pypi/mendeleev)
 [![MIT license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![image](https://anaconda.org/conda-forge/github3.py/badges/installer/conda.svg)](https://anaconda.org/lmmentel/mendeleev)
+[![image](https://anaconda.org/lmmentel/mendeleev/badges/version.svg)](https://anaconda.org/lmmentel/mendeleev)
 [![Python package](https://github.com/lmmentel/mendeleev/actions/workflows/main.yml/badge.svg)](https://github.com/lmmentel/mendeleev/actions/workflows/main.yml)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/lmmentel/mendeleev.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lmmentel/mendeleev/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/lmmentel/mendeleev.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lmmentel/mendeleev/context:python)
