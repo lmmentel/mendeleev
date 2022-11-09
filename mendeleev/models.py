@@ -725,6 +725,7 @@ class Element(Base):
             "ionic_radii",
             "isotopes",
             "screening_constants",
+            "phase_transitions",
         ]
         hashable = [(k, v) for k, v in self.__dict__.items() if k not in to_drop]
         return hash(tuple(sorted(hashable)))
