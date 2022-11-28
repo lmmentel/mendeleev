@@ -2,6 +2,13 @@
 mendeleev Changelog
 *******************
 
+v0.12.1 (28.11.2022)
+--------------------
+
+* Add CodeQL workflow for GitHub code scanning by :user:`@lgtm-com` in :pr:`89`
+* Fix number of valence electrons (:issue:`91`) for Pd by :user:`lmmentel` in :pr:`92`
+* Add missing type hints by :user:`lmmentel` in :pr:`93`
+
 v0.12.0 (9.10.2022)
 -------------------
 
