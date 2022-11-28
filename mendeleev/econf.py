@@ -1,7 +1,7 @@
 """
 Class abstracting the elctronic configuration
 """
-
+from typing import Dict, List, Tuple, Union
 from collections import OrderedDict
 import math
 import re
@@ -13,41 +13,57 @@ ORBITALS = ("s", "p", "d", "f", "g", "h", "i", "j", "k")
 SHELLS = ("K", "L", "M", "N", "O", "P", "Q")
 
 
-def get_l(subshell):
+def get_l(subshell: str) -> int:
     "Return the orbital angular momentum quantum number for a given subshell"
 
     if subshell.lower() in ORBITALS:
         return ORBITALS.index(subshell.lower())
     else:
-        raise ValueError((f'wrong subshell label: "{subshell}",' + f' should be one of: {", ".join(ORBITALS)}'))
+        raise ValueError(
+            (
+                f'wrong subshell label: "{subshell}",'
+                + f' should be one of: {", ".join(ORBITALS)}'
+            )
+        )
 
 
-def subshell_degeneracy(subshell):
+def subshell_degeneracy(subshell: str) -> int:
     "Return the degeneracy of a given subshell"
-
     return 2 * get_l(subshell) + 1
 
 
-def subshell_capacity(subshell):
+def subshell_capacity(subshell: str) -> int:
     """
     Return the subshell capacity (max number of electrons)
     """
-
     return 2 * subshell_degeneracy(subshell)
 
 
-def shell_capactity(shell):
+def shell_capactity(shell: str) -> int:
     """
     Return the shell capacity (max number of electrons)
 
     The capacity is :math:`N=2n^{2}`, where :math:`n` is the principal
     quantum number.
+
+    Args:
+        shell: str
+            Shell label, "K", "L", "M", ...
+
+    Returns:
+        capacity: int
+            Number of electrons that can occupy a given shell
     """
 
     if shell.upper() in SHELLS:
         return 2 * (SHELLS.index(shell.upper()) + 1) ** 2
     else:
-        raise ValueError((f'wrong shell label: "{shell}",' + f' should be one of: {", ".join(SHELLS)}'))
+        raise ValueError(
+            (
+                f'wrong shell label: "{shell}",'
+                + f' should be one of: {", ".join(SHELLS)}'
+            )
+        )
 
 
 class ElectronicConfiguration(object):
@@ -64,21 +80,21 @@ class ElectronicConfiguration(object):
         ]
     )
 
-    def __init__(self, conf=None, atomre=None, shellre=None):
-
+    def __init__(
+        self, conf: Union[str, Dict] = None, atomre: str = None, shellre: str = None
+    ):
         self.atomre = atomre
         self.shellre = shellre
         self.conf = conf
 
     @property
-    def conf(self):
+    def conf(self) -> OrderedDict:
         "Return the configuration"
         return self._conf
 
     @conf.setter
-    def conf(self, value):
+    def conf(self, value: Union[str, Dict]) -> OrderedDict:
         "Setter method for initializing the configuration"
-
         if isinstance(value, six.string_types):
             self.confstr = value
             self.parse(str(value))
@@ -90,12 +106,12 @@ class ElectronicConfiguration(object):
             raise ValueError(f"<conf> should be str or dict, got {type(value)}")
 
     @property
-    def atomre(self):
+    def atomre(self) -> str:
         "Regular expression for atomic symbols"
         return self._atomre
 
     @atomre.setter
-    def atomre(self, value):
+    def atomre(self, value: str):
 
         if value is None:
             self._atomre = re.compile(r"\[([A-Z][a-z]*)\]")
@@ -108,14 +124,14 @@ class ElectronicConfiguration(object):
         return self._shellre
 
     @shellre.setter
-    def shellre(self, value):
+    def shellre(self, value: str):
 
         if value is None:
             self._shellre = re.compile(r"(?P<n>\d)(?P<o>[spdfghijk])(?P<e>\d+)?")
         else:
             self._shellre = re.compile(value)
 
-    def parse(self, string):
+    def parse(self, string: str) -> None:
         """
         Parse a ``string`` with electronic configuration into an
         ``OrderedDict`` representation
@@ -147,20 +163,16 @@ class ElectronicConfiguration(object):
 
         self._conf = OrderedDict(list(core.items()) + list(valence.items()))
 
-    def get_largest_core(self):
+    def get_largest_core(self) -> Tuple:
         """
         Find the largest noble gas core possible for the current
         configuration and return the symbol of the corresponding noble
         gas element.
         """
-
         confset = set(self.conf.items())
-
         for s, conf in reversed(ElectronicConfiguration.noble.items()):
-
             ec = ElectronicConfiguration(conf)
             nobleset = set(ec.conf.items())
-
             ans = confset.issuperset(nobleset)
             if ans:
                 return (s, ec)
@@ -170,14 +182,11 @@ class ElectronicConfiguration(object):
         Find the valence configuration i.e. remove the largest noble gas
         core from the current configuration and return the result.
         """
-
         _, core_conf = self.get_largest_core()
-
         valence = OrderedDict(set(self.conf.items()) - set(core_conf.conf.items()))
-
         return ElectronicConfiguration(valence)
 
-    def sort(self, inplace=True):
+    def sort(self, inplace: bool = True):
         "Sort the occupations OD"
         if inplace:
             self.conf = OrderedDict(
@@ -192,24 +201,22 @@ class ElectronicConfiguration(object):
                 )
             )
 
-    def electrons_per_shell(self):
+    def electrons_per_shell(self) -> Dict[str, int]:
         "Return number of electrons per shell as dict"
-
         return {
             s: sum(v for k, v in self.conf.items() if k[0] == n)
             for n, s in zip(range(1, self.max_n() + 1), SHELLS)
         }
 
-    def shell2int(self):
+    def shell2int(self) -> List[Tuple[int]]:
         "configuration as list of tuples (n, l, e)"
         return [(x[0], get_l(x[1]), x[2]) for x in self.conf]
 
-    def max_n(self):
+    def max_n(self) -> int:
         "Return the largest value of principal quantum number for the atom"
-
         return max(shell[0] for shell in self.conf.keys())
 
-    def max_l(self, n):
+    def max_l(self, n: int) -> int:
         """
         Return the largest value of azimutal quantum number for a given
         value of principal quantum number
@@ -217,13 +224,15 @@ class ElectronicConfiguration(object):
         Args:
             n : int
                 Principal quantum number
-        """
 
+        Returns:
+            l: int
+                Azimutal quantum number
+        """
         return ORBITALS[max(get_l(x[1]) for x in self.conf.keys() if x[0] == n)]
 
-    def last_subshell(self, wrt="order"):
+    def last_subshell(self, wrt: str = "order"):
         "Return the valence shell"
-
         if wrt.lower() == "order":
             return list(self.conf.items())[-1]
         elif wrt.lower() == "aufbau":
@@ -233,36 +242,36 @@ class ElectronicConfiguration(object):
         else:
             raise ValueError(f"wrong <wrt>: {wrt}")
 
-    def nvalence(self, block, method=None):
+    def nvalence(self, block: str, period: int, method: str = None) -> int:
         "Return the number of valence electrons"
-
-        if block in ["s", "p"]:
+        if block in {"s", "p"}:
             return sum(v for k, v in self.conf.items() if k[0] == self.max_n())
         elif block == "d":
             if method == "simple":
                 return 2
-            else:
-                return (
-                    self.conf[(self.max_n(), "s")] + self.conf[(self.max_n() - 1, "d")]
-                )
+            return self.conf.get((period, "s"), 0) + self.conf.get((period - 1, "d"), 0)
         elif block == "f":
-            return 2
+            if method == "simple":
+                return 2
+            return (
+                self.conf.get((period, "s"), 0)
+                + self.conf.get((period, "p"), 0)
+                + self.conf.get((period - 1, "d"), 0)
+                + self.conf.get((period - 2, "f"), 0)
+            )
         else:
-            raise ValueError(f"wrong block: {block}")
+            raise ValueError(f"Cannot process block: {block}")
 
-    def ne(self):
-        "Return the number of electrons"
-
+    def ne(self) -> int:
+        "Number of electrons"
         return sum(list(self.conf.values()))
 
-    def unpaired_electrons(self):
-        "Return the number of unpaired electrons"
-
+    def unpaired_electrons(self) -> int:
+        "Number of unpaired electrons"
         so = self.spin_occupations()
-
         return sum(v["unpaired"] for v in so.values())
 
-    def ionize(self, n=1):
+    def ionize(self, n: int = 1):
         """
         Remove `n` electrons from and return a new `ElectronicConfiguration`
         object"""
@@ -288,9 +297,7 @@ class ElectronicConfiguration(object):
         For each subshell calculate the number of `alpha`, `beta` electrons,
         electron pairs and unpaired electrons
         """
-
         so = OrderedDict()
-
         for (n, orb), nele in self.conf.items():
 
             ssc = subshell_capacity(orb)
@@ -313,17 +320,15 @@ class ElectronicConfiguration(object):
 
         return so
 
-    def spin_only_magnetic_moment(self):
+    def spin_only_magnetic_moment(self) -> float:
         """
         Return the magnetic moment insluding only spin of the electrons
         and not the angular momentum
         """
-
         ue = self.unpaired_electrons()
-
         return math.sqrt(ue * (ue + 2))
 
-    def slater_screening(self, n, o, alle=False):
+    def slater_screening(self, n: int, o: str, alle: bool = False):
         """
         Calculate the screening constant using the approach introduced by
         Slater in Slater, J. C. (1930). Atomic Shielding Constants. Physical
@@ -342,7 +347,7 @@ class ElectronicConfiguration(object):
 
         ne = 0 if alle else 1
         coeff = 0.3 if n == 1 else 0.35
-        if o in ["s", "p"]:
+        if o in {"s", "p"}:
             # get the number of valence electrons - 1
             vale = float(
                 sum(v for k, v in self.conf.items() if k[0] == n and k[1] in ["s", "p"])
@@ -351,7 +356,7 @@ class ElectronicConfiguration(object):
             n1 = sum(v * 0.85 for k, v in self.conf.items() if k[0] == n - 1)
             n2 = sum(float(v) for k, v in self.conf.items() if k[0] in range(1, n - 1))
 
-        elif o in ["d", "f"]:
+        elif o in {"d", "f"}:
             # get the number of valence electrons - 1
             vale = float(
                 sum(v for k, v in self.conf.items() if k[0] == n and k[1] == o) - ne
@@ -365,21 +370,20 @@ class ElectronicConfiguration(object):
 
         return n1 + n2 + vale * coeff
 
-    def to_str(self):
+    def to_str(self) -> str:
         "Return a string with the configuration"
-
         return " ".join(
             "{n:d}{s:s}{e:d}".format(n=k[0], s=k[1], e=v) for k, v in self.conf.items()
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'<ElectronicConfiguration(conf="{self.to_str()}")>'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.to_str()
 
 
-def get_spin_strings(sodict, average=True):
+def get_spin_strings(sodict, average: bool = True):
     """
     spin strings as numpy arrays
 
