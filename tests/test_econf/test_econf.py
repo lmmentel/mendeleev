@@ -1,4 +1,5 @@
 from mendeleev.econf import ElectronicConfiguration
+from mendeleev import element
 
 
 def test_parse():
@@ -31,3 +32,11 @@ def test_largest_core():
         ec = ElectronicConfiguration(refconf)
         symbol, core = ec.get_largest_core()
         assert refsymbol == symbol
+
+
+def test_nvalence():
+    pd = element("Pd")
+    assert pd.nvalence() == 10
+
+    th = element("Th")
+    assert th.nvalence() == 4

@@ -697,7 +697,7 @@ class Element(Base):
         """
         Return the number of valence electrons
         """
-        return self.ec.nvalence(self.block, method=method)
+        return self.ec.nvalence(self.block, self.period, method=method)
 
     def oxides(self) -> List[str]:
         """
