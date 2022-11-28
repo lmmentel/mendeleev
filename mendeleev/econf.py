@@ -1,7 +1,7 @@
 """
 Class abstracting the elctronic configuration
 """
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Pattern, Tuple, Union
 from collections import OrderedDict
 import math
 import re
@@ -106,12 +106,12 @@ class ElectronicConfiguration(object):
             raise ValueError(f"<conf> should be str or dict, got {type(value)}")
 
     @property
-    def atomre(self) -> str:
+    def atomre(self) -> Pattern:
         "Regular expression for atomic symbols"
         return self._atomre
 
     @atomre.setter
-    def atomre(self, value: str):
+    def atomre(self, value: str) -> None:
 
         if value is None:
             self._atomre = re.compile(r"\[([A-Z][a-z]*)\]")
@@ -119,12 +119,12 @@ class ElectronicConfiguration(object):
             self._atomre = re.compile(value)
 
     @property
-    def shellre(self):
+    def shellre(self) -> Pattern:
         "Regular expression for the shell"
         return self._shellre
 
     @shellre.setter
-    def shellre(self, value: str):
+    def shellre(self, value: str) -> None:
 
         if value is None:
             self._shellre = re.compile(r"(?P<n>\d)(?P<o>[spdfghijk])(?P<e>\d+)?")
