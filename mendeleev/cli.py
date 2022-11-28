@@ -5,12 +5,13 @@ from __future__ import print_function
 import argparse
 import textwrap
 import colorama
+import contextlib
 from pyfiglet import Figlet
 from mendeleev import element
 from mendeleev.fetch import fetch_table
 
 
-def clielement():
+def clielement() -> None:
     """
     CLI for convenient printing of properties for a given element
     """
@@ -23,11 +24,8 @@ def clielement():
     )
     args = parser.parse_args()
 
-    try:
+    with contextlib.suppress(ValueError):
         args.element = int(args.element)
-    except ValueError:
-        pass
-
     e = element(args.element)
 
     f = Figlet("dotmatrix", justify="center")
@@ -43,7 +41,6 @@ def clielement():
     et.sort_index(inplace=True)
 
     # print the data
-
     print(colorama.Fore.RED + symbol)
 
     if e.description is not None:
@@ -63,5 +60,4 @@ def clielement():
 
 
 if __name__ == "__main__":
-
     clielement()

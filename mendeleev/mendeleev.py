@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import Union
+from typing import List, Union
 
 import six
 
@@ -58,7 +58,6 @@ def element(ids: Union[int, str]) -> Element:
         Carbon Hydrogen Oxygen
 
     """
-
     if isinstance(ids, (list, tuple)):
         return [_get_element(i) for i in ids]
     elif isinstance(ids, (six.string_types, int)):
@@ -69,7 +68,7 @@ def element(ids: Union[int, str]) -> Element:
         )
 
 
-def _get_element(ids):
+def _get_element(ids) -> Union[Element, List[Element]]:
     """
     Return an element from the database based on the `ids` identifier passed.
     Valid identifiers for an element are: *name*, *symbol*, *atomic number*.
@@ -88,7 +87,7 @@ def _get_element(ids):
         raise ValueError("Expecting a <str> or <int>, got: {0:s}".format(type(ids)))
 
 
-def get_all_elements():
+def get_all_elements() -> List[Element]:
     "Get all elements as a list"
 
     session = get_session()
@@ -111,14 +110,25 @@ def isotope(symbol_or_atn: Union[str, int], mass_number: int) -> Isotope:
     """
     session = get_session()
     if isinstance(symbol_or_atn, int):
-        return session.query(Isotope).filter_by(atomic_number=symbol_or_atn, mass_number=mass_number).one()
+        return (
+            session.query(Isotope)
+            .filter_by(atomic_number=symbol_or_atn, mass_number=mass_number)
+            .one()
+        )
     elif isinstance(symbol_or_atn, str):
-        return session.query(Isotope).join(Element).filter(Element.symbol==symbol_or_atn, Isotope.mass_number==mass_number).one()
+        return (
+            session.query(Isotope)
+            .join(Element)
+            .filter(Element.symbol == symbol_or_atn, Isotope.mass_number == mass_number)
+            .one()
+        )
     else:
-        raise ValueError("Expecting a <str> or <int>, got: {0:s}".format(type(symbol_or_atn)))
+        raise ValueError(
+            "Expecting a <str> or <int>, got: {0:s}".format(type(symbol_or_atn))
+        )
 
 
-def ids_to_attr(ids, attr="atomic_number"):
+def ids_to_attr(ids, attr: str = "atomic_number"):
     """
     Convert the element ids: atomic numbers, symbols, element names or a
     combination of the above to a list of corresponding attributes.
@@ -141,7 +151,13 @@ def ids_to_attr(ids, attr="atomic_number"):
         return [getattr(element(ids), attr)]
 
 
-def deltaN(id1, id2, charge1=0, charge2=0, missingIsZero=True):
+def deltaN(
+    id1: Union[str, int],
+    id2: Union[str, int],
+    charge1: int = 0,
+    charge2: int = 0,
+    missingIsZero: bool = True,
+) -> float:
     r"""
     Calculate the approximate fraction of transferred electrons between
     elements or ions `id1` and `id2` with charges `charge1` and `charge2`

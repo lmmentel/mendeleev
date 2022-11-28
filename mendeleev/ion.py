@@ -1,4 +1,5 @@
 from statistics import mean
+from typing import List
 from mendeleev import element
 
 
@@ -18,71 +19,70 @@ class Ion:
     ]
 
     def __init__(self, label, q=1):
-
         self._element = element(label)
         self.q = q
 
     @property
-    def q(self):
+    def q(self) -> int:
         return self._q
 
     @q.setter
-    def q(self, value):
+    def q(self, value: int) -> None:
         if value == 0:
             raise ValueError(f"expecting change other than 0, got {value}")
         elif value > self.Z:
-            raise ValueError(f"ionic charge ({value}) cannot be larger than atomic number ({self.Z})")
-
+            raise ValueError(
+                f"ionic charge ({value}) cannot be larger than atomic number ({self.Z})"
+            )
         else:
             self._q = int(value)
 
     @property
-    def Z(self):
+    def Z(self) -> int:
         return self._element.atomic_number
 
     @property
-    def charge(self):
+    def charge(self) -> int:
         return self._q
 
     @property
-    def electrons(self):
+    def electrons(self) -> int:
         return self.Z - self.q
 
     @property
-    def name(self):
+    def name(self) -> str:
         sign = "+" if self.charge > 0 else "-"
         return f"{self._element.name} {self.charge}{sign} ion"
 
     @property
-    def ie(self):
+    def ie(self) -> float:
         return self._element.ionenergies[self.q + 1]
 
     @property
-    def ea(self):
+    def ea(self) -> float:
         return self._element.ionenergies[self.q]
 
     @property
-    def radius(self):
+    def radius(self) -> List[float]:
         return [r for r in self._element.ionic_radii if r.charge == self.charge]
 
     def unicode_ion_symbol(self) -> str:
         """
         Return a unicode string symbol of the ion
         """
-
         superscripts = {
-            "+": u"\u207A",
-            "-": u"\u207B",
-            "0": u"\u2070",
-            "1": u"\u00B9",
-            "2": u"\u00B2",
-            "3": u"\u00B3",
-            "4": u"\u2074",
-            "5": u"\u2075",
-            "6": u"\u2076",
-            "7": u"\u2077",
-            "8": u"\u2078",
-            "9": u"\u2079",
+            "+": "\u207A",
+            "-": "\u207B",
+            "0": "\u2070",
+            "1": "\u00B9",
+            "2": "\u00B2",
+            "3": "\u00B3",
+            "4": "\u2074",
+            "5": "\u2075",
+            "6": "\u2076",
+            "7": "\u2077",
+            "8": "\u2078",
+            "9": "\u2079",
         }
         table = str.maketrans(superscripts)
         template = "+" if self.charge > 0 else "-"
@@ -109,11 +109,12 @@ class Ion:
         return self.q / radius
 
     def __getattr__(self, name):
-
         if name in Ion.__element_attributes__:
             return getattr(self._element, name)
         else:
-            raise AttributeError(f"'{name}' is not an attribute of '{self.__class__.__name__}'")
+            raise AttributeError(
+                f"'{name}' is not an attribute of '{self.__class__.__name__}'"
+            )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.unicode_ion_symbol()

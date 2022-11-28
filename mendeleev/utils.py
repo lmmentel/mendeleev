@@ -32,7 +32,6 @@ def n_effective(n: int, source: str = "slater") -> Union[float, None]:
        1. Electronegativities of elements in valence states.
        Inorganic Chemistry, 21(11), 3886–3889. https://doi.org/10.1021/ic00141a005
     """
-
     numbers = {
         "slater": {1: 1.0, 2: 2.0, 3: 3.0, 4: 3.7, 5: 4.0, 6: 4.2},
         "zhang": {1: 0.85, 2: 1.99, 3: 2.89, 4: 3.45, 5: 3.85, 6: 4.36, 7: 4.99},

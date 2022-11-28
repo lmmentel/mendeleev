@@ -226,9 +226,8 @@ class Element(Base):
     screening_constants = relationship("ScreeningConstant", lazy="subquery")
 
     @reconstructor
-    def init_on_load(self):
+    def init_on_load(self) -> None:
         "Initialize the ElectronicConfiguration class as attribute of self"
-
         self.ec = ElectronicConfiguration(self.econf)
 
     @hybrid_property
@@ -254,7 +253,6 @@ class Element(Base):
         """
         Return a dict with screening constants with tuples (n, s) as keys and
         screening constants as values"""
-
         return {(x.n, x.s): x.screening for x in self.screening_constants}
 
     @hybrid_property
@@ -290,7 +288,6 @@ class Element(Base):
     @hybrid_property
     def electrons(self) -> int:
         """Return the number of electrons."""
-
         return self.atomic_number
 
     @hybrid_property
@@ -299,13 +296,11 @@ class Element(Base):
         Return the number of neutrons of the most abundant natural stable
         isotope.
         """
-
         return self.mass_number - self.protons
 
     @hybrid_property
     def protons(self) -> int:
         """Return the number of protons."""
-
         return self.atomic_number
 
     @hybrid_property
@@ -313,7 +308,6 @@ class Element(Base):
         """
         Return the `atomic_weight` if defined or mass number otherwise.
         """
-
         return self.atomic_weight
 
     @hybrid_property
@@ -321,7 +315,6 @@ class Element(Base):
         """
         Return the mass number of the most abundant natural stable isotope
         """
-
         if len(self.isotopes) <= 0:
             return int(self.atomic_weight)
 
@@ -337,8 +330,7 @@ class Element(Base):
         if self.atomic_weight_uncertainty is None:
             if self.is_radioactive:
                 return "[{aw:.0f}]".format(aw=self.atomic_weight)
-            else:
-                return "{aw:.3f}".format(aw=self.atomic_weight)
+            return "{aw:.3f}".format(aw=self.atomic_weight)
         else:
             dec = np.abs(
                 np.floor(np.log10(np.abs(self.atomic_weight_uncertainty)))
@@ -346,15 +338,13 @@ class Element(Base):
             dec = min(dec, 5)
             if self.is_radioactive:
                 return "[{aw:.{dec}f}]".format(aw=self.atomic_weight, dec=dec)
-            else:
-                return "{aw:.{dec}f}".format(aw=self.atomic_weight, dec=dec)
+            return "{aw:.{dec}f}".format(aw=self.atomic_weight, dec=dec)
 
     @hybrid_property
     def covalent_radius(self) -> float:
         """
         Return the default covalent radius which is covalent_radius_pyykko
         """
-
         return self.covalent_radius_pyykko
 
     @hybrid_method
@@ -375,7 +365,6 @@ class Element(Base):
         - :math`EA` is the electron affinity
 
         """
-
         if charge == 0:
             if (
                 self.ionenergies.get(1, None) is not None
@@ -412,9 +401,7 @@ class Element(Base):
         - :math:`\eta` is the absolute hardness
 
         """
-
         eta = self.hardness(charge=charge)
-
         return None if eta is None else 1.0 / (2.0 * eta)
 
     def oxidation_states(self, category: str = "main") -> List[int]:
@@ -470,7 +457,6 @@ class Element(Base):
                 extra electron when method='slater', if method='clementi' this
                 option is ignored
         """
-
         # identify the valence s,p vs d,f
         if n is None:
             n = self.ec.max_n()
@@ -487,10 +473,10 @@ class Element(Base):
             return self.atomic_number - self.ec.slater_screening(n=n, o=o, alle=alle)
         elif method.lower() == "clementi":
             sc = self.sconst.get((n, o), None)
-            if sc is not None:
-                return self.atomic_number - self.sconst.get((n, o), None)
-            else:
+            if sc is None:
                 return sc
+            else:
+                return self.atomic_number - self.sconst.get((n, o), None)
         else:
             raise ValueError('<method> should be one of: "slater", "clementi"')
 
@@ -502,7 +488,6 @@ class Element(Base):
 
            \omega = \frac{\mu}{2\eta}
         """
-
         ip = self.ionenergies.get(1, None)
         ea = self.electron_affinity
 
@@ -548,7 +533,6 @@ class Element(Base):
             kwargs: keyword arguments that are passed to compute a specific electronegativity
 
         """
-
         return self.electronegativity_scales(name=scale)(**kwargs)
 
     def electronegativity_allen(self) -> float:
@@ -590,7 +574,6 @@ class Element(Base):
                 coordination string as keys or tuple of coordination and spin
                 if the ion is LS or HS
         """
-
         if (not isinstance(charge, int)) or (charge == 0):
             raise ValueError(f"charge should be a nonzero initeger, got: {charge}")
 
@@ -613,6 +596,7 @@ class Element(Base):
         }
 
     def electronegativity_martynov_batsanov(self) -> float:
+        # sourcery skip: assign-if-exp
         r"""
         Calculates the electronegativity value according to Martynov and
         Batsanov as the average of the ionization energies of the valence
@@ -693,7 +677,7 @@ class Element(Base):
         noble_gas_radius = estimate_from_group(self.atomic_number, radius)
         return sanderson(getattr(self, radius), noble_gas_radius)
 
-    def nvalence(self, method=None) -> int:
+    def nvalence(self, method: str = None) -> int:
         """
         Return the number of valence electrons
         """
@@ -708,7 +692,7 @@ class Element(Base):
         normal_coeffs = [[str(c) if c != 1 else "" for c in t] for t in oxide_coeffs]
         return [f"{self.symbol}{cme}O{co}" for cme, co in normal_coeffs]
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         """Custom has function to allow comparisons
 
         This drops allt he nested, related objects since SQLAlchemy use a custom
@@ -760,7 +744,6 @@ def fetch_attrs_for_group(attrs: List[str], group: int = 18) -> Tuple[List[Any]]
         data (dict): Dictionary with noble gas atomic numbers as keys and values of the
             `attr` as values
     """
-
     session = get_session()
     members = (
         session.query(Element)
@@ -788,7 +771,6 @@ def estimate_from_group(
         deg: degree of the polynomial used in the extrapolation beyond
             the provided data points
     """
-
     xref, yref = fetch_attrs_for_group(["atomic_number", attr_name], group=group)
 
     x = atomic_number
@@ -877,8 +859,7 @@ class IonizationEnergy(Base):
     degree = Column(Integer)
     energy = Column(Float)
 
-    def __str__(self):
-
+    def __str__(self) -> str:
         return "{0:5d} {1:10.5f}".format(self.degree, self.energy)
 
     def __repr__(self) -> str:
