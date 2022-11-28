@@ -49,6 +49,10 @@ vis = [
     "jupyter-bokeh",
 ]
 
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--durations=10" 
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -4,7 +4,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 
-def parse_rowspan_table(table):
+def parse_rowspan_table(table: str) -> pd.DataFrame:
     """
     based on http://stackoverflow.com/a/28766684
     """
@@ -15,11 +15,9 @@ def parse_rowspan_table(table):
     allRows = tmp[1:-1]
 
     headers = [header.get_text() for header in first.find_all("th")]
-
     results = [[data.get_text() for data in row.find_all("td")] for row in allRows]
 
     rowspan = []
-
     for no, tr in enumerate(allRows):
         for td_no, data in enumerate(tr.find_all("td")):
             if data.has_attr("rowspan"):
@@ -31,16 +29,14 @@ def parse_rowspan_table(table):
             for j in range(1, i[2]):
                 # Add value in next tr.
                 results[i[0] + j].insert(i[1], i[3])
-
     return pd.DataFrame(data=results, columns=headers)
 
 
-def ciaaw_atomic_masses():
+def ciaaw_atomic_masses() -> pd.DataFrame:
     """
     Scrape the CIAAW webpage for atomic masses and return them as
-    pandas DataFrame
+    pandas DataFrame.
     """
-
     url = "http://ciaaw.org/atomic-masses.htm"
 
     req = urllib.request.Request(url)
@@ -85,12 +81,11 @@ def ciaaw_atomic_masses():
     return df
 
 
-def ciaaw_atomic_weights():
+def ciaaw_atomic_weights() -> pd.DataFrame:
     """
     Scrape the CIAAW webpage for atomic weights and return them as
-    pandas DataFrame
+    pandas DataFrame.
     """
-
     url = "http://ciaaw.org/atomic-weights.htm"
 
     table = pd.read_html(url, attrs={"id": "mytable"})[0]
@@ -119,7 +114,7 @@ def ciaaw_atomic_weights():
     return table
 
 
-def ciaaw_isotopic_abundances():
+def ciaaw_isotopic_abundances() -> pd.DataFrame:
 
     url = "http://ciaaw.org/isotopic-abundances.htm"
 
@@ -142,12 +137,11 @@ def ciaaw_isotopic_abundances():
     return ia
 
 
-def ciaaw_monoisotopic():
+def ciaaw_monoisotopic() -> pd.DataFrame:
     """
     Scrape the CIAAW webpage for monoisotopic elements and return the
     data as pandas DataFrame
     """
-
     url = "http://ciaaw.org/monoisotopic-elements.htm"
 
     # parse monoisotopic elements

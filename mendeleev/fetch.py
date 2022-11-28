@@ -10,9 +10,18 @@ from .db import get_engine, get_session
 from .models import Element, IonizationEnergy
 
 
-def get_zeff(an, method="slater") -> float:
-    "A helper function to calculate the effective nuclear charge"
+def get_zeff(an, method: str = "slater") -> float:
+    """
+    A helper function to calculate the effective nuclear charge.
 
+    Args:
+        method: str
+            Method to use, one of "slater" or "clementi", default="slater"
+
+    Returns:
+        zeff: float
+            Effective nuclear charge
+    """
     e = element(an)
     return e.zeff(method=method)
 
@@ -22,11 +31,11 @@ def fetch_table(table: str, **kwargs) -> pd.DataFrame:
     Return a table from the database as :py:class:`pandas.DataFrame`
 
     Args:
-      table: Name of the table from the database
-      kwargs: A dictionary of keyword arguments to pass to the :py:func:`pandas.read_qsl`
+        table: Name of the table from the database
+        kwargs: A dictionary of keyword arguments to pass to the :py:func:`pandas.read_qsl`
 
     Returns:
-      df (pandas.DataFrame): Pandas DataFrame with the contents of the table
+        df (pandas.DataFrame): Pandas DataFrame with the contents of the table
 
     Example:
         >>> from mendeleev.fetch import fetch_table
@@ -64,7 +73,7 @@ def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
         scales: list of scale names, defaults to all available scales
 
     Returns:
-      df (pandas.DataFrame): Pandas DataFrame with the contents of the table
+        df (pandas.DataFrame): Pandas DataFrame with the contents of the table
     """
 
     session = get_session()
@@ -211,7 +220,6 @@ def fetch_ionic_radii(radius: str = "ionic_radius") -> pd.DataFrame:
         df (pandas.DataFrame): a table with atomic numbers, symbols and ionic radii for all
             coordination numbers
     """
-
     if radius not in ["ionic_radius", "crystal_radius"]:
         raise ValueError(
             "radius '{radius}', not found, available radii are: 'ionic_radius', 'crystal_radius'"
@@ -230,7 +238,6 @@ def add_plot_columns(elements: pd.DataFrame) -> pd.DataFrame:
     Args:
         elements: pd.DataFrame
     """
-
     mask = elements["group_id"].notnull()
 
     elements.loc[mask, "x"] = elements.loc[mask, "group_id"].astype(int)
@@ -259,9 +266,8 @@ def add_plot_columns(elements: pd.DataFrame) -> pd.DataFrame:
     return elements
 
 
-def get_app_data():
+def get_app_data() -> None:
     "write a file with the neutral data"
-
     data = fetch_neutral_data()
     data = add_plot_columns(data)
     fname = "neutral_{0:s}.pkl".format(version)
