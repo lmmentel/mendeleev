@@ -32,9 +32,9 @@ def heatmap(
 
     # add lanthanides and actinides
 
-    keys = ["period", "group_id", prop]
-    els = elements[keys].dropna()
-    elements_rect = els.pivot(*keys)
+    args = {"columns": "period", "index": "group_id", "values": prop}
+    els = elements[list(args.values())].dropna()
+    elements_rect = els.pivot(**args)
 
     sns.set(font_scale=1.5, style=style, rc={"figure.figsize": figsize})
     mask = np.asarray(elements_rect.isnull())
