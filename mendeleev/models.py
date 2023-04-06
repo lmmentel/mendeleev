@@ -354,7 +354,8 @@ class Element(Base):
         Return the absolute hardness, calculated as
 
         Args:
-          charge:  Charge of the cation for which the hardness will be calculated
+          charge: Charge of the cation for which the hardness will be calculated.
+            Defaultf to 0.
 
         .. math::
 
@@ -363,7 +364,7 @@ class Element(Base):
         where:
 
         - :math:`IE` is the ionization energy,
-        - :math`EA` is the electron affinity
+        - :math:`EA` is the electron affinity
 
         """
         if charge == 0:
@@ -388,7 +389,7 @@ class Element(Base):
     @hybrid_method
     def softness(self, charge: int = 0) -> Union[float, None]:
         r"""
-        Return the absolute softness, calculated as
+        Return the absolute softness.
 
         Args:
           charge: Charge of the cation for which the hardness will be calculated
