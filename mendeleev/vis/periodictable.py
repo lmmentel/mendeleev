@@ -17,7 +17,7 @@ def periodic_table(
     backend="plotly",
 ):
     """High level api for visualizing periodic tables.
-    
+
     Currently supports plotting backends:
         - bokeh
         - plotly

@@ -47,7 +47,7 @@ class Element(Base):
     """
     Chemical element.
 
-    For full list of available data with references see :ref:`data` and 
+    For full list of available data with references see :ref:`data` and
     :ref`data acess <data-access>` for documentation on accessing data.
 
     Args:
@@ -954,7 +954,7 @@ def with_uncertainty(value: float, uncertainty: float, digits: int = 5) -> str:
     if uncertainty is None or uncertainty == 0.0:
         return "{0:.{1}f}".format(value, digits)
     digits = -int(math.floor(math.log10(uncertainty)))
-    return "{0:.{2}f}({1:.0f})".format(value, uncertainty * 10 ** digits, digits)
+    return "{0:.{2}f}({1:.0f})".format(value, uncertainty * 10**digits, digits)
 
 
 class Isotope(Base):
