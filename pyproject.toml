@@ -39,7 +39,7 @@ sphinxcontrib-bibtex = "^2.1.4"
 
 
 [tool.poetry.group.vis]
-optional = true
+optional = false
 
 [tool.poetry.group.vis.dependencies]
 bokeh = "^2.3.0"
