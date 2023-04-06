@@ -29,7 +29,7 @@ If you want a whole set of data you can retrieve one of the tables from the
 database as `pandas <http://pandas.pydata.org/>`_
 `DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_ through the :py:func:`fetch_table`. The following
 tables are available:
-                         
+
 - :ref:`elements <element-class>`
 - :ref:`groups <group-class>`
 - :ref:`ionicradii <ionicradius-class>`
