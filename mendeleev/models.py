@@ -47,7 +47,8 @@ class Element(Base):
     """
     Chemical element.
 
-    For full list of available data with references see :doc:`data`.
+    For full list of available data with references see :ref:`data` and 
+    :ref`data acess <data-access>` for documentation on accessing data.
 
     Args:
         abundance_crust (float): Abundance in the earth's crust in mg/kg
