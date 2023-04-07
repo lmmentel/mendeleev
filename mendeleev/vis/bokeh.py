@@ -22,10 +22,11 @@ def periodic_table_bokeh(
     width: int = 1200,
 ):
     """
-    Use Bokeh to plot the periodic table data contained in the `df`
+    Use Bokeh backend to plot the periodic table.
 
     Args:
-        elements : Pandas DataFrame with the data about elements
+        elements : Pandas DataFrame with the elements data. Needs to have `x` and `y`
+            columns with coordianates for each tile.
         attribute : Name of the attribute to be displayed
         cmap : Colormap to use, see matplotlib colormaps
         colorby : Name of the column containig the colors
@@ -36,6 +37,13 @@ def periodic_table_bokeh(
         wide_layout: wide layout variant of the periodic table
         width : Width of the figure in pixels
     """
+
+    if any(col not in elements.columns for col in ["x", "y"]):
+        raise ValueError(
+            "Coordinate columns named 'x' and 'y' are required "
+            "in 'elements' DataFrame. Consider using "
+            "'mendeleev.vis.utils.create_vis_dataframe' and try again."
+        )
 
     # additional columns for positioning of the text
 

@@ -63,7 +63,8 @@ def periodic_table_plotly(
     Create a periodic table visualization with plotly.Figure
 
     Args:
-        elements : Pandas DataFrame with the data about elements
+        elements : Pandas DataFrame with the elements data. Needs to have `x` and `y`
+            columns with coordianates for each tile.
         attribute : Name of the attribute to be displayed
         cmap : Colormap to use, see matplotlib colormaps
         colorby : Name of the column containig the colors
@@ -74,6 +75,14 @@ def periodic_table_plotly(
         wide_layout: wide layout variant of the periodic table
         width : Width of the figure in pixels
     """
+
+    if any(col not in elements.columns for col in ["x", "y"]):
+        raise ValueError(
+            "Coordinate columns named 'x' and 'y' are required "
+            "in 'elements' DataFrame. Consider using "
+            "'mendeleev.vis.utils.create_vis_dataframe' and try again."
+        )
+
     fig = go.Figure()
 
     if colorby == "attribute":
