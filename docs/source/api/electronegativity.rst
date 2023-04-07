@@ -1,6 +1,6 @@
 .. currentmodule:: mendeleev.electronegativity
 
-electronegativity module
+Electronegativity module
 ========================
 
 .. automodule:: mendeleev.electronegativity

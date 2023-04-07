@@ -1,8 +1,8 @@
 .. currentmodule:: mendeleev.vis
 .. _vis:
 
-vis module
-==========
+Visualization module
+====================
 
 Periodic table visualizations
 -----------------------------

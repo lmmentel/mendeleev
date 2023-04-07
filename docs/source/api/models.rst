@@ -1,7 +1,7 @@
 .. currentmodule:: mendeleev.models
 
-Classes
-=======
+Models
+======
 
 .. _element-class:
 
