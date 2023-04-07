@@ -1,5 +1,5 @@
 """
-Class abstracting the elctronic configuration
+Implementation of the abstraction for the elctronic configuration object.
 """
 from typing import Dict, List, Pattern, Tuple, Union
 from collections import OrderedDict
