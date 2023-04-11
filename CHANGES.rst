@@ -2,6 +2,14 @@
 mendeleev Changelog
 *******************
 
+v0.13.0 (11.04.2023)
+--------------------
+
+* [MNT] Relax dependencies for sqlalchemy and pandas and drop python 3.7 by :user:`@lmmentel` in :pr:`103`
+* Bump ipython from 7.34.0 to 8.10.0 by :user:`@dependabot` in :pr:`104`
+* [MNT] Add API docs for vis module by :user:`@lmmentel` in :pr:`105`
+
+
 v0.12.1 (28.11.2022)
 --------------------
 
