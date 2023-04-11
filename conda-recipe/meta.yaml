@@ -1,10 +1,10 @@
 package:
   name: mendeleev
-  version: "0.12.1"
+  version: "0.13.0"
 
 source:
   git_url: https://github.com/lmmentel/mendeleev
-  git_rev: v0.12.1
+  git_rev: v0.13.0
 
 build:
   noarch: python
