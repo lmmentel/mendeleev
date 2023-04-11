@@ -53,6 +53,7 @@ extensions = [
     "sphinx_material",
     "nbsphinx",
     "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
     "sphinx.ext.coverage",
     "sphinx.ext.ifconfig",
     "sphinx.ext.intersphinx",

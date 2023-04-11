@@ -326,7 +326,7 @@ Features added
   ``covalent_radius_slater``
 * Added the ``c6`` dispersion coefficients
 * Added ``gas_basicity``, ``proton_affinity`` and ``heat_of_formation``
-* Added ``periodic_plot`` function for producing `Bokeh <https://bokeh.pydata.org/en/latest/>`_ based plots of the
+* Added ``periodic_plot`` function for producing `bokeh <https://bokeh.org/>` based plots of the
   periodic table
 * Added ``jmol_color`` and ``cpk_color`` with different coloring schemes for
   atoms

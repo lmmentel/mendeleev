@@ -47,7 +47,8 @@ class Element(Base):
     """
     Chemical element.
 
-    For full list of available data with references see :doc:`data`.
+    For full list of available data with references see :ref:`data` and
+    :ref:`data acess <data-access>` for documentation on accessing data.
 
     Args:
         abundance_crust (float): Abundance in the earth's crust in mg/kg
@@ -353,7 +354,8 @@ class Element(Base):
         Return the absolute hardness, calculated as
 
         Args:
-          charge:  Charge of the cation for which the hardness will be calculated
+          charge: Charge of the cation for which the hardness will be calculated.
+            Defaultf to 0.
 
         .. math::
 
@@ -362,7 +364,7 @@ class Element(Base):
         where:
 
         - :math:`IE` is the ionization energy,
-        - :math`EA` is the electron affinity
+        - :math:`EA` is the electron affinity
 
         """
         if charge == 0:
@@ -387,7 +389,7 @@ class Element(Base):
     @hybrid_method
     def softness(self, charge: int = 0) -> Union[float, None]:
         r"""
-        Return the absolute softness, calculated as
+        Return the absolute softness.
 
         Args:
           charge: Charge of the cation for which the hardness will be calculated
@@ -953,7 +955,7 @@ def with_uncertainty(value: float, uncertainty: float, digits: int = 5) -> str:
     if uncertainty is None or uncertainty == 0.0:
         return "{0:.{1}f}".format(value, digits)
     digits = -int(math.floor(math.log10(uncertainty)))
-    return "{0:.{2}f}({1:.0f})".format(value, uncertainty * 10 ** digits, digits)
+    return "{0:.{2}f}({1:.0f})".format(value, uncertainty * 10**digits, digits)
 
 
 class Isotope(Base):

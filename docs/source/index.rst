@@ -26,8 +26,9 @@ the periodic table of elements.
    Installation <install>
    Tutorials <tutorials>
    Data <data>
+   Accessing data <data_access>
    Electronegativity <electronegativity>
-   API Reference <code>
+   API Reference <api/api>
    Bibliography <bibliography>
    Changes <changes_link>
    License <license_link>

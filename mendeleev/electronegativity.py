@@ -1,5 +1,5 @@
 """
-Electronegativity scale formulas
+Electronegativity scale formulas.
 """
 
 import math

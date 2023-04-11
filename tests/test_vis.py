@@ -51,3 +51,7 @@ def test_periodic_table(attribute, colorby, wide_layout, backend):
     fig = periodic_table(
         attribute=attribute, colorby=colorby, wide_layout=wide_layout, backend=backend
     )
+    if backend == "plotly":
+        assert isinstance(fig, PlotlyFigure)
+    elif backend == "bokeh":
+        assert isinstance(fig, BokehFigure)
