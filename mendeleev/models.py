@@ -9,9 +9,8 @@ import urllib.parse
 
 import numpy as np
 from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey
-from sqlalchemy.orm import relationship, reconstructor
+from sqlalchemy.orm import declarative_base, relationship, reconstructor
 from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
 from .electronegativity import (
