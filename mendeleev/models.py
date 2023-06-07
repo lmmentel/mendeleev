@@ -627,23 +627,23 @@ class Element(Base):
     def electronegativity_mulliken(
         self,
         charge: int = 0,
-        missing_is_zero: bool = False,
-        allow_negative_ea: bool = False,
     ) -> float:
         r"""
-        Return the absolute electronegativity (Mulliken scale), calculated as
+        Return the absolute electronegativity (Mulliken scale).
 
         Args:
             charge: charge of the ion
-            missing_is_zero: missing values are substituted with zero
-            allow_negative_ea: if `True` negative EA values will be allowed
+
+        The value of electonegativity is calculated as:
 
         .. math::
 
-           \chi = \frac{I + A}{2}
+        \chi = \frac{I + A}{2}
 
-        where :math:`I` is the ionization energy and :math:`A` is the electron
-        affinity
+        where:
+
+        - :math:`I` is the ionization energy,
+        - :math:`A` is the electron affinity
         """
 
         if charge == 0:
@@ -654,9 +654,7 @@ class Element(Base):
             ea = self.ionenergies.get(charge, None)
         else:
             raise ValueError(f"Charge has to be a non-negative integer, got: {charge}")
-        return mulliken(
-            ip, ea, missing_is_zero=missing_is_zero, allow_negative_ea=allow_negative_ea
-        )
+        return mulliken(ip, ea)
 
     def electronegativity_nagle(self) -> float:
         "Nagle's electronegativity"
