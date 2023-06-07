@@ -2,6 +2,12 @@
 mendeleev Changelog
 *******************
 
+v0.14.0 (07.06.2023)
+--------------------
+
+* Fix Mulliken electronegativity by :user:`@lmmentel` in :pr:`116`
+* [FIX] Enable fetch of phase transition data by :user:`@lmmentel` in :pr:`112`
+
 v0.13.1 (24.04.2023)
 --------------------
 
