@@ -3,7 +3,7 @@ Electronegativity scale formulas.
 """
 
 import math
-from typing import List
+from typing import List, Union
 
 import numpy as np
 
@@ -98,17 +98,15 @@ def martynov_batsanov(ionization_energies: List[float]) -> float:
 def mulliken(
     ionization_energy: float,
     electron_affinity: float,
-    missing_is_zero: bool = False,
-    allow_negative_ea: bool = False,
-) -> float:
+) -> Union[float, None]:
     r"""
-    Return the absolute electronegativity (Mulliken scale), calculated as
+    Return the absolute electronegativity (Mulliken scale).
 
     Args:
         ionization_energy: ionization energy
         electron_affinity: electron affinity
-        missing_is_zero: missing values are substituted with zero
-        allow_negative_ea: if `True` negative EA values will be allowed
+
+    The value of electonegativity is calculated as:
 
     .. math::
 
@@ -120,17 +118,13 @@ def mulliken(
     - :math:`A` is the electron affinity
     """
 
-    if ionization_energy is not None:
-        if (
-            electron_affinity is not None
-            and electron_affinity < 0.0
-            and allow_negative_ea
-        ):
-            return (ionization_energy + electron_affinity) * 0.5
-        elif electron_affinity is not None or missing_is_zero:
-            return ionization_energy * 0.5
-    else:
+    if ionization_energy is None:
         return None
+
+    if electron_affinity is None:
+        return ionization_energy * 0.5
+
+    return (ionization_energy + electron_affinity) * 0.5
 
 
 def nagle(nvalence: int, polarizability: float) -> float:
