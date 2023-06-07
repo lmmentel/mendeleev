@@ -48,10 +48,12 @@ def fetch_table(table: str, **kwargs) -> pd.DataFrame:
     tables = {
         "elements",
         "groups",
-        "isotopes",
         "ionicradii",
         "ionizationenergies",
+        "isotopedecaymodes",
+        "isotopes",
         "oxidationstates",
+        "phasetransitions",
         "screeningconstants",
         "series",
     }
