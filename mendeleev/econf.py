@@ -6,8 +6,6 @@ from collections import OrderedDict
 import math
 import re
 
-import six
-
 
 ORBITALS = ("s", "p", "d", "f", "g", "h", "i", "j", "k")
 SHELLS = ("K", "L", "M", "N", "O", "P", "Q")
@@ -95,9 +93,9 @@ class ElectronicConfiguration(object):
     @conf.setter
     def conf(self, value: Union[str, Dict]) -> OrderedDict:
         "Setter method for initializing the configuration"
-        if isinstance(value, six.string_types):
+        if isinstance(value, str):
             self.confstr = value
-            self.parse(str(value))
+            self.parse(value)
         elif isinstance(value, dict):
             self._conf = OrderedDict(
                 sorted(value.items(), key=lambda x: (x[0][0] + get_l(x[0][1]), x[0][0]))

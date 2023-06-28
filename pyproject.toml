@@ -16,7 +16,6 @@ numpy = "^1.21"
 pyfiglet = "^0.8.post1"
 Pygments = "^2.8.0"
 pandas = ">=1.0.0"
-six = "^1.15.0"
 SQLAlchemy = ">=1.4.0"
 bokeh = { version= "^2.3.0", optional = true }
 jupyter-bokeh = { version= "^3.0.2", optional = true }
@@ -53,7 +52,7 @@ vis = [
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--durations=10" 
+addopts = "--durations=10"
 
 
 [build-system]

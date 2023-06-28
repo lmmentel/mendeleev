@@ -2,8 +2,6 @@
 
 from typing import List, Union
 
-import six
-
 from .db import get_session
 from .models import Element, Isotope
 
@@ -60,7 +58,7 @@ def element(ids: Union[int, str]) -> Element:
     """
     if isinstance(ids, (list, tuple)):
         return [_get_element(i) for i in ids]
-    elif isinstance(ids, (six.string_types, int)):
+    elif isinstance(ids, (str, int)):
         return _get_element(ids)
     else:
         raise ValueError(
@@ -76,7 +74,7 @@ def _get_element(ids) -> Union[Element, List[Element]]:
 
     session = get_session()
 
-    if isinstance(ids, six.string_types):
+    if isinstance(ids, str):
         if len(ids) <= 3 and ids.lower() != "tin":
             return session.query(Element).filter(Element.symbol == str(ids)).one()
         else:
