@@ -1,7 +1,7 @@
 [![Documentation Status](https://readthedocs.org/projects/mendeleev/badge/)](https://mendeleev.readthedocs.org)
-[![Latest version released on PyPi](https://img.shields.io/pypi/v/mendeleev.svg?style=flat-square&label=PYPI%20version)](https://pypi.python.org/pypi/mendeleev)
+[![Latest version released on PyPI](https://img.shields.io/pypi/v/mendeleev.svg?style=flat-square&label=PyPI%20version)](https://pypi.python.org/pypi/mendeleev)
 [![MIT license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![image](https://anaconda.org/lmmentel/mendeleev/badges/version.svg)](https://anaconda.org/conda-forge/mendeleev)
+[![image](https://anaconda.org/conda-forge/mendeleev/badges/version.svg)](https://anaconda.org/conda-forge/mendeleev)
 [![Python package](https://github.com/lmmentel/mendeleev/actions/workflows/main.yml/badge.svg)](https://github.com/lmmentel/mendeleev/actions/workflows/main.yml)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/lmmentel/mendeleev.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lmmentel/mendeleev/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/lmmentel/mendeleev.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lmmentel/mendeleev/context:python)
@@ -101,8 +101,8 @@ relations between various properties of elements.
 ## Installation
 
 The preferred installation method is with
-[conda](https://conda.io/docs/intro.html) and you can install the
-package from the [my Anaconda channel](https://anaconda.org/lmmentel/mendeleev)
+[conda](https://conda.io/docs/intro.html) and you can install the package from
+the [conda-forge Anaconda channel](https://anaconda.org/conda-forge/mendeleev)
 channel by
 
 ``` {.sourceCode .bash}
@@ -492,14 +492,14 @@ Feel free to submit [issues](https://github.com/lmmentel/mendeleev/issues) regar
 
 ## License
 
-The packegs is release under the persmissive MIT license, see [LICENSE](https://github.com/lmmentel/mendeleev/blob/master/LICENSE)
+This package is released under the permissive MIT license, see [LICENSE](https://github.com/lmmentel/mendeleev/blob/master/LICENSE)
 
 ## Citing
 
 If you use [mendeleev](http://mendeleev.readthedocs.org) in a scientific
 publication, please consider citing the software as
 
-|    L. M. Mentel, *mendeleev* - A Python resource for properties of
+> L. M. Mentel, *mendeleev* - A Python resource for properties of
   chemical elements, ions and isotopes. , 2014\-- . Available at:
   <https://github.com/lmmentel/mendeleev>.
 
@@ -513,9 +513,8 @@ Here\'s the reference in the
    url = {https://github.com/lmmentel/mendeleev},
    version = {0.14.0},
    date = {2014--},
+}
 ```
-
-> }
 
 or the older [BibTeX](http://www.bibtex.org/) format
 
