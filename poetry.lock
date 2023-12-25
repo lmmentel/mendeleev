@@ -4050,5 +4050,5 @@ vis = ["bokeh", "jupyter-bokeh", "plotly", "seaborn"]
 
 [metadata]
 lock-version = "2.0"
-python-versions = ">=3.8.1,<=3.12"
-content-hash = "688fd2fee7ce405175ba7727b3e3f89b199cfa5716c0c02abe0817ff92f3a521"
+python-versions = ">=3.8.1,<3.13"
+content-hash = "cb8ca488152099d4cb3195a52652f72c9722d44ea7f1ff77951413bb19efdf52"
