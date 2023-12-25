@@ -36,6 +36,7 @@ jobs:
           virtualenvs-in-project: true
       - name: Install dependencies
         run: poetry install -E vis --no-interaction
+        continue-on-error: ${{ matrix.python-version == '3.12' }}
       - name: Lint with flake8
         run: |
           source $VENV
