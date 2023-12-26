@@ -2,6 +2,25 @@
 name = "mendeleev"
 version = "v0.14.0"
 description = "Pythonic periodic table of elements"
+keywords = ["periodic table", "chemistry", "elements", "science"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 authors = ["Lukasz Mentel <lmmentel@gmail.com>"]
 maintainers = ["Lukasz Mentel <lmmentel@gmail.com>"]
 readme = "README.md"
