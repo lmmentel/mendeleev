@@ -52,7 +52,7 @@ flake8 = "^6.0.0"
 
 
 [tool.poetry.extras]
-vis = ["bokeh", "plotly", "seaborn", "jupyter-bokeh", "scipy"]
+vis = ["bokeh", "plotly", "seaborn", "jupyter-bokeh", "scipy", "pyzmq"]
 
 
 [tool.pytest.ini_options]
