@@ -35,8 +35,8 @@ jobs:
           virtualenvs-create: true
           virtualenvs-in-project: true
       - name: Install dependencies
-        #run: poetry install --no-interaction
-        run: poetry install -E vis --no-interaction
+        run: poetry install --no-interaction
+        # run: poetry install -E vis --no-interaction
       - name: Lint with flake8
         run: |
           source $VENV
