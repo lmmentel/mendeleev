@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mendeleev"
-version = "v0.14.0"
+version = "v0.15.0"
 description = "Pythonic periodic table of elements"
 keywords = ["periodic table", "chemistry", "elements", "science"]
 classifiers = [
