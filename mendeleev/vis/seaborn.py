@@ -13,7 +13,7 @@ def heatmap(
     cmap: str = "RdBu_r",
     lw: int = 1,
     output: str = None,
-    **kwargs
+    **kwargs,
 ):
     """
     Plot a heatmap of the given property

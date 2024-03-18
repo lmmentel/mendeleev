@@ -46,21 +46,18 @@ SQLAlchemy = ">=1.4.0"
 
 [tool.poetry.group.dev.dependencies]
 alembic = "^1.5.5"
-black = "^22.1.0"
 bump2version = "^1.0.1"
-ipykernel = "^5.5.0"
-ipython = "^8.10"
-jupyterlab = "^3.0"
+ipykernel = "^6.0"
+ipython = "^8.0"
+jupyterlab = "^4.0"
 nbsphinx = "^0.9.0"
 pandas-stubs = "^1.2.0"
-pylint = "^2.7.2"
 pytest = "^6.2.2"
 Sphinx = "^6.0.0"
 sphinx-copybutton = "^0.3.1"
 sphinx-material = "^0.0.32"
 sphinxcontrib-bibtex = "^2.1.4"
-flake8 = "^6.0.0"
-
+pre-commit = "==3.5.0"
 
 [tool.poetry.group.vis]
 optional = true

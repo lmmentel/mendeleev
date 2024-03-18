@@ -114,7 +114,7 @@ def periodic_table_bokeh(
         text="symbol",
         text_font_style="bold",
         text_font_size="15pt",
-        **text_props
+        **text_props,
     )
     fig.text(
         x="x", y="y_anumber", text="atomic_number", text_font_size="9pt", **text_props

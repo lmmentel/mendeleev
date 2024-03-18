@@ -116,8 +116,8 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"mendeleev"
-copyright = u"2021, Lukasz Mentel"
+project = "mendeleev"
+copyright = "2021, Lukasz Mentel"
 
 # Link to GitHub repo for github_issues extension
 issues_github_path = "lmmentel/mendeleev"
@@ -269,7 +269,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ("index", "user_guide.tex", u"mendeleev Documentation", u"Lukasz Mentel", "manual"),
+    ("index", "user_guide.tex", "mendeleev Documentation", "Lukasz Mentel", "manual"),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

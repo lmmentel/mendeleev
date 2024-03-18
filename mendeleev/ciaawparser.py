@@ -115,7 +115,6 @@ def ciaaw_atomic_weights() -> pd.DataFrame:
 
 
 def ciaaw_isotopic_abundances() -> pd.DataFrame:
-
     url = "http://ciaaw.org/isotopic-abundances.htm"
 
     req = urllib.request.Request(url)

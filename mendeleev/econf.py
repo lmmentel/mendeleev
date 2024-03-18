@@ -1,6 +1,7 @@
 """
 Implementation of the abstraction for the elctronic configuration object.
 """
+
 from typing import Dict, List, Pattern, Tuple, Union
 from collections import OrderedDict
 import math
@@ -110,7 +111,6 @@ class ElectronicConfiguration(object):
 
     @atomre.setter
     def atomre(self, value: str) -> None:
-
         if value is None:
             self._atomre = re.compile(r"\[([A-Z][a-z]*)\]")
         else:
@@ -123,7 +123,6 @@ class ElectronicConfiguration(object):
 
     @shellre.setter
     def shellre(self, value: str) -> None:
-
         if value is None:
             self._shellre = re.compile(r"(?P<n>\d)(?P<o>[spdfghijk])(?P<e>\d+)?")
         else:
@@ -277,7 +276,6 @@ class ElectronicConfiguration(object):
         newec = ElectronicConfiguration(str(self.__str__()))
 
         for _ in range(n):
-
             if not newec.conf:
                 raise ValueError("Cannot ionize further, no more electrons!")
 
@@ -297,7 +295,6 @@ class ElectronicConfiguration(object):
         """
         so = OrderedDict()
         for (n, orb), nele in self.conf.items():
-
             ssc = subshell_capacity(orb)
             ssd = subshell_degeneracy(orb)
 
