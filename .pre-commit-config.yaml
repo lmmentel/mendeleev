@@ -1,4 +1,4 @@
-exclude: "^alembic/"
+exclude: "^(alembic|notebooks)/"
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
