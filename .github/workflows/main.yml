@@ -36,7 +36,7 @@ jobs:
           virtualenvs-in-project: true
       - name: Install dependencies
         run: poetry install --with vis --no-interaction
-      - name: Lint and format with pre-commit
+      - name: Lint and format with ruff
         uses: pre-commit/action@v3.0.1
       - name: Test with pytest
         run: |
