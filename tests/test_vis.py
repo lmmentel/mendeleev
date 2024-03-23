@@ -35,7 +35,7 @@ def test_periodic_table_bokeh():
 
 def test_periodic_table_seaborn():
     elements = create_vis_dataframe()
-    fig = heatmap(elements, "c6")
+    heatmap(elements, "c6")
 
 
 @pytest.mark.parametrize("attribute", ["atomic_weight", "atomic_radius"])

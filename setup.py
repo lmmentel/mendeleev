@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-    Setup file for the mendeleev package.
+Setup file for the mendeleev package.
 """
 
 from setuptools import setup, find_packages
@@ -44,7 +44,6 @@ def readme():
 
 
 def setup_package():
-
     setup(
         name=MAIN_PACKAGE,
         version=VERSION,
