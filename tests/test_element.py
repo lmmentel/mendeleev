@@ -26,6 +26,12 @@ def test_element():
     assert si.name == "Silicon"
 
 
+def test_incorrect_element():
+
+    with pytest.raises(ValueError, match="Element not found: si"):
+        element("si")
+
+
 @pytest.mark.parametrize("atomic_number", list(range(1, 119)))
 def test_elements_get_by_atomic_number(atomic_number):
 
