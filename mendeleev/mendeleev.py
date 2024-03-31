@@ -2,6 +2,8 @@
 
 from typing import List, Union
 
+import sqlalchemy
+
 from .db import get_session
 from .models import Element, Isotope
 
@@ -74,15 +76,17 @@ def _get_element(ids) -> Union[Element, List[Element]]:
 
     session = get_session()
 
-    if isinstance(ids, str):
-        if len(ids) <= 3 and ids.lower() != "tin":
-            return session.query(Element).filter(Element.symbol == str(ids)).one()
-        else:
-            return session.query(Element).filter(Element.name == str(ids)).one()
-    elif isinstance(ids, int):
-        return session.query(Element).filter(Element.atomic_number == ids).one()
-    else:
+    try:
+        if isinstance(ids, str):
+            if len(ids) <= 3 and ids.lower() != "tin":
+                return session.query(Element).filter(Element.symbol == str(ids)).one()
+            else:
+                return session.query(Element).filter(Element.name == str(ids)).one()
+        elif isinstance(ids, int):
+            return session.query(Element).filter(Element.atomic_number == ids).one()
         raise ValueError("Expecting a <str> or <int>, got: {0:s}".format(type(ids)))
+    except sqlalchemy.exc.NoResultFound:
+        raise ValueError(f"Element not found: {ids}")
 
 
 def get_all_elements() -> List[Element]:
