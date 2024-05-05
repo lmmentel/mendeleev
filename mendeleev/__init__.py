@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-__version__ = "0.14.0"
+__version__ = "0.15.0"
 
-from .mendeleev import *
-from .models import *
+from .mendeleev import *  # noqa F403
+from .models import *  # noqa F403
 
 
-_elems = [
+_symbols = [
     "H",
     "He",
     "Li",
@@ -127,9 +127,30 @@ _elems = [
     "Og",
 ]
 
-# Lazily load data upon element access (e.g., mendeleev.Zn)
+
 def __getattr__(name):
-    if name in _elems:
-        globals()[name] = element(name)
-        return globals()[name]
-    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+    """
+    Dynamically creates an element object and stores it in the module's namespace.
+
+    Args:
+        name (str): The symbol of the element to be created.
+
+    Returns:
+        Element: The element object corresponding to the provided symbol.
+
+    Raises:
+        ImportError: If the element symbol is not found in _symbols.
+
+    Examples:
+        Usage:
+        >>> from mendeleev import C
+        >>> print(C.atomic_number)
+        6
+    """
+    if name in _symbols:
+        element_obj = element(name)  # noqa: F405
+        globals()[name] = element_obj
+        return element_obj
+    raise ImportError(
+        f"module 'mendeleev' has no element with symbol '{name}', please check you spelling"
+    )
