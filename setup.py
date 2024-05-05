@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-    Setup file for the mendeleev package.
+Setup file for the mendeleev package.
 """
 
 from setuptools import setup, find_packages
@@ -16,7 +16,7 @@ URL = "https://github.com/lmmentel/mendeleev"
 DOWNLOAD_URL = "https://github.com/lmmentel/mendeleev/archive/master.zip"
 AUTHOR = "Lukasz Mentel"
 EMAIL = "lmmentel@gmail.com"
-VERSION = "0.14.0"
+VERSION = "0.15.0"
 KEYWORDS = ["periodic", "table", "elements", "atomic", "properties", "mendeleev"]
 
 
@@ -44,7 +44,6 @@ def readme():
 
 
 def setup_package():
-
     setup(
         name=MAIN_PACKAGE,
         version=VERSION,

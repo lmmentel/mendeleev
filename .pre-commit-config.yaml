@@ -1,0 +1,12 @@
+exclude: "^(alembic|notebooks)/"
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.3.3
+    hooks:
+      # Run the linter.
+      - id: ruff
+        types_or: [python, pyi, jupyter]
+      # Run the formatter.
+      - id: ruff-format
+        types_or: [python, pyi, jupyter]

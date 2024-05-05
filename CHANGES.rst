@@ -2,6 +2,14 @@
 mendeleev Changelog
 *******************
 
+v0.15.0 (26.12.2023)
+--------------------
+
+* [FIX] Fix a few issues with README.md by :user:`@paulromano` in :pr:`119`
+* [MNT] Remove six dependency by :user:`@paulromano` in :pr:`120`
+* [FIX] Update abundance for 126Te isotope by :user:`@lmmentel` in :pr:`123`
+* [MNT] add python 3.12 support and bump various package versions :user:`@lmmentel` in :pr:`134`
+
 v0.14.0 (07.06.2023)
 --------------------
 

@@ -2,7 +2,6 @@ from mendeleev import isotope
 
 
 def test_get_isotope():
-
     # Hydrogen
     result = isotope(1, 1)
     assert result.atomic_number == 1

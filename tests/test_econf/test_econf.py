@@ -3,7 +3,6 @@ from mendeleev import element
 
 
 def test_parse():
-
     confs = ["1s", "1s2", "1s2 2s1", "1s2 2s2", "1s2 2s2 2p"]
     ans = ["1s1", "1s2", "1s2 2s1", "1s2 2s2", "1s2 2s2 2p1"]
     for c, a in zip(confs, ans):
@@ -13,7 +12,6 @@ def test_parse():
 
 
 def test_largest_core():
-
     # test for Hydrogen case (no core)
     ec = ElectronicConfiguration("1s")
     assert ec.get_largest_core() is None
