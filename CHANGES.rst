@@ -2,6 +2,13 @@
 mendeleev Changelog
 *******************
 
+v0.16.0 (05.05.2024)
+--------------------
+
+* [ENH] Adopt ruff and pre-commit for linting and formatting by :user:`@lmmentel` in :pr:`139`
+* [ENH] Improve element not found by :user:`@Vi-L` in :pr:`142`
+* [ENH] Defer loading element data until attribute access by :user:`@paulromano` in :pr:`121`
+
 v0.15.0 (26.12.2023)
 --------------------
 
