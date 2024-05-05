@@ -153,4 +153,3 @@ def __getattr__(name):
     raise ImportError(
         f"module 'mendeleev' has no element with symbol '{name}', please check you spelling"
     )
-
