@@ -2,6 +2,8 @@
 
 __version__ = "0.16.1"
 
+import importlib
+
 from .mendeleev import *  # noqa F403
 from .models import *  # noqa F403
 
@@ -150,3 +152,11 @@ def __getattr__(name):
         element_obj = element(name)  # noqa: F405
         globals()[name] = element_obj
         return element_obj
+
+    # attempt to import the module if it's not an element symbol
+    try:
+        module = importlib.import_module(name)
+        globals()[name] = module
+        return module
+    except ModuleNotFoundError as e:
+        raise AttributeError(f"module 'mendeleev' has no attribute '{name}'") from e
