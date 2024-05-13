@@ -150,6 +150,3 @@ def __getattr__(name):
         element_obj = element(name)  # noqa: F405
         globals()[name] = element_obj
         return element_obj
-    raise ImportError(
-        f"module 'mendeleev' has no element with symbol '{name}', please check you spelling"
-    )
