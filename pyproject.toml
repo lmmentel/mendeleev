@@ -58,6 +58,7 @@ sphinx-copybutton = "^0.3.1"
 sphinx-material = "^0.0.32"
 sphinxcontrib-bibtex = "^2.1.4"
 pre-commit = "==3.5.0"
+invoke = "^2.2.0"
 
 [tool.poetry.group.vis]
 optional = true
