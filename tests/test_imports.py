@@ -37,3 +37,10 @@ def test_missing_import():
     """Test that the import of a non-existing module raises ImportError"""
     with pytest.raises(ImportError):
         from mendeleev import nonexisting  # noqa: F401
+
+
+def test_element_import():
+    """Test that the element instances can be imported"""
+    from mendeleev import C
+
+    assert C is not None
