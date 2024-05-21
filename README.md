@@ -286,7 +286,7 @@ the `Element` object:
     >>> from mendeleev import element
 
 The `element` method accepts unique identifiers: atomic number, atomic
-symbol or element\'s name in english. To retrieve the entries on Silicon
+symbol or element\'s name in English. To retrieve the entries on Silicon
 by symbol type
 
 ``` {.sourceCode .python}
@@ -340,7 +340,7 @@ following attributes per isotope
 The columns represent the attributes `atomic_number`, `mass`,
 `abundance` and `mass_number` respectively.
 
-### Accesing data tables and the database
+### Accessing data tables and the database
 
 [mendeleev](http://mendeleev.readthedocs.org) offers also methods for
 accessing whole tables of data, e.g. table with the data on all isotopes
