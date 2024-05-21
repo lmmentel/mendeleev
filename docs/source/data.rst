@@ -356,7 +356,7 @@ for compatibility. The table below provides explanations of the symbols.
 
 .. [#f5] **Mendeleev numbers**
     
-   Mendeleev numbers were mostly taken from :cite:`Villars2004` but the range
+   Mendeleev numbers were sourced from :cite:`Villars2004` but the range
    was extended to cover the whole periodic table following the prescription
    in the article of increasing the numbers going from top to bottom in each
    group and group by group from left to right in the periodic table.
@@ -384,7 +384,7 @@ for compatibility. The table below provides explanations of the symbols.
 .. [#f7] **van der Waals radii according to Alvarez**
 
    The bulk of the radii data was taken from Ref. :cite:`Alvarez2013`, but the
-   radii for noble gasses were update according to the values in Ref.
+   radii for noble gasses were updated according to the values in Ref.
    :cite:`Vogt2014`.
 
 .. [#f9] **Ionic radii for Actinoid (III) ions**
@@ -403,7 +403,7 @@ for compatibility. The table below provides explanations of the symbols.
    Original values for gasses are converted from g/L to g/cm\ :sup:`3`.
 
    For elements where several allotropes exist, the density corresponding to the
-   most abundand are reported (for full list refer to :cite:`haynes2014crc`), namely:
+   most abundant are reported (for full list refer to :cite:`haynes2014crc`), namely:
 
    - Antimony (gray)
    - Berkelium (α form)
