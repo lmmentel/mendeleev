@@ -104,7 +104,7 @@ the [conda-forge Anaconda channel](https://anaconda.org/conda-forge/mendeleev)
 channel by
 
 ``` {.sourceCode .bash}
-conda install -c lmmentel mendeleev=0.16.1
+conda install -c lmmentel mendeleev=0.16.2
 ```
 
 The package can also be installed using
@@ -509,7 +509,7 @@ Here\'s the reference in the
    author = {Mentel, Łukasz},
    title = {{mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes},
    url = {https://github.com/lmmentel/mendeleev},
-   version = {0.16.1},
+   version = {0.16.2},
    date = {2014--},
 }
 ```
@@ -519,7 +519,7 @@ or the older [BibTeX](http://www.bibtex.org/) format
 ``` {.sourceCode .latex}
 @misc{mendeleev2014,
    auhor = {Mentel, Łukasz},
-   title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 0.16.1},
+   title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 0.16.2},
    howpublished = {\url{https://github.com/lmmentel/mendeleev}},
    year  = {2014--},
 }
