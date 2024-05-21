@@ -8,7 +8,7 @@ import math
 import urllib.parse
 
 import numpy as np
-from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey
+from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey, Text
 from sqlalchemy.orm import declarative_base, relationship, reconstructor
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
@@ -719,6 +719,28 @@ class Element(Base):
 
     def __str__(self) -> str:
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
+
+    def __repr__(self) -> str:
+        return "%s(\n%s)" % (
+            self.__class__.__name__,
+            " ".join(
+                "\t%s=%r,\n" % (key, getattr(self, key))
+                for key in sorted(self.__dict__.keys())
+                if not key.startswith("_")
+            ),
+        )
+
+
+class PropertyMetadata(Base):
+    __tablename__ = "propertymetadata"
+
+    id = Column(Integer, primary_key=True)
+    table = Column(String, nullable=False)
+    column = Column(String, nullable=False)
+    category = Column(String)
+    description = Column(Text, nullable=False)
+    unit = Column(String)
+    annotations = Column(String)
 
     def __repr__(self) -> str:
         return "%s(\n%s)" % (
