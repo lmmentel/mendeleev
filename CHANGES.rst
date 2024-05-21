@@ -2,6 +2,17 @@
 mendeleev Changelog
 *******************
 
+v0.16.2 (21.05.2024)
+--------------------
+
+* * Fix `ImportError`s not being raised with missing objects by :user:`lmmentel` in :pr:`150`
+
+v0.16.1 (13.05.2024)
+--------------------
+
+* [FIX] Fix import error by :user:`lmmentel` in :pr:`148`
+
+
 v0.16.0 (05.05.2024)
 --------------------
 
