@@ -23,8 +23,10 @@ def upgrade():
     op.create_table(
         'propertymetadata',
         sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
-        sa.Column('table', sa.String, nullable=True),
-        sa.Column('column', sa.String, nullable=True),
+        sa.Column('table_name', sa.String, nullable=True),
+        sa.Column('column_name', sa.String, nullable=True),
+        sa.Column('class_name', sa.String, nullable=False),
+        sa.Column('attribute_name', sa.String, nullable=False),
         sa.Column('category', sa.String, nullable=False),
         sa.Column('value_origin', value_origin_enum, nullable=False),
         sa.Column('description', sa.Text, nullable=False),

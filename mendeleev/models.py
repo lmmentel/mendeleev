@@ -748,11 +748,13 @@ class PropertyMetadata(Base):
 
     id = Column(Integer, primary_key=True)
     annotations = Column(Text)
+    attribute_name = Column(String, nullable=False)
     category = Column(String)
     citation_keys = Column(String)
-    column = Column(String, nullable=False)
+    class_name = Column(String, nullable=False)
+    column_name = Column(String, nullable=True)
     description = Column(Text, nullable=False)
-    table = Column(String, nullable=False)
+    table_name = Column(String, nullable=True)
     unit = Column(String)
     value_origin = Column(Enum(ValueOrigin), nullable=False)
 
