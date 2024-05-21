@@ -4,11 +4,12 @@
 
 from typing import Any, Callable, Dict, List, Tuple, Union
 from operator import attrgetter
+import enum
 import math
 import urllib.parse
 
 import numpy as np
-from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey, Text
+from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey, Text, Enum
 from sqlalchemy.orm import declarative_base, relationship, reconstructor
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
@@ -731,16 +732,29 @@ class Element(Base):
         )
 
 
+class ValueOrigin(enum.Enum):
+    STORED = "stored"
+    COMPUTED = "computed"
+
+
 class PropertyMetadata(Base):
+    """Metadata for properties of elements and isotopes.
+
+    Args:
+        Base (_type_): _description_
+    """
+
     __tablename__ = "propertymetadata"
 
     id = Column(Integer, primary_key=True)
-    table = Column(String, nullable=False)
-    column = Column(String, nullable=False)
+    annotations = Column(Text)
     category = Column(String)
+    citation_keys = Column(String)
+    column = Column(String, nullable=False)
     description = Column(Text, nullable=False)
+    table = Column(String, nullable=False)
     unit = Column(String)
-    annotations = Column(String)
+    value_origin = Column(Enum(ValueOrigin), nullable=False)
 
     def __repr__(self) -> str:
         return "%s(\n%s)" % (
