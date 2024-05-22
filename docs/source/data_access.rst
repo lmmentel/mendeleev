@@ -38,6 +38,7 @@ tables are available:
 - :ref:`oxidationstates <oxidationstate-class>`
 - :ref:`screeningconstants <screeningconstant-class>`
 - :ref:`series <series-class>`
+- :ref:`propertymetadata <propertymetadata-class>`
 
 .. autofunction:: fetch_table
 

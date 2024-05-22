@@ -95,6 +95,15 @@ OxidationState
 .. autoclass:: mendeleev.models.OxidationState
    :members:
 
+.. _propertymetadata-class:
+
+PropertyMetadata
+--------------
+
+.. currentmodule:: mendeleev.models
+
+.. autoclass:: mendeleev.models.PropertyMetadata
+   :members:
 
 .. _econf-class:
 
