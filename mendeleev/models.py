@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""module specifying the database models"""
+"""module defining the database models"""
 
 from typing import Any, Callable, Dict, List, Tuple, Union
 from operator import attrgetter
@@ -733,6 +733,8 @@ class Element(Base):
 
 
 class ValueOrigin(enum.Enum):
+    "Options for the origin of the property value."
+
     STORED = "stored"
     COMPUTED = "computed"
 
@@ -741,7 +743,16 @@ class PropertyMetadata(Base):
     """Metadata for properties of elements and isotopes.
 
     Args:
-        Base (_type_): _description_
+        annotations (str): Additional information about the property.
+        attribute_name (str): Name of the attribute of the ORM class.
+        category (str): Category of the property.
+        citation_keys (str): Comma separated list of citation keys. See references.bib for full bibliography.
+        class_name (str): Name of the ORM class.
+        column_name (str): Name of the column in the database.
+        description (str): Description of the property.
+        table_name (str): Name of the table in the database.
+        unit (str): Unit of the property.
+        value_origin (ValueOrigin): Origin of the value, either stored or computed.
     """
 
     __tablename__ = "propertymetadata"
