@@ -66,3 +66,25 @@ for getting the session or the engine:
 .. autofunction:: mendeleev.db.get_session
 
 .. autofunction:: mendeleev.db.get_engine
+
+
+Export data
+-----------
+
+The data can be exported to a number of formats using the CLI by invoking `inv export` command. The following formats are supported:
+
+- csv
+- json
+- html
+- markdown
+
+The command will export all the tables from the database to a set of files in the specified format.
+
+In order to use this functionality you'll need to clone the mendeleev repository and install the package in the development mode. Here's how you can do it:
+
+```bash
+gh clone lmmentel/mendeleev
+cd mendeleev
+poetry install
+poetry run inv export
+```
