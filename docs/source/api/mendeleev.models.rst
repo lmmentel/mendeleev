@@ -33,8 +33,10 @@
       IsotopeDecayMode
       OxidationState
       PhaseTransition
+      PropertyMetadata
       ScreeningConstant
       Series
+      ValueOrigin
    
    
 

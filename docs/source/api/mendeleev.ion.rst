@@ -1,29 +1,6 @@
 ﻿mendeleev.ion
 =============
 
-.. automodule:: mendeleev.ion
+.. currentmodule:: mendeleev
 
-   
-   
-   
-
-   
-   
-   
-
-   
-   
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      Ion
-   
-   
-
-   
-   
-   
-
-
-
+.. autodata:: ion
