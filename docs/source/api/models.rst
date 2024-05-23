@@ -98,7 +98,7 @@ OxidationState
 .. _propertymetadata-class:
 
 PropertyMetadata
---------------
+----------------
 
 .. currentmodule:: mendeleev.models
 
