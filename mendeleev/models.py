@@ -35,6 +35,7 @@ __all__ = [
     "IonicRadius",
     "OxidationState",
     "Isotope",
+    "PropertyMetadata",
     "Series",
     "ScreeningConstant",
 ]
