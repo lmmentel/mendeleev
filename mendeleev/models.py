@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
-"""module specifying the database models"""
+"""module defining the database models"""
 
 from typing import Any, Callable, Dict, List, Tuple, Union
 from operator import attrgetter
+import enum
 import math
 import urllib.parse
 
 import numpy as np
-from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey
+from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey, Text, Enum
 from sqlalchemy.orm import declarative_base, relationship, reconstructor
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
@@ -34,6 +35,7 @@ __all__ = [
     "IonicRadius",
     "OxidationState",
     "Isotope",
+    "PropertyMetadata",
     "Series",
     "ScreeningConstant",
 ]
@@ -719,6 +721,54 @@ class Element(Base):
 
     def __str__(self) -> str:
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
+
+    def __repr__(self) -> str:
+        return "%s(\n%s)" % (
+            self.__class__.__name__,
+            " ".join(
+                "\t%s=%r,\n" % (key, getattr(self, key))
+                for key in sorted(self.__dict__.keys())
+                if not key.startswith("_")
+            ),
+        )
+
+
+class ValueOrigin(enum.Enum):
+    "Options for the origin of the property value."
+
+    STORED = "stored"
+    COMPUTED = "computed"
+
+
+class PropertyMetadata(Base):
+    """Metadata for properties of elements and isotopes.
+
+    Args:
+        annotations (str): Additional information about the property.
+        attribute_name (str): Name of the attribute of the ORM class.
+        category (str): Category of the property.
+        citation_keys (str): Comma separated list of citation keys. See references.bib for full bibliography.
+        class_name (str): Name of the ORM class.
+        column_name (str): Name of the column in the database.
+        description (str): Description of the property.
+        table_name (str): Name of the table in the database.
+        unit (str): Unit of the property.
+        value_origin (ValueOrigin): Origin of the value, either stored or computed.
+    """
+
+    __tablename__ = "propertymetadata"
+
+    id = Column(Integer, primary_key=True)
+    annotations = Column(Text)
+    attribute_name = Column(String, nullable=False)
+    category = Column(String)
+    citation_keys = Column(String)
+    class_name = Column(String, nullable=False)
+    column_name = Column(String, nullable=True)
+    description = Column(Text, nullable=False)
+    table_name = Column(String, nullable=True)
+    unit = Column(String)
+    value_origin = Column(Enum(ValueOrigin), nullable=False)
 
     def __repr__(self) -> str:
         return "%s(\n%s)" % (
