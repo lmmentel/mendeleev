@@ -488,6 +488,12 @@ Feel free to submit [issues](https://github.com/lmmentel/mendeleev/issues) regar
 -   submit a [pull request](https://github.com/lmmentel/mendeleev/pulls)
     so that your changes can be reviewed
 
+## Other languages
+
+Due to great work of other people there are aleternative version in different languages:
+
+- **rust** https://crates.io/crates/mendeleev
+
 ## License
 
 This package is released under the permissive MIT license, see [LICENSE](https://github.com/lmmentel/mendeleev/blob/master/LICENSE)
