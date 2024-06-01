@@ -2,6 +2,7 @@ from typing import List, Union
 
 import pandas as pd
 from sqlalchemy.dialects import sqlite
+from sqlalchemy import text
 
 from mendeleev import element
 from mendeleev import __version__ as version
@@ -65,7 +66,9 @@ def fetch_table(table: str, **kwargs) -> pd.DataFrame:
         )
 
     engine = get_engine()
-    return pd.read_sql(table, engine, **kwargs)
+    query = f"SELECT * FROM {table}"
+    with engine.begin() as conn:
+        return pd.read_sql_query(sql=text(query), con=conn, **kwargs)
 
 
 def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
