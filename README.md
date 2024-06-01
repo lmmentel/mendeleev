@@ -493,7 +493,7 @@ Feel free to submit [issues](https://github.com/lmmentel/mendeleev/issues) regar
 
 Due to great work of other people there are alternative versions in different languages:
 
-- **rust** https://crates.io/crates/mendeleev
+- ![Static Badge](https://img.shields.io/badge/language%20-%20rust%20-%20orange?style=flat&logo=Rust) https://crates.io/crates/mendeleev
 
 ## License
 
