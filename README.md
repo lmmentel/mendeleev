@@ -496,6 +496,8 @@ Due to great work of other people there are alternative versions in different la
 | Name | Language | Source | Documentation | Releases |
 | ---- | -------- | ------ | ------------- | -------- |
 | `mendeleev` | ![Static Badge](https://img.shields.io/badge/language%20-%20rust%20-%20orange?style=flat&logo=Rust) | [gitlab](https://gitlab.com/ygor.souza/mendeleev) | [docs.rs/mendeleev](https://docs.rs/mendeleev/0.8.0) | [![Latest version](https://img.shields.io/crates/v/mendeleev.svg)](https://crates.io/crates/mendeleev) |
+| `Mendeleev.jl` | ![Static Badge](https://img.shields.io/badge/language%20-%20julia%20-%20purple?logo=julia) | [github](https://github.com/Eben60/Mendeleev.jl) | [eben60.github.io/Mendeleev.jl/](https://eben60.github.io/Mendeleev.jl/) | |
+
 
 
 ## License
