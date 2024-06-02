@@ -493,7 +493,10 @@ Feel free to submit [issues](https://github.com/lmmentel/mendeleev/issues) regar
 
 Due to great work of other people there are alternative versions in different languages:
 
-- ![Static Badge](https://img.shields.io/badge/language%20-%20rust%20-%20orange?style=flat&logo=Rust) https://crates.io/crates/mendeleev
+| Name | Language | Source | Documentation | Releases |
+| ---- | -------- | ------ | ------------- | -------- |
+| `mendeleev` | ![Static Badge](https://img.shields.io/badge/language%20-%20rust%20-%20orange?style=flat&logo=Rust) | [gitlab](https://gitlab.com/ygor.souza/mendeleev) | [docs.rs/mendeleev](https://docs.rs/mendeleev/0.8.0) | [![Latest version](https://img.shields.io/crates/v/mendeleev.svg)](https://crates.io/crates/mendeleev) |
+
 
 ## License
 
