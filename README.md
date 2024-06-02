@@ -55,6 +55,7 @@ of elements, ions and isotopes in the periodic table of elements.
 - [Contributing](#contributing)
   - [Issues](#issues)
   - [Pull requests](#pull-requests)
+- [Implementations in other languages](#implementations-in-other-languages) 
 - [License](#license)
 - [Citing](#citing)
 - [Funding](#funding)
@@ -487,6 +488,15 @@ Feel free to submit [issues](https://github.com/lmmentel/mendeleev/issues) regar
 -   push your work back up to your fork
 -   submit a [pull request](https://github.com/lmmentel/mendeleev/pulls)
     so that your changes can be reviewed
+
+## Implementations in other languages
+
+Due to great work of other people there are alternative versions in different languages:
+
+| Name | Language | Source | Documentation | Releases |
+| ---- | -------- | ------ | ------------- | -------- |
+| `mendeleev` | ![Static Badge](https://img.shields.io/badge/language%20-%20rust%20-%20orange?style=flat&logo=Rust) | [gitlab](https://gitlab.com/ygor.souza/mendeleev) | [docs.rs/mendeleev](https://docs.rs/mendeleev/0.8.0) | [![Latest version](https://img.shields.io/crates/v/mendeleev.svg)](https://crates.io/crates/mendeleev) |
+
 
 ## License
 
