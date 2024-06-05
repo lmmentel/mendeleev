@@ -2,6 +2,17 @@
 mendeleev Changelog
 *******************
 
+v0.17.0 (05.06.2024)
+--------------------
+
+* [ENH] Add data export to various formats by :user:`@lmmentel` in :pr:`151`
+* [ENH] Create metadata table for stored properties by :user:`@lmmentel` in :pr:`156`
+* [ENH] Update Isotope.half_life_unit values by :user:`@lmmentel` in :pr:`160`
+* [DOC] Add section for alternative implementation of mendeleev to README by :user:`@lmmentel` in :pr:`163`
+* [DOC] Add Mendeleev.jl to README by :user:`@lmmentel` in :pr:`164`
+* [FIX] Use read-only SQLite connection by :user:`@jan-janssen` in :pr:`165`
+* [FIX] Fix fetch_table to be compatible across major versions of pandas and sqlalchemy by :user:`@lmmentel` in :pr:`159`
+
 v0.16.2 (21.05.2024)
 --------------------
 
