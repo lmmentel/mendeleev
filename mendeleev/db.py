@@ -26,8 +26,8 @@ def get_engine(dbpath: str = None, read_only: bool = True) -> Engine:
     return create_engine(connectstr, echo=False)
 
 
-def get_session(dbpath: str = None) -> Session:
+def get_session(dbpath: str = None, read_only: bool = True) -> Session:
     """Return the database session connection."""
-    engine = get_engine(dbpath=dbpath)
+    engine = get_engine(dbpath=dbpath, read_only=read_only)
     db_session = sessionmaker(bind=engine, autoflush=False, autocommit=False)
     return db_session()
