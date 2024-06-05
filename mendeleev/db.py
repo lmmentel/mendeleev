@@ -21,7 +21,7 @@ def get_engine(dbpath: str = None, read_only: bool = True) -> Engine:
         connectstr = "sqlite:///file:{path:s}?mode=ro&nolock=1&uri=true".format(
             path=dbpath
         )
-    else: 
+    else:
         connectstr = "sqlite:///{path:s}".format(path=dbpath)
     return create_engine(connectstr, echo=False)
 
