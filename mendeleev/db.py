@@ -18,7 +18,9 @@ def get_engine(dbpath: str = None, read_only: bool = True) -> Engine:
     if not dbpath:
         dbpath = get_package_dbpath()
     if read_only:
-        connectstr = "sqlite:///file:{path:s}?mode=ro&nolock=1&uri=true".format(path=dbpath)
+        connectstr = "sqlite:///file:{path:s}?mode=ro&nolock=1&uri=true".format(
+            path=dbpath
+        )
     else: 
         connectstr = "sqlite:///{path:s}".format(path=dbpath)
     return create_engine(connectstr, echo=False)
