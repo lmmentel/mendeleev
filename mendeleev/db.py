@@ -19,7 +19,7 @@ def get_engine(dbpath: str = None) -> Engine:
         dbpath = get_package_dbpath()
     return create_engine(
         "sqlite:///file:{path:s}?mode=ro&nolock=1&uri=true".format(path=dbpath),
-        echo=False
+        echo=False,
     )
 
 
