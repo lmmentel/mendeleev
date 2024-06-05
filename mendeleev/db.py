@@ -17,7 +17,10 @@ def get_engine(dbpath: str = None) -> Engine:
     """Return the db engine"""
     if not dbpath:
         dbpath = get_package_dbpath()
-    return create_engine("sqlite:///{path:s}".format(path=dbpath), echo=False)
+    return create_engine(
+        "sqlite:///file:{path:s}?mode=ro&nolock=1&uri=true".format(path=dbpath),
+        echo=False
+    )
 
 
 def get_session(dbpath: str = None) -> Session:
