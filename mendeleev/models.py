@@ -225,6 +225,7 @@ class Element(Base):
     ionic_radii = relationship("IonicRadius", lazy="subquery")
     isotopes = relationship("Isotope", lazy="subquery", back_populates="element")
     phase_transitions = relationship("PhaseTransition", lazy="subquery")
+    scattering_factors = relationship("ScatteringFactor", lazy="subquery")
     screening_constants = relationship("ScreeningConstant", lazy="subquery")
 
     @reconstructor
@@ -711,6 +712,7 @@ class Element(Base):
             "isotopes",
             "screening_constants",
             "phase_transitions",
+            "scattering_factors",
         ]
         hashable = [(k, v) for k, v in self.__dict__.items() if k not in to_drop]
         return hash(tuple(sorted(hashable)))
@@ -1180,4 +1182,29 @@ class PhaseTransition(Base):
         return f"{self.atomic_number} Tm={self.melting_point} Tb={self.boiling_point}"
 
     def __repr__(self) -> str:
+        return str(self)
+
+
+class ScatteringFactor(Base):
+    """Atomic scattering factors
+
+    Args:
+        atomic_number (int): Atomic number
+        energy (float): Energy in eV
+        f1 (float): Energy in eV
+        f1 (float): Energy in eV
+    """
+
+    __tablename__ = "scattering_factors"
+
+    id = Column(Integer, primary_key=True)
+    atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
+    energy = Column(Float)
+    f1 = Column(Float)
+    f2 = Column(Float)
+
+    def __str__(self):
+        return f"Z={self.atomic_number} E={self.energy} f1={self.f1} f2={self.f2}"
+
+    def __repr__(self):
         return str(self)
