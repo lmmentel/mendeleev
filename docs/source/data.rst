@@ -51,7 +51,7 @@ The following data are currently available:
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
 | ``covalent_radius_pyykko``              | Single bond covalent radius by Pyykko et al.                         | pm             | stored       | :cite:`Pyykko2009`                             |
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
-| ``cpk_color``                           | Element color in CPK convention ([#f_color]_)                        |                | stored       | :cite:`wiki-cpk`                               |
+| ``cpk_color``                           | Element color in CPK convention as HEX codes.                        |                | stored       | :cite:`wiki-cpk`                               |
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
 | ``critical_pressure``                   | Critical pressure                                                    | MPa            | stored       | :cite:`haynes2016crc`                          |
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
@@ -131,7 +131,7 @@ The following data are currently available:
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
 | ``isotopes``                            | See Isotope class documentation                                      |                | stored       |                                                |
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
-| ``jmol_color``                          | Element color in Jmol convention ([#f_color]_)                       |                | stored       | :cite:`jmol-colors`                            |
+| ``jmol_color``                          | Element color in Jmol convention as HEX codes.                       |                | stored       | :cite:`jmol-colors`                            |
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
 | ``lattice_constant``                    | Lattice constant                                                     | angstrom       | stored       |                                                |
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
@@ -149,7 +149,7 @@ The following data are currently available:
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
 | ``molar_heat_capacity``                 | Molar heat capacity @ 25 C, 1 bar                                    | J/mol/K        | stored       | :cite:`haynes2014crc`                          |
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
-| ``molcas_gv_color``                     | Element color in MOCAS GV convention ([#f_color]_)                   |                | stored       | :cite:`molcas-colors`                          |
+| ``molcas_gv_color``                     | Element color in MOCAS GV convention as HEX codes.                   |                | stored       | :cite:`molcas-colors`                          |
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
 | ``name_origin``                         | Origin of the name                                                   |                | stored       |                                                |
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
@@ -173,7 +173,7 @@ The following data are currently available:
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
 | ``protons``                             | Number of protons                                                    |                | computed     |                                                |
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
-| ``sconst``                              | See ScreeningConstant class documentation                            |                | stored       |                                                |
+| ``sconst``                              | See ScreeningConstant class documentation ([#f_sconst]_)             |                | stored       |                                                |
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
 | ``series``                              | Series in the periodic table                                         |                | stored       |                                                |
 +-----------------------------------------+----------------------------------------------------------------------+----------------+--------------+------------------------------------------------+
@@ -396,10 +396,6 @@ Atomic Scattering Factors
    :cite:`Cordero2008` the values for 3 different valences for C, also the low
    and high spin values for Mn, Fe Co, were respectively averaged.
 
-.. [#f_color] **colors**
-
-   HEX codes for colors.
-
 .. [#f_electron_affinity] **Electron affinity**
 
    Electron affinities were taken from :cite:`haynes2014crc` for the elements
@@ -455,7 +451,7 @@ Atomic Scattering Factors
 .. [#f9] **Ionic radii for Actinoid (III) ions**
 
    Ionic radii values for 3\ :sup:`+` Actinoids were with coordination number 9 were taken
-   from :cite:`Lundberg2016`. In addition ``crystal_radius`` values were computed
+   from :cite:`Lundberg2016`. In addition, ``crystal_radius`` values were computed
    by adding 14 pm to the ``ionic_radius`` values according to :cite:`Shannon1976`.
 
 .. [#f_density] **Densities**
