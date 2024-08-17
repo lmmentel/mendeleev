@@ -1,6 +1,8 @@
 from typing import Union, Tuple
 import math
 
+import pandas as pd
+
 
 def coeffs(a: int, b: int = 2) -> Tuple[int, int]:
     """
@@ -43,3 +45,75 @@ def n_effective(n: int, source: str = "slater") -> Union[float, None]:
         raise ValueError(
             f"source '{source}' not found, available sources are: {', '.join(numbers.keys())}"
         )
+
+
+def render_rst_table(df: pd.DataFrame) -> str:
+    """
+    Converts a pandas DataFrame to a reStructuredText table.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to convert.
+
+    Returns:
+        str: The DataFrame as a reStructuredText table.
+    """
+    # Get the column headers
+    headers = df.columns.tolist()
+
+    # Get the lengths of each column for formatting
+    col_lengths = [
+        max(len(str(val)) for val in df[col].tolist() + [col]) for col in headers
+    ]
+
+    # Create the horizontal line for the table
+    hline = "+" + "+".join(["-" * (length + 2) for length in col_lengths]) + "+"
+    header_hline = "+" + "+".join(["=" * (length + 2) for length in col_lengths]) + "+"
+
+    # Format the header row
+    header_row = (
+        "|"
+        + "|".join(
+            [
+                f" {headers[i]}{' ' * (col_lengths[i] - len(headers[i]))} "
+                for i in range(len(headers))
+            ]
+        )
+        + "|"
+    )
+
+    data_rows = []
+    for _, row in df.iterrows():
+        data_row = (
+            "|"
+            + "|".join(
+                [
+                    f" {str(row[col])}{' ' * (col_lengths[i] - len(str(row[col])))} "
+                    for i, col in enumerate(headers)
+                ]
+            )
+            + "|"
+        )
+        data_rows.extend((data_row, hline))
+    return "\n".join([hline, header_row, header_hline] + data_rows)
+
+
+def apply_rst_format(df: pd.DataFrame) -> pd.DataFrame:
+    "Prepare daraframe for printing by intorducing ReST specific formatting"
+
+    # convert the key to cite directive
+    df.loc[:, "citation_keys"] = ":cite:`" + df["citation_keys"] + "`"
+
+    # identify and add footnote_marks
+    mask = df["annotations"].notnull()
+    df.loc[mask, "footnote_mark"] = "[#f_" + df.loc[mask, "attribute_name"] + "]"
+    df.loc[mask, "description"] = (
+        df.loc[mask, "description"] + " (" + df.loc[mask, "footnote_mark"] + "_)"
+    )
+
+    # wrap attributes into code blocks
+    df.loc[:, "attribute_name"] = "``" + df["attribute_name"] + "``"
+    df.loc[:, "value_origin"] = df["value_origin"].str.lower()
+
+    # capitalize column names which will be table headers
+    df.columns = [c.replace("_", " ").capitalize() for c in df.columns]
+    return df.fillna("")
