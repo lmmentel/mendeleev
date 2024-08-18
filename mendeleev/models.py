@@ -1191,8 +1191,8 @@ class ScatteringFactor(Base):
     Args:
         atomic_number (int): Atomic number
         energy (float): Energy in eV
-        f1 (float): Energy in eV
-        f1 (float): Energy in eV
+        f1 (float): Scattering factor f1
+        f1 (float): Scattering factor f2
     """
 
     __tablename__ = "scattering_factors"

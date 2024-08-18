@@ -117,7 +117,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "mendeleev"
-copyright = "2021, Lukasz Mentel"
+copyright = "2024, Lukasz Mentel"
 
 # Link to GitHub repo for github_issues extension
 issues_github_path = "lmmentel/mendeleev"
