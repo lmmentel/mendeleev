@@ -76,6 +76,15 @@ Isotope
 .. autoclass:: mendeleev.models.Isotope
    :members:
 
+.. _isotopedecaymode-class:
+
+IsotopeDecayMode
+----------------
+
+.. currentmodule:: mendeleev.models
+
+.. autoclass:: mendeleev.models.IsotopeDecayMode
+   :members:
 
 .. _oxidationstate-class:
 

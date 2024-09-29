@@ -34,11 +34,14 @@ tables are available:
 - :ref:`groups <group-class>`
 - :ref:`ionicradii <ionicradius-class>`
 - :ref:`ionizationenergies <ionizationenergy-class>`
+- :ref:`isotopedecaymodes <isotopedecaymode-class>`
 - :ref:`isotopes <isotope-class>`
 - :ref:`oxidationstates <oxidationstate-class>`
+- :ref:`phasetransitions <phasetransition-class>`
+- :ref:`propertymetadata <propertymetadata-class>`
+- :ref:`scattering_factors <scatteringfactor-class>`
 - :ref:`screeningconstants <screeningconstant-class>`
 - :ref:`series <series-class>`
-- :ref:`propertymetadata <propertymetadata-class>`
 
 .. autofunction:: fetch_table
 
