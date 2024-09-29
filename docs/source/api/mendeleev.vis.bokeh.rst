@@ -3,27 +3,9 @@ mendeleev.vis.bokeh
 
 .. automodule:: mendeleev.vis.bokeh
 
-   
-   
-   
 
-   
-   
    .. rubric:: Functions
 
-   .. autosummary::
+   .. autofunction:: periodic_table_bokeh
    
-      periodic_table_bokeh
-   
-   
-
-   
-   
-   
-
-   
-   
-   
-
-
 

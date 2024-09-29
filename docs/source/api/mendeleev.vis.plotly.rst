@@ -3,29 +3,11 @@ mendeleev.vis.plotly
 
 .. automodule:: mendeleev.vis.plotly
 
-   
-   
-   
 
-   
-   
    .. rubric:: Functions
 
-   .. autosummary::
+   .. autofunction:: periodic_table_plotly
    
-      create_annotation
-      create_tile
-      periodic_table_plotly
+   .. autofunction:: create_annotation
    
-   
-
-   
-   
-   
-
-   
-   
-   
-
-
-
+   .. autofunction:: create_tile

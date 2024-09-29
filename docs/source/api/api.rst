@@ -32,13 +32,12 @@ Visualization
 =============
 
 The main entry point for visualizing periodic tables with different
-properties is the :func:`periodictable.periodic_table` function.
+properties is the :func:`vis.periodictable.periodic_table` function.
 
-.. autosummary::
-   :toctree:
+.. toctree::
 
-   mendeleev.vis.bokeh
    mendeleev.vis.periodictable
+   mendeleev.vis.bokeh
    mendeleev.vis.plotly
    mendeleev.vis.seaborn
    mendeleev.vis.utils
