@@ -32,7 +32,7 @@ Visualization
 =============
 
 The main entry point for visualizing periodic tables with different
-properties is the :func:`vis.periodictable.periodic_table` function.
+properties is the :func:`mendeleev.vis.periodictable.periodic_table` function.
 
 .. toctree::
 
