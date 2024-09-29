@@ -13,6 +13,27 @@ Element
 .. autoclass:: mendeleev.models.Element
    :members:
 
+.. _econf-class:
+
+ElectronicConfiguration
+-----------------------
+
+.. currentmodule:: mendeleev.econf
+
+.. autoclass:: mendeleev.econf.ElectronicConfiguration
+   :members:
+
+
+.. _group-class:
+
+Group
+-----
+
+.. currentmodule:: mendeleev.models
+
+.. autoclass:: mendeleev.models.Group
+   :members:
+
 
 .. _ion-class:
 
@@ -55,6 +76,27 @@ Isotope
 .. autoclass:: mendeleev.models.Isotope
    :members:
 
+
+.. _oxidationstate-class:
+
+OxidationState
+--------------
+
+.. currentmodule:: mendeleev.models
+
+.. autoclass:: mendeleev.models.OxidationState
+   :members:
+
+.. _scatteringfactor-class:
+
+ScatteringFactor
+----------------
+
+.. currentmodule:: mendeleev.models
+
+.. autoclass:: mendeleev.models.ScatteringFactor
+   :members:
+
 .. _screeningconstant-class:
 
 ScreeningConstant
@@ -75,25 +117,17 @@ Series
 .. autoclass:: mendeleev.models.Series
    :members:
 
-.. _group-class:
 
-Group
------
+.. _phasetransition-class:
 
-.. currentmodule:: mendeleev.models
-
-.. autoclass:: mendeleev.models.Group
-   :members:
-
-.. _oxidationstate-class:
-
-OxidationState
---------------
+PhaseTransition
+---------------
 
 .. currentmodule:: mendeleev.models
 
-.. autoclass:: mendeleev.models.OxidationState
+.. autoclass:: mendeleev.models.PhaseTransition
    :members:
+
 
 .. _propertymetadata-class:
 
@@ -103,15 +137,5 @@ PropertyMetadata
 .. currentmodule:: mendeleev.models
 
 .. autoclass:: mendeleev.models.PropertyMetadata
-   :members:
-
-.. _econf-class:
-
-ElectronicConfiguration
------------------------
-
-.. currentmodule:: mendeleev.econf
-
-.. autoclass:: mendeleev.econf.ElectronicConfiguration
    :members:
 
