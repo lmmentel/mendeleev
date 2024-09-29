@@ -1,3 +1,5 @@
+"""Low-level database access functions."""
+
 import os
 
 from sqlalchemy import create_engine
