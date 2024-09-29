@@ -38,6 +38,7 @@ __all__ = [
     "PhaseTransition",
     "PropertyMetadata",
     "Series",
+    "ScatteringFactor",
     "ScreeningConstant",
 ]
 
