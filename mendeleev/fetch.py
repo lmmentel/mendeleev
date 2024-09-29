@@ -1,3 +1,5 @@
+"""Utility functions to fetch data from the database in bulk"""
+
 from typing import List, Union
 
 import pandas as pd
