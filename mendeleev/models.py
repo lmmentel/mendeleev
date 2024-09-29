@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""module defining the database models"""
+"""Module defining the database models for elements and related properties."""
 
 from typing import Any, Callable, Dict, List, Tuple, Union
 from operator import attrgetter
