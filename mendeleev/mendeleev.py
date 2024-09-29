@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""Entry point for the Mendeleev package for instantiating elements and isotopes."""
 
 from typing import List, Union
 
