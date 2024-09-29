@@ -31,15 +31,17 @@ from .utils import coeffs
 
 __all__ = [
     "Element",
-    "IonizationEnergy",
+    "Group",
     "IonicRadius",
-    "OxidationState",
+    "IonizationEnergy",
     "Isotope",
+    "IsotopeDecayMode",
+    "OxidationState",
     "PhaseTransition",
     "PropertyMetadata",
-    "Series",
     "ScatteringFactor",
     "ScreeningConstant",
+    "Series",
 ]
 
 
