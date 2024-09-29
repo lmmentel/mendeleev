@@ -1168,6 +1168,7 @@ class PhaseTransition(Base):
         critical_pressure (float): Critical pressure in MPa
         triple_point_temperature (float): Temperature in K of the triple point
         triple_point_pressure (float): Pressure in kPa of the triple point
+        alotrope (str): Allotrope
     """
 
     __tablename__ = "phasetransitions"
