@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function
+"""Module defining the command line interface for mendeleev."""
 
 import argparse
 import textwrap

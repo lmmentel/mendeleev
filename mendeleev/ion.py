@@ -1,3 +1,5 @@
+"""Module defining the database models for ions."""
+
 from statistics import mean
 from typing import List
 from mendeleev import element

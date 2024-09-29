@@ -1,3 +1,5 @@
+"""Utility functions for Mendeleev package."""
+
 from typing import Union, Tuple
 import math
 

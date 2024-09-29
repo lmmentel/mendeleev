@@ -1,6 +1,29 @@
 ﻿mendeleev.cli
 =============
 
-.. currentmodule:: mendeleev
+.. automodule:: mendeleev.cli
 
-.. autodata:: cli
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      clielement
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

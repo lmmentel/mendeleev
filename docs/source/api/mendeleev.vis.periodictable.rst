@@ -1,29 +1,10 @@
-mendeleev.vis.periodictable
+﻿mendeleev.vis.periodictable
 ===========================
 
 .. automodule:: mendeleev.vis.periodictable
 
-   
-   
-   
-
-   
-   
    .. rubric:: Functions
 
-   .. autosummary::
+   .. autofunction:: periodic_table
    
-      periodic_table
-   
-   
-
-   
-   
-   
-
-   
-   
-   
-
-
 

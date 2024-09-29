@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""module defining the database models"""
+"""Module defining the database models for elements and related properties."""
 
 from typing import Any, Callable, Dict, List, Tuple, Union
 from operator import attrgetter
@@ -31,13 +31,17 @@ from .utils import coeffs
 
 __all__ = [
     "Element",
-    "IonizationEnergy",
+    "Group",
     "IonicRadius",
-    "OxidationState",
+    "IonizationEnergy",
     "Isotope",
+    "IsotopeDecayMode",
+    "OxidationState",
+    "PhaseTransition",
     "PropertyMetadata",
-    "Series",
+    "ScatteringFactor",
     "ScreeningConstant",
+    "Series",
 ]
 
 
@@ -1164,6 +1168,7 @@ class PhaseTransition(Base):
         critical_pressure (float): Critical pressure in MPa
         triple_point_temperature (float): Temperature in K of the triple point
         triple_point_pressure (float): Pressure in kPa of the triple point
+        alotrope (str): Allotrope
     """
 
     __tablename__ = "phasetransitions"
