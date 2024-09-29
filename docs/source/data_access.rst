@@ -85,7 +85,59 @@ In order to use this functionality you'll need to clone the mendeleev repository
 
 .. code-block:: bash
 
-   gh clone lmmentel/mendeleev
-   cd mendeleev
-   poetry install
-   poetry run inv export
+    gh clone lmmentel/mendeleev
+    cd mendeleev
+    poetry install
+    poetry run inv export
+
+
+After the command is executed you'll find the exported files in the `data` directory. The
+contents should look like this:
+
+.. code-block:: bash
+
+    data
+    ├── csv
+    │   ├── elements.csv
+    │   ├── groups.csv
+    │   ├── ionicradii.csv
+    │   ├── ionizationenergies.csv
+    │   ├── isotopedecaymodes.csv
+    │   ├── isotopes.csv
+    │   ├── oxidationstates.csv
+    │   ├── phasetransitions.csv
+    │   ├── screeningconstants.csv
+    │   └── series.csv
+    ├── html
+    │   ├── elements.html
+    │   ├── groups.html
+    │   ├── ionicradii.html
+    │   ├── ionizationenergies.html
+    │   ├── isotopedecaymodes.html
+    │   ├── isotopes.html
+    │   ├── oxidationstates.html
+    │   ├── phasetransitions.html
+    │   ├── screeningconstants.html
+    │   └── series.html
+    ├── json
+    │   ├── elements.json
+    │   ├── groups.json
+    │   ├── ionicradii.json
+    │   ├── ionizationenergies.json
+    │   ├── isotopedecaymodes.json
+    │   ├── isotopes.json
+    │   ├── oxidationstates.json
+    │   ├── phasetransitions.json
+    │   ├── screeningconstants.json
+    │   └── series.json
+    └── markdown
+        ├── elements.markdown
+        ├── groups.markdown
+        ├── ionicradii.markdown
+        ├── ionizationenergies.markdown
+        ├── isotopedecaymodes.markdown
+        ├── isotopes.markdown
+        ├── oxidationstates.markdown
+        ├── phasetransitions.markdown
+        ├── screeningconstants.markdown
+        └── series.markdown
