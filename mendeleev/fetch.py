@@ -58,6 +58,7 @@ def fetch_table(table: str, **kwargs) -> pd.DataFrame:
         "oxidationstates",
         "phasetransitions",
         "propertymetadata",
+        "scattering_factors",
         "screeningconstants",
         "series",
     }
