@@ -2,6 +2,17 @@
 mendeleev Changelog
 *******************
 
+v0.18.0 (30.09.2024)
+--------------------
+
+* [ENH] Add atomic scattering factors by :user:`@lmmentel` in :pr:`174`
+* [DOC] Update data documentation by :user:`@lmmentel` in :pr:`175`
+* [DOC] Add api docs for the ``PhaseTransition`` model by :user:`@lmmentel` in :pr:`181`
+* [DOC] Add ``phasetransitions`` table to data access docs by :user:`@lmmentel` in :pr:`183`
+* [DOC] Correct the data export instructions by :user:`@lmmentel` in :pr:`184`
+* [DOC] Add metadata on ``PhaseTransition`` and update docs by :user:`@lmmentel` in :pr:`185`
+* [DOC] Update tutorial notebooks by :user:`@lmmentel` in :pr:`187`
+
 v0.17.0 (05.06.2024)
 --------------------
 
