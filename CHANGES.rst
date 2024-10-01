@@ -2,6 +2,11 @@
 mendeleev Changelog
 *******************
 
+v0.18.1 (01.10.2024)
+--------------------
+
+* [MNT] drop pdf format from docs by :user:`@lmmentel`
+
 v0.18.0 (30.09.2024)
 --------------------
 
