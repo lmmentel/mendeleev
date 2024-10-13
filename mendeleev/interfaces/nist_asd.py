@@ -2,6 +2,9 @@
 
 import io
 from enum import Enum
+import asyncio
+import httpx
+import time
 
 import pandas as pd
 import requests
@@ -72,3 +75,40 @@ def clean(df):
     df["Ionization Energy (eV)"] = pd.to_numeric(df["Ionization Energy (eV)"])
     df["Uncertainty (eV)"] = pd.to_numeric(df["Uncertainty (eV)"])
     return df
+
+
+start_time = time.time()
+
+
+def response_to_dataframe(response):
+    # find the Notes section if exists
+    try:
+        index = response.text.index("Notes")
+    except ValueError:
+        index = len(response.text)
+    csv_data = response.text[:index]
+    # csv_notes = response.text[index:]
+    csv_file = io.StringIO(csv_data)
+    return pd.read_csv(csv_file)
+
+
+async def get_csv(client, url):
+    response = await client.get(url)
+    return response_to_dataframe(response)
+
+
+async def main():
+    async with httpx.AsyncClient() as client:
+        tasks = []
+        for element in ["H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne"]:
+            url = Query(spectra=element).request()
+            tasks.append(asyncio.ensure_future(get_csv(client, url)))
+
+        data = await asyncio.gather(*tasks)
+        for df in data:
+            df = clean(df)
+            print(df)
+
+
+asyncio.run(main())
+print("--- %s seconds ---" % (time.time() - start_time))
