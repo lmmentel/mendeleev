@@ -1,11 +1,10 @@
 import pytest
-from mendeleev import Element, element, get_all_elements
+from mendeleev import Element, element, get_all_elements, get_attribute_for_all_elements
 from mendeleev.db import get_session
 
 
-ALL_ELEMENTS = {x.symbol: x for x in get_all_elements()}
-SYMBOLS = list(ALL_ELEMENTS.keys())
-NAMES = [x.name for x in ALL_ELEMENTS.values()]
+SYMBOLS = get_attribute_for_all_elements("symbol")
+NAMES = get_attribute_for_all_elements("name")
 
 
 @pytest.fixture
