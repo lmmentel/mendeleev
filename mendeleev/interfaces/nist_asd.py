@@ -1,14 +1,16 @@
 """Interface to the NIST Atomic Spectra Database (ASD)"""
 
-import io
-from enum import Enum
 import asyncio
-import httpx
+import io
 import time
+from enum import Enum
 
+import httpx
 import pandas as pd
 import requests
 from pydantic import BaseModel
+
+from mendeleev.mendeleev import get_attribute_for_all_elements
 
 
 class Units(Enum):
@@ -100,7 +102,7 @@ async def get_csv(client, url):
 async def main():
     async with httpx.AsyncClient() as client:
         tasks = []
-        for element in ["H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne"]:
+        for element in get_attribute_for_all_elements("symbol")[:20]:
             url = Query(spectra=element).request()
             tasks.append(asyncio.ensure_future(get_csv(client, url)))
 
@@ -108,7 +110,8 @@ async def main():
         for df in data:
             df = clean(df)
             print(df)
+            df.to_csv(f"{df.iloc[0]['El. Name']}.csv", index=False)
 
 
 asyncio.run(main())
-print("--- %s seconds ---" % (time.time() - start_time))
+print(f"--- {time.time() - start_time} seconds ---")
