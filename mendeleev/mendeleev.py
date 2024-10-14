@@ -3,13 +3,15 @@
 from typing import List, Union
 
 import sqlalchemy
+from sqlalchemy.orm import Session
 
-from .db import get_session
+from .db import get_session, get_engine
 from .models import Element, Isotope
 
 
 __all__ = [
     "get_all_elements",
+    "get_attribute_for_all_elements",
     "element",
     "isotope",
 ]
@@ -194,3 +196,17 @@ def deltaN(
         )
     else:
         return None
+
+
+def get_attribute_for_all_elements(attribute: str) -> List:
+    """
+    Get a list of from a single attribute of all elements in the database.
+    """
+    engine = get_engine()
+    with Session(engine) as session:
+        return [
+            getattr(r, attribute)
+            for r in session.query(getattr(Element, attribute))
+            .order_by(Element.atomic_number)
+            .all()
+        ]
