@@ -4,6 +4,7 @@ import asyncio
 import io
 import time
 from enum import Enum
+from pathlib import Path
 
 import httpx
 import pandas as pd
@@ -74,12 +75,9 @@ def clean(df):
     df = df.apply(lambda x: x.str.strip("="))
     df = df.apply(lambda x: x.str.strip('"'))
     df["At. num"] = pd.to_numeric(df["At. num"])
-    df["Ionization Energy (eV)"] = pd.to_numeric(df["Ionization Energy (eV)"])
-    df["Uncertainty (eV)"] = pd.to_numeric(df["Uncertainty (eV)"])
+    # df["Ionization Energy (eV)"] = pd.to_numeric(df["Ionization Energy (eV)"])
+    # df["Uncertainty (eV)"] = pd.to_numeric(df["Uncertainty (eV)"])
     return df
-
-
-start_time = time.time()
 
 
 def response_to_dataframe(response):
@@ -94,24 +92,43 @@ def response_to_dataframe(response):
     return pd.read_csv(csv_file)
 
 
-async def get_csv(client, url):
-    response = await client.get(url)
-    return response_to_dataframe(response)
+async def get_csv(client, url: str, semaphore):
+    async with semaphore:
+        response = await client.get(url)
+        return response_to_dataframe(response)
 
 
-async def main():
+async def main(path: Path):
+    """Fetch ionization energy data from NIST ASD for all elements
+
+    Args:
+        path (Path): path to save the data
+    """
+    semaphore = asyncio.Semaphore(20)
     async with httpx.AsyncClient() as client:
         tasks = []
-        for element in get_attribute_for_all_elements("symbol")[:20]:
+        for element in get_attribute_for_all_elements("symbol"):
+            print(f"Fetching data for {element}")
             url = Query(spectra=element).request()
-            tasks.append(asyncio.ensure_future(get_csv(client, url)))
+            # tasks.append(asyncio.ensure_future(get_csv(client, url)))
+            tasks.append(get_csv(client, url, semaphore))
 
         data = await asyncio.gather(*tasks)
-        for df in data:
-            df = clean(df)
-            print(df)
-            df.to_csv(f"{df.iloc[0]['El. Name']}.csv", index=False)
+    for df in data:
+        df = clean(df)
+        print(df.head(1))
+        df.to_csv(path.joinpath(f"{df.iloc[0]['El. Name']}.csv"), index=False)
 
 
-asyncio.run(main())
-print(f"--- {time.time() - start_time} seconds ---")
+def download_ie_data():
+    path = Path("data/ie")
+    if not path.exists():
+        path.mkdir(parents=True)
+
+    start_time = time.time()
+    asyncio.run(main(path))
+    print(f"--- {time.time() - start_time} seconds ---")
+
+
+if __name__ == "__main__":
+    download_ie_data()
