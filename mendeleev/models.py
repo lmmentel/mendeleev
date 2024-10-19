@@ -961,10 +961,10 @@ class OxidationState(Base):
     Oxidation states of an element
 
     Args:
-      atomic_number (int): Atomic number
-      oxidation_state (int): Oxidation state
-      category (str): Either `main` or `extended` flag to indicate
-        the type of oxidation state.
+        atomic_number (int): Atomic number
+        oxidation_state (int): Oxidation state
+        category (str): Either `main` or `extended` flag to indicate
+            the type of oxidation state.
     """
 
     __tablename__ = "oxidationstates"
