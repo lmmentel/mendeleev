@@ -10,7 +10,9 @@ import httpx
 import pandas as pd
 from pydantic import BaseModel
 
+from mendeleev.db import get_session
 from mendeleev.mendeleev import get_attribute_for_all_elements
+from mendeleev.models import IonizationEnergy
 
 
 class Units(Enum):
@@ -180,6 +182,33 @@ def process_ie_files(source: Path, destination: Path):
             print(f"ERROR: {e}")
             continue
         df.to_csv(destination.joinpath(file.name), index=False)
+
+
+def udate_database():
+    """Update the mendeleev database with the ionization energy data."""
+    session = get_session(read_only=False)
+
+    objects = [
+        IonizationEnergy(
+            atomic_number=row["atomic_number"],
+            ground_configuration=row["ground_configuration"],
+            ground_level=row["ground_level"],
+            ground_shells=row["ground_shells"],
+            ion_charge=row["ion_charge"],
+            ionization_energy=row["ionization_energy"],
+            ionized_level=row["ionized_level"],
+            is_semi_empirical=row["is_semi_empirical"],
+            is_theoretical=row["is_theoretical"],
+            isoelectonic_sequence=row["isoelectonic_sequence"],
+            references=row["references"],
+            species_name=row["species_name"],
+            uncertainty=row["uncertainty"],
+        )
+        for _, row in ie.iterrows()
+    ]
+    session.add_all(objects)
+    session.commit()
+    session.close()
 
 
 if __name__ == "__main__":
