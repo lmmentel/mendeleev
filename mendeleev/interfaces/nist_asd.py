@@ -86,7 +86,8 @@ async def fetch_url_data(url: str, client, semaphore):
 async def write_csv(element: str, url: str, path: Path, client, semaphore):
     """Write the data to a csv file, and the notes to a txt file"""
     df, notes = await parse_to_dataframe(url, client, semaphore)
-    df.to_csv(path.joinpath(f"{element}.csv"), index=False)
+    if df is not None:
+        df.to_csv(path.joinpath(f"{element}.csv"), index=False)
     if notes:
         with open(path.joinpath(f"{element}.txt"), "w") as f:
             f.write(notes)
@@ -139,7 +140,7 @@ def download_ie_data():
     path = Path("data/ie")
     if not path.exists():
         path.mkdir(parents=True)
-    elements = get_attribute_for_all_elements("symbol")[:10]
+    elements = get_attribute_for_all_elements("symbol")
 
     start_time = time.time()
     asyncio.run(bulk_fetch_and_save(elements=elements, dest=path))
