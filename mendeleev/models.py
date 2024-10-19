@@ -941,8 +941,8 @@ class IonizationEnergy(Base):
 
     @hybrid_property
     def degree(self):
-        """Alias for `degree` for backwards compatibility"""
-        return self.ion_charge
+        """`ion_charge` + 1 provided for backwards compatibility"""
+        return self.ion_charge + 1
 
     @hybrid_property
     def energy(self):
