@@ -167,8 +167,10 @@ def prepare_ie_table(ie: pd.DataFrame) -> pd.DataFrame:
     # create new flag based on souce from: https://physics.nist.gov/PhysRefData/ASD/Html/iehelp.html#IE_OUTPUT
     ie.loc[:, "is_semi_empirical"] = (ie.prefix == "[") & (ie.suffix == "]")
     ie.loc[:, "is_theoretical"] = (ie.prefix == "(") & (ie.suffix == ")")
-
+    # drop the columns that are not needed
     ie = ie.drop(columns=["prefix", "suffix", "element_name"])
+    # drop rows without the ioniztion energy
+    ie = ie.dropna(axis=0, subset=["ionization_energy"])
     return ie
 
 
