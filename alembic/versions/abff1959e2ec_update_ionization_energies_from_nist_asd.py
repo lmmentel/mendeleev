@@ -23,6 +23,7 @@ def upgrade():
     # Create the new table with the specified columns
     op.create_table(
         'ionizationenergies',
+        sa.Column("id", sa.Integer, primary_key=True),
         sa.Column('atomic_number', sa.Integer(), nullable=False),
         sa.Column('species_name', sa.String(), nullable=False),
         sa.Column('ion_charge', sa.Integer(), nullable=False),
@@ -36,7 +37,6 @@ def upgrade():
         sa.Column('references', sa.Text(), nullable=True),
         sa.Column('is_semi_empirical', sa.Boolean(), nullable=True),
         sa.Column('is_theoretical', sa.Boolean(), nullable=True),
-        sa.PrimaryKeyConstraint('atomic_number', 'ion_charge')
     )
 
 def downgrade():
