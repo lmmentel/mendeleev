@@ -165,8 +165,8 @@ def fetch_ionization_energies(degree: Union[List[int], int] = 1) -> pd.DataFrame
 
         df = pd.merge(
             df,
-            energies.loc[:, ["atomic_number", "energy"]].rename(
-                columns={"energy": "IE{0:d}".format(d)}
+            energies.loc[:, ["atomic_number", "ionization_energy"]].rename(
+                columns={"ionization_energy": "IE{0:d}".format(d)}
             ),
             on="atomic_number",
             how="left",
