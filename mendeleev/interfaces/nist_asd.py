@@ -95,7 +95,6 @@ async def write_csv(element: str, url: str, path: Path, client, semaphore):
 
 async def bulk_fetch_and_save(elements: list[str], dest: Path):
     """Fetch ionization energy data from NIST ASD and save it to a csv file."""
-
     semaphore = asyncio.Semaphore(20)
     async with httpx.AsyncClient() as client:
         tasks = []
@@ -106,15 +105,18 @@ async def bulk_fetch_and_save(elements: list[str], dest: Path):
         await asyncio.gather(*tasks)
 
 
-def clean(df):
-    "Clean the data frame from NIST ASD"
+def clean(df: pd.DataFrame) -> pd.DataFrame:
+    """Clean the data frame from NIST ASD
+
+    For Hydrogen the extra column "Ionised Level" was added since it's missing in the original data
+    """
 
     columns = [
         "atomic_number",
         "species_name",
         "ion_charge",
         "element_name",
-        "Isoel. Seq.",
+        "isoelectonic_sequence",
         "ground_shells",
         "ground_configuration",
         "ground_level",
@@ -126,20 +128,19 @@ def clean(df):
         "references",
     ]
 
-    df.columns = columns
     df = df.dropna(axis="columns")
+    df = df.iloc[:, :15]
+    df.columns = columns
     df = df.apply(lambda x: x.str.strip("="))
     df = df.apply(lambda x: x.str.strip('"'))
     df["atomic_number"] = pd.to_numeric(df["atomic_number"])
-    # df["Ionization Energy (eV)"] = pd.to_numeric(df["Ionization Energy (eV)"])
-    # df["Uncertainty (eV)"] = pd.to_numeric(df["Uncertainty (eV)"])
+    df["ionization_energy"] = pd.to_numeric(df["ionization_energy"])
+    df["uncertainty"] = pd.to_numeric(df["uncertainty"])
     return df
 
 
-def download_ie_data():
-    path = Path("data/ie")
-    if not path.exists():
-        path.mkdir(parents=True)
+def download_ie_data(path: Path):
+    """Download ionization energy data from NIST ASD and save it to a csv file per element."""
     elements = get_attribute_for_all_elements("symbol")
 
     start_time = time.time()
@@ -147,5 +148,57 @@ def download_ie_data():
     print(f"--- {time.time() - start_time} seconds ---")
 
 
+def merge_ie_data(path: Path) -> pd.DataFrame:
+    "Merge individual csv files into a single DataFrame"
+    dfs = []
+    for file in path.glob("*.csv"):
+        df = pd.read_csv(file)
+        dfs.append(df)
+
+    df = pd.concat(dfs, axis=0)
+    return df
+
+
+def prepare_ie_table(ie: pd.DataFrame) -> pd.DataFrame:
+    """Prepare the ionization energy table for storing in the database."""
+    ie = ie.sort_values(by=["atomic_number", "ion_charge"])
+    # create new flag based on souce from: https://physics.nist.gov/PhysRefData/ASD/Html/iehelp.html#IE_OUTPUT
+    ie.loc[:, "is_semi_empirical"] = (ie.prefix == "[") & (ie.suffix == "]")
+    ie.loc[:, "is_theoretical"] = (ie.prefix == "(") & (ie.suffix == ")")
+
+    ie = ie.drop(columns=["prefix", "suffix", "element_name"])
+    return ie
+
+
+def process_ie_files(source: Path, destination: Path):
+    for file in source.glob("*.csv"):
+        print(f"Processing: {file}")
+        df = pd.read_csv(file)
+        try:
+            df = clean(df)
+        except Exception as e:
+            print(f"ERROR: {e}")
+            continue
+        df.to_csv(destination.joinpath(file.name), index=False)
+
+
 if __name__ == "__main__":
-    download_ie_data()
+    DOWNLOAD = False
+    PROCESS = True
+
+    if DOWNLOAD:
+        raw = Path("data/ie")
+        if not raw.exists():
+            raw.mkdir(parents=True)
+        download_ie_data(raw)
+
+    if PROCESS:
+        processed = Path("data/ie/processed")
+        if not processed.exists():
+            processed.mkdir(parents=True)
+        process_ie_files(source=raw, destination=processed)
+
+        # get the data readt for the database
+        ie = merge_ie_data(processed)
+        ie = prepare_ie_table(ie)
+        ie.to_parquet(processed.joinpath("ionization_energies.parquet"), index=False)
