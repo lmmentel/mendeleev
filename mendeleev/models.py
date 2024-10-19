@@ -898,21 +898,54 @@ class IonicRadius(Base):
 
 class IonizationEnergy(Base):
     """
-    Ionization energy of an element
+    Ionization energies of an element
 
     Args:
         atomic_number (int): Atomic number
-        degree (int): Degree of ionization with respect to neutral atom
-        energy (float): Ionization energy in eV parsed from
-            http://physics.nist.gov/cgi-bin/ASD/ie.pl on April 13, 2015
+        ionization_energy (float): Ionization energy in eV
+        energy (float): alias for `ionization_energy`
+        ground_configuration (str): Ground state electronic configuration
+        ground_level (str): Term symbol and *J* value for the largest component in the calculated eigenvector of the ground level.
+        ground_shells (str): Ground state shells
+        ion_charge (int): Charge of the ion, i.e. the degree of ionization with respect to neutral atom
+        degree (int): Alias for `ion_charge`.
+        ionized_level (str): Configuration, term, and *J* value corresponding to the ground state of the next ion
+        is_semi_empirical (bool): Flag indicating that the energy is determined by interpolation, extrapolation, or other semi-empirical procedure relying on some known experimental values.
+        is_theoretical (bool): Flag indicating that the energy have been determined from an ab-initio calculation, or are otherwise not derived from evaluated experimental data
+        isoelectonic_sequence (str): Isoelectronic sequence
+        references (str): References
+        species_name (str): Name of the species
+        uncertainty (float): Uncertainty in the ionization energy
+
+    Data parsed from `http://physics.nist.gov/cgi-bin/ASD/ie.pl` on October 19, 2024.
     """
 
     __tablename__ = "ionizationenergies"
 
     id = Column(Integer, primary_key=True)
-    atomic_number = Column(Integer, ForeignKey("elements.atomic_number"))
-    degree = Column(Integer)
-    energy = Column(Float)
+    atomic_number = Column(
+        Integer, ForeignKey("elements.atomic_number"), nullable=False
+    )
+    ground_configuration = Column(String, nullable=True)
+    ground_level = Column(String, nullable=True)
+    ground_shells = Column(String, nullable=True)
+    ion_charge = Column(Integer, nullable=False)
+    ionization_energy = Column(Float, nullable=True)
+    ionized_level = Column(String, nullable=True)
+    is_semi_empirical = Column(Boolean, nullable=True)
+    is_theoretical = Column(Boolean, nullable=True)
+    isoelectonic_sequence = Column(String, nullable=False)
+    references = Column(Text, nullable=True)
+    species_name = Column(String, nullable=False)
+    uncertainty = Column(Float, nullable=True)
+
+    def degree(self):
+        """Alias for `degree` for backwards compatibility"""
+        return self.ion_charge
+
+    def energy(self):
+        """Alias for `ionization_energy` for backwards compatibility"""
+        return self.ionization_energy
 
     def __str__(self) -> str:
         return "{0:5d} {1:10.5f}".format(self.degree, self.energy)
