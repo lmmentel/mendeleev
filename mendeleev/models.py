@@ -908,7 +908,7 @@ class IonizationEnergy(Base):
         ground_level (str): Term symbol and *J* value for the largest component in the calculated eigenvector of the ground level.
         ground_shells (str): Ground state shells
         ion_charge (int): Charge of the ion, i.e. the degree of ionization with respect to neutral atom
-        degree (int): Alias for `ion_charge`.
+        degree (int): Degree of ionization, equal to `ion_charge + 1`.
         ionized_level (str): Configuration, term, and *J* value corresponding to the ground state of the next ion
         is_semi_empirical (bool): Flag indicating that the energy is determined by interpolation, extrapolation, or other semi-empirical procedure relying on some known experimental values.
         is_theoretical (bool): Flag indicating that the energy have been determined from an ab-initio calculation, or are otherwise not derived from evaluated experimental data
