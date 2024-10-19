@@ -13,7 +13,7 @@ tables = [
     ("elements", 118),
     ("isotopes", 3557),
     ("ionicradii", 507),
-    ("ionizationenergies", 5837),
+    ("ionizationenergies", 5847),
     ("groups", 18),
     ("series", 10),
     ("oxidationstates", 579),
