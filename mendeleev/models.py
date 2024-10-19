@@ -939,10 +939,12 @@ class IonizationEnergy(Base):
     species_name = Column(String, nullable=False)
     uncertainty = Column(Float, nullable=True)
 
+    @hybrid_property
     def degree(self):
         """Alias for `degree` for backwards compatibility"""
         return self.ion_charge
 
+    @hybrid_property
     def energy(self):
         """Alias for `ionization_energy` for backwards compatibility"""
         return self.ionization_energy
