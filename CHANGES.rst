@@ -32,7 +32,7 @@ v0.17.0 (05.06.2024)
 v0.16.2 (21.05.2024)
 --------------------
 
-* * Fix `ImportError`s not being raised with missing objects by :user:`lmmentel` in :pr:`150`
+* * Fix ``ImportError`` not being raised with missing objects by :user:`lmmentel` in :pr:`150`
 
 v0.16.1 (13.05.2024)
 --------------------
