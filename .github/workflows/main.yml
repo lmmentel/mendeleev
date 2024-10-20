@@ -55,9 +55,7 @@ jobs:
         uses: pre-commit/action@v3.0.1
 
       - name: Test with pytest
-        run: |
-          source $VENV 
-          pytest
+        run: poetry run pytest
 
   deploy:
     needs: test
