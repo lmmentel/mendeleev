@@ -45,7 +45,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./.venv
-          key: pydeps-${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
+          key: pydeps-${{ matrix.os }}-python${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
 
       - name: Install dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
