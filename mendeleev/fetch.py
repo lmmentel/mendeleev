@@ -6,8 +6,9 @@ import pandas as pd
 from sqlalchemy.dialects import sqlite
 from sqlalchemy import text
 
-from mendeleev import element
+from mendeleev import element, get_all_elements
 from mendeleev import __version__ as version
+from mendeleev.electronegativity import allred_rochow, gordy, cottrell_sutton
 
 from .db import get_engine, get_session
 from .models import Element, IonizationEnergy
@@ -84,33 +85,42 @@ def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
     Returns:
         df (pandas.DataFrame): Pandas DataFrame with the contents of the table
     """
-
-    session = get_session()
-    engine = get_engine()
-
-    query = session.query(Element.atomic_number).order_by("atomic_number")
-    df = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
-
     scales = [
-        "allen",
-        "allred-rochow",
-        "cottrell-sutton",
-        "ghosh",
-        "gordy",
+        # "allred-rochow",  # computed, zeff, radius
+        # "cottrell-sutton",  # computed, zeff, radius
+        # "gordy",
         "li-xue",
         "martynov-batsanov",
         "mulliken",
         "nagle",
-        "pauling",
         "sanderson",
     ]
 
+    session = get_session()
+    engine = get_engine()
+
+    # query = session.query(Element.atomic_number).order_by("atomic_number")
+    query = session.query(
+        Element.atomic_number,
+        Element.symbol,
+        Element.covalent_radius_pyykko.label("radius"),
+        Element.en_pauling,
+        Element.en_allen,
+        Element.en_ghosh,
+    ).order_by("atomic_number")
+    df = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
+
+    elems = get_all_elements()
+
+    df.loc[:, "zeff"] = [e.zeff() for e in elems]
+    # scales
+    df.loc[:, "Allred-Rochow"] = allred_rochow(df["zeff"], df["radius"])
+    df.loc[:, "Cottrell-Sutton"] = cottrell_sutton(df["zeff"], df["radius"])
+    df.loc[:, "Gordy"] = gordy(df["zeff"], df["radius"])
+
     for scale in scales:
         scale_name = "-".join(s.capitalize() for s in scale.split("-"))
-        df.loc[:, scale_name] = [
-            element(int(row.atomic_number)).electronegativity(scale=scale)
-            for _, row in df.iterrows()
-        ]
+        df.loc[:, scale_name] = [e.electronegativity(scale=scale) for e in elems]
     return df.set_index("atomic_number")
 
 
