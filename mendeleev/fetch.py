@@ -202,22 +202,13 @@ def fetch_neutral_data() -> pd.DataFrame:
     )
 
     elements.rename(columns={"color": "series_colors"}, inplace=True)
-
-    for attr in ["hardness", "softness"]:
-        elements[attr] = [
-            getattr(element(row.symbol), attr)() for _, row in elements.iterrows()
-        ]
-
-    elements["mass"] = [
-        element(row.symbol).mass_str() for _, row in elements.iterrows()
-    ]
-
-    elements.loc[:, "zeff_slater"] = elements.apply(
-        lambda x: get_zeff(x["atomic_number"], method="slater"), axis=1
-    )
-    elements.loc[:, "zeff_clementi"] = elements.apply(
-        lambda x: get_zeff(x["atomic_number"], method="clementi"), axis=1
-    )
+    # get all element objects
+    ELEMS = get_all_elements()
+    elements.loc[:, "hardness"] = [e.hardness() for e in ELEMS]
+    elements.loc[:, "softness"] = [e.softness() for e in ELEMS]
+    elements.loc[:, "mass"] = [e.mass_str() for e in ELEMS]
+    elements.loc[:, "zeff_slater"] = [e.zeff(method="slater") for e in ELEMS]
+    elements.loc[:, "zeff_clementi"] = [e.zeff(method="clementi") for e in ELEMS]
 
     ens = fetch_electronegativities()
     elements = pd.merge(elements, ens.reset_index(), on="atomic_number", how="left")
