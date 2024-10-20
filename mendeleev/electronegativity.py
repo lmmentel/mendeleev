@@ -24,7 +24,7 @@ def allred_rochow(zeff: float, radius: float) -> float:
         radius: value of the radius
     """
 
-    return zeff / math.pow(radius, 2)
+    return zeff / np.power(radius, 2)
 
 
 def cottrell_sutton(zeff: float, radius: float) -> float:
@@ -37,7 +37,7 @@ def cottrell_sutton(zeff: float, radius: float) -> float:
         radius: value of the radius
     """
 
-    return math.sqrt(zeff / radius)
+    return np.sqrt(zeff / radius)
 
 
 def gordy(zeff: float, radius: float) -> float:
@@ -137,7 +137,7 @@ def nagle(nvalence: int, polarizability: float) -> float:
         polarizability: dipole polarizability
     """
 
-    return math.pow(nvalence / polarizability, 1.0 / 3.0)
+    return np.power(nvalence / polarizability, 1.0 / 3.0)
 
 
 def sanderson(radius: float, noble_gas_radius: float) -> float:
@@ -179,4 +179,4 @@ def generic(zeff: float, radius: float, rpow: float = 1, apow: float = 1) -> flo
     - :math:`\alpha,\beta` parameters
     """
 
-    return math.pow(zeff / math.pow(radius, rpow), apow)
+    return np.power(zeff / np.power(radius, rpow), apow)
