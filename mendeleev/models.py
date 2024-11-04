@@ -428,13 +428,15 @@ class Element(Base):
             )
 
         if category == "all":
-            return [o.oxidation_state for o in self._oxidation_states]
+            return sorted([o.oxidation_state for o in self._oxidation_states])
         else:
-            return [
-                o.oxidation_state
-                for o in self._oxidation_states
-                if o.category == category
-            ]
+            return sorted(
+                [
+                    o.oxidation_state
+                    for o in self._oxidation_states
+                    if o.category == category
+                ]
+            )
 
     def zeff(
         self, n: int = None, o: str = None, method: str = "slater", alle: bool = False
