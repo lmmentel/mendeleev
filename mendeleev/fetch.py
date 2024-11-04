@@ -3,6 +3,7 @@
 from typing import List, Union
 
 import pandas as pd
+from deprecated import deprecated
 from sqlalchemy.dialects import sqlite
 from sqlalchemy import text
 
@@ -14,6 +15,9 @@ from .db import get_engine, get_session
 from .models import Element, IonizationEnergy
 
 
+@deprecated(
+    reason="This function is deprecated and will be removed in the future version."
+)
 def get_zeff(an, method: str = "slater") -> float:
     """
     A helper function to calculate the effective nuclear charge.
@@ -86,9 +90,6 @@ def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
         df (pandas.DataFrame): Pandas DataFrame with the contents of the table
     """
     scales = [
-        # "allred-rochow",  # computed, zeff, radius
-        # "cottrell-sutton",  # computed, zeff, radius
-        # "gordy",
         "li-xue",
         "martynov-batsanov",
         "mulliken",
@@ -99,14 +100,13 @@ def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
     session = get_session()
     engine = get_engine()
 
-    # query = session.query(Element.atomic_number).order_by("atomic_number")
     query = session.query(
         Element.atomic_number,
         Element.symbol,
         Element.covalent_radius_pyykko.label("radius"),
-        Element.en_pauling,
-        Element.en_allen,
-        Element.en_ghosh,
+        Element.en_pauling.label("Pauling"),
+        Element.en_allen.label("Allen"),
+        Element.en_ghosh.label("Ghosh"),
     ).order_by("atomic_number")
     df = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
 
@@ -241,6 +241,9 @@ def fetch_ionic_radii(radius: str = "ionic_radius") -> pd.DataFrame:
     )
 
 
+@deprecated(
+    reason="This function is deprecated and will be removed in the future version."
+)
 def add_plot_columns(elements: pd.DataFrame) -> pd.DataFrame:
     """
     Add columns needed for the creating the plots
@@ -276,6 +279,9 @@ def add_plot_columns(elements: pd.DataFrame) -> pd.DataFrame:
     return elements
 
 
+@deprecated(
+    reason="This function is deprecated and will be removed in the future version."
+)
 def get_app_data() -> None:
     "write a file with the neutral data"
     data = fetch_neutral_data()

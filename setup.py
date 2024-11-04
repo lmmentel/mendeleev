@@ -63,7 +63,6 @@ def setup_package():
         entry_points={
             "console_scripts": [
                 "element.py = mendeleev.cli:clielement",
-                "mdlvappdata = mendeleev.utils:get_app_data",
             ]
         },
     )
