@@ -16,7 +16,7 @@ tables = [
     ("ionizationenergies", 5847),
     ("groups", 18),
     ("series", 10),
-    ("oxidationstates", 579),
+    ("oxidationstates", 601),
     ("phasetransitions", 108),
 ]
 
