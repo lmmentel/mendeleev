@@ -80,7 +80,7 @@ scipy = [ # required by seaborn
     { version = "^1.11", python = ">=3.12,<3.13", optional = true },
     { version = "^1.6", python = "<3.12", optional = true },
 ]
-pyzmq = "^25.1.2"
+pyzmq = "^26.0.0"
 
 
 [tool.pytest.ini_options]
