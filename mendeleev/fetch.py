@@ -3,16 +3,21 @@
 from typing import List, Union
 
 import pandas as pd
+from deprecated import deprecated
 from sqlalchemy.dialects import sqlite
 from sqlalchemy import text
 
-from mendeleev import element
+from mendeleev import element, get_all_elements
 from mendeleev import __version__ as version
+from mendeleev.electronegativity import allred_rochow, gordy, cottrell_sutton
 
 from .db import get_engine, get_session
 from .models import Element, IonizationEnergy
 
 
+@deprecated(
+    reason="This function is deprecated and will be removed in the future version."
+)
 def get_zeff(an, method: str = "slater") -> float:
     """
     A helper function to calculate the effective nuclear charge.
@@ -84,33 +89,38 @@ def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
     Returns:
         df (pandas.DataFrame): Pandas DataFrame with the contents of the table
     """
-
-    session = get_session()
-    engine = get_engine()
-
-    query = session.query(Element.atomic_number).order_by("atomic_number")
-    df = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
-
     scales = [
-        "allen",
-        "allred-rochow",
-        "cottrell-sutton",
-        "ghosh",
-        "gordy",
         "li-xue",
         "martynov-batsanov",
         "mulliken",
         "nagle",
-        "pauling",
         "sanderson",
     ]
 
+    session = get_session()
+    engine = get_engine()
+
+    query = session.query(
+        Element.atomic_number,
+        Element.symbol,
+        Element.covalent_radius_pyykko.label("radius"),
+        Element.en_pauling.label("Pauling"),
+        Element.en_allen.label("Allen"),
+        Element.en_ghosh.label("Ghosh"),
+    ).order_by("atomic_number")
+    df = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
+
+    elems = get_all_elements()
+
+    df.loc[:, "zeff"] = [e.zeff() for e in elems]
+    # scales
+    df.loc[:, "Allred-Rochow"] = allred_rochow(df["zeff"], df["radius"])
+    df.loc[:, "Cottrell-Sutton"] = cottrell_sutton(df["zeff"], df["radius"])
+    df.loc[:, "Gordy"] = gordy(df["zeff"], df["radius"])
+
     for scale in scales:
         scale_name = "-".join(s.capitalize() for s in scale.split("-"))
-        df.loc[:, scale_name] = [
-            element(int(row.atomic_number)).electronegativity(scale=scale)
-            for _, row in df.iterrows()
-        ]
+        df.loc[:, scale_name] = [e.electronegativity(scale=scale) for e in elems]
     return df.set_index("atomic_number")
 
 
@@ -192,22 +202,13 @@ def fetch_neutral_data() -> pd.DataFrame:
     )
 
     elements.rename(columns={"color": "series_colors"}, inplace=True)
-
-    for attr in ["hardness", "softness"]:
-        elements[attr] = [
-            getattr(element(row.symbol), attr)() for _, row in elements.iterrows()
-        ]
-
-    elements["mass"] = [
-        element(row.symbol).mass_str() for _, row in elements.iterrows()
-    ]
-
-    elements.loc[:, "zeff_slater"] = elements.apply(
-        lambda x: get_zeff(x["atomic_number"], method="slater"), axis=1
-    )
-    elements.loc[:, "zeff_clementi"] = elements.apply(
-        lambda x: get_zeff(x["atomic_number"], method="clementi"), axis=1
-    )
+    # get all element objects
+    ELEMS = get_all_elements()
+    elements.loc[:, "hardness"] = [e.hardness() for e in ELEMS]
+    elements.loc[:, "softness"] = [e.softness() for e in ELEMS]
+    elements.loc[:, "mass"] = [e.mass_str() for e in ELEMS]
+    elements.loc[:, "zeff_slater"] = [e.zeff(method="slater") for e in ELEMS]
+    elements.loc[:, "zeff_clementi"] = [e.zeff(method="clementi") for e in ELEMS]
 
     ens = fetch_electronegativities()
     elements = pd.merge(elements, ens.reset_index(), on="atomic_number", how="left")
@@ -240,6 +241,9 @@ def fetch_ionic_radii(radius: str = "ionic_radius") -> pd.DataFrame:
     )
 
 
+@deprecated(
+    reason="This function is deprecated and will be removed in the future version."
+)
 def add_plot_columns(elements: pd.DataFrame) -> pd.DataFrame:
     """
     Add columns needed for the creating the plots
@@ -275,6 +279,9 @@ def add_plot_columns(elements: pd.DataFrame) -> pd.DataFrame:
     return elements
 
 
+@deprecated(
+    reason="This function is deprecated and will be removed in the future version."
+)
 def get_app_data() -> None:
     "write a file with the neutral data"
     data = fetch_neutral_data()
