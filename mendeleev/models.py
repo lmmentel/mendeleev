@@ -96,6 +96,10 @@ class Element(Base):
         electron_affinity (float): Electron affinity in eV
         electrophilicity (float): Parr's electrophilicity index
         econf (str): Ground state electron configuration
+        en_allen (float): ELectronegativity by Allen
+        en_ghosh (float): Electronegativity by Ghosh
+        en_miedema (float): Electronegativity by Miedema
+        en_pauling (float): Electronegativity by Pauling
         evaporation_heat (float): Evaporation heat in kJ/mol
         fusion_heat (float): Fusion heat in kJ/mol
         gas_basicity (float): Gas basicity
@@ -144,8 +148,7 @@ class Element(Base):
         vdw_radius_uff (float): Van der Waals radius from the UFF in pm
         vdw_radius_mm3 (float): Van der Waals radius from MM3 in pm
         oxistates (list): Oxidation states
-        ionenergies (dict): Ionization energies in eV parsed from
-            http://physics.nist.gov/cgi-bin/ASD/ie.pl on April 13, 2015
+        ionenergies (dict): Ionization energies in eV
     """
 
     __tablename__ = "elements"
@@ -179,6 +182,7 @@ class Element(Base):
     electron_affinity = Column(Float)
     en_allen = Column(Float)
     en_ghosh = Column(Float)
+    en_miedema = Column(Float)
     en_pauling = Column(Float)
     econf = Column("electronic_configuration", String)
     evaporation_heat = Column(Float)
@@ -198,6 +202,8 @@ class Element(Base):
     mendeleev_number = Column(Integer)
     metallic_radius = Column(Float)
     metallic_radius_c12 = Column(Float)
+    miedema_molar_volume = Column(Float)
+    miedema_electron_density = Column(Float)
     molar_heat_capacity = Column(Float)
     molcas_gv_color = Column(String)
     name = Column(String)
@@ -518,6 +524,7 @@ class Element(Base):
             "gordy": self.electronegativity_gordy,
             "li-xue": self.electronegativity_li_xue,
             "martynov-batsanov": self.electronegativity_martynov_batsanov,
+            "miedema": self.en_miedema,
             "mulliken": self.electronegativity_mulliken,
             "nagle": self.electronegativity_nagle,
             "pauling": self.electronegativity_pauling,
@@ -1248,7 +1255,7 @@ class ScatteringFactor(Base):
 
     .. math::
 
-        \mu_a = 2 \cdot r_0 \cdot \lambda \cdot f_2
+        \\mu_a = 2 \cdot r_0 \cdot \lambda \cdot f_2
 
     where :math:`r_0` is the classical electron radius, and :math:`\lambda` is the wavelength.
 
