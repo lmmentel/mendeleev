@@ -4,11 +4,6 @@
 .. automodule:: mendeleev.econf
 
    
-   
-   
-
-   
-   
    .. rubric:: Functions
 
    .. autosummary::
@@ -20,21 +15,9 @@
       subshell_capacity
       subshell_degeneracy
    
-   
-
-   
-   
    .. rubric:: Classes
 
    .. autosummary::
    
       ElectronicConfiguration
    
-   
-
-   
-   
-   
-
-
-

@@ -4,11 +4,6 @@
 .. automodule:: mendeleev.electronegativity
 
    
-   
-   
-
-   
-   
    .. rubric:: Functions
 
    .. autosummary::
@@ -23,15 +18,3 @@
       nagle
       sanderson
    
-   
-
-   
-   
-   
-
-   
-   
-   
-
-
-
