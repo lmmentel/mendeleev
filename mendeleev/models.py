@@ -1232,7 +1232,45 @@ class ScatteringFactor(Base):
         atomic_number (int): Atomic number
         energy (float): Energy in eV
         f1 (float): Scattering factor f1
-        f1 (float): Scattering factor f2
+        f2 (float): Scattering factor f2
+
+    :math:`f_1` and :math:`f_2` are the atomic (forward) scattering factors.
+    There are 500+ points on a uniform logarithmic mesh with points
+    added 0.1 eV above and below "sharp" absorption edges.
+    (Note: below 29 eV :math:`f_1` is set equal to -9999.)
+    The tabulated values of :math:`f_1` contain a relativistic, energy independent,
+    correction given by, :math:`Z^{*} = Z - (Z/82.5)^{2.37}`.
+
+    The atomic photoabsorption cross section, :math:`\mu_a`, may be readily obtained
+    from the values of :math:`f_2` using the relation,
+
+    .. math::
+
+        \mu_a = 2 \cdot r_0 \cdot \lambda \cdot f_2
+
+    where :math:`r_0` is the classical electron radius, and :math:`\lambda` is the wavelength.
+
+    The index of refraction for a material with N atoms per unit volume
+    is calculated by,
+
+    .. math::
+
+        n = 1 - N \cdot r_0 \cdot \lambda^2 \cdot (f_1 + i f_2)/(2\cdot\pi).
+
+    These (semi-empirical) atomic scattering factors are based upon
+    photoabsorption measurements of elements in their elemental state.
+    The basic assumption is that condensed matter may be modeled as a
+    collection of non-interacting atoms. This assumption is in general
+    a good one for energies sufficiently far from absorption thresholds.
+    In the threshold regions, the specific chemical state is important
+    and direct experimental measurements must be made.
+
+    These tables are based on a compilation of the available experimental
+    measurements and theoretical calculations. For many elements there is
+    little or no published data and in such cases it was necessary to
+    rely on theoretical calculations and interpolations across Z.
+    In order to improve the accuracy in the future considerably more
+    experimental measurements are needed.
     """
 
     __tablename__ = "scattering_factors"

@@ -4,11 +4,6 @@
 .. automodule:: mendeleev.utils
 
    
-   
-   
-
-   
-   
    .. rubric:: Functions
 
    .. autosummary::
@@ -18,15 +13,3 @@
       n_effective
       render_rst_table
    
-   
-
-   
-   
-   
-
-   
-   
-   
-
-
-

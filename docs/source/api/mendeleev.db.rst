@@ -4,11 +4,6 @@
 .. automodule:: mendeleev.db
 
    
-   
-   
-
-   
-   
    .. rubric:: Functions
 
    .. autosummary::
@@ -17,15 +12,3 @@
       get_package_dbpath
       get_session
    
-   
-
-   
-   
-   
-
-   
-   
-   
-
-
-
