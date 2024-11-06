@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__version__ = "0.18.1"
+__version__ = "0.19.0"
 
 import importlib
 
