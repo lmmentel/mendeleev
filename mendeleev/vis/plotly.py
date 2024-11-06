@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.graph_objects as go
+import plotly.express as px
 from plotly.graph_objs.layout import Shape, Annotation
 from pandas.api.types import is_float_dtype
 
@@ -161,4 +162,30 @@ def periodic_table_plotly(
         },
     )
 
+    return fig
+
+
+def plot_scale(data: pd.DataFrame, scale: str):
+    """Plot an electronegativity scale
+
+    Args:
+        data: DataFrame with the electronegativity data, obtained from :func:`fetch.fetch_electronegativities`
+        scale: Electronegativity scale to plot
+    """
+    fig = px.scatter(
+        data,
+        y=scale,
+        template="plotly_white",
+        height=600,
+        width=1400,
+        text="symbol",
+        title=f"{scale}'s Electronegativity",
+    )
+    fig.update_traces(
+        textposition="top center",
+        textfont={"size": 10},
+        marker={"size": 8, "color": "#0081a7"},
+    )
+    fig.update_layout(font={"size": 12})
+    fig.update_xaxes(title_text="Atomic Number", zeroline=False, range=[0, 119])
     return fig
