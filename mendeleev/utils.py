@@ -1,9 +1,14 @@
 """Utility functions for Mendeleev package."""
 
+# TODO: can be removed after dropping support for python 3.8
+from __future__ import annotations
 from typing import Union, Tuple
 import math
 
 import pandas as pd
+from sqlalchemy.exc import SQLAlchemyError
+
+from mendeleev.db import get_session
 
 
 def coeffs(a: int, b: int = 2) -> Tuple[int, int]:
@@ -119,3 +124,36 @@ def apply_rst_format(df: pd.DataFrame) -> pd.DataFrame:
     # capitalize column names which will be table headers
     df.columns = [c.replace("_", " ").capitalize() for c in df.columns]
     return df.fillna("")
+
+
+def update_model_from_df(
+    model,
+    data_frame: pd.DataFrame,
+    attributes: list[str],
+    primary_key: str = "atomic_number",
+):
+    """Update database table from a pandas dataframe
+
+    Args:
+        model: SQLAlchemy model to be updated
+        data_frame: pandas DataFrame with actual data
+        attributes: names of attributes of `model` to be updated. The attributes must exist on `model` and corresponding columns must be present in `data_frame`
+        primary_key: Attribute name of model and column name in `data_frame` on which instanced of `model` will be matched with rows from `data_frame`
+    """
+    # check if model has attributes
+    if not all(map(lambda attr: hasattr(model, attr), attributes)):
+        raise ValueError(f"Model {model} does not have attribute/s.")
+
+    session = get_session(read_only=False)
+    for _, row in data_frame.iterrows():
+        update_values = row[attributes].to_dict()
+        print(update_values)
+        try:
+            session.query(model).filter(
+                getattr(model, primary_key) == row[primary_key]
+            ).update(update_values)
+            session.commit()
+        except SQLAlchemyError:
+            print(f"ERROR for {row[primary_key]}")
+            session.rollback()
+    session.close()
