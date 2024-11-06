@@ -16,6 +16,7 @@ appropriate formulas. The following scales are stored:
 
 - :ref:`Allen <allen_en>`
 - :ref:`Ghosh <ghosh_en>`
+- :ref:`Miedema <miedema_en>`
 - :ref:`Pauling <pauling_en>`
 
 Moreover there are electronegativity scales that can be computed from their
@@ -185,6 +186,26 @@ Example::
     5.0777041564076963
     >>> Si.electronegativity(scale='martynov-batsanov')
     5.0777041564076963
+
+.. _miedema_en:
+
+Miedema
+=======
+
+Miedema et. al. :cite:`deboer1988cohesion,ZHANG201658` devised a semi-empirical 
+theory that could predict formation enthalpies and other
+basic properties of various alloys. It is based on estimating quantitatively the enthalpy
+(energy) effects when bringing dissimilar elements into
+contact, which will change the electron density at the so-called
+Wigner-Seitz cell boundary, and would tend to shift their electron densities
+due to an electronegativity difference.
+
+The enthalpy can be estimated with three critical parameters,
+i.e. the electronegativity difference :math:`\Delta\phi` (defined as :math:`\phi_A - \phi_B`),
+the electron-density discontinuity :math:`\Delta n^{1/3}_{WS}`, which is the difference in the
+:math:`n_{WS}` - the electron density based on the volume of Wigner-Seitz atomic cells :math:`V_{m}`. 
+
+Atomic electronegativities :math:`\phi` are empirical parameters in this model and are tabulated in ``mendeleev``. 
 
 .. _mulliken_en:
 
