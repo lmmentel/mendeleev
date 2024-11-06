@@ -414,6 +414,15 @@ Ionic Radii
 | ``spin``           | Spin state: HS: high spin, LS: low spin |      | stored       | :cite:`Shannon1976,Lundberg2016` |
 +--------------------+-----------------------------------------+------+--------------+----------------------------------+
 
+Notes
+-----
+
+**Ionic radii for Actinoid (III) ions**
+
+Ionic radii values for 3\ :sup:`+` Actinoids were with coordination number 9 were taken
+from :cite:`Lundberg2016`. In addition, ``crystal_radius`` values were computed
+by adding 14 pm to the ``ionic_radius`` values according to :cite:`Shannon1976`.
+
 Oxidation States
 ================
 
@@ -505,13 +514,13 @@ Screening Constants
    units.
 
 .. [#f_mendeleev_number] **Mendeleev numbers**
-    
+
    Mendeleev numbers were sourced from :cite:`Villars2004` but the range
    was extended to cover the whole periodic table following the prescription
    in the article of increasing the numbers going from top to bottom in each
    group and group by group from left to right in the periodic table.
 
-.. [#f6] **Nuclear charge screening constants**
+.. [#f_sconst] **Nuclear charge screening constants**
 
    The screening constants were calculated according to the following formula
 
@@ -536,12 +545,6 @@ Screening Constants
    The bulk of the radii data was taken from Ref. :cite:`Alvarez2013`, but the
    radii for noble gasses were updated according to the values in Ref.
    :cite:`Vogt2014`.
-
-.. [#f9] **Ionic radii for Actinoid (III) ions**
-
-   Ionic radii values for 3\ :sup:`+` Actinoids were with coordination number 9 were taken
-   from :cite:`Lundberg2016`. In addition, ``crystal_radius`` values were computed
-   by adding 14 pm to the ``ionic_radius`` values according to :cite:`Shannon1976`.
 
 .. [#f_density] **Densities**
 
