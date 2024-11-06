@@ -2,6 +2,22 @@
 mendeleev Changelog
 *******************
 
+v0.19.0 (06.11.2024)
+--------------------
+
+* [DOC] Update docs for atomic scattering factor by :user:`@lmmentel` in :pr:`203`
+* [ENH] Add Miedema's scale of electronegativity by :user:`@lmmentel` in :pr:`204`
+* [ENH] Improve data export by :user:`@lmmentel` in :pr:`205`
+* [ENH] Update ionization energy data and metadata from NIST ASD by :user:`@lmmentel` in :pr:`192`
+* [FIX] Correct the electronic configuration for Lr by :user:`@lmmentel` in :pr:`190`
+* [FIX] Fix footnotes on data doc page by :user:`@lmmentel` in :pr:`206`
+* [FIX] Typo in changelog by :user:`@lmmentel` in :pr:`196`
+* [FIX] Update values of oxidation states by :user:`@lmmentel` in :pr:`202`
+* [MNT] Add dependency caching in CI by :user:`@lmmentel` in :pr:`197`
+* [MNT] Add pytest-xdist to dev deps and configure to use all cores by :user:`@lmmentel` in :pr:`201`
+* [MNT] Bump versions of dev dependencies by :user:`@lmmentel` in :pr:`200`
+* [MNT] Improve performance of `fetch_electronegativity` by :user:`@lmmentel` in :pr:`198`
+
 v0.18.1 (01.10.2024)
 --------------------
 
