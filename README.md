@@ -190,6 +190,7 @@ important entries are listed:
 -   Li & Xue
 -   Nagle
 -   Martynov & Batsanov
+-   Miedema
 -   Mulliken
 -   Pauling
 -   Sanderson
