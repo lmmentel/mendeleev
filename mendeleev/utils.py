@@ -1,5 +1,7 @@
 """Utility functions for Mendeleev package."""
 
+# TODO: can be removed after dropping support for python 3.8
+from __future__ import annotations
 from typing import Union, Tuple
 import math
 
