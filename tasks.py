@@ -3,9 +3,9 @@ from invoke import task
 
 
 @task
-def export(c):
+def export(c, dest="data"):
     """Export data to a few formats files."""
-    tables = [
+    tables = {
         "elements",
         "groups",
         "ionicradii",
@@ -14,9 +14,11 @@ def export(c):
         "isotopes",
         "oxidationstates",
         "phasetransitions",
+        "propertymetadata",
+        "scattering_factors",
         "screeningconstants",
         "series",
-    ]
+    }
 
     formats = [
         "csv",
@@ -25,20 +27,26 @@ def export(c):
         "markdown",
     ]
 
+    root = Path(f"{dest}")
+    root.mkdir(exist_ok=True)
+
     for fmt in formats:
-        Path(f"data/{fmt}").mkdir(exist_ok=True)
+        path = root.joinpath(fmt)
+        path.mkdir(exist_ok=True)
         for table in tables:
             print(f"Exporting {table} to {fmt} ... ", end="")
             c.run(
-                f"sqlite3 -{fmt} mendeleev/elements.db 'SELECT * FROM {table};' > data/{fmt}/{table}.{fmt}",
+                f"sqlite3 -{fmt} mendeleev/elements.db 'SELECT * FROM {table};' > {path}/{table}.{fmt}",
                 echo=True,
             )
             print("done")
 
     # SQL dump
     print("Creating SQL files with the data ... ", end="")
+    path = root.joinpath("sql")
+    path.mkdir(exist_ok=True)
     c.run(
-        "sqlite3 mendeleev/elements.db .dump > data/sql/elements.sql",
+        f"sqlite3 mendeleev/elements.db .dump > {path}/mendeleev.sql",
         echo=True,
         pty=True,
     )
