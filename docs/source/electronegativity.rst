@@ -62,6 +62,15 @@ Example::
     >>> Si.electronegativity('allen')
     11.33
 
+Graph
+-----
+
+.. image:: _static/img/en_allen.png
+   :width: 100%
+   :alt: Allen's electronegativity scale
+   :align: center
+
+
 .. _allred-rochow_en:
 
 Allred and Rochow
@@ -82,6 +91,14 @@ Example::
     >>> Si.electronegativity('allred-rochow')
     0.00028240190249702736
 
+Graph
+-----
+
+.. image:: _static/img/en_allred-rochow.png
+   :width: 100%
+   :alt: Allred and Rochow's electronegativity scale
+   :align: center
+
 .. _cottrell-sutton_en:
 
 Cottrell and Sutton
@@ -100,6 +117,14 @@ Example::
 
     >>> Si.electronegativity('cottrell-sutton')
     0.18099342720014772
+
+Graph
+-----
+
+.. image:: _static/img/en_cottrell-sutton.png
+   :width: 100%
+   :alt: Cottrell and Sutton's electronegativity scale
+   :align: center
 
 .. _ghosh_en:
 
@@ -120,6 +145,13 @@ Example::
     >>> Si.en_ghosh
     0.178503
 
+Graph
+-----
+
+.. image:: _static/img/en_ghosh.png
+   :width: 100%
+   :alt: Ghosh's electronegativity scale
+   :align: center
 
 .. _gordy_en:
 
@@ -140,6 +172,14 @@ Example::
 
     >>> Si.electronegativity('gordy')
     0.03275862068965517
+
+Graph
+-----
+
+.. image:: _static/img/en_gordy.png
+   :width: 100%
+   :alt: Gordy's electronegativity scale
+   :align: center
 
 .. _li_xue_en:
 
@@ -187,6 +227,14 @@ Example::
     >>> Si.electronegativity(scale='martynov-batsanov')
     5.0777041564076963
 
+Graph
+-----
+
+.. image:: _static/img/en_martynov-batsanov.png
+   :width: 100%
+   :alt: Martynov and Batsanov's electronegativity scale
+   :align: center
+
 .. _miedema_en:
 
 Miedema
@@ -207,6 +255,19 @@ the electron-density discontinuity :math:`\Delta n^{1/3}_{WS}`, which is the dif
 
 Atomic electronegativities :math:`\phi` are empirical parameters in this model and are tabulated in ``mendeleev``. 
 
+Example::
+
+    >>> Si.en_miedema
+    4.7
+
+Graph
+-----
+
+.. image:: _static/img/en_miedema.png
+   :width: 100%
+   :alt: Miedema's electronegativity scale
+   :align: center
+
 .. _mulliken_en:
 
 Mulliken
@@ -226,6 +287,14 @@ Example::
     >>> Si.electronegativity('mulliken')
     4.0758415
 
+Graph
+-----
+
+.. image:: _static/img/en_mulliken.png
+   :width: 100%
+   :alt: Mulliken's electronegativity scale
+   :align: center
+
 .. _nagle_en:
 
 Nagle
@@ -241,6 +310,14 @@ Example::
 
     >>> Si.electronegativity('nagle')
     0.47505611644667534
+
+Graph
+-----
+
+.. image:: _static/img/en_nagle.png
+   :width: 100%
+   :alt: Nagle's electronegativity scale
+   :align: center
 
 .. _pauling_en:
 
@@ -264,6 +341,14 @@ Example::
     >>> Si.electronegativity('pauling')
     1.9
 
+Graph
+-----
+
+.. image:: _static/img/en_pauling.png
+   :width: 100%
+   :alt: Pauling's electronegativity scale
+   :align: center
+
 .. _sanderson_en:
 
 Sanderson
@@ -286,6 +371,14 @@ Example::
     0.3468157872145231
     >>> Si.electronegativity()
     0.3468157872145231
+
+Graph
+-----
+
+.. image:: _static/img/en_sanderson.png
+   :width: 100%
+   :alt: Sanderson's electronegativity scale
+   :align: center
 
 
 Fetching all electronegativities
