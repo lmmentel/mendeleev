@@ -380,7 +380,7 @@ functional are tabulated.
 Graph
 -----
 
-.. image:: _static/img/en_robles-_bartolotti.png
+.. image:: _static/img/en_robles_bartolotti.png
    :width: 100%
    :alt: Robles-Bartolotti's electronegativity scale
    :align: center
