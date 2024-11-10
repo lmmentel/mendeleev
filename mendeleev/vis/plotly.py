@@ -172,6 +172,7 @@ def plot_scale(data: pd.DataFrame, scale: str):
         data: DataFrame with the electronegativity data, obtained from :func:`fetch.fetch_electronegativities`
         scale: Electronegativity scale to plot
     """
+    scale_name = "-".join(map(str.capitalize, scale.strip("en_").split("_")))
     fig = px.scatter(
         data,
         y=scale,
@@ -179,7 +180,7 @@ def plot_scale(data: pd.DataFrame, scale: str):
         height=600,
         width=1400,
         text="symbol",
-        title=f"{scale}'s Electronegativity",
+        title=f"{scale_name}'s Electronegativity",
     )
     fig.update_traces(
         textposition="top center",
@@ -188,4 +189,5 @@ def plot_scale(data: pd.DataFrame, scale: str):
     )
     fig.update_layout(font={"size": 12})
     fig.update_xaxes(title_text="Atomic Number", zeroline=False, range=[0, 119])
+    fig.update_yaxes(title_text=f"{scale_name}")
     return fig
