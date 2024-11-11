@@ -104,10 +104,12 @@ def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
         Element.atomic_number,
         Element.symbol,
         Element.covalent_radius_pyykko.label("radius"),
-        Element.en_pauling.label("Pauling"),
         Element.en_allen.label("Allen"),
         Element.en_ghosh.label("Ghosh"),
+        Element.en_gunnarsson_lundqvist.label("Gunnarsson-Lundqvist"),
         Element.en_miedema.label("Miedema"),
+        Element.en_pauling.label("Pauling"),
+        Element.en_robles_bartolotti.label("Robles-Bartolotti"),
     ).order_by("atomic_number")
     df = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
 

@@ -184,6 +184,8 @@ class Element(Base):
     en_ghosh = Column(Float)
     en_miedema = Column(Float)
     en_pauling = Column(Float)
+    en_gunnarsson_lundqvist = Column(Float)
+    en_robles_bartolotti = Column(Float)
     econf = Column("electronic_configuration", String)
     evaporation_heat = Column(Float)
     fusion_heat = Column(Float)
@@ -522,12 +524,14 @@ class Element(Base):
             "cottrell-sutton": self.electronegativity_cottrell_sutton,
             "ghosh": self.electronegativity_ghosh,
             "gordy": self.electronegativity_gordy,
+            "gunnarsson-lundqvist": self.en_gunnarsson_lundqvist,
             "li-xue": self.electronegativity_li_xue,
             "martynov-batsanov": self.electronegativity_martynov_batsanov,
             "miedema": self.en_miedema,
             "mulliken": self.electronegativity_mulliken,
             "nagle": self.electronegativity_nagle,
             "pauling": self.electronegativity_pauling,
+            "robles-bartolotti": self.en_robles_bartolotti,
             "sanderson": self.electronegativity_sanderson,
         }
 

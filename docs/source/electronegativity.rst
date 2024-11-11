@@ -16,10 +16,12 @@ appropriate formulas. The following scales are stored:
 
 - :ref:`Allen <allen_en>`
 - :ref:`Ghosh <ghosh_en>`
+- :ref:`Gunnarsson-Lundqvist <gunnarsson_lundqvist_en>`
 - :ref:`Miedema <miedema_en>`
 - :ref:`Pauling <pauling_en>`
+- :ref:`Robles-Bartolotti <robles_bartolotti_en>`
 
-Moreover there are electronegativity scales that can be computed from their
+Moreover, there are electronegativity scales that can be computed from their
 respective definition and the atomic properties available in :ref:`mendeleev <mendeleev>`:
 
 - :ref:`Allred-Rochow <allred-rochow_en>`
@@ -179,6 +181,23 @@ Graph
 .. image:: _static/img/en_gordy.png
    :width: 100%
    :alt: Gordy's electronegativity scale
+   :align: center
+
+.. _gunnarsson_lundqvist_en:
+
+Gunnarsson-Lundqvist
+====================
+
+The electronegativities calculated by Robles and Bartolotti :cite:`RoblesBartolotti1984` used a spin polarized
+density functional theory. Here the values using the Gunnarsson-Lundqvist :cite:`GunnarssonLundqvist1979`
+approximation to the exchange-correlation functional are tabulated.
+
+Graph
+-----
+
+.. image:: _static/img/en_gunnarsson_lundqvist.png
+   :width: 100%
+   :alt: Gunnarsson-Lundqvist's electronegativity scale
    :align: center
 
 .. _li_xue_en:
@@ -347,6 +366,23 @@ Graph
 .. image:: _static/img/en_pauling.png
    :width: 100%
    :alt: Pauling's electronegativity scale
+   :align: center
+
+.. _robles_bartolotti_en:
+
+Robles-Bartolotti
+=================
+
+The electronegativities calculated by Robles and Bartolotti :cite:`RoblesBartolotti1984` used a spin polarized
+density functional theory. Here the values using the :math:`X_{\alpha}` approximation to the exchange-correlation
+functional are tabulated.
+
+Graph
+-----
+
+.. image:: _static/img/en_robles_bartolotti.png
+   :width: 100%
+   :alt: Robles-Bartolotti's electronegativity scale
    :align: center
 
 .. _sanderson_en:

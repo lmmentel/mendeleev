@@ -182,18 +182,20 @@ important entries are listed:
 
 ### Electronegativity scales
 
--   Allen
--   Allred & Rochow
--   Cottrell & Sutton
--   Ghosh
--   Gordy
--   Li & Xue
--   Nagle
--   Martynov & Batsanov
--   Miedema
--   Mulliken
--   Pauling
--   Sanderson
+- Allen
+- Allred & Rochow
+- Cottrell & Sutton
+- Ghosh
+- Gordy
+- Gunnarsson-Lundqvist
+- Li & Xue
+- Nagle
+- Martynov & Batsanov
+- Miedema
+- Mulliken
+- Pauling
+- Robles-Bartolotti
+- Sanderson
 
 ### Descriptive properties
 
