@@ -131,6 +131,7 @@ def update_model_from_df(
     data_frame: pd.DataFrame,
     attributes: list[str],
     primary_key: str = "atomic_number",
+    dropna: bool = True,
 ):
     """Update database table from a pandas dataframe
 
@@ -139,6 +140,7 @@ def update_model_from_df(
         data_frame: pandas DataFrame with actual data
         attributes: names of attributes of `model` to be updated. The attributes must exist on `model` and corresponding columns must be present in `data_frame`
         primary_key: Attribute name of model and column name in `data_frame` on which instanced of `model` will be matched with rows from `data_frame`
+        dropna: If True, drop rows with NaN values in `attributes` before updating the database
     """
     # check if model has attributes
     if not all(map(lambda attr: hasattr(model, attr), attributes)):
@@ -146,14 +148,18 @@ def update_model_from_df(
 
     session = get_session(read_only=False)
     for _, row in data_frame.iterrows():
-        update_values = row[attributes].to_dict()
+        if dropna:
+            update_values = row[attributes].dropna().to_dict()
+        else:
+            update_values = row[attributes].to_dict()
         print(update_values)
-        try:
-            session.query(model).filter(
-                getattr(model, primary_key) == row[primary_key]
-            ).update(update_values)
-            session.commit()
-        except SQLAlchemyError:
-            print(f"ERROR for {row[primary_key]}")
-            session.rollback()
+        if update_values:  # when dict isn't empty
+            try:
+                session.query(model).filter(
+                    getattr(model, primary_key) == row[primary_key]
+                ).update(update_values)
+                session.commit()
+            except SQLAlchemyError:
+                print(f"ERROR for {row[primary_key]}")
+                session.rollback()
     session.close()
