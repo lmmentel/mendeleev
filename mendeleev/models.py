@@ -213,7 +213,6 @@ class Element(Base):
     period = Column(Integer)
     pettifor_number = Column(Integer)
     proton_affinity = Column(Float)
-    _series_id = Column("series_id", Integer, ForeignKey("series.id"))
     series = association_proxy("_series", "name")
     sources = Column(String)
     specific_heat_capacity = Column(Float)
@@ -230,6 +229,18 @@ class Element(Base):
     vdw_radius_uff = Column(Float)
     vdw_radius_mm3 = Column(Float)
 
+    # supply risk parameters from https://www.rsc.org/periodic-table/
+    political_stability_of_top_producer = Column(Float)
+    political_stability_of_top_reserve_holder = Column(Float)
+    production_concentration = Column(Float)
+    recycling_rate = Column(String)
+    relative_supply_risk = Column(Float)
+    reserve_distribution = Column(Float)
+    substitutability = Column(String)
+    top_3_producers = Column(String)
+    top_3_reserve_holders = Column(String)
+
+    _series_id = Column("series_id", Integer, ForeignKey("series.id"))
     _ionization_energies = relationship("IonizationEnergy", lazy="subquery")
     _oxidation_states = relationship("OxidationState", lazy="subquery")
     _series = relationship("Series", uselist=False, lazy="subquery")
