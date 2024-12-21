@@ -10,6 +10,8 @@ To find out how to fetch data in bulk, check out the documentation about
 Elements
 ========
 
+Class: :py:class:`Element <mendeleev.models.Element>`
+
 The following data are currently available:
 
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
@@ -245,6 +247,8 @@ The following data are currently available:
 
 Isotopes
 ========
+
+Class: :py:class:`Isotope <mendeleev.models.Isotope>`
 
 +-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
 | Attribute name                    | Description                                     | Unit     | Value origin | Citation keys        |

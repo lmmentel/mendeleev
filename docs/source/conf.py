@@ -11,6 +11,7 @@
 import inspect
 import os
 import sys
+from pathlib import Path
 import sphinx_material
 
 
@@ -24,6 +25,8 @@ autodoc_mock_imports = [
     "seaborn",
     "sqlalchemy",
 ]
+
+sys.path.append(str(Path("_ext").resolve()))
 
 __location__ = os.path.join(
     os.getcwd(), os.path.dirname(inspect.getfile(inspect.currentframe()))
@@ -51,7 +54,7 @@ extensions = [
     "sphinx_copybutton",
     "sphinx_issues",  # linking github issues, prs, users
     "sphinx_material",
-    "nbsphinx",
+    # "nbsphinx",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.coverage",
@@ -62,6 +65,7 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
     "sphinxcontrib.bibtex",
+    "ormproperties",
 ]
 
 # sphinxcontrib.bibtex settings
