@@ -26,7 +26,7 @@ Class: :py:class:`Isotope <mendeleev.models.Isotope>`
 Isotope Decay Modes
 ===================
 
-Class: :py:class:`Isotope <mendeleev.models.IsotopeDecayMode>`
+Class: :py:class:`IsotopeDecayMode <mendeleev.models.IsotopeDecayMode>`
 
 {{ IsotopeDecayMode }}
 
@@ -92,21 +92,21 @@ for compatibility. The table below provides explanations of the symbols.
 Atomic Scattering Factors
 =========================
 
-Class: :py:class:`Element <mendeleev.models.ScatteringFactor>`
+Class: :py:class:`ScatteringFactor <mendeleev.models.ScatteringFactor>`
 
 {{ ScatteringFactor }}
 
 Ionization Energies
 ===================
 
-Class: :py:class:`Element <mendeleev.models.IonizationEnergy>`
+Class: :py:class:`IonizationEnergy <mendeleev.models.IonizationEnergy>`
 
 {{ IonizationEnergy }}
 
 Ionic Radii
 ===========
 
-Class: :py:class:`Element <mendeleev.models.IonicRadius>`
+Class: :py:class:`IonicRadius <mendeleev.models.IonicRadius>`
 
 {{ IonicRadius }}
 
@@ -122,21 +122,21 @@ by adding 14 pm to the ``ionic_radius`` values according to :cite:`Shannon1976`.
 Oxidation States
 ================
 
-Class: :py:class:`Element <mendeleev.models.OxidationState>`
+Class: :py:class:`OxidationState <mendeleev.models.OxidationState>`
 
 {{ OxidationState }}
 
 Phase Transitions
 =================
 
-Class: :py:class:`Element <mendeleev.models.PhaseTransition>`
+Class: :py:class:`PhaseTransition <mendeleev.models.PhaseTransition>`
 
 {{ PhaseTransition }}
 
 Screening Constants
 ===================
 
-Class: :py:class:`Element <mendeleev.models.ScreeningConstant>`
+Class: :py:class:`ScreeningConstant <mendeleev.models.ScreeningConstant>`
 
 {{ ScreeningConstant }}
 
