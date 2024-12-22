@@ -17,7 +17,7 @@ tables = [
     ("groups", 18),
     ("series", 10),
     ("oxidationstates", 601),
-    ("phasetransitions", 108),
+    ("phasetransitions", 107),
 ]
 
 
