@@ -1,6 +1,6 @@
 import pytest
 
-from mendeleev import Element
+from mendeleev.models import Element
 from mendeleev.electronegativity import mulliken
 
 

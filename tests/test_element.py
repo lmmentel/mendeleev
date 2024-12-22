@@ -1,6 +1,7 @@
 import pytest
-from mendeleev import Element, element, get_all_elements, get_attribute_for_all_elements
+from mendeleev import element, get_all_elements, get_attribute_for_all_elements
 from mendeleev.db import get_session
+from mendeleev.models import Element
 
 
 SYMBOLS = get_attribute_for_all_elements("symbol")
