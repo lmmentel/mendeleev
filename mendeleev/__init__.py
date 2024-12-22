@@ -4,8 +4,13 @@ __version__ = "0.19.0"
 
 import importlib
 
-from .mendeleev import *  # noqa F403
-from .models import *  # noqa F403
+from .mendeleev import (  # noqa: F401
+    element,
+    isotope,
+    get_all_elements,
+    get_attribute_for_all_elements,
+)
+
 
 _symbols = [
     "H",
