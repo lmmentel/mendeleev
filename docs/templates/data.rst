@@ -14,33 +14,21 @@ Class: :py:class:`Element <mendeleev.models.Element>`
 
 The following data are currently available:
 
-{{ elements }}
+{{ Element }}
 
 Isotopes
 ========
 
 Class: :py:class:`Isotope <mendeleev.models.Isotope>`
 
-{{ isotopes }}
+{{ Isotope }}
 
 Isotope Decay Modes
 ===================
 
-+-----------------------------------+---------------------------------------------------------------------------------+------+--------------+--------------------+
-| Attribute name                    | Description                                                                     | Unit | Value origin | Citation keys      |
-+===================================+=================================================================================+======+==============+====================+
-| ``intensity``                     | Intensity of the decay mode                                                     |      | stored       | :cite:`Kondev2021` |
-+-----------------------------------+---------------------------------------------------------------------------------+------+--------------+--------------------+
-| ``is_allowed_not_observed``       | If `True` decay mode is energetically allowed, but not experimentally observed  |      | stored       | :cite:`Kondev2021` |
-+-----------------------------------+---------------------------------------------------------------------------------+------+--------------+--------------------+
-| ``is_observed_intensity_unknown`` | If `True` decay mode is observed, but its intensity is not experimentally known |      | stored       | :cite:`Kondev2021` |
-+-----------------------------------+---------------------------------------------------------------------------------+------+--------------+--------------------+
-| ``isotope_id``                    | ID of the isotope, links to the `isotopes` table.                               |      | stored       | :cite:`Kondev2021` |
-+-----------------------------------+---------------------------------------------------------------------------------+------+--------------+--------------------+
-| ``mode``                          | ASCII symbol of the decay mode                                                  |      | stored       | :cite:`Kondev2021` |
-+-----------------------------------+---------------------------------------------------------------------------------+------+--------------+--------------------+
-| ``relation``                      | Uncertainty of relative abundance                                               |      | stored       | :cite:`Kondev2021` |
-+-----------------------------------+---------------------------------------------------------------------------------+------+--------------+--------------------+
+Class: :py:class:`Isotope <mendeleev.models.IsotopeDecayMode>`
+
+{{ IsotopeDecayMode }}
 
 The different modes in the table are stores as ASCII representations
 for compatibility. The table below provides explanations of the symbols.
@@ -104,17 +92,23 @@ for compatibility. The table below provides explanations of the symbols.
 Atomic Scattering Factors
 =========================
 
-{{ atomic_scattering_factors }}
+Class: :py:class:`Element <mendeleev.models.ScatteringFactor>`
+
+{{ ScatteringFactor }}
 
 Ionization Energies
 ===================
 
-{{ ionization_energies }}
+Class: :py:class:`Element <mendeleev.models.IonizationEnergy>`
+
+{{ IonizationEnergy }}
 
 Ionic Radii
 ===========
 
-{{ ionic_radii}}
+Class: :py:class:`Element <mendeleev.models.IonicRadius>`
+
+{{ IonicRadius }}
 
 Notes
 -----
@@ -128,20 +122,24 @@ by adding 14 pm to the ``ionic_radius`` values according to :cite:`Shannon1976`.
 Oxidation States
 ================
 
-{{ oxidation_states}}
+Class: :py:class:`Element <mendeleev.models.OxidationState>`
+
+{{ OxidationState }}
 
 Phase Transitions
 =================
 
-{{ phase_transitions }}
+Class: :py:class:`Element <mendeleev.models.PhaseTransition>`
 
+{{ PhaseTransition }}
 
 Screening Constants
 ===================
 
-{{ screning_constants}}
+Class: :py:class:`Element <mendeleev.models.ScreeningConstant>`
+
+{{ ScreeningConstant }}
 
 .. rubric:: Data Footnotes
-
 
 {{ footnotes }}
