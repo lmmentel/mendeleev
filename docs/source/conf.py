@@ -65,7 +65,6 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
     "sphinxcontrib.bibtex",
-    "ormproperties",
 ]
 
 # sphinxcontrib.bibtex settings
