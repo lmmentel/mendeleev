@@ -98,7 +98,7 @@ def render_data_docs(c):
 
     env = Environment(
         loader=FileSystemLoader("docs/templates"),
-        autoescape=select_autoescape(['html', 'xml', 'rst'])
+        autoescape=select_autoescape(["html", "xml", "rst"]),
     )
 
     template = env.get_template("data.rst")
