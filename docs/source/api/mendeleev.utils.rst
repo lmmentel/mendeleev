@@ -10,6 +10,6 @@
    
       apply_rst_format
       coeffs
-      n_effective
       render_rst_table
+      update_model_from_df
    

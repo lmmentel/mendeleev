@@ -15,6 +15,7 @@
       li_xue
       martynov_batsanov
       mulliken
+      n_effective
       nagle
       sanderson
    
