@@ -244,54 +244,55 @@ The following data are currently available:
 | ``zeff``                                      | Effective nuclear charge                                                                                                                                                                                                                                                                         |                | computed     |                                                      |
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
 
-
 Isotopes
 ========
 
 Class: :py:class:`Isotope <mendeleev.models.Isotope>`
 
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| Attribute name                    | Description                                     | Unit     | Value origin | Citation keys        |
-+===================================+=================================================+==========+==============+======================+
-| ``abundance_uncertainty``         | Uncertainty of relative abundance               |          | stored       | :cite:`Kondev2021`   |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``abundance``                     | Relative Abundance                              |          | stored       | :cite:`Kondev2021`   |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``atomic_number``                 | Atomic number                                   |          | stored       |                      |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``decay_modes``                   | Decay modes with intensities                    |          | stored       | :cite:`Kondev2021`   |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``discovery_year``                | Year the isotope was discovered                 |          | stored       | :cite:`Kondev2021`   |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``g_factor_uncertainty``          | Uncertainty of the nuclear g-factor             |          | stored       | :cite:`Stone2014`    |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``g_factor``                      | Nuclear g-factor                                |          | stored       | :cite:`Stone2014`    |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``half_life_uncertainty``         | Uncertainty of the half life                    |          | stored       | :cite:`Kondev2021`   |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``half_life_unit``                | Unit in which the half life is given            |          | stored       | :cite:`Kondev2021`   |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``half_life``                     | Half life of the isotope                        |          | stored       | :cite:`Kondev2021`   |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``is_radioactive``                | Is the isotope radioactive                      |          | stored       | :cite:`iupac-masses` |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``mass_number``                   | Mass number of the isotope                      |          | stored       | :cite:`iupac-masses` |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``mass_uncertainty``              | Uncertainty of the atomic mass                  | Da       | stored       | :cite:`iupac-masses` |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``mass``                          | Atomic mass                                     | Da       | stored       | :cite:`iupac-masses` |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``parity``                        | Parity, if present, it can be either `+` or `-` |          | stored       | :cite:`Kondev2021`   |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``quadrupole_moment_uncertainty`` | Nuclear electric quadrupole moment              | 100 fm^2 | stored       | :cite:`Stone2013`    |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``quadrupole_moment``             | Nuclear electric quadrupole moment              | 100 fm^2 | stored       | :cite:`Stone2013`    |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
-| ``spin``                          | Nuclear spin quantum number                     |          | stored       | :cite:`Kondev2021`   |
-+-----------------------------------+-------------------------------------------------+----------+--------------+----------------------+
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| Attribute name                    | Description                                                 | Unit     | Value origin | Citation keys        |
++===================================+=============================================================+==========+==============+======================+
+| ``abundance_uncertainty``         | Uncertainty of relative abundance                           |          | stored       | :cite:`Kondev2021`   |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``abundance``                     | Relative Abundance                                          |          | stored       | :cite:`Kondev2021`   |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``atomic_number``                 | Atomic number                                               |          | stored       |                      |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``decay_modes``                   | Decay modes with intensities                                |          | stored       | :cite:`Kondev2021`   |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``discovery_year``                | Year the isotope was discovered                             |          | stored       | :cite:`Kondev2021`   |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``g_factor_uncertainty``          | Uncertainty of the nuclear g-factor                         |          | stored       | :cite:`Stone2014`    |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``g_factor``                      | Nuclear g-factor                                            |          | stored       | :cite:`Stone2014`    |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``half_life_uncertainty``         | Uncertainty of the half life                                |          | stored       | :cite:`Kondev2021`   |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``half_life_unit``                | Unit in which the half life is given ([#f_half_life_unit]_) |          | stored       | :cite:`Kondev2021`   |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``half_life``                     | Half life of the isotope                                    |          | stored       | :cite:`Kondev2021`   |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``is_radioactive``                | Is the isotope radioactive                                  |          | stored       | :cite:`iupac-masses` |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``mass_number``                   | Mass number of the isotope                                  |          | stored       | :cite:`iupac-masses` |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``mass_uncertainty``              | Uncertainty of the atomic mass                              | Da       | stored       | :cite:`iupac-masses` |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``mass``                          | Atomic mass                                                 | Da       | stored       | :cite:`iupac-masses` |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``parity``                        | Parity, if present, it can be either `+` or `-`             |          | stored       | :cite:`Kondev2021`   |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``quadrupole_moment_uncertainty`` | Nuclear electric quadrupole moment                          | 100 fm^2 | stored       | :cite:`Stone2013`    |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``quadrupole_moment``             | Nuclear electric quadrupole moment                          | 100 fm^2 | stored       | :cite:`Stone2013`    |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
+| ``spin``                          | Nuclear spin quantum number                                 |          | stored       | :cite:`Kondev2021`   |
++-----------------------------------+-------------------------------------------------------------+----------+--------------+----------------------+
 
 Isotope Decay Modes
 ===================
+
+Class: :py:class:`Isotope <mendeleev.models.IsotopeDecayMode>`
 
 +-----------------------------------+---------------------------------------------------------------------------------+------+--------------+--------------------+
 | Attribute name                    | Description                                                                     | Unit | Value origin | Citation keys      |
@@ -371,20 +372,24 @@ for compatibility. The table below provides explanations of the symbols.
 Atomic Scattering Factors
 =========================
 
+Class: :py:class:`Element <mendeleev.models.ScatteringFactor>`
+
 +-------------------+----------------------------------------------+------+--------------+-------------------------------------------------+
 | Attribute name    | Description                                  | Unit | Value origin | Citation keys                                   |
 +===================+==============================================+======+==============+=================================================+
 | ``atomic_number`` | Atomic number                                |      | stored       | :cite:`atomic_scattering_factors,henke1993xray` |
 +-------------------+----------------------------------------------+------+--------------+-------------------------------------------------+
-| ``energy``        | Energy of the incident photon                | eV   | stored       | :cite:`atomic_scattering_factors,henke1993xray` |
+| ``energy``        | Energy of the incident photon ([#f_energy]_) | eV   | stored       | :cite:`atomic_scattering_factors,henke1993xray` |
 +-------------------+----------------------------------------------+------+--------------+-------------------------------------------------+
-| ``f1``            | Scattering factor f1                         |      | stored       | :cite:`atomic_scattering_factors,henke1993xray` |
+| ``f1``            | Scattering factor f1 ([#f_f1]_)              |      | stored       | :cite:`atomic_scattering_factors,henke1993xray` |
 +-------------------+----------------------------------------------+------+--------------+-------------------------------------------------+
-| ``f2``            | Scattering factor f2                         |      | stored       | :cite:`atomic_scattering_factors,henke1993xray` |
+| ``f2``            | Scattering factor f2 ([#f_f2]_)              |      | stored       | :cite:`atomic_scattering_factors,henke1993xray` |
 +-------------------+----------------------------------------------+------+--------------+-------------------------------------------------+
 
 Ionization Energies
 ===================
+
+Class: :py:class:`Element <mendeleev.models.IonizationEnergy>`
 
 +---------------------------+-------------------------------------------------------------------------+------+--------------+---------------+
 | Attribute name            | Description                                                             | Unit | Value origin | Citation keys |
@@ -418,6 +423,8 @@ Ionization Energies
 
 Ionic Radii
 ===========
+
+Class: :py:class:`Element <mendeleev.models.IonicRadius>`
 
 +--------------------+-----------------------------------------+------+--------------+----------------------------------+
 | Attribute name     | Description                             | Unit | Value origin | Citation keys                    |
@@ -453,6 +460,8 @@ by adding 14 pm to the ``ionic_radius`` values according to :cite:`Shannon1976`.
 Oxidation States
 ================
 
+Class: :py:class:`Element <mendeleev.models.OxidationState>`
+
 +---------------------+--------------------------------------------------------------------------+------+--------------+---------------------------+
 | Attribute name      | Description                                                              | Unit | Value origin | Citation keys             |
 +=====================+==========================================================================+======+==============+===========================+
@@ -465,6 +474,8 @@ Oxidation States
 
 Phase Transitions
 =================
+
+Class: :py:class:`Element <mendeleev.models.PhaseTransition>`
 
 +------------------------------+--------------------------------------+------+--------------+-----------------------+
 | Attribute name               | Description                          | Unit | Value origin | Citation keys         |
@@ -486,9 +497,10 @@ Phase Transitions
 | ``triple_point_temperature`` | Temperature in K of the triple point | K    | stored       | :cite:`haynes2016crc` |
 +------------------------------+--------------------------------------+------+--------------+-----------------------+
 
-
 Screening Constants
 ===================
+
+Class: :py:class:`Element <mendeleev.models.ScreeningConstant>`
 
 +-------------------+--------------------------------+------+--------------+-----------------------------------+
 | Attribute name    | Description                    | Unit | Value origin | Citation keys                     |
@@ -504,86 +516,21 @@ Screening Constants
 
 .. rubric:: Data Footnotes
 
-.. [#f_atomic_weight] **Atomic Weights**
+.. [#f_atomic_weight] **atomic_weight**
 
-   Atomic weights and their uncertainties were retrieved mainly from ref. :cite:`iupac-weights`. For
-   elements whose values were given as ranges the *conventional atomic weights* from
-   Table 3 in ref. :cite:`Meija2016` were taken. For radioactive elements the standard approach
-   was adopted where the weight is taken as the mass number of the most stable isotope.
-   The data was obtained from `CIAAW page on radioactive elements <http://www.ciaaw.org/radioactive-elements.htm>`_.
-   In cases where two isotopes were specified the one with the smaller standard deviation was chosen.
-   In case of Tc and Pm relative weights of their isotopes were used, for Tc isotope 98, and for Pm isotope 145 were taken
-   from `CIAAW <http://www.ciaaw.org/atomic-masses.htm>`_.
+   Atomic weights and their uncertainties were retrieved mainly from ref. :cite:`iupac-weights`. For elements whose values were given as ranges the *conventional atomic weights* from Table 3 in ref. :cite:`Meija2016` were taken. For radioactive elements the standard approach was adopted where the weight is taken as the mass number of the most stable isotope. The data was obtained from `CIAAW page on radioactive elements <http://www.ciaaw.org/radioactive-elements.htm>`_. In cases where two isotopes were specified the one with the smaller standard deviation was chosen. In case of Tc and Pm relative weights of their isotopes were used, for Tc isotope 98, and for Pm isotope 145 were taken from `CIAAW <http://www.ciaaw.org/atomic-masses.htm>`_.
 
-.. [#f_covalent_radius_cordero] **Covalent Radius by Cordero et al.**
+.. [#f_covalent_radius_cordero] **covalent_radius_cordero**
 
-   In order to have a more homogeneous data for covalent radii taken from ref.
-   :cite:`Cordero2008` the values for 3 different valences for C, also the low
-   and high spin values for Mn, Fe Co, were respectively averaged.
+   In order to have a more homogeneous data for covalent radii taken from ref. :cite:`Cordero2008` the values for 3 different valences for C, also the low and high spin values for Mn, Fe Co, were respectively averaged.
 
-.. [#f_electron_affinity] **Electron affinity**
+.. [#f_density] **density**
 
-   Electron affinities were taken from :cite:`haynes2014crc` for the elements
-   for which the data was available. For He, Be, N, Ar and Xe affinities were
-   taken from :cite:`Andersen2004` where they were specified for metastable
-   ions and therefore the values are negative.
-   
-   Updates
-   
-     - Electron affinity of niobium was taken from :cite:`Luo2016`.
-     - Electron affinity of cobalt was taken from :cite:`Chen2016a`.
-     - Electron affinity of lead was taken from :cite:`Chen2016`.
+   Density values for solids and liquids are always in units of grams per cubic centimeter and can be assumed to refer to temperatures near room temperature unless otherwise stated. Values for gases are the calculated ideal gas densities at 25°C and 101.325 kPa. 
 
-.. [#f_electronegativity_allen] **Allen's configuration energies**
-
-   The values of configurational energies from refs. :cite:`Mann2000a` and
-   :cite:`Mann2000` were taken as reported in eV without converting to Pauling
-   units.
-
-.. [#f_mendeleev_number] **Mendeleev numbers**
-
-   Mendeleev numbers were sourced from :cite:`Villars2004` but the range
-   was extended to cover the whole periodic table following the prescription
-   in the article of increasing the numbers going from top to bottom in each
-   group and group by group from left to right in the periodic table.
-
-.. [#f_sconst] **Nuclear charge screening constants**
-
-   The screening constants were calculated according to the following formula
-
-   .. math::
-   
-      \sigma_{n,l,m} = Z - n\cdot\zeta_{n,l,m}
-   
-   where :math:`n` is the principal quantum number, :math:`Z` is the atomic number,
-   :math:`\sigma_{n,l,m}` is the screening constant, :math:`\zeta_{n,l,m}` is the
-   optimized exponent from :cite:`Clementi1963,Clementi1967`.
-   
-   For elements Nb, Mo, Ru, Rh, Pd and Ag the exponent values corresponding to the
-   ground state electronic configuration were taken (entries with superscript `a`
-   in Table II in :cite:`Clementi1967`).
-   
-   For elements La, Pr, Nd and Pm two exponent were reported for 4f shell denoted
-   4f and 4f' in :cite:`Clementi1967`. The value corresponding to 4f were used
-   since according to the authors these are the dominant ones.
-
-.. [#f_vdw_radius_alvarez] **van der Waals radii according to Alvarez**
-
-   The bulk of the radii data was taken from Ref. :cite:`Alvarez2013`, but the
-   radii for noble gasses were updated according to the values in Ref.
-   :cite:`Vogt2014`.
-
-.. [#f_density] **Densities**
-
-   Density values for solids and liquids are always in units of grams per cubic
-   centimeter and can be assumed to refer to temperatures near room temperature
-   unless otherwise stated. Values for gases are the calculated ideal gas densities
-   at 25°C and 101.325 kPa. 
-   
    Original values for gasses are converted from g/L to g/cm\ :sup:`3`.
 
-   For elements where several allotropes exist, the density corresponding to the
-   most abundant are reported (for full list refer to :cite:`haynes2014crc`), namely:
+   For elements where several allotropes exist, the density corresponding to the most abundant are reported (for full list refer to :cite:`haynes2014crc`), namely:
 
    - Antimony (gray)
    - Berkelium (α form)
@@ -593,8 +540,7 @@ Screening Constants
    - Sulfur (rhombic)
    - Tin (white)
 
-   For elements where experimental data is not available, theoretical estimates taken
-   from :cite:`enwiki:1039678864` are used, namely for:
+   For elements where experimental data is not available, theoretical estimates taken from :cite:`enwiki:1039678864` are used, namely for:
 
    - Astatine
    - Francium
@@ -618,3 +564,62 @@ Screening Constants
    - Livermorium
    - Tennessine
    - Oganesson
+
+.. [#f_electron_affinity] **electron_affinity**
+
+   Electron affinities were taken from :cite:`haynes2014crc` for the elements for which the data was available. For He, Be, N, Ar and Xe affinities were taken from :cite:`Andersen2004` where they were specified for metastable ions and therefore the values are negative.
+   
+   Updates
+
+   - Electron affinity of niobium was taken from :cite:`Luo2016`.
+   - Electron affinity of cobalt was taken from :cite:`Chen2016a`.
+   - Electron affinity of lead was taken from :cite:`Chen2016`.
+
+.. [#f_electronegativity_allen] **electronegativity_allen**
+
+   The values of configurational energies from refs. :cite:`Mann2000a` and :cite:`Mann2000` were taken as reported in eV without converting to Pauling units.
+
+.. [#f_mendeleev_number] **mendeleev_number**
+
+   Mendeleev numbers were sourced from :cite:`Villars2004` but the range was extended to cover the whole periodic table following the prescription in the article of increasing the numbers going from top to bottom in each group and group by group from left to right in the periodic table.
+
+.. [#f_vdw_radius_alvarez] **vdw_radius_alvarez**
+
+   The bulk of the radii data was taken from Ref. :cite:`Alvarez2013`, but the radii for noble gasses were updated according to the values in Ref. :cite:`Vogt2014`.
+
+.. [#f_sconst] **sconst**
+
+   The screening constants were calculated according to the following formula
+
+   .. math::
+
+      \sigma_{n,l,m} = Z - n\cdot\zeta_{n,l,m}
+
+   where :math:`n` is the principal quantum number, :math:`Z` is the atomic number,
+   :math:`\sigma_{n,l,m}` is the screening constant, :math:`\zeta_{n,l,m}` is the
+   optimized exponent from :cite:`Clementi1963,Clementi1967`.
+
+   For elements Nb, Mo, Ru, Rh, Pd and Ag the exponent values corresponding to the
+   ground state electronic configuration were taken (entries with superscript `a`
+   in Table II in :cite:`Clementi1967`).
+
+   For elements La, Pr, Nd and Pm two exponent were reported for 4f shell denoted
+   4f and 4f' in :cite:`Clementi1967`. The value corresponding to 4f were used
+   since according to the authors these are the dominant ones.
+
+.. [#f_half_life_unit] **half_life_unit**
+
+    1 year = 365.2422 days = 31 556 926 sec
+
+.. [#f_energy] **energy**
+
+   specific data references available at cited data source
+
+.. [#f_f1] **f1**
+
+   specific data references available at cited data source
+
+.. [#f_f2] **f2**
+
+   specific data references available at cited data source
+
