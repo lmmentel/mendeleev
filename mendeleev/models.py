@@ -1241,9 +1241,28 @@ class PhaseTransition(Base):
     triple_point_temperature = Column(Float)
     triple_point_pressure = Column(Float)
     allotrope = Column(String)
+    is_sublimation_point = Column(Boolean)
+    is_transition = Column(Boolean)
 
     def __str__(self) -> str:
-        return f"{self.atomic_number} Tm={self.melting_point} Tb={self.boiling_point}"
+        return (
+            "PhaseTransition("
+            + ", ".join(
+                [
+                    f"atomic_number={self.atomic_number}",
+                    f"allotrope={self.allotrope}",
+                    f"melting_point={self.melting_point}",
+                    f"boiling_point={self.boiling_point}",
+                    f"triple_point_temperature={self.triple_point_temperature}",
+                    f"triple_point_pressure={self.triple_point_pressure}",
+                    f"critical_temperature={self.critical_temperature}",
+                    f"pritical_pressure={self.critical_pressure}",
+                    f"is_sublimation_point={self.is_sublimation_point}",
+                    f"is_transition={self.is_transition}",
+                ]
+            )
+            + ")"
+        )
 
     def __repr__(self) -> str:
         return str(self)
