@@ -73,16 +73,14 @@ def test_electrophilicity(symbol):
     e.electrophilicity()
 
 
-def test__eq__():
-    elements = get_all_elements()
-    for e in elements:
-        clone = element(e.symbol)
-        assert clone == e
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test__eq__(element_obj):
+    clone = element(element_obj.symbol)
+    assert clone == element_obj
 
 
 def test__ne__():
-    elements = get_all_elements()
-    for e1, e2 in zip(elements[:-1], elements[1:]):
+    for e1, e2 in zip(ELEMENTS[:-1], ELEMENTS[1:]):
         assert e1 != e2
 
 
