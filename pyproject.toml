@@ -37,13 +37,13 @@ url = "https://pypi.org/simple/"
 python = ">=3.9,<3.14"
 colorama = "^0.4.6"
 numpy = [
-    { version = "^1.26", python = ">=3.12" },
+    { version = "^2.0", python = ">=3.12" },
     { version = "^1.21", python = "<3.12" },
 ]
 pyfiglet = "^0.8.post1"
 Pygments = "^2.11.2"
 pandas = [
-    { version = "^2.1", python = ">=3.12,<3.13" },
+    { version = "^2.1", python = ">=3.12,<3.14" },
     { version = ">=1.0.0", python = "<3.12" },
 ]
 SQLAlchemy = ">=1.4.0"
