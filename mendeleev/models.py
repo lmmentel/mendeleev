@@ -60,7 +60,7 @@ class Element(Base):
     Args:
         abundance_crust (float): Abundance in the earth's crust in mg/kg
         abundance_sea (float): Abundance in the seas in mg/L
-        annotation (str): Annotations regarding the data
+        annotation (str): Annotations regarding the data. Deprecated.
         atomic_number (int): Atomic number
         atomic_radius (float): Atomic radius in pm
         atomic_radius_rahm (float): Atomic radius by Rahm et al. in pm
