@@ -157,7 +157,8 @@ class Element(Base):
 
     abundance_crust = Column(Float)
     abundance_sea = Column(Float)
-    annotation = Column(String)
+    # TODO: remove in a future version
+    _annotation = Column(String)
     atomic_number = Column(Integer, primary_key=True)
     atomic_radius = Column(Float)
     atomic_radius_rahm = Column(Float)
@@ -290,6 +291,18 @@ class Element(Base):
         See: https://en.wikipedia.org/wiki/International_Chemical_Identifier
         """
         return f"InchI=1S/{self.symbol}"
+
+    @property
+    def annotation(self):
+        "Temporary property before before removing annotation"
+        # TODO: remove in a future version
+        warnings.warn(
+            "The 'annotation' attribute is deprecated and will be removed in a future version. "
+            "Use the 'annotations' attribute of the 'PropertyMetadata' class instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return self._annotation
 
     @property
     def boiling_point(self) -> float | None:
