@@ -2,11 +2,13 @@
 
 """Module defining the database models for elements and related properties."""
 
+from __future__ import annotations
 from typing import Any, Callable, Dict, List, Tuple, Union
 from operator import attrgetter
 import enum
 import math
 import urllib.parse
+import warnings
 
 import numpy as np
 from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey, Text, Enum
@@ -290,20 +292,50 @@ class Element(Base):
         return f"InchI=1S/{self.symbol}"
 
     @property
-    def boiling_point(self) -> Union[float, Dict[str, float]]:
-        """Boiling point"""
+    def boiling_point(self) -> float | None:
+        """Proxy for boiling point from the ``PhaseTransition`` object.
+
+        For elements with a single allotrope return the boiling point,
+        for elements with multiple allotropes where the boiling points
+        are equal return the boiling point, otherwise return None.
+        """
         if len(self.phase_transitions) == 1:
             return self.phase_transitions[0].boiling_point
+        elif len(self.phase_transitions) == 2:
+            bps = [pt.boiling_point for pt in self.phase_transitions]
+            if math.isclose(*bps, rel_tol=1e-2):
+                return self.phase_transitions[0].boiling_point
+            else:
+                warnings.warn(
+                    f"{self.symbol} has multiple allotropes, "
+                    "check <{self.symbol}.phase_transitions> for details.",
+                    UserWarning,
+                )
         else:
-            return {pt.allotrope: pt.boiling_point for pt in self.phase_transitions}
+            return None
 
     @property
-    def melting_point(self) -> Union[float, Dict[str, float]]:
-        """Melting point"""
+    def melting_point(self) -> float | None:
+        """Proxy for melting point from the ``PhaseTransition`` object.
+
+        For elements with a single allotrope return the melting point,
+        for elements with multiple allotropes where the melting points
+        are equal return the melting point, otherwise return None.
+        """
         if len(self.phase_transitions) == 1:
             return self.phase_transitions[0].melting_point
+        elif len(self.phase_transitions) == 2:
+            mps = [pt.melting_point for pt in self.phase_transitions]
+            if math.isclose(*mps, rel_tol=1e-2):
+                return self.phase_transitions[0].melting_point
+            else:
+                warnings.warn(
+                    f"{self.symbol} has multiple allotropes, "
+                    "check <{self.symbol}.phase_transitions> for details.",
+                    UserWarning,
+                )
         else:
-            return {pt.allotrope: pt.melting_point for pt in self.phase_transitions}
+            return None
 
     @property
     def nist_webbook_url(self) -> str:
@@ -1241,9 +1273,28 @@ class PhaseTransition(Base):
     triple_point_temperature = Column(Float)
     triple_point_pressure = Column(Float)
     allotrope = Column(String)
+    is_sublimation_point = Column(Boolean)
+    is_transition = Column(Boolean)
 
     def __str__(self) -> str:
-        return f"{self.atomic_number} Tm={self.melting_point} Tb={self.boiling_point}"
+        return (
+            "PhaseTransition("
+            + ", ".join(
+                [
+                    f"atomic_number={self.atomic_number}",
+                    f"allotrope={self.allotrope}",
+                    f"melting_point={self.melting_point}",
+                    f"boiling_point={self.boiling_point}",
+                    f"triple_point_temperature={self.triple_point_temperature}",
+                    f"triple_point_pressure={self.triple_point_pressure}",
+                    f"critical_temperature={self.critical_temperature}",
+                    f"critical_pressure={self.critical_pressure}",
+                    f"is_sublimation_point={self.is_sublimation_point}",
+                    f"is_transition={self.is_transition}",
+                ]
+            )
+            + ")"
+        )
 
     def __repr__(self) -> str:
         return str(self)

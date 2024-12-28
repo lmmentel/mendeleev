@@ -147,7 +147,7 @@ The following data are currently available:
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
 | ``mass_number``                               | Mass number of the most abundant isotope                                                                                                                                                                                                                                                         |                | computed     |                                                      |
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
-| ``melting_point``                             | Melting point                                                                                                                                                                                                                                                                                    | K              | stored       | :cite:`haynes2016crc`                                |
+| ``melting_point``                             | Melting point at 101.325 kPa pressure                                                                                                                                                                                                                                                            | K              | stored       | :cite:`haynes2016crc`                                |
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
 | ``mendeleev_number``                          | Mendeleev's number ([#f_mendeleev_number]_)                                                                                                                                                                                                                                                      |                | stored       | :cite:`Pettifor1984,Villars2004`                     |
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
@@ -292,7 +292,7 @@ Class: :py:class:`Isotope <mendeleev.models.Isotope>`
 Isotope Decay Modes
 ===================
 
-Class: :py:class:`Isotope <mendeleev.models.IsotopeDecayMode>`
+Class: :py:class:`IsotopeDecayMode <mendeleev.models.IsotopeDecayMode>`
 
 +-----------------------------------+---------------------------------------------------------------------------------+------+--------------+--------------------+
 | Attribute name                    | Description                                                                     | Unit | Value origin | Citation keys      |
@@ -372,7 +372,7 @@ for compatibility. The table below provides explanations of the symbols.
 Atomic Scattering Factors
 =========================
 
-Class: :py:class:`Element <mendeleev.models.ScatteringFactor>`
+Class: :py:class:`ScatteringFactor <mendeleev.models.ScatteringFactor>`
 
 +-------------------+----------------------------------------------+------+--------------+-------------------------------------------------+
 | Attribute name    | Description                                  | Unit | Value origin | Citation keys                                   |
@@ -389,7 +389,7 @@ Class: :py:class:`Element <mendeleev.models.ScatteringFactor>`
 Ionization Energies
 ===================
 
-Class: :py:class:`Element <mendeleev.models.IonizationEnergy>`
+Class: :py:class:`IonizationEnergy <mendeleev.models.IonizationEnergy>`
 
 +---------------------------+-------------------------------------------------------------------------+------+--------------+---------------+
 | Attribute name            | Description                                                             | Unit | Value origin | Citation keys |
@@ -424,7 +424,7 @@ Class: :py:class:`Element <mendeleev.models.IonizationEnergy>`
 Ionic Radii
 ===========
 
-Class: :py:class:`Element <mendeleev.models.IonicRadius>`
+Class: :py:class:`IonicRadius <mendeleev.models.IonicRadius>`
 
 +--------------------+-----------------------------------------+------+--------------+----------------------------------+
 | Attribute name     | Description                             | Unit | Value origin | Citation keys                    |
@@ -460,7 +460,7 @@ by adding 14 pm to the ``ionic_radius`` values according to :cite:`Shannon1976`.
 Oxidation States
 ================
 
-Class: :py:class:`Element <mendeleev.models.OxidationState>`
+Class: :py:class:`OxidationState <mendeleev.models.OxidationState>`
 
 +---------------------+--------------------------------------------------------------------------+------+--------------+---------------------------+
 | Attribute name      | Description                                                              | Unit | Value origin | Citation keys             |
@@ -475,32 +475,36 @@ Class: :py:class:`Element <mendeleev.models.OxidationState>`
 Phase Transitions
 =================
 
-Class: :py:class:`Element <mendeleev.models.PhaseTransition>`
+Class: :py:class:`PhaseTransition <mendeleev.models.PhaseTransition>`
 
-+------------------------------+--------------------------------------+------+--------------+-----------------------+
-| Attribute name               | Description                          | Unit | Value origin | Citation keys         |
-+==============================+======================================+======+==============+=======================+
-| ``allotrope``                | Allotrope name                       |      | stored       | :cite:`haynes2016crc` |
-+------------------------------+--------------------------------------+------+--------------+-----------------------+
-| ``atomic_number``            | Atomic number                        |      | stored       |                       |
-+------------------------------+--------------------------------------+------+--------------+-----------------------+
-| ``boiling_point``            | Boiling point                        | K    | stored       | :cite:`haynes2016crc` |
-+------------------------------+--------------------------------------+------+--------------+-----------------------+
-| ``critical_pressure``        | Critical pressure                    | MPa  | stored       | :cite:`haynes2016crc` |
-+------------------------------+--------------------------------------+------+--------------+-----------------------+
-| ``critical_temperature``     | Critical temperature                 | K    | stored       | :cite:`haynes2016crc` |
-+------------------------------+--------------------------------------+------+--------------+-----------------------+
-| ``melting_point``            | Melting point                        | K    | stored       | :cite:`haynes2016crc` |
-+------------------------------+--------------------------------------+------+--------------+-----------------------+
-| ``triple_point_pressure``    | Pressure in kPa of the triple point  | kPa  | stored       | :cite:`haynes2016crc` |
-+------------------------------+--------------------------------------+------+--------------+-----------------------+
-| ``triple_point_temperature`` | Temperature in K of the triple point | K    | stored       | :cite:`haynes2016crc` |
-+------------------------------+--------------------------------------+------+--------------+-----------------------+
++------------------------------+----------------------------------------------------------------------------------------------------------------------------------+------+--------------+-----------------------+
+| Attribute name               | Description                                                                                                                      | Unit | Value origin | Citation keys         |
++==============================+==================================================================================================================================+======+==============+=======================+
+| ``allotrope``                | Allotrope name                                                                                                                   |      | stored       | :cite:`haynes2016crc` |
++------------------------------+----------------------------------------------------------------------------------------------------------------------------------+------+--------------+-----------------------+
+| ``atomic_number``            | Atomic number                                                                                                                    |      | stored       |                       |
++------------------------------+----------------------------------------------------------------------------------------------------------------------------------+------+--------------+-----------------------+
+| ``boiling_point``            | Boiling point                                                                                                                    | K    | stored       | :cite:`haynes2016crc` |
++------------------------------+----------------------------------------------------------------------------------------------------------------------------------+------+--------------+-----------------------+
+| ``critical_pressure``        | Critical pressure                                                                                                                | MPa  | stored       | :cite:`haynes2016crc` |
++------------------------------+----------------------------------------------------------------------------------------------------------------------------------+------+--------------+-----------------------+
+| ``critical_temperature``     | Critical temperature                                                                                                             | K    | stored       | :cite:`haynes2016crc` |
++------------------------------+----------------------------------------------------------------------------------------------------------------------------------+------+--------------+-----------------------+
+| ``is_sublimation_point``     | Indicates that boiling_point marks a sublimation point, where the vapor pressure of the solid phase reaches 101.325 kPa          |      | stored       | :cite:`haynes2016crc` |
++------------------------------+----------------------------------------------------------------------------------------------------------------------------------+------+--------------+-----------------------+
+| ``is_transition``            | Indicates that melting_point marks the temperature of the transition to the crystalline form immediately below that entry        |      | stored       | :cite:`haynes2016crc` |
++------------------------------+----------------------------------------------------------------------------------------------------------------------------------+------+--------------+-----------------------+
+| ``melting_point``            | Melting point at 101.325 kPa pressure ([#f_melting_point]_)                                                                      | K    | stored       | :cite:`haynes2016crc` |
++------------------------------+----------------------------------------------------------------------------------------------------------------------------------+------+--------------+-----------------------+
+| ``triple_point_pressure``    | Pressure in kPa of the triple point                                                                                              | kPa  | stored       | :cite:`haynes2016crc` |
++------------------------------+----------------------------------------------------------------------------------------------------------------------------------+------+--------------+-----------------------+
+| ``triple_point_temperature`` | Temperature in K of the triple point                                                                                             | K    | stored       | :cite:`haynes2016crc` |
++------------------------------+----------------------------------------------------------------------------------------------------------------------------------+------+--------------+-----------------------+
 
 Screening Constants
 ===================
 
-Class: :py:class:`Element <mendeleev.models.ScreeningConstant>`
+Class: :py:class:`ScreeningConstant <mendeleev.models.ScreeningConstant>`
 
 +-------------------+--------------------------------+------+--------------+-----------------------------------+
 | Attribute name    | Description                    | Unit | Value origin | Citation keys                     |
@@ -564,6 +568,10 @@ Class: :py:class:`Element <mendeleev.models.ScreeningConstant>`
    - Livermorium
    - Tennessine
    - Oganesson
+
+.. [#f_melting_point] **melting_point**
+
+   Melting points for carbon from the original source are not included since they are not at standard pressure.
 
 .. [#f_electron_affinity] **electron_affinity**
 
