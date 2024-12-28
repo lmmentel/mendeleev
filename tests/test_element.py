@@ -6,6 +6,7 @@ from mendeleev.models import Element
 
 SYMBOLS = get_attribute_for_all_elements("symbol")
 NAMES = get_attribute_for_all_elements("name")
+ELEMENTS = get_all_elements()
 
 
 @pytest.fixture
@@ -83,3 +84,13 @@ def test__ne__():
     elements = get_all_elements()
     for e1, e2 in zip(elements[:-1], elements[1:]):
         assert e1 != e2
+
+
+@pytest.mark.parametrize("e", ELEMENTS)
+def test_melting_points_float_or_none(e):
+    assert isinstance(e.melting_point, (float, type(None)))
+
+
+@pytest.mark.parametrize("e", ELEMENTS)
+def test_boiling_points_float_or_none(e):
+    assert isinstance(e.boiling_point, (float, type(None)))
