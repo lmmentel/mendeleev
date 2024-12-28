@@ -2,11 +2,12 @@
 
 """Module defining the database models for elements and related properties."""
 
-from typing import Any, Callable, Dict, List, Tuple, Union
+from typing import Any, Callable, Dict, List, Tuple, Union, Optional
 from operator import attrgetter
 import enum
 import math
 import urllib.parse
+import warnings
 
 import numpy as np
 from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey, Text, Enum
@@ -291,19 +292,49 @@ class Element(Base):
 
     @property
     def boiling_point(self) -> Union[float, Dict[str, float]]:
-        """Boiling point"""
+        """Proxy for boiling point from the ``PhaseTransition`` object.
+
+        For elements with a single allotrope return the boiling point,
+        for elements with multiple allotropes where the boiling points
+        are equal return the boiling point, otherwise return None.
+        """
         if len(self.phase_transitions) == 1:
             return self.phase_transitions[0].boiling_point
+        elif len(self.phase_transitions) == 2:
+            bps = [pt.boiling_point for pt in self.phase_transitions]
+            if math.isclose(*bps, rel_tol=1e-2):
+                return self.phase_transitions[0].boiling_point
+            else:
+                warnings.warn(
+                    f"{self.symbol} has multiple allotropes, "
+                    "check <{self.symbol}.phase_transitions> for details.",
+                    UserWarning,
+                )
         else:
-            return {pt.allotrope: pt.boiling_point for pt in self.phase_transitions}
+            return None
 
     @property
-    def melting_point(self) -> Union[float, Dict[str, float]]:
-        """Melting point"""
+    def melting_point(self) -> Optional[float]:
+        """Proxy for melting point from the ``PhaseTransition`` object.
+
+        For elements with a single allotrope return the melting point,
+        for elements with multiple allotropes where the melting points
+        are equal return the melting point, otherwise return None.
+        """
         if len(self.phase_transitions) == 1:
             return self.phase_transitions[0].melting_point
+        elif len(self.phase_transitions) == 2:
+            mps = [pt.melting_point for pt in self.phase_transitions]
+            if math.isclose(*mps, rel_tol=1e-2):
+                return self.phase_transitions[0].melting_point
+            else:
+                warnings.warn(
+                    f"{self.symbol} has multiple allotropes, "
+                    "check <{self.symbol}.phase_transitions> for details.",
+                    UserWarning,
+                )
         else:
-            return {pt.allotrope: pt.melting_point for pt in self.phase_transitions}
+            return None
 
     @property
     def nist_webbook_url(self) -> str:
@@ -1256,7 +1287,7 @@ class PhaseTransition(Base):
                     f"triple_point_temperature={self.triple_point_temperature}",
                     f"triple_point_pressure={self.triple_point_pressure}",
                     f"critical_temperature={self.critical_temperature}",
-                    f"pritical_pressure={self.critical_pressure}",
+                    f"critical_pressure={self.critical_pressure}",
                     f"is_sublimation_point={self.is_sublimation_point}",
                     f"is_transition={self.is_transition}",
                 ]
