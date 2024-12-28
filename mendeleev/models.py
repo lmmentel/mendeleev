@@ -2,7 +2,8 @@
 
 """Module defining the database models for elements and related properties."""
 
-from typing import Any, Callable, Dict, List, Tuple, Union, Optional
+from __future__ import annotations
+from typing import Any, Callable, Dict, List, Tuple, Union
 from operator import attrgetter
 import enum
 import math
@@ -291,7 +292,7 @@ class Element(Base):
         return f"InchI=1S/{self.symbol}"
 
     @property
-    def boiling_point(self) -> Union[float, Dict[str, float]]:
+    def boiling_point(self) -> float | None:
         """Proxy for boiling point from the ``PhaseTransition`` object.
 
         For elements with a single allotrope return the boiling point,
@@ -314,7 +315,7 @@ class Element(Base):
             return None
 
     @property
-    def melting_point(self) -> Optional[float]:
+    def melting_point(self) -> float | None:
         """Proxy for melting point from the ``PhaseTransition`` object.
 
         For elements with a single allotrope return the melting point,
