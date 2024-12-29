@@ -377,7 +377,7 @@ class Element(Base):
     @hybrid_property
     def mass(self) -> float:
         """
-        Return the `atomic_weight` if defined or mass number otherwise.
+        Alias for ``atomic_weight``.
         """
         return self.atomic_weight
 
@@ -414,7 +414,7 @@ class Element(Base):
     @hybrid_property
     def covalent_radius(self) -> float:
         """
-        Return the default covalent radius which is covalent_radius_pyykko
+        Return the default covalent radius i.e. ``covalent_radius_pyykko``
         """
         return self.covalent_radius_pyykko
 
@@ -424,8 +424,8 @@ class Element(Base):
         Return the absolute hardness, calculated as
 
         Args:
-          charge: Charge of the cation for which the hardness will be calculated.
-            Defaultf to 0.
+            charge: Charge of the cation for which the hardness will be calculated.
+            Default is 0.
 
         .. math::
 
@@ -457,12 +457,12 @@ class Element(Base):
             raise ValueError(f"Charge has to be a non-negative integer, got: {charge}")
 
     @hybrid_method
-    def softness(self, charge: int = 0) -> Union[float, None]:
+    def softness(self, charge: int = 0) -> float | None:
         r"""
         Return the absolute softness.
 
         Args:
-          charge: Charge of the cation for which the hardness will be calculated
+            charge: Charge of the cation for which the hardness will be calculated
 
         .. math::
 
