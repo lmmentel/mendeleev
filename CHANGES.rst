@@ -2,6 +2,19 @@
 mendeleev Changelog
 *******************
 
+v0.20.0 (29.12.2024)
+--------------------
+
+* [MNT] Add function to update model data from dataframe by :user:`@lmmentel` in :pr:`207`
+* [ENH] Add Robles-Bartolotti and Gunnarsson-Lundqvist electronegativities by :user:`@lmmentel` in :pr:`208`
+* [ENH] Add supply risk attributes from RSC by :user:`@lmmentel` in :pr:`209`
+* [MNT] Add missing migration for supply risk attributes by :user:`@lmmentel` in :pr:`210`
+* [MNT] Automating rendering documentation tables by :user:`@lmmentel` in :pr:`211`
+* [FIX] Correct melting and boiling points for Carbon allotropes by :user:`@lmmentel` in :pr:`214`
+* [MNT] Deprecate Element.annotation by :user:`@lmmentel` in :pr:`215`
+* [MNT] Include python 3.13 in CI testing matrix by :user:`@lmmentel` in :pr:`191`
+* [MNT] Increase test coverage by :user:`@lmmentel` in :pr:`216`
+
 v0.19.0 (06.11.2024)
 --------------------
 
