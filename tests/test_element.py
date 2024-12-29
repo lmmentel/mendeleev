@@ -1,3 +1,4 @@
+import math
 import pytest
 from mendeleev import element, get_all_elements, get_attribute_for_all_elements
 from mendeleev.db import get_session
@@ -70,6 +71,26 @@ def test_electrophilicity(element_obj):
 
 
 @pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_hardness(element_obj):
+    assert isinstance(element_obj.hardness(), (float, type(None)))
+
+
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_hardness_charge_1(element_obj):
+    assert isinstance(element_obj.hardness(charge=1), (float, type(None)))
+
+
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_softness(element_obj):
+    assert isinstance(element_obj.softness(), (float, type(None)))
+
+
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_softness_charge_1(element_obj):
+    assert isinstance(element_obj.softness(charge=1), (float, type(None)))
+
+
+@pytest.mark.parametrize("element_obj", ELEMENTS)
 def test__eq__(element_obj):
     clone = element(element_obj.symbol)
     assert clone == element_obj
@@ -88,3 +109,24 @@ def test_melting_points_float_or_none(e):
 @pytest.mark.parametrize("e", ELEMENTS)
 def test_boiling_points_float_or_none(e):
     assert isinstance(e.boiling_point, (float, type(None)))
+
+
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_specific_heat_hybrid_property(element_obj):
+    if (
+        element_obj.specific_heat is not None
+        and element_obj.specific_heat_capacity is not None
+    ):
+        assert math.isclose(
+            element_obj.specific_heat, element_obj.specific_heat_capacity, rel_tol=1e-5
+        )
+
+
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_protons(element_obj):
+    assert element_obj.protons == element_obj.atomic_number
+
+
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_electrons(element_obj):
+    assert element_obj.electrons == element_obj.atomic_number
