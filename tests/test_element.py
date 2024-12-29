@@ -47,30 +47,26 @@ def test_elements_get_by_name(name):
     assert e.name == name
 
 
-@pytest.mark.parametrize("symbol", SYMBOLS)
-def test_elements_str(symbol):
-    e = element(symbol)
-    str(e)
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_elements_str(element_obj):
+    str(element_obj)
 
 
-@pytest.mark.parametrize("symbol", SYMBOLS)
-def test_elements_repr(symbol):
-    e = element(symbol)
-    repr(e)
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_elements_repr(element_obj):
+    repr(element_obj)
 
 
-@pytest.mark.parametrize("symbol", SYMBOLS)
-def test_isotopes_str(symbol):
-    e = element(symbol)
-    for i in e.isotopes:
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_isotopes_str(element_obj):
+    for i in element_obj.isotopes:
         str(i)
         repr(i)
 
 
-@pytest.mark.parametrize("symbol", SYMBOLS)
-def test_electrophilicity(symbol):
-    e = element(symbol)
-    e.electrophilicity()
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_electrophilicity(element_obj):
+    assert isinstance(element_obj.electrophilicity(), (float, type(None)))
 
 
 @pytest.mark.parametrize("element_obj", ELEMENTS)
