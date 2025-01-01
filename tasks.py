@@ -126,5 +126,8 @@ def render_data_docs(c):
 @task
 def sqldiff(c, branch="master"):
     """Run sqldiff."""
-    c.run("git show master:mendeleev/elements.db > elements.db.master", echo=True)
+    c.run(
+        "git show master:mendeleev/elements.db > mendeleev/elements.db.master",
+        echo=True,
+    )
     c.run("sqldiff mendeleev/elements.db.master mendeleev/elements.db", echo=True)
