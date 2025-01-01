@@ -3,11 +3,12 @@
 Accessing data
 ==============
 
-.. tip:: Data assets repository
+.. tip::
 
     If you're looking for raw data behind ``mendeleev`` have a look at `mendeleev-data <https://github.com/lmmentel/mendeleev-data>`_ repo.
 
     You can find **all data assets** in multiple formats: 
+    
     - csv, 
     - html,
     - json, 
