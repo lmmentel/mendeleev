@@ -24,15 +24,14 @@ the periodic table of elements.
 
    Overview <quick>
    Installation <install>
+   Tutorials <tutorials>
    Data <data>
-   New Data <newdata>
    Accessing data <data_access>
    Electronegativity <electronegativity>
    API Reference <api/api>
    Bibliography <bibliography>
    Changes <changes_link>
    License <license_link>
-   .. Tutorials <tutorials>
 
 
 Indices and tables
