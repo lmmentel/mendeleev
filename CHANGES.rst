@@ -2,6 +2,12 @@
 mendeleev Changelog
 *******************
 
+v0.20.1 (01.01.2025)
+
+* [DOC] Add a reference to `mendeleev-data` repo by :user:`@lmmentel` in :pr:`217`
+* [DOC] Clean-up tutorial docs by :user:`@lmmentel` in :pr:`218`
+* [FIX] Correct path for sqldiff by :user:`@lmmentel` in :pr:`219`
+
 v0.20.0 (29.12.2024)
 --------------------
 
