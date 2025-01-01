@@ -54,7 +54,7 @@ extensions = [
     "sphinx_copybutton",
     "sphinx_issues",  # linking github issues, prs, users
     "sphinx_material",
-    # "nbsphinx",
+    "nbsphinx",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.coverage",
