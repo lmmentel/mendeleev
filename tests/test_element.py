@@ -101,14 +101,14 @@ def test__ne__():
         assert e1 != e2
 
 
-@pytest.mark.parametrize("e", ELEMENTS)
-def test_melting_points_float_or_none(e):
-    assert isinstance(e.melting_point, (float, type(None)))
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_melting_points_float_or_none(element_obj):
+    assert isinstance(element_obj.melting_point, (float, type(None)))
 
 
-@pytest.mark.parametrize("e", ELEMENTS)
-def test_boiling_points_float_or_none(e):
-    assert isinstance(e.boiling_point, (float, type(None)))
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_boiling_points_float_or_none(element_obj):
+    assert isinstance(element_obj.boiling_point, (float, type(None)))
 
 
 @pytest.mark.parametrize("element_obj", ELEMENTS)
@@ -130,3 +130,8 @@ def test_protons(element_obj):
 @pytest.mark.parametrize("element_obj", ELEMENTS)
 def test_electrons(element_obj):
     assert element_obj.electrons == element_obj.atomic_number
+
+
+@pytest.mark.parametrize("element_obj", ELEMENTS)
+def test_price_per_kg_float_or_none(element_obj):
+    assert isinstance(element_obj.price_per_kg, (float, type(None)))
