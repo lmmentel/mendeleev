@@ -132,6 +132,7 @@ class Element(Base):
         nist_webbook_url (str): URL for the NIST Chemistry WebBook
         period (int): Period in periodic table
         pettifor_number (int): Pettifor scale
+        price_per_kg (float): Price per kg in USD
         proton_affinity (float): Proton affinity
         series (int): Index to chemical series
         sources (str): Sources of the element
@@ -215,6 +216,7 @@ class Element(Base):
     name_origin = Column(String)
     period = Column(Integer)
     pettifor_number = Column(Integer)
+    price_per_kg = Column(Float)
     proton_affinity = Column(Float)
     series = association_proxy("_series", "name")
     sources = Column(String)
