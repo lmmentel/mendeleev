@@ -109,7 +109,7 @@ The following data are currently available:
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
 | ``en_robles_bartolotti``                      | Robles-Bartolotti's scale of electronegativity                                                                                                                                                                                                                                                   | eV             | stored       | :cite:`RoblesBartolotti1984`                         |
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
-| ``evaporation_heat``                          | Evaporation heat                                                                                                                                                                                                                                                                                 | kJ/mol         | stored       |                                                      |
+| ``evaporation_heat``                          | Evaporation heat ([#f_evaporation_heat]_)                                                                                                                                                                                                                                                        | kJ/mol         | stored       |                                                      |
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
 | ``fusion_heat``                               | Fusion heat                                                                                                                                                                                                                                                                                      | kJ/mol         | stored       |                                                      |
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
@@ -184,6 +184,8 @@ The following data are currently available:
 | ``political_stability_of_top_producer``       | A percentile rank for the political stability of the top producing country, derived from World Bank governance indicators.                                                                                                                                                                       |                | stored       | :cite:`RSC_periodic_table`                           |
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
 | ``political_stability_of_top_reserve_holder`` | A percentile rank for the political stability of the country with the largest reserves, derived from World Bank governance indicators.                                                                                                                                                           |                | stored       | :cite:`RSC_periodic_table`                           |
++-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
+| ``price_per_kg``                              | Price per kg in USD ([#f_price_per_kg]_)                                                                                                                                                                                                                                                         | USD/kg         | stored       | :cite:`enwiki:1262554464`                            |
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
 | ``production_concentration``                  | The percentage of an element produced in the top producing country. The higher the value, the larger risk there is to supply.                                                                                                                                                                    | %              | stored       | :cite:`RSC_periodic_table`                           |
 +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------+--------------+------------------------------------------------------+
@@ -569,10 +571,6 @@ Class: :py:class:`ScreeningConstant <mendeleev.models.ScreeningConstant>`
    - Tennessine
    - Oganesson
 
-.. [#f_melting_point] **melting_point**
-
-   Melting points for carbon from the original source are not included since they are not at standard pressure.
-
 .. [#f_electron_affinity] **electron_affinity**
 
    Electron affinities were taken from :cite:`haynes2014crc` for the elements for which the data was available. For He, Be, N, Ar and Xe affinities were taken from :cite:`Andersen2004` where they were specified for metastable ions and therefore the values are negative.
@@ -586,6 +584,22 @@ Class: :py:class:`ScreeningConstant <mendeleev.models.ScreeningConstant>`
 .. [#f_electronegativity_allen] **electronegativity_allen**
 
    The values of configurational energies from refs. :cite:`Mann2000a` and :cite:`Mann2000` were taken as reported in eV without converting to Pauling units.
+
+.. [#f_evaporation_heat] **evaporation_heat**
+
+   - H: evaporation heat of H-H
+   - F: evaporation heat of F-F
+   - Cl: evaporation heat of Cl-Cl
+   - Br: evaporation heat of Br-Br
+   - I: evaporation heat of I-I
+
+.. [#f_fusion_heat] **fusion_heat**
+
+   - H: fusion heat of H-H
+   - F: fusion heat of F-F
+   - Cl: fusion heat of Cl-Cl
+   - Br: fusion heat of Br-Br
+   - I: fusion heat of I-I
 
 .. [#f_mendeleev_number] **mendeleev_number**
 
@@ -630,4 +644,12 @@ Class: :py:class:`ScreeningConstant <mendeleev.models.ScreeningConstant>`
 .. [#f_f2] **f2**
 
    specific data references available at cited data source
+
+.. [#f_melting_point] **melting_point**
+
+   Melting points for carbon from the original source are not included since they are not at standard pressure
+
+.. [#f_price_per_kg] **price_per_kg**
+
+   In cases where a range was provided in the source, the lower value was used. In cases of multiple isotopes the lower priced isotope's price was used.
 
