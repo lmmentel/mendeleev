@@ -5,7 +5,7 @@
 [![Python package](https://github.com/lmmentel/mendeleev/actions/workflows/main.yml/badge.svg)](https://github.com/lmmentel/mendeleev/actions/workflows/main.yml)
 [![image](https://pepy.tech/badge/mendeleev)](https://pepy.tech/project/mendeleev)
 [![DOI](https://zenodo.org/badge/204296088.svg)](https://zenodo.org/badge/latestdoi/204296088)
-
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
 <!-- PROJECT LOGO -->
 <br />
