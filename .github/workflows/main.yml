@@ -55,7 +55,7 @@ jobs:
         uses: pre-commit/action@v3.0.1
 
       - name: Test with pytest
-        run: poetry run pytest
+        run: poetry run pytest --cov=mendeleev
 
   pypi-publish:
     name: upload release to PyPI
