@@ -82,7 +82,9 @@ def render_footnotes():
 
     df = fetch_table("propertymetadata")
     footnotes = ""
-    for _, row in df[df["annotations"].notnull()].iterrows():
+    for _, row in (
+        df[df["annotations"].notnull()].sort_values(by="attribute_name").iterrows()
+    ):
         footnote_mark = "[#f_" + row["attribute_name"] + "]"
         footnotes += f".. {footnote_mark} **{row['attribute_name']}**\n\n"
         notes = add_leading_spaces(row["annotations"])
@@ -94,11 +96,10 @@ def render_footnotes():
 def render_data_docs(c):
     """Render data documentation."""
 
-    from jinja2 import Environment, FileSystemLoader, select_autoescape
+    from jinja2 import Environment, FileSystemLoader
 
     env = Environment(
         loader=FileSystemLoader("docs/templates"),
-        autoescape=select_autoescape(["html", "xml", "rst"]),
     )
 
     template = env.get_template("data.rst")
