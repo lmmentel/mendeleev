@@ -94,11 +94,10 @@ def render_footnotes():
 def render_data_docs(c):
     """Render data documentation."""
 
-    from jinja2 import Environment, FileSystemLoader, select_autoescape
+    from jinja2 import Environment, FileSystemLoader
 
     env = Environment(
         loader=FileSystemLoader("docs/templates"),
-        autoescape=select_autoescape(["html", "xml", "rst"]),
     )
 
     template = env.get_template("data.rst")
