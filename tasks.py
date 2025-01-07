@@ -82,7 +82,9 @@ def render_footnotes():
 
     df = fetch_table("propertymetadata")
     footnotes = ""
-    for _, row in df[df["annotations"].notnull()].iterrows():
+    for _, row in (
+        df[df["annotations"].notnull()].sort_values(by="attribute_name").iterrows()
+    ):
         footnote_mark = "[#f_" + row["attribute_name"] + "]"
         footnotes += f".. {footnote_mark} **{row['attribute_name']}**\n\n"
         notes = add_leading_spaces(row["annotations"])

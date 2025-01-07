@@ -585,6 +585,10 @@ Class: :py:class:`ScreeningConstant <mendeleev.models.ScreeningConstant>`
 
    The values of configurational energies from refs. :cite:`Mann2000a` and :cite:`Mann2000` were taken as reported in eV without converting to Pauling units.
 
+.. [#f_energy] **energy**
+
+   specific data references available at cited data source
+
 .. [#f_evaporation_heat] **evaporation_heat**
 
    - H: evaporation heat of H-H
@@ -592,6 +596,14 @@ Class: :py:class:`ScreeningConstant <mendeleev.models.ScreeningConstant>`
    - Cl: evaporation heat of Cl-Cl
    - Br: evaporation heat of Br-Br
    - I: evaporation heat of I-I
+
+.. [#f_f1] **f1**
+
+   specific data references available at cited data source
+
+.. [#f_f2] **f2**
+
+   specific data references available at cited data source
 
 .. [#f_fusion_heat] **fusion_heat**
 
@@ -601,13 +613,21 @@ Class: :py:class:`ScreeningConstant <mendeleev.models.ScreeningConstant>`
    - Br: fusion heat of Br-Br
    - I: fusion heat of I-I
 
+.. [#f_half_life_unit] **half_life_unit**
+
+    1 year = 365.2422 days = 31 556 926 sec
+
+.. [#f_melting_point] **melting_point**
+
+   Melting points for carbon from the original source are not included since they are not at standard pressure
+
 .. [#f_mendeleev_number] **mendeleev_number**
 
    Mendeleev numbers were sourced from :cite:`Villars2004` but the range was extended to cover the whole periodic table following the prescription in the article of increasing the numbers going from top to bottom in each group and group by group from left to right in the periodic table.
 
-.. [#f_vdw_radius_alvarez] **vdw_radius_alvarez**
+.. [#f_price_per_kg] **price_per_kg**
 
-   The bulk of the radii data was taken from Ref. :cite:`Alvarez2013`, but the radii for noble gasses were updated according to the values in Ref. :cite:`Vogt2014`.
+   In cases where a range was provided in the source, the lower value was used. In cases of multiple isotopes the lower priced isotope's price was used.
 
 .. [#f_sconst] **sconst**
 
@@ -623,27 +643,7 @@ Class: :py:class:`ScreeningConstant <mendeleev.models.ScreeningConstant>`
 
    For elements La, Pr, Nd and Pm two exponent were reported for 4f shell denoted 4f and 4f' in :cite:`Clementi1967`. The value corresponding to 4f were used since according to the authors these are the dominant ones.
 
-.. [#f_half_life_unit] **half_life_unit**
+.. [#f_vdw_radius_alvarez] **vdw_radius_alvarez**
 
-    1 year = 365.2422 days = 31 556 926 sec
-
-.. [#f_energy] **energy**
-
-   specific data references available at cited data source
-
-.. [#f_f1] **f1**
-
-   specific data references available at cited data source
-
-.. [#f_f2] **f2**
-
-   specific data references available at cited data source
-
-.. [#f_melting_point] **melting_point**
-
-   Melting points for carbon from the original source are not included since they are not at standard pressure
-
-.. [#f_price_per_kg] **price_per_kg**
-
-   In cases where a range was provided in the source, the lower value was used. In cases of multiple isotopes the lower priced isotope's price was used.
+   The bulk of the radii data was taken from Ref. :cite:`Alvarez2013`, but the radii for noble gasses were updated according to the values in Ref. :cite:`Vogt2014`.
 
