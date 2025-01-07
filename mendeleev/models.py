@@ -294,6 +294,33 @@ class Element(Base):
         """
         return f"InchI=1S/{self.symbol}"
 
+    @hybrid_method
+    def isotope(self, mass_number: int) -> Isotope:
+        """
+        Return the isotope with the given atomic mass number.
+
+        Examples:
+
+        >>> from mendeleev import H
+        >>> H.isotopes
+        [<Isotope(Z=1, A=1, mass=1.00782503190(1), abundance=99.986(8))>,
+            <Isotope(Z=1, A=2, mass=2.01410177784(2), abundance=0.015(8))>,
+            <Isotope(Z=1, A=3, mass=3.01604928132(8), abundance=None)>,
+            <Isotope(Z=1, A=4, mass=4.0264(1), abundance=None)>,
+            <Isotope(Z=1, A=5, mass=5.03531(10), abundance=None)>,
+            <Isotope(Z=1, A=6, mass=6.0450(3), abundance=None)>,
+            <Isotope(Z=1, A=7, mass=7.053(1), abundance=None)>]
+        >>> H.isotope(2)
+        <Isotope(Z=1, A=2, mass=2.01410177784(2), abundance=0.015(8))>
+        """
+        selected = next(
+            (iso for iso in self.isotopes if iso.mass_number == mass_number), None
+        )
+        if selected is None:
+            raise ValueError(f"No Isotope with mass number {mass_number} found")
+        else:
+            return selected
+
     @property
     def annotation(self):
         "Temporary property before before removing annotation"
