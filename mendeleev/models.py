@@ -163,7 +163,6 @@ class Element(Base):
     atomic_number = Column(Integer, primary_key=True)
     atomic_radius = Column(Float)
     atomic_radius_rahm = Column(Float)
-    atomic_volume = Column(Float)
     atomic_weight = Column(Float)
     atomic_weight_uncertainty = Column(Float)
     block = Column(String)
@@ -260,6 +259,11 @@ class Element(Base):
     def init_on_load(self) -> None:
         "Initialize the ElectronicConfiguration class as attribute of self"
         self.ec = ElectronicConfiguration(self.econf)
+
+    @hybrid_property
+    def atomic_volume(self) -> float:
+        "Atomic volume in cm3/mol"
+        return self.atomic_weight / self.density
 
     @hybrid_property
     def specific_heat(self) -> float:
