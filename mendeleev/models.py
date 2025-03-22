@@ -1273,12 +1273,12 @@ class ScatteringFactor(Base, ReprMixin):
     The tabulated values of :math:`f_1` contain a relativistic, energy independent,
     correction given by, :math:`Z^{*} = Z - (Z/82.5)^{2.37}`.
 
-    The atomic photoabsorption cross section, :math:`\mu_a`, may be readily obtained
+    The atomic photoabsorption cross section, :math:`\\mu_a`, may be readily obtained
     from the values of :math:`f_2` using the relation,
 
     .. math::
 
-        \mu_a = 2 \cdot r_0 \cdot \lambda \cdot f_2
+        \\mu_a = 2 \\cdot r_0 \\cdot \lambda \\cdot f_2
 
     where :math:`r_0` is the classical electron radius, and :math:`\lambda` is the wavelength.
 
@@ -1287,7 +1287,7 @@ class ScatteringFactor(Base, ReprMixin):
 
     .. math::
 
-        n = 1 - N \cdot r_0 \cdot \lambda^2 \cdot (f_1 + i f_2)/(2\cdot\pi).
+        n = 1 - N \\cdot r_0 \\cdot \lambda^2 \\cdot (f_1 + i f_2)/(2\\cdot\pi).
 
     These (semi-empirical) atomic scattering factors are based upon
     photoabsorption measurements of elements in their elemental state.
