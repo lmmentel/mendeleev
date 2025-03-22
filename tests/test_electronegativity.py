@@ -2,16 +2,17 @@ import pytest
 
 from mendeleev.models import Element
 from mendeleev.electronegativity import (
-    n_effective,
     allred_rochow,
     cottrell_sutton,
+    generic,
     gordy,
+    interpolate_property,
     li_xue,
     martynov_batsanov,
     mulliken,
+    n_effective,
     nagle,
     sanderson,
-    generic,
 )
 
 
@@ -74,3 +75,43 @@ def test_sanderson():
 def test_generic():
     assert generic(4.0, 2.0, 2, 1) == pytest.approx(1.0)
     assert generic(9.0, 3.0, 2, 0.5) == pytest.approx(1.0)
+
+
+def test_interpolation_within_range():
+    x_ref = [1, 2, 4, 5]
+    y_ref = [10, 20, 40, 50]
+    x = 3
+    result = interpolate_property(x, x_ref, y_ref)
+    assert pytest.approx(result, 0.0001) == 30.0
+
+
+def test_extrapolation_below_range():
+    x_ref = [2, 3, 4, 5]
+    y_ref = [20, 30, 40, 50]
+    x = 1
+    result = interpolate_property(x, x_ref, y_ref)
+    assert pytest.approx(result, 1e-1) == 10.0
+
+
+def test_extrapolation_above_range():
+    x_ref = [1, 2, 3, 4]
+    y_ref = [10, 20, 30, 40]
+    x = 5
+    result = interpolate_property(x, x_ref, y_ref)
+    assert pytest.approx(result, 1e-1) == 50.0
+
+
+def test_linear_interpolation():
+    x_ref = [1, 3, 5]
+    y_ref = [10, 30, 50]
+    x = 4
+    result = interpolate_property(x, x_ref, y_ref)
+    assert pytest.approx(result, 0.0001) == 40.0
+
+
+def test_invalid_inputs():
+    x_ref = [1, 2, 3]
+    y_ref = [10, 20]  # Mismatched lengths
+    x = 2
+    with pytest.raises(ValueError):
+        interpolate_property(x, x_ref, y_ref)

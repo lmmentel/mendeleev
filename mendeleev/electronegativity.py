@@ -43,6 +43,38 @@ def n_effective(n: int, source: str = "slater") -> Union[float, None]:
         )
 
 
+def interpolate_property(
+    x: int, x_ref: List[int], y_ref: List[float], poly_deg: int = 1
+) -> float:
+    """
+    Estiate a property for element by interpolation or
+    extrapolation of the data points from x`x_ref` and `y_ref`.
+
+    Args:
+        x: value for which the property will be evaluated
+        x_ref: list of values for the elements
+        y_ref: list of values of the property for the elements
+        deg: degree of the polynomial used in the extrapolation beyond
+            the provided data points, default=1
+    """
+    x_ref = np.array(x_ref)
+    y_ref = np.array(y_ref)
+    if x_ref.min() <= x <= x_ref.max():
+        return np.interp([x], x_ref, y_ref)
+
+    # extrapolation
+    if x < x_ref.min():
+        xslice = x_ref[:3]
+        yslice = y_ref[:3]
+    elif x > x_ref.max():
+        xslice = x_ref[-3:]
+        yslice = y_ref[-3:]
+
+    fit = np.polyfit(xslice, yslice, poly_deg)
+    fn = np.poly1d(fit)
+    return fn(x)
+
+
 def allred_rochow(zeff: float, radius: float) -> float:
     """
     Calculate the electronegativity of an atom according to the definition
