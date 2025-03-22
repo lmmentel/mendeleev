@@ -15,6 +15,7 @@ from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey, Text
 from sqlalchemy.orm import declarative_base, relationship, reconstructor
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
+from sqlalchemy.inspection import inspect
 
 from .electronegativity import (
     allred_rochow,
@@ -51,7 +52,37 @@ __all__ = [
 Base = declarative_base()
 
 
-class Element(Base):
+class ReprMixin:
+    """
+    A mixin class that provides a generic __repr__ implementation
+    for SQLAlchemy models.
+    """
+
+    def __repr__(self) -> str:
+        """
+        Generate a string representation of the model instance by
+        including all its attributes and their values.
+        """
+        mapper = inspect(self.__class__)
+        relations = {m.key: m.mapper.class_.__name__ for m in mapper.relationships}
+        attrs = {
+            key: value
+            for key, value in self.__dict__.items()
+            if not key.startswith("_") and key not in relations.keys()
+        }
+        attrs_str = ", ".join(
+            f"{key}={repr(value)}" for key, value in sorted(attrs.items())
+        )
+        relations_str = ", ".join(
+            f"{key}={value}[...]" for key, value in relations.items()
+        )
+        if relations:
+            return f"<{self.__class__.__name__}({attrs_str}, {relations_str})>"
+        else:
+            return f"<{self.__class__.__name__}({attrs_str})>"
+
+
+class Element(Base, ReprMixin):
     """
     Chemical element.
 
@@ -822,16 +853,6 @@ class Element(Base):
     def __str__(self) -> str:
         return "{0} {1} {2}".format(self.atomic_number, self.symbol, self.name)
 
-    def __repr__(self) -> str:
-        return "%s(\n%s)" % (
-            self.__class__.__name__,
-            " ".join(
-                "\t%s=%r,\n" % (key, getattr(self, key))
-                for key in sorted(self.__dict__.keys())
-                if not key.startswith("_")
-            ),
-        )
-
 
 def fetch_by_group(properties: List[str], group: int = 18) -> tuple[list[Any]]:
     """
@@ -870,7 +891,7 @@ class ValueOrigin(enum.Enum):
     COMPUTED = "computed"
 
 
-class PropertyMetadata(Base):
+class PropertyMetadata(Base, ReprMixin):
     """Metadata for properties of elements and isotopes.
 
     Args:
@@ -900,18 +921,8 @@ class PropertyMetadata(Base):
     unit = Column(String)
     value_origin = Column(Enum(ValueOrigin), nullable=False)
 
-    def __repr__(self) -> str:
-        return "%s(\n%s)" % (
-            self.__class__.__name__,
-            " ".join(
-                "\t%s=%r,\n" % (key, getattr(self, key))
-                for key in sorted(self.__dict__.keys())
-                if not key.startswith("_")
-            ),
-        )
 
-
-class IonicRadius(Base):
+class IonicRadius(Base, ReprMixin):
     """
     Effective ionic radii and crystal radii in pm retrieved from [1]_.
 
@@ -950,18 +961,8 @@ class IonicRadius(Base):
         keys = ["charge", "coordination", "crystal_radius", "ionic_radius"]
         return ", ".join(o.format(k, getattr(self, k)) for o, k in zip(out, keys))
 
-    def __repr__(self) -> str:
-        return "%s(\n%s)" % (
-            self.__class__.__name__,
-            " ".join(
-                "\t%s=%r,\n" % (key, getattr(self, key))
-                for key in sorted(self.__dict__.keys())
-                if not key.startswith("_")
-            ),
-        )
 
-
-class IonizationEnergy(Base):
+class IonizationEnergy(Base, ReprMixin):
     """
     Ionization energies of an element
 
@@ -1017,13 +1018,8 @@ class IonizationEnergy(Base):
     def __str__(self) -> str:
         return "{0:5d} {1:10.5f}".format(self.degree, self.energy)
 
-    def __repr__(self) -> str:
-        return "<IonizationEnergy(atomic_number={a:5d}, degree={d:3d}, energy={e:10.5f})>".format(
-            a=self.atomic_number, d=self.degree, e=self.energy
-        )
 
-
-class OxidationState(Base):
+class OxidationState(Base, ReprMixin):
     """
     Oxidation states of an element
 
@@ -1041,18 +1037,8 @@ class OxidationState(Base):
     oxidation_state = Column(Integer)
     category = Column(String)
 
-    def __repr__(self) -> str:
-        return ", ".join(
-            [
-                f"<OxidationState(id={self.id}",
-                f"atomic_number={self.atomic_number}",
-                f"oxidation_state={self.oxidation_state}",
-                f"category={self.category})>",
-            ]
-        )
 
-
-class Group(Base):
+class Group(Base, ReprMixin):
     """
     Name of the group in the periodic table.
 
@@ -1068,11 +1054,8 @@ class Group(Base):
     symbol = Column(String)
     name = Column(String)
 
-    def __repr__(self) -> str:
-        return "<Group(symbol={s:s}, name={n:s})>".format(s=self.symbol, n=self.name)
 
-
-class Series(Base):
+class Series(Base, ReprMixin):
     """
     Name of the series in the periodic table.
 
@@ -1088,9 +1071,6 @@ class Series(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     color = Column(String)
-
-    def __repr__(self) -> str:
-        return "<Series(name={n:s}, color={c:s})>".format(n=self.name, c=self.color)
 
 
 # TODO: move to utils
@@ -1112,7 +1092,7 @@ def with_uncertainty(value: float, uncertainty: float, digits: int = 5) -> str:
     return "{0:.{2}f}({1:.0f})".format(value, uncertainty * 10**digits, digits)
 
 
-class Isotope(Base):
+class Isotope(Base, ReprMixin):
     """
     Isotope
 
@@ -1173,18 +1153,8 @@ class Isotope(Base):
             with_uncertainty(self.abundance, self.abundance_uncertainty, digits=3),
         )
 
-    def __repr__(self) -> str:
-        return ", ".join(
-            [
-                f"<Isotope(Z={self.atomic_number}",
-                f"A={self.mass_number}",
-                f"mass={with_uncertainty(self.mass, self.mass_uncertainty, 5)}",
-                f"abundance={with_uncertainty(self.abundance, self.abundance_uncertainty, 3)})>",
-            ]
-        )
 
-
-class IsotopeDecayMode(Base):
+class IsotopeDecayMode(Base, ReprMixin):
     """
     IsotopeDecayMode
 
@@ -1218,11 +1188,8 @@ class IsotopeDecayMode(Base):
             ]
         )
 
-    def __repr__(self) -> str:
-        return str(self)
 
-
-class ScreeningConstant(Base):
+class ScreeningConstant(Base, ReprMixin):
     """
     Nuclear screening constants from Clementi, E., & Raimondi, D. L. (1963).
     Atomic Screening Constants from SCF Functions. The Journal of Chemical
@@ -1252,13 +1219,8 @@ class ScreeningConstant(Base):
             self.atomic_number, self.n, self.s, self.screening
         )
 
-    def __repr__(self) -> str:
-        return "<ScreeningConstant(Z={0:4d}, n={1:3d}, s={2:s}, screening={3:10.4f})>".format(
-            self.atomic_number, self.n, self.s, self.screening
-        )
 
-
-class PhaseTransition(Base):
+class PhaseTransition(Base, ReprMixin):
     """Phase Transition Conditions
 
     Args:
@@ -1306,12 +1268,8 @@ class PhaseTransition(Base):
             + ")"
         )
 
-    def __repr__(self) -> str:
-        return str(self)
 
-
-# TODO: some    thing is wrong with the docstring
-class ScatteringFactor(Base):
+class ScatteringFactor(Base, ReprMixin):
     """Atomic scattering factors
 
     Args:
@@ -1327,21 +1285,21 @@ class ScatteringFactor(Base):
     The tabulated values of :math:`f_1` contain a relativistic, energy independent,
     correction given by, :math:`Z^{*} = Z - (Z/82.5)^{2.37}`.
 
-    The atomic photoabsorption cross section, :math:`\mu_a`, may be readily obtained
+    The atomic photoabsorption cross section, :math:`\\mu_a`, may be readily obtained
     from the values of :math:`f_2` using the relation,
 
     .. math::
 
-        \\mu_a = 2 \cdot r_0 \cdot \lambda \cdot f_2
+        \\mu_a = 2 \\cdot r_0 \\cdot \\lambda \\cdot f_2
 
-    where :math:`r_0` is the classical electron radius, and :math:`\lambda` is the wavelength.
+    where :math:`r_0` is the classical electron radius, and :math:`\\lambda` is the wavelength.
 
     The index of refraction for a material with N atoms per unit volume
     is calculated by,
 
     .. math::
 
-        n = 1 - N \cdot r_0 \cdot \lambda^2 \cdot (f_1 + i f_2)/(2\cdot\pi).
+        n = 1 - N \\cdot r_0 \\cdot \\lambda^2 \\cdot (f_1 + i f_2)/(2\\cdot\\pi).
 
     These (semi-empirical) atomic scattering factors are based upon
     photoabsorption measurements of elements in their elemental state.
@@ -1369,6 +1327,3 @@ class ScatteringFactor(Base):
 
     def __str__(self):
         return f"Z={self.atomic_number} E={self.energy} f1={self.f1} f2={self.f2}"
-
-    def __repr__(self):
-        return str(self)
