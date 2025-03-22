@@ -64,13 +64,13 @@ def interpolate_property(
 
     # extrapolation
     if x < x_ref.min():
-        xslice = x_ref[:3]
-        yslice = y_ref[:3]
+        x_slice = x_ref[:3]
+        y_slice = y_ref[:3]
     elif x > x_ref.max():
-        xslice = x_ref[-3:]
-        yslice = y_ref[-3:]
+        x_slice = x_ref[-3:]
+        y_slice = y_ref[-3:]
 
-    fit = np.polyfit(xslice, yslice, poly_deg)
+    fit = np.polyfit(x_slice, y_slice, poly_deg)
     fn = np.poly1d(fit)
     return fn(x)
 
