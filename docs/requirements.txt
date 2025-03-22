@@ -1,5 +1,6 @@
 bokeh
 jupyter_bokeh
+myst-parser
 seaborn
 plotly
 ipython

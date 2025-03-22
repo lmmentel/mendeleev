@@ -51,6 +51,7 @@ autosummary_generate = True
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
+    "myst_parser",
     "sphinx_copybutton",
     "sphinx_issues",  # linking github issues, prs, users
     "sphinx_material",
@@ -110,7 +111,10 @@ html_theme_options = {
 templates_path = ["_templates"]
 
 # The suffix of source filenames.
-source_suffix = ".rst"
+source_suffix = {
+    ".rst": "restructuredtext",
+    ".md": "markdown",
+}
 
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
@@ -120,7 +124,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "mendeleev"
-copyright = "2024, Lukasz Mentel"
+copyright = "2025, Lukasz Mentel"
 
 # Link to GitHub repo for github_issues extension
 issues_github_path = "lmmentel/mendeleev"
