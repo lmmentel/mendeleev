@@ -1257,7 +1257,6 @@ class PhaseTransition(Base, ReprMixin):
         )
 
 
-# TODO: something is wrong with the docstring
 class ScatteringFactor(Base, ReprMixin):
     """Atomic scattering factors
 
@@ -1279,7 +1278,7 @@ class ScatteringFactor(Base, ReprMixin):
 
     .. math::
 
-        \\mu_a = 2 \cdot r_0 \cdot \lambda \cdot f_2
+        \mu_a = 2 \cdot r_0 \cdot \lambda \cdot f_2
 
     where :math:`r_0` is the classical electron radius, and :math:`\lambda` is the wavelength.
 
