@@ -65,8 +65,6 @@ class ReprMixin:
         """
         mapper = inspect(self.__class__)
         relations = {m.key: m.mapper.class_.__name__ for m in mapper.relationships}
-        attrs = self.__dict__.items()
-
         attrs = {
             key: value
             for key, value in self.__dict__.items()
