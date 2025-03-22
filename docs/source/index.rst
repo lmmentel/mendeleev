@@ -28,7 +28,7 @@ the periodic table of elements.
    Data <data>
    Accessing data <data_access>
    Electronegativity <electronegativity>
-   Contributing <../../CONTRIBUTING.md>
+   Contributing guide <CONTRIBUTING>
    API Reference <api/api>
    Bibliography <bibliography>
    Changes <changes_link>
