@@ -327,18 +327,6 @@ class Element(Base):
             return selected
 
     @property
-    def annotation(self):
-        "Temporary property before before removing annotation"
-        # TODO: remove in a future version
-        warnings.warn(
-            "The 'annotation' attribute is deprecated and will be removed in a future version. "
-            "Use the 'annotations' attribute of the 'PropertyMetadata' class instead.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        return self._annotation
-
-    @property
     def boiling_point(self) -> float | None:
         """Proxy for boiling point from the ``PhaseTransition`` object.
 
