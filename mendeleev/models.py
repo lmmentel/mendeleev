@@ -25,6 +25,7 @@ from .electronegativity import (
     martynov_batsanov,
     mulliken,
     sanderson,
+    interpolate_property,
 )
 from .db import get_session
 from .econf import ElectronicConfiguration, get_l, ORBITALS
@@ -774,15 +775,21 @@ class Element(Base):
         "Pauling's electronegativity"
         return self.en_pauling
 
-    def electronegativity_sanderson(self, radius="covalent_radius_pyykko") -> float:
+    def electronegativity_sanderson(
+        self, radius: str = "covalent_radius_pyykko"
+    ) -> float:
         """
-        Sanderson electronegativity
+        Sanderson's electronegativity
 
         Args:
             radius : radius to use in the calculation
         """
-        # estimate the radius of a corresponding noble gas
-        noble_gas_radius = estimate_from_group(self.atomic_number, radius)
+        results = fetch_by_group(["atomic_number", radius], group=18)
+        # transpose rows to list of properties
+        atomic_numbers, radii = list(zip(*results))
+        noble_gas_radius = interpolate_property(
+            self.atomic_number, atomic_numbers, radii
+        )
         return sanderson(getattr(self, radius), noble_gas_radius)
 
     def nvalence(self, method: str = None) -> int:
@@ -841,6 +848,36 @@ class Element(Base):
         )
 
 
+def fetch_by_group(properties: List[str], group: int = 18) -> tuple[list[Any]]:
+    """
+    Get a specified properties for all the elements of a given group.
+
+    Args:
+        properties: Attributes of `Element` to retrieve for all group members
+        group: Group number to retrieve data for
+
+    Returns:
+        result: list of tuples with the requested properties for all group members
+    """
+    if isinstance(properties, str):
+        props = [properties]
+    else:
+        props = properties[:]
+
+    if "atomic_number" not in props:
+        props = ["atomic_number"] + props
+
+    session = get_session()
+    results = (
+        session.query(*[getattr(Element, prop) for prop in props])
+        .filter(Element.group_id == group)
+        .order_by("atomic_number")
+        .all()
+    )
+    session.close()
+    return results
+
+
 class ValueOrigin(enum.Enum):
     "Options for the origin of the property value."
 
@@ -887,65 +924,6 @@ class PropertyMetadata(Base):
                 if not key.startswith("_")
             ),
         )
-
-
-def fetch_attrs_for_group(attrs: List[str], group: int = 18) -> Tuple[List[Any]]:
-    """
-    A convenience function for getting a specified attribute for all
-    the memebers of a given group.
-
-    Args:
-        attr : Attribute of `Element` to retrieve for all group members
-
-    Returns:
-        data (dict): Dictionary with noble gas atomic numbers as keys and values of the
-            `attr` as values
-    """
-    session = get_session()
-    members = (
-        session.query(Element)
-        .filter(Element.group_id == group)
-        .order_by(Element.atomic_number)
-        .all()
-    )
-
-    results = tuple([getattr(member, attr) for member in members] for attr in attrs)
-    session.close()
-    return results
-
-
-def estimate_from_group(
-    atomic_number, attr_name, group: int = 18, deg: int = 1
-) -> float:
-    """
-    Evaluate a value `attribute` for element by interpolation or
-    extrapolation of the data points from elements from `group`.
-
-    Args:
-        atomic_number: value for which the property will be evaluated
-        attr_name: attribute to be estimated
-        group: periodic table group number
-        deg: degree of the polynomial used in the extrapolation beyond
-            the provided data points
-    """
-    xref, yref = fetch_attrs_for_group(["atomic_number", attr_name], group=group)
-
-    x = atomic_number
-    xref = np.array(xref)
-    yref = np.array(yref)
-    if xref.min() <= x <= xref.max():
-        return np.interp([x], xref, yref)
-
-    if x < xref.min():
-        xslice = xref[:3]
-        yslice = yref[:3]
-    elif x > xref.max():
-        xslice = xref[-3:]
-        yslice = yref[-3:]
-
-    fit = np.polyfit(xslice, yslice, deg)
-    fn = np.poly1d(fit)
-    return fn(x)
 
 
 class IonicRadius(Base):
@@ -1130,6 +1108,7 @@ class Series(Base):
         return "<Series(name={n:s}, color={c:s})>".format(n=self.name, c=self.color)
 
 
+# TODO: move to utils
 def with_uncertainty(value: float, uncertainty: float, digits: int = 5) -> str:
     """Format a value with uncertainty using scientific notation.
 
@@ -1346,6 +1325,7 @@ class PhaseTransition(Base):
         return str(self)
 
 
+# TODO: some    thing is wrong with the docstring
 class ScatteringFactor(Base):
     """Atomic scattering factors
 
