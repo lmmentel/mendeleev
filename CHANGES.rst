@@ -2,7 +2,25 @@
 mendeleev Changelog
 *******************
 
+v1.0.0 (22.03.2025)
+--------------------
+
+* [MNT] Switch to PyPI Trusted Publishing by :user:`@lmmentel` in :pr:`220`
+* [ENH] Add price per kg for elements by :user:`@lmmentel` in :pr:`221`
+* [DOC] Add **CONTRIBUTING.md** and **CODE_OF_CONDUCT.md** by :user:`@lmmentel` in :pr:`222`
+* [DOC] Formatting corrections for data docs by :user:`@lmmentel` in :pr:`223`
+* [MNT] Add coverage print to CI tests by :user:`@lmmentel` in :pr:`224`
+* [ENH] Add ``isotope`` method to access a single isotope from ``Element`` by :user:`@lmmentel` in :pr:`225`
+* [FIX] Replace stored atomic volumes with computed ones by :user:`@lmmentel` in :pr:`227`
+* [ENH] Update **nuclear g-factor** data by :user:`@lmmentel` in :pr:`230`
+* [ENH] Update **nuclear electric quadrupole moment** data by :user:`@lmmentel` in :pr:`231`
+* [MNT] Refactor and speed up Sanderson's electronegativity calculation by :user:`@lmmentel` in :pr:`233`
+* [DOC] Add contributor's guide to the docs by :user:`@lmmentel` in :pr:`234`
+* [MNT] Remove deprecated code and columns by :user:`@lmmentel` in :pr:`235`
+* [ENH] Refactor ``__repr__`` to ``ReprMixin`` for all models by :user:`@lmmentel` in :pr:`236`
+
 v0.20.1 (01.01.2025)
+--------------------
 
 * [DOC] Add a reference to `mendeleev-data` repo by :user:`@lmmentel` in :pr:`217`
 * [DOC] Clean-up tutorial docs by :user:`@lmmentel` in :pr:`218`
