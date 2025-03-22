@@ -61,7 +61,6 @@ class Element(Base):
     Args:
         abundance_crust (float): Abundance in the earth's crust in mg/kg
         abundance_sea (float): Abundance in the seas in mg/L
-        annotation (str): Annotations regarding the data. Deprecated.
         atomic_number (int): Atomic number
         atomic_radius (float): Atomic radius in pm
         atomic_radius_rahm (float): Atomic radius by Rahm et al. in pm
@@ -159,8 +158,6 @@ class Element(Base):
 
     abundance_crust = Column(Float)
     abundance_sea = Column(Float)
-    # TODO: remove in a future version
-    _annotation = Column(String)
     atomic_number = Column(Integer, primary_key=True)
     atomic_radius = Column(Float)
     atomic_radius_rahm = Column(Float)
@@ -325,18 +322,6 @@ class Element(Base):
             raise ValueError(f"No Isotope with mass number {mass_number} found")
         else:
             return selected
-
-    @property
-    def annotation(self):
-        "Temporary property before before removing annotation"
-        # TODO: remove in a future version
-        warnings.warn(
-            "The 'annotation' attribute is deprecated and will be removed in a future version. "
-            "Use the 'annotations' attribute of the 'PropertyMetadata' class instead.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        return self._annotation
 
     @property
     def boiling_point(self) -> float | None:

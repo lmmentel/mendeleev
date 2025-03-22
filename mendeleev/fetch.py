@@ -3,35 +3,14 @@
 from typing import List, Union
 
 import pandas as pd
-from deprecated import deprecated
 from sqlalchemy.dialects import sqlite
 from sqlalchemy import text
 
-from mendeleev import element, get_all_elements
-from mendeleev import __version__ as version
+from mendeleev import get_all_elements
 from mendeleev.electronegativity import allred_rochow, gordy, cottrell_sutton
 
 from .db import get_engine, get_session
 from .models import Element, IonizationEnergy
-
-
-@deprecated(
-    reason="This function is deprecated and will be removed in the future version."
-)
-def get_zeff(an, method: str = "slater") -> float:
-    """
-    A helper function to calculate the effective nuclear charge.
-
-    Args:
-        method: str
-            Method to use, one of "slater" or "clementi", default="slater"
-
-    Returns:
-        zeff: float
-            Effective nuclear charge
-    """
-    e = element(an)
-    return e.zeff(method=method)
 
 
 def fetch_table(table: str, **kwargs) -> pd.DataFrame:
@@ -242,53 +221,3 @@ def fetch_ionic_radii(radius: str = "ionic_radius") -> pd.DataFrame:
     return ir.pivot_table(
         columns="coordination", values=radius, index=["atomic_number", "charge"]
     )
-
-
-@deprecated(
-    reason="This function is deprecated and will be removed in the future version."
-)
-def add_plot_columns(elements: pd.DataFrame) -> pd.DataFrame:
-    """
-    Add columns needed for the creating the plots
-
-    Args:
-        elements: pd.DataFrame
-    """
-    mask = elements["group_id"].notnull()
-
-    elements.loc[mask, "x"] = elements.loc[mask, "group_id"].astype(int)
-    elements.loc[:, "y"] = elements.loc[:, "period"].astype(int)
-
-    elements.loc[mask, "group_name"] = (
-        elements.loc[mask, "group_id"].astype(int).astype(str)
-    )
-    elements.loc[~mask, "group_name"] = "f block"
-
-    for period in [6, 7]:
-        mask = (elements["block"] == "f") & (elements["period"] == period)
-        elements.loc[mask, "x"] = (
-            elements.loc[mask, "atomic_number"]
-            - elements.loc[mask, "atomic_number"].min()
-            + 3
-        )
-        elements.loc[mask, "y"] = elements.loc[mask, "period"] + 2.5
-
-    # additional columns for positioning of the text
-
-    elements.loc[:, "y_symbol"] = elements["y"] - 0.05
-    elements.loc[:, "y_anumber"] = elements["y"] - 0.3
-    elements.loc[:, "y_name"] = elements["y"] + 0.18
-
-    return elements
-
-
-@deprecated(
-    reason="This function is deprecated and will be removed in the future version."
-)
-def get_app_data() -> None:
-    "write a file with the neutral data"
-    data = fetch_neutral_data()
-    data = add_plot_columns(data)
-    fname = "neutral_{0:s}.pkl".format(version)
-    data.to_pickle(fname)
-    print("wrote file: ", fname)
