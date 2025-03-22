@@ -15,6 +15,7 @@ from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey, Text
 from sqlalchemy.orm import declarative_base, relationship, reconstructor
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
+from sqlalchemy.inspection import inspect
 
 from .electronegativity import (
     allred_rochow,
@@ -62,12 +63,25 @@ class ReprMixin:
         Generate a string representation of the model instance by
         including all its attributes and their values.
         """
-        attrs = ", ".join(
-            f"{key}={repr(value)}"
+        mapper = inspect(self.__class__)
+        relations = {m.key: m.mapper.class_.__name__ for m in mapper.relationships}
+        attrs = self.__dict__.items()
+
+        attrs = {
+            key: value
             for key, value in self.__dict__.items()
-            if not key.startswith("_")
+            if not key.startswith("_") and key not in relations.keys()
+        }
+        attrs_str = ", ".join(
+            f"{key}={repr(value)}" for key, value in sorted(attrs.items())
         )
-        return f"<{self.__class__.__name__}({attrs})>"
+        relations_str = ", ".join(
+            f"{key}={value}[...]" for key, value in relations.items()
+        )
+        if relations:
+            return f"<{self.__class__.__name__}({attrs_str}, {relations_str})>"
+        else:
+            return f"<{self.__class__.__name__}({attrs_str})>"
 
 
 class Element(Base, ReprMixin):
@@ -1278,16 +1292,16 @@ class ScatteringFactor(Base, ReprMixin):
 
     .. math::
 
-        \\mu_a = 2 \\cdot r_0 \\cdot \lambda \\cdot f_2
+        \\mu_a = 2 \\cdot r_0 \\cdot \\lambda \\cdot f_2
 
-    where :math:`r_0` is the classical electron radius, and :math:`\lambda` is the wavelength.
+    where :math:`r_0` is the classical electron radius, and :math:`\\lambda` is the wavelength.
 
     The index of refraction for a material with N atoms per unit volume
     is calculated by,
 
     .. math::
 
-        n = 1 - N \\cdot r_0 \\cdot \lambda^2 \\cdot (f_1 + i f_2)/(2\\cdot\pi).
+        n = 1 - N \\cdot r_0 \\cdot \\lambda^2 \\cdot (f_1 + i f_2)/(2\\cdot\\pi).
 
     These (semi-empirical) atomic scattering factors are based upon
     photoabsorption measurements of elements in their elemental state.
