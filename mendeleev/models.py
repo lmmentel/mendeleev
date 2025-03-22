@@ -158,7 +158,6 @@ class Element(Base):
 
     abundance_crust = Column(Float)
     abundance_sea = Column(Float)
-    # TODO: remove in a future version
     atomic_number = Column(Integer, primary_key=True)
     atomic_radius = Column(Float)
     atomic_radius_rahm = Column(Float)
