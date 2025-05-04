@@ -2,6 +2,11 @@
 mendeleev Changelog
 *******************
 
+Unreleased
+----------
+
+* [ENH] Update data on dipole polarizabilities by :user:`@lmmentel` in :pr:`237`
+
 v1.0.0 (22.03.2025)
 --------------------
 
