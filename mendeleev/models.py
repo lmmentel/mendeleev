@@ -215,6 +215,7 @@ class Element(Base, ReprMixin):
     en_allen = Column(Float)
     en_ghosh = Column(Float)
     en_miedema = Column(Float)
+    en_mullay = Column(Float)
     en_pauling = Column(Float)
     en_gunnarsson_lundqvist = Column(Float)
     en_robles_bartolotti = Column(Float)
