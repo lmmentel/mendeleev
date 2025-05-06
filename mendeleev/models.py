@@ -132,6 +132,7 @@ class Element(Base, ReprMixin):
         en_allen (float): ELectronegativity by Allen
         en_ghosh (float): Electronegativity by Ghosh
         en_miedema (float): Electronegativity by Miedema
+        en_mullay (float): Electronegativity by Mullay
         en_pauling (float): Electronegativity by Pauling
         evaporation_heat (float): Evaporation heat in kJ/mol
         fusion_heat (float): Fusion heat in kJ/mol
