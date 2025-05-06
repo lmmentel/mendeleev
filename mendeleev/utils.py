@@ -128,7 +128,7 @@ def update_model_from_df(
                     getattr(model, primary_key) == row[primary_key]
                 ).update(update_values)
                 session.commit()
-            except SQLAlchemyError:
-                print(f"ERROR for {row[primary_key]}")
+            except SQLAlchemyError as e:
+                print(f"ERROR for {row[primary_key]}", e)
                 session.rollback()
     session.close()
