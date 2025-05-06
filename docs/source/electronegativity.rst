@@ -288,10 +288,10 @@ Graph
    :alt: Miedema's electronegativity scale
    :align: center
 
-.. _miedema_en:
+.. _mullay_en:
 
-Miedema
-=======
+Mullay
+======
 
 Mullay's scale in Pauling units was calculated according to formula (22) from :cite:`mullay1984atomic`:
 
