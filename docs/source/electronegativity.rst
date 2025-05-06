@@ -18,6 +18,7 @@ appropriate formulas. The following scales are stored:
 - :ref:`Ghosh <ghosh_en>`
 - :ref:`Gunnarsson-Lundqvist <gunnarsson_lundqvist_en>`
 - :ref:`Miedema <miedema_en>`
+- :ref:`Mullay <mullay_en>`
 - :ref:`Pauling <pauling_en>`
 - :ref:`Robles-Bartolotti <robles_bartolotti_en>`
 
@@ -286,6 +287,22 @@ Graph
    :width: 100%
    :alt: Miedema's electronegativity scale
    :align: center
+
+.. _miedema_en:
+
+Miedema
+=======
+
+Mullay's scale in Pauling units was calculated according to formula (22) from :cite:`mullay1984atomic`:
+
+.. math::
+
+   \chi^{\deg}_{A} = 1.67 G_{i}z^{2}/n^{2}_{e} + 0.41
+
+Example::
+
+    >>> Si.en_mullay
+    1.91 
 
 .. _mulliken_en:
 
