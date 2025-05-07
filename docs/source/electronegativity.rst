@@ -1,9 +1,3 @@
-.. **Sanderson electronegativity**
-
-..   The values of Sanderson's electronegativity are taken from from as *revised
-   values* from Table 3.1 in ref. :cite:`Sanderson1976`. The
-   electronegativities for noble gases are taken from :cite:`Allen1980`.
-
 *******************
 Electronegativities
 *******************
@@ -398,6 +392,11 @@ stability ratio:
 where: :math:`\rho` is the average electron density :math:`\rho=\frac{Z}{4\pi r^{3}/3}`,
 and :math:`\rho_{\text{ng}}` is the average electron density of a hypothetical
 noble gas atom with charge :math:`Z`.
+
+
+..   The values of Sanderson's electronegativity are taken from from as *revised
+   values* from Table 3.1 in ref. :cite:`Sanderson1976`. The
+   electronegativities for noble gases are taken from :cite:`Allen1980`.
 
 Example::
 
