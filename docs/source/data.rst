@@ -591,13 +591,13 @@ Class: :py:class:`ScreeningConstant <mendeleev.models.ScreeningConstant>`
 
    In the original paper multiple values of electronegativity are provided for several element. The values corresponding to follwing hybrid were chosen:
 
-   - C _sp3_
-   - N _p_
-   - O _p_
-   - F _p_
-   - CL _p_
-   - Br _p_
-   - I _p_
+   - C *sp3*
+   - N *p*
+   - O *p*
+   - F *p*
+   - CL *p*
+   - Br *p*
+   - I *p*
 
 .. [#f_energy] **energy**
 
