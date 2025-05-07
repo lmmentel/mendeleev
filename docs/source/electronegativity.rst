@@ -65,8 +65,6 @@ Example::
     >>> Si.electronegativity('allen')
     11.33
 
-Graph
------
 
 .. image:: _static/img/en_allen.png
    :width: 100%
@@ -94,8 +92,6 @@ Example::
     >>> Si.electronegativity('allred-rochow')
     0.00028240190249702736
 
-Graph
------
 
 .. image:: _static/img/en_allred-rochow.png
    :width: 100%
@@ -121,8 +117,6 @@ Example::
     >>> Si.electronegativity('cottrell-sutton')
     0.18099342720014772
 
-Graph
------
 
 .. image:: _static/img/en_cottrell-sutton.png
    :width: 100%
@@ -148,8 +142,6 @@ Example::
     >>> Si.en_ghosh
     0.178503
 
-Graph
------
 
 .. image:: _static/img/en_ghosh.png
    :width: 100%
@@ -176,8 +168,6 @@ Example::
     >>> Si.electronegativity('gordy')
     0.03275862068965517
 
-Graph
------
 
 .. image:: _static/img/en_gordy.png
    :width: 100%
@@ -193,8 +183,6 @@ The electronegativities calculated by Robles and Bartolotti :cite:`RoblesBartolo
 density functional theory. Here the values using the Gunnarsson-Lundqvist :cite:`GunnarssonLundqvist1979`
 approximation to the exchange-correlation functional are tabulated.
 
-Graph
------
 
 .. image:: _static/img/en_gunnarsson_lundqvist.png
    :width: 100%
@@ -247,8 +235,6 @@ Example::
     >>> Si.electronegativity(scale='martynov-batsanov')
     5.0777041564076963
 
-Graph
------
 
 .. image:: _static/img/en_martynov-batsanov.png
    :width: 100%
@@ -280,8 +266,6 @@ Example::
     >>> Si.en_miedema
     4.7
 
-Graph
------
 
 .. image:: _static/img/en_miedema.png
    :width: 100%
@@ -303,9 +287,6 @@ Example::
 
     >>> Si.en_mullay
     1.91 
-
-Graph
------
 
 .. image:: _static/img/en_mullay.png
    :width: 100%
@@ -331,8 +312,6 @@ Example::
     >>> Si.electronegativity('mulliken')
     4.0758415
 
-Graph
------
 
 .. image:: _static/img/en_mulliken.png
    :width: 100%
@@ -355,8 +334,6 @@ Example::
     >>> Si.electronegativity('nagle')
     0.47505611644667534
 
-Graph
------
 
 .. image:: _static/img/en_nagle.png
    :width: 100%
@@ -385,8 +362,6 @@ Example::
     >>> Si.electronegativity('pauling')
     1.9
 
-Graph
------
 
 .. image:: _static/img/en_pauling.png
    :width: 100%
@@ -402,8 +377,6 @@ The electronegativities calculated by Robles and Bartolotti :cite:`RoblesBartolo
 density functional theory. Here the values using the :math:`X_{\alpha}` approximation to the exchange-correlation
 functional are tabulated.
 
-Graph
------
 
 .. image:: _static/img/en_robles_bartolotti.png
    :width: 100%
@@ -433,8 +406,6 @@ Example::
     >>> Si.electronegativity()
     0.3468157872145231
 
-Graph
------
 
 .. image:: _static/img/en_sanderson.png
    :width: 100%
