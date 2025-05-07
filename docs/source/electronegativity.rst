@@ -271,16 +271,21 @@ Example::
 Mullay
 ======
 
-Mullay's scale in Pauling units was calculated according to formula (22) from :cite:`mullay1984atomic`:
+Mullay's orbital electronegativity in Pauling units was calculated according to formula (22) from :cite:`mullay1984atomic`:
 
 .. math::
 
    \chi^{\deg}_{A} = 1.67 G_{i}z^{2}/n^{2}_{e} + 0.41
 
+where: :math:`G_{i}` is a linear function of the % *p* character :math:`p_i` of orbital *i*, :math:`z` is the screened nuclear charge
+and :math:`n_{e}` is the Slater's effective principal quantum number.
+
 Example::
 
     >>> Si.en_mullay
     1.91 
+    >>> Si.electronegativity("mullay")
+    1.91
 
 .. image:: _static/img/en_mullay.png
    :width: 100%

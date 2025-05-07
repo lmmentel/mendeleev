@@ -636,7 +636,7 @@ class Element(Base, ReprMixin):
             "li-xue": self.electronegativity_li_xue,
             "martynov-batsanov": self.electronegativity_martynov_batsanov,
             "miedema": self.en_miedema,
-            "mullay": self.en_mullay,
+            "mullay": self.electronegativity_mullay,
             "mulliken": self.electronegativity_mulliken,
             "nagle": self.electronegativity_nagle,
             "pauling": self.electronegativity_pauling,
@@ -789,6 +789,10 @@ class Element(Base, ReprMixin):
         "Nagle's electronegativity"
         if self.dipole_polarizability is not None:
             return nagle(self.nvalence(), self.dipole_polarizability)
+
+    def electronegativity_mullay(self) -> float:
+        "Mullay's electronegativity"
+        return self.en_mullay
 
     def electronegativity_pauling(self) -> float:
         "Pauling's electronegativity"
