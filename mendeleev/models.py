@@ -636,6 +636,7 @@ class Element(Base, ReprMixin):
             "li-xue": self.electronegativity_li_xue,
             "martynov-batsanov": self.electronegativity_martynov_batsanov,
             "miedema": self.en_miedema,
+            "mullay": self.en_mullay,
             "mulliken": self.electronegativity_mulliken,
             "nagle": self.electronegativity_nagle,
             "pauling": self.electronegativity_pauling,
