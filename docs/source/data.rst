@@ -589,7 +589,7 @@ Class: :py:class:`ScreeningConstant <mendeleev.models.ScreeningConstant>`
 
 .. [#f_en_mullay] **en_mullay**
 
-   In the original paper multiple values of electronegativity are provided for several element. The values corresponding to follwing hybrid were chosen:
+   In the original paper multiple values of electronegativity are provided for several elements. The values corresponding to following hybrids were chosen:
 
    - C *sp3*
    - N *p*
