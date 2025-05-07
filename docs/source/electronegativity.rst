@@ -304,6 +304,14 @@ Example::
     >>> Si.en_mullay
     1.91 
 
+Graph
+-----
+
+.. image:: _static/img/en_mullay.png
+   :width: 100%
+   :alt: Mullay's electronegativity scale
+   :align: center
+
 .. _mulliken_en:
 
 Mulliken
