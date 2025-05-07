@@ -1,9 +1,3 @@
-.. **Sanderson electronegativity**
-
-..   The values of Sanderson's electronegativity are taken from from as *revised
-   values* from Table 3.1 in ref. :cite:`Sanderson1976`. The
-   electronegativities for noble gases are taken from :cite:`Allen1980`.
-
 *******************
 Electronegativities
 *******************
@@ -18,6 +12,7 @@ appropriate formulas. The following scales are stored:
 - :ref:`Ghosh <ghosh_en>`
 - :ref:`Gunnarsson-Lundqvist <gunnarsson_lundqvist_en>`
 - :ref:`Miedema <miedema_en>`
+- :ref:`Mullay <mullay_en>`
 - :ref:`Pauling <pauling_en>`
 - :ref:`Robles-Bartolotti <robles_bartolotti_en>`
 
@@ -64,8 +59,6 @@ Example::
     >>> Si.electronegativity('allen')
     11.33
 
-Graph
------
 
 .. image:: _static/img/en_allen.png
    :width: 100%
@@ -93,8 +86,6 @@ Example::
     >>> Si.electronegativity('allred-rochow')
     0.00028240190249702736
 
-Graph
------
 
 .. image:: _static/img/en_allred-rochow.png
    :width: 100%
@@ -120,8 +111,6 @@ Example::
     >>> Si.electronegativity('cottrell-sutton')
     0.18099342720014772
 
-Graph
------
 
 .. image:: _static/img/en_cottrell-sutton.png
    :width: 100%
@@ -147,8 +136,6 @@ Example::
     >>> Si.en_ghosh
     0.178503
 
-Graph
------
 
 .. image:: _static/img/en_ghosh.png
    :width: 100%
@@ -175,8 +162,6 @@ Example::
     >>> Si.electronegativity('gordy')
     0.03275862068965517
 
-Graph
------
 
 .. image:: _static/img/en_gordy.png
    :width: 100%
@@ -192,8 +177,6 @@ The electronegativities calculated by Robles and Bartolotti :cite:`RoblesBartolo
 density functional theory. Here the values using the Gunnarsson-Lundqvist :cite:`GunnarssonLundqvist1979`
 approximation to the exchange-correlation functional are tabulated.
 
-Graph
------
 
 .. image:: _static/img/en_gunnarsson_lundqvist.png
    :width: 100%
@@ -246,8 +229,6 @@ Example::
     >>> Si.electronegativity(scale='martynov-batsanov')
     5.0777041564076963
 
-Graph
------
 
 .. image:: _static/img/en_martynov-batsanov.png
    :width: 100%
@@ -279,12 +260,36 @@ Example::
     >>> Si.en_miedema
     4.7
 
-Graph
------
 
 .. image:: _static/img/en_miedema.png
    :width: 100%
    :alt: Miedema's electronegativity scale
+   :align: center
+
+.. _mullay_en:
+
+Mullay
+======
+
+Mullay's orbital electronegativity in Pauling units was calculated according to formula (22) from :cite:`mullay1984atomic`:
+
+.. math::
+
+   \chi^{\deg}_{A} = 1.67 G_{i}z^{2}/n^{2}_{e} + 0.41
+
+where: :math:`G_{i}` is a linear function of the % *p* character :math:`p_i` of orbital *i*, :math:`z` is the screened nuclear charge
+and :math:`n_{e}` is the Slater's effective principal quantum number.
+
+Example::
+
+    >>> Si.en_mullay
+    1.91 
+    >>> Si.electronegativity("mullay")
+    1.91
+
+.. image:: _static/img/en_mullay.png
+   :width: 100%
+   :alt: Mullay's electronegativity scale
    :align: center
 
 .. _mulliken_en:
@@ -306,8 +311,6 @@ Example::
     >>> Si.electronegativity('mulliken')
     4.0758415
 
-Graph
------
 
 .. image:: _static/img/en_mulliken.png
    :width: 100%
@@ -330,8 +333,6 @@ Example::
     >>> Si.electronegativity('nagle')
     0.47505611644667534
 
-Graph
------
 
 .. image:: _static/img/en_nagle.png
    :width: 100%
@@ -360,8 +361,6 @@ Example::
     >>> Si.electronegativity('pauling')
     1.9
 
-Graph
------
 
 .. image:: _static/img/en_pauling.png
    :width: 100%
@@ -377,8 +376,6 @@ The electronegativities calculated by Robles and Bartolotti :cite:`RoblesBartolo
 density functional theory. Here the values using the :math:`X_{\alpha}` approximation to the exchange-correlation
 functional are tabulated.
 
-Graph
------
 
 .. image:: _static/img/en_robles_bartolotti.png
    :width: 100%
@@ -401,6 +398,11 @@ where: :math:`\rho` is the average electron density :math:`\rho=\frac{Z}{4\pi r^
 and :math:`\rho_{\text{ng}}` is the average electron density of a hypothetical
 noble gas atom with charge :math:`Z`.
 
+
+..   The values of Sanderson's electronegativity are taken from from as *revised
+   values* from Table 3.1 in ref. :cite:`Sanderson1976`. The
+   electronegativities for noble gases are taken from :cite:`Allen1980`.
+
 Example::
 
     >>> Si.en_sanderson()
@@ -408,8 +410,6 @@ Example::
     >>> Si.electronegativity()
     0.3468157872145231
 
-Graph
------
 
 .. image:: _static/img/en_sanderson.png
    :width: 100%

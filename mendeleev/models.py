@@ -132,6 +132,7 @@ class Element(Base, ReprMixin):
         en_allen (float): ELectronegativity by Allen
         en_ghosh (float): Electronegativity by Ghosh
         en_miedema (float): Electronegativity by Miedema
+        en_mullay (float): Electronegativity by Mullay
         en_pauling (float): Electronegativity by Pauling
         evaporation_heat (float): Evaporation heat in kJ/mol
         fusion_heat (float): Fusion heat in kJ/mol
@@ -215,6 +216,7 @@ class Element(Base, ReprMixin):
     en_allen = Column(Float)
     en_ghosh = Column(Float)
     en_miedema = Column(Float)
+    en_mullay = Column(Float)
     en_pauling = Column(Float)
     en_gunnarsson_lundqvist = Column(Float)
     en_robles_bartolotti = Column(Float)
@@ -634,6 +636,7 @@ class Element(Base, ReprMixin):
             "li-xue": self.electronegativity_li_xue,
             "martynov-batsanov": self.electronegativity_martynov_batsanov,
             "miedema": self.en_miedema,
+            "mullay": self.electronegativity_mullay,
             "mulliken": self.electronegativity_mulliken,
             "nagle": self.electronegativity_nagle,
             "pauling": self.electronegativity_pauling,
@@ -786,6 +789,10 @@ class Element(Base, ReprMixin):
         "Nagle's electronegativity"
         if self.dipole_polarizability is not None:
             return nagle(self.nvalence(), self.dipole_polarizability)
+
+    def electronegativity_mullay(self) -> float:
+        "Mullay's electronegativity"
+        return self.en_mullay
 
     def electronegativity_pauling(self) -> float:
         "Pauling's electronegativity"
