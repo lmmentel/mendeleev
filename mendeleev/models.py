@@ -11,6 +11,7 @@ import urllib.parse
 import warnings
 
 import numpy as np
+from pint import UnitRegistry
 from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey, Text, Enum
 from sqlalchemy.orm import declarative_base, relationship, reconstructor
 from sqlalchemy.ext.associationproxy import association_proxy
@@ -50,6 +51,8 @@ __all__ = [
 
 
 Base = declarative_base()
+ureg = UnitRegistry()
+ureg.define("USD = [currency]")
 
 
 class ReprMixin:
@@ -82,7 +85,83 @@ class ReprMixin:
             return f"<{self.__class__.__name__}({attrs_str})>"
 
 
-class Element(Base, ReprMixin):
+class ValueOrigin(enum.Enum):
+    "Options for the origin of the property value."
+
+    STORED = "stored"
+    COMPUTED = "computed"
+
+
+class PropertyMetadata(Base, ReprMixin):
+    """Metadata for properties of elements and isotopes.
+
+    Args:
+        annotations (str): Additional information about the property.
+        attribute_name (str): Name of the attribute of the ORM class.
+        category (str): Category of the property.
+        citation_keys (str): Comma separated list of citation keys. See references.bib for full bibliography.
+        class_name (str): Name of the ORM class.
+        column_name (str): Name of the column in the database.
+        description (str): Description of the property.
+        table_name (str): Name of the table in the database.
+        unit (str): Unit of the property.
+        value_origin (ValueOrigin): Origin of the value, either stored or computed.
+    """
+
+    __tablename__ = "propertymetadata"
+
+    id = Column(Integer, primary_key=True)
+    annotations = Column(Text)
+    attribute_name = Column(String, nullable=False)
+    category = Column(String)
+    citation_keys = Column(String)
+    class_name = Column(String, nullable=False)
+    column_name = Column(String, nullable=True)
+    description = Column(Text, nullable=False)
+    table_name = Column(String, nullable=True)
+    unit = Column(String)
+    value_origin = Column(Enum(ValueOrigin), nullable=False)
+
+
+def fetch_unit_metadata() -> dict[tuple, str]:
+    session = get_session()
+    rows = (
+        session.query(PropertyMetadata).filter(PropertyMetadata.unit.isnot(None)).all()
+    )
+    metadata = {(row.class_name, row.attribute_name): row.unit for row in rows}
+    session.close()
+    return metadata
+
+
+UNIT_CACHE = fetch_unit_metadata()
+
+
+class UnitMixin:
+    def get_unit(self, attribute_name: str) -> str:
+        return UNIT_CACHE.get((self.__class__.__name__, attribute_name))
+
+    def __getattr__(self, name: str) -> Any:
+        if name.endswith("_u"):
+            attr_name = name[:-2]
+            if not hasattr(self, attr_name):
+                raise AttributeError(
+                    f"'{self.__class__.__name__}' object has no attribute '{attr_name}'"
+                )
+            unit = self.get_unit(attr_name)
+            if unit is None:
+                raise AttributeError(
+                    f"'{self.__class__.__name__}' has no unit defined for '{attr_name}'"
+                )
+            value = getattr(self, attr_name)
+            if value is None:
+                return None
+            return value * ureg(unit)
+        raise AttributeError(
+            f"'{self.__class__.__name__}' object has no attribute '{name}'"
+        )
+
+
+class Element(Base, ReprMixin, UnitMixin):
     """
     Chemical element.
 
@@ -889,44 +968,6 @@ def fetch_by_group(properties: List[str], group: int = 18) -> tuple[list[Any]]:
     )
     session.close()
     return results
-
-
-class ValueOrigin(enum.Enum):
-    "Options for the origin of the property value."
-
-    STORED = "stored"
-    COMPUTED = "computed"
-
-
-class PropertyMetadata(Base, ReprMixin):
-    """Metadata for properties of elements and isotopes.
-
-    Args:
-        annotations (str): Additional information about the property.
-        attribute_name (str): Name of the attribute of the ORM class.
-        category (str): Category of the property.
-        citation_keys (str): Comma separated list of citation keys. See references.bib for full bibliography.
-        class_name (str): Name of the ORM class.
-        column_name (str): Name of the column in the database.
-        description (str): Description of the property.
-        table_name (str): Name of the table in the database.
-        unit (str): Unit of the property.
-        value_origin (ValueOrigin): Origin of the value, either stored or computed.
-    """
-
-    __tablename__ = "propertymetadata"
-
-    id = Column(Integer, primary_key=True)
-    annotations = Column(Text)
-    attribute_name = Column(String, nullable=False)
-    category = Column(String)
-    citation_keys = Column(String)
-    class_name = Column(String, nullable=False)
-    column_name = Column(String, nullable=True)
-    description = Column(Text, nullable=False)
-    table_name = Column(String, nullable=True)
-    unit = Column(String)
-    value_origin = Column(Enum(ValueOrigin), nullable=False)
 
 
 class IonicRadius(Base, ReprMixin):
