@@ -132,3 +132,15 @@ def sqldiff(c, branch="master"):
         echo=True,
     )
     c.run("sqldiff mendeleev/elements.db.master mendeleev/elements.db", echo=True)
+
+
+@task
+def timeimport(c):
+    import time
+    import importlib
+
+    start = time.perf_counter()
+    mod = importlib.import_module("mendeleev.models")  # noqa: F841
+    end = time.perf_counter()
+
+    print(f"Import time: {end - start:.6f} seconds")
