@@ -672,7 +672,7 @@ class Element(Base, ReprMixin, UnitMixin):
             # take the shell with max `l` for a given `n`
             o = ORBITALS[max(get_l(x[1]) for x in self.ec.conf.keys() if x[0] == n)]
         elif o not in ORBITALS:
-            raise ValueError(f'<s> should be one of {", ".join(ORBITALS)}')
+            raise ValueError(f"<s> should be one of {', '.join(ORBITALS)}")
 
         if method.lower() == "slater":
             return self.atomic_number - self.ec.slater_screening(n=n, o=o, alle=alle)
