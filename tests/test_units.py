@@ -59,6 +59,8 @@ def element():
 
 def test_element_w_units(element):
     """Test that attributes return appropriate Python objects when accessed normally."""
+    assert isinstance(element.abundance_crust_u, Quantity)
+    assert isinstance(element.abundance_sea_u, Quantity)
     assert isinstance(element.atomic_radius_u, Quantity)
     assert isinstance(element.covalent_radius_pyykko_u, Quantity)
     assert isinstance(element.vdw_radius_u, Quantity)
