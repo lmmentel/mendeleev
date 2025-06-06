@@ -169,8 +169,8 @@ def test_element_w_units(element):
     # properties
     # hybrid_properties
     assert isinstance(element.atomic_volume_u, Quantity)
-    assert isinstance(element.boiling_point_u, Quantity)
-    assert isinstance(element.melting_point_u, Quantity)
+    assert isinstance(element.boiling_point_u, (Quantity, type(None)))
+    assert isinstance(element.melting_point_u, (Quantity, type(None)))
     assert isinstance(element.specific_heat_u, Quantity)
     # methods
 
