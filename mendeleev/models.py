@@ -11,6 +11,7 @@ import urllib.parse
 import warnings
 
 import numpy as np
+from pint import UnitRegistry, Quantity
 from sqlalchemy import Column, Boolean, Integer, String, Float, ForeignKey, Text, Enum
 from sqlalchemy.orm import declarative_base, relationship, reconstructor
 from sqlalchemy.ext.associationproxy import association_proxy
@@ -50,6 +51,8 @@ __all__ = [
 
 
 Base = declarative_base()
+ureg = UnitRegistry()
+ureg.define("USD = [currency]")
 
 
 class ReprMixin:
@@ -82,7 +85,84 @@ class ReprMixin:
             return f"<{self.__class__.__name__}({attrs_str})>"
 
 
-class Element(Base, ReprMixin):
+class ValueOrigin(enum.Enum):
+    "Options for the origin of the property value."
+
+    STORED = "stored"
+    COMPUTED = "computed"
+
+
+class PropertyMetadata(Base, ReprMixin):
+    """Metadata for properties of elements and isotopes.
+
+    Args:
+        annotations (str): Additional information about the property.
+        attribute_name (str): Name of the attribute of the ORM class.
+        category (str): Category of the property.
+        citation_keys (str): Comma separated list of citation keys. See references.bib for full bibliography.
+        class_name (str): Name of the ORM class.
+        column_name (str): Name of the column in the database.
+        description (str): Description of the property.
+        table_name (str): Name of the table in the database.
+        unit (str): Unit of the property.
+        value_origin (ValueOrigin): Origin of the value, either stored or computed.
+    """
+
+    __tablename__ = "propertymetadata"
+
+    id = Column(Integer, primary_key=True)
+    annotations = Column(Text)
+    attribute_name = Column(String, nullable=False)
+    category = Column(String)
+    citation_keys = Column(String)
+    class_name = Column(String, nullable=False)
+    column_name = Column(String, nullable=True)
+    description = Column(Text, nullable=False)
+    table_name = Column(String, nullable=True)
+    unit = Column(String)
+    value_origin = Column(Enum(ValueOrigin), nullable=False)
+
+
+def fetch_unit_metadata() -> dict[tuple, str]:
+    """Fetch unit metadata from the database for all dimensional properties."""
+    session = get_session()
+    rows = (
+        session.query(PropertyMetadata).filter(PropertyMetadata.unit.isnot(None)).all()
+    )
+    metadata = {(row.class_name, row.attribute_name): row.unit for row in rows}
+    session.close()
+    return metadata
+
+
+UNIT_CACHE = fetch_unit_metadata()
+
+
+class UnitMixin:
+    def get_unit(self, attribute_name: str) -> str:
+        return UNIT_CACHE.get((self.__class__.__name__, attribute_name))
+
+    def __getattr__(self, name: str) -> Any:
+        if name.endswith("_u"):
+            attr_name = name[:-2]
+            if not hasattr(self, attr_name):
+                raise AttributeError(
+                    f"'{self.__class__.__name__}' object has no attribute '{attr_name}'"
+                )
+            unit = self.get_unit(attr_name)
+            if unit is None:
+                raise AttributeError(
+                    f"'{self.__class__.__name__}' has no unit defined for '{attr_name}'"
+                )
+            value = getattr(self, attr_name)
+            if value is None:
+                return None
+            return value * ureg(unit)
+        raise AttributeError(
+            f"'{self.__class__.__name__}' object has no attribute '{name}'"
+        )
+
+
+class Element(Base, ReprMixin, UnitMixin):
     """
     Chemical element.
 
@@ -593,7 +673,7 @@ class Element(Base, ReprMixin):
             # take the shell with max `l` for a given `n`
             o = ORBITALS[max(get_l(x[1]) for x in self.ec.conf.keys() if x[0] == n)]
         elif o not in ORBITALS:
-            raise ValueError(f'<s> should be one of {", ".join(ORBITALS)}')
+            raise ValueError(f"<s> should be one of {', '.join(ORBITALS)}")
 
         if method.lower() == "slater":
             return self.atomic_number - self.ec.slater_screening(n=n, o=o, alle=alle)
@@ -891,45 +971,7 @@ def fetch_by_group(properties: List[str], group: int = 18) -> tuple[list[Any]]:
     return results
 
 
-class ValueOrigin(enum.Enum):
-    "Options for the origin of the property value."
-
-    STORED = "stored"
-    COMPUTED = "computed"
-
-
-class PropertyMetadata(Base, ReprMixin):
-    """Metadata for properties of elements and isotopes.
-
-    Args:
-        annotations (str): Additional information about the property.
-        attribute_name (str): Name of the attribute of the ORM class.
-        category (str): Category of the property.
-        citation_keys (str): Comma separated list of citation keys. See references.bib for full bibliography.
-        class_name (str): Name of the ORM class.
-        column_name (str): Name of the column in the database.
-        description (str): Description of the property.
-        table_name (str): Name of the table in the database.
-        unit (str): Unit of the property.
-        value_origin (ValueOrigin): Origin of the value, either stored or computed.
-    """
-
-    __tablename__ = "propertymetadata"
-
-    id = Column(Integer, primary_key=True)
-    annotations = Column(Text)
-    attribute_name = Column(String, nullable=False)
-    category = Column(String)
-    citation_keys = Column(String)
-    class_name = Column(String, nullable=False)
-    column_name = Column(String, nullable=True)
-    description = Column(Text, nullable=False)
-    table_name = Column(String, nullable=True)
-    unit = Column(String)
-    value_origin = Column(Enum(ValueOrigin), nullable=False)
-
-
-class IonicRadius(Base, ReprMixin):
+class IonicRadius(Base, ReprMixin, UnitMixin):
     """
     Effective ionic radii and crystal radii in pm retrieved from [1]_.
 
@@ -969,7 +1011,7 @@ class IonicRadius(Base, ReprMixin):
         return ", ".join(o.format(k, getattr(self, k)) for o, k in zip(out, keys))
 
 
-class IonizationEnergy(Base, ReprMixin):
+class IonizationEnergy(Base, ReprMixin, UnitMixin):
     """
     Ionization energies of an element
 
@@ -1099,7 +1141,7 @@ def with_uncertainty(value: float, uncertainty: float, digits: int = 5) -> str:
     return "{0:.{2}f}({1:.0f})".format(value, uncertainty * 10**digits, digits)
 
 
-class Isotope(Base, ReprMixin):
+class Isotope(Base, ReprMixin, UnitMixin):
     """
     Isotope
 
@@ -1151,6 +1193,11 @@ class Isotope(Base, ReprMixin):
     def is_stable(self) -> bool:
         """Flag to indicate whether the isotope is stable"""
         return not self.is_radioactive
+
+    @property
+    def half_life_u(self) -> "Quantity":
+        "Half life time as pint.Quantity with units"
+        return self.half_file * ureg(self.half_life_unit)
 
     def __str__(self) -> str:
         return "atomic_number={0:5d}, mass_number={1:5d}, mass={2:10s}, abundance={3:10s}".format(
@@ -1227,7 +1274,7 @@ class ScreeningConstant(Base, ReprMixin):
         )
 
 
-class PhaseTransition(Base, ReprMixin):
+class PhaseTransition(Base, ReprMixin, UnitMixin):
     """Phase Transition Conditions
 
     Args:
@@ -1255,6 +1302,7 @@ class PhaseTransition(Base, ReprMixin):
     is_sublimation_point = Column(Boolean)
     is_transition = Column(Boolean)
 
+    # TODO: remove this custom implementation since it's handled by ReprMixin
     def __str__(self) -> str:
         return (
             "PhaseTransition("
@@ -1276,7 +1324,7 @@ class PhaseTransition(Base, ReprMixin):
         )
 
 
-class ScatteringFactor(Base, ReprMixin):
+class ScatteringFactor(Base, ReprMixin, UnitMixin):
     """Atomic scattering factors
 
     Args:
