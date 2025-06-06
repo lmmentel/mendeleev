@@ -1323,7 +1323,7 @@ class PhaseTransition(Base, ReprMixin, UnitMixin):
         )
 
 
-class ScatteringFactor(Base, ReprMixin):
+class ScatteringFactor(Base, ReprMixin, UnitMixin):
     """Atomic scattering factors
 
     Args:
