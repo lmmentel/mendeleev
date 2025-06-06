@@ -124,6 +124,7 @@ class PropertyMetadata(Base, ReprMixin):
 
 
 def fetch_unit_metadata() -> dict[tuple, str]:
+    """Fetch unit metadata from the database for all dimensional properties."""
     session = get_session()
     rows = (
         session.query(PropertyMetadata).filter(PropertyMetadata.unit.isnot(None)).all()
