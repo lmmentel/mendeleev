@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mendeleev"
-version = "v1.0.0"
+version = "v1.1.0"
 description = "Pythonic periodic table of elements"
 keywords = ["periodic table", "chemistry", "elements", "science"]
 classifiers = [
@@ -41,7 +41,7 @@ pyfiglet = "^0.8.post1"
 Pygments = "^2.11.2"
 pandas = [
     { version = "^2.1", python = ">=3.12,<3.14" },
-    { version = ">=1.0.0", python = "<3.12" },
+    { version = ">=1.1.0", python = "<3.12" },
 ]
 SQLAlchemy = ">=1.4.0"
 deprecated = "^1.2.14"
@@ -91,5 +91,5 @@ addopts = "--durations=10 -n auto"
 
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.1.0"]
 build-backend = "poetry.core.masonry.api"
