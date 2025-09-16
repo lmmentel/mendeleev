@@ -2,14 +2,15 @@
 mendeleev Changelog
 *******************
 
-Unreleased
-----------
+v1.1.0 (10.06.2025)
+-------------------
 
 * [ENH] Update data on dipole polarizabilities by :user:`@lmmentel` in :pr:`237`
 * [ENH] Add Mullay's scale of electronegativity by :user:`@lmmentel` in :pr:`238`
+* [MNT] Bump numpy dependency to ^2.0 by :user:`@lmmentel` in :pr:`241`
 
 v1.0.0 (22.03.2025)
---------------------
+-------------------
 
 * [MNT] Switch to PyPI Trusted Publishing by :user:`@lmmentel` in :pr:`220`
 * [ENH] Add price per kg for elements by :user:`@lmmentel` in :pr:`221`
