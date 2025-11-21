@@ -117,7 +117,7 @@ the [conda-forge Anaconda channel](https://anaconda.org/conda-forge/mendeleev)
 channel by
 
 ``` {.sourceCode .bash}
-conda install -c lmmentel mendeleev=1.1.0
+conda install conda-forge::mendeleev
 ```
 
 The package can also be installed using
