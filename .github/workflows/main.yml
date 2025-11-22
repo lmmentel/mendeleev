@@ -41,7 +41,9 @@ jobs:
           virtualenvs-in-project: true
 
       - name: list files
-        run: ls -la
+        run: |
+          ls -la
+          pwd
       - name: Cache dependencies
         id: cache-deps
         uses: actions/cache@v4
