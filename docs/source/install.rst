@@ -16,8 +16,8 @@ You can also install the most recent version from the repository:
    pip install git+https://github.com/lmmentel/mendeleev.git
 
 If you use `conda <https://conda.io/docs/intro.html>`_ you can install 
-the package from `my anaconda channel <https://anaconda.org/lmmentel/mendeleev>`_ by 
+the package from the `conda-forge channel <https://anaconda.org/conda-forge/mendeleev>`_ by 
 
 .. code-block:: bash
 
-   conda install -c lmmentel mendeleev=1.1.0
+   conda install conda-forge::mendeleev
