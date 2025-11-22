@@ -40,6 +40,8 @@ jobs:
           virtualenvs-create: true
           virtualenvs-in-project: true
 
+      - name: list files
+        run: ls -la
       - name: Cache dependencies
         id: cache-deps
         uses: actions/cache@v4
