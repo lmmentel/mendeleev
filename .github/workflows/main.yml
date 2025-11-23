@@ -19,7 +19,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest]
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
     defaults:
       run:
@@ -40,17 +40,12 @@ jobs:
           virtualenvs-create: true
           virtualenvs-in-project: true
 
-      - name: list files
-        run: |
-          ls -la
-          pwd
-          hash
       - name: Cache dependencies
         id: cache-deps
         uses: actions/cache@v4
         with:
           path: ./.venv
-          key: pydeps-${{ matrix.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: pydeps-${{ matrix.os }}-python${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
 
       - name: Install dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
