@@ -9,6 +9,16 @@ Overview
 This package provides an API for accessing various properties of elements from
 the periodic table of elements. 
 
+Properties can be accessed with or without units. For example::
+
+    >>> from mendeleev import H
+    >>> H.atomic_weight
+    1.008
+    >>> H.atomic_weight_u  # With units
+    1.008 dalton
+
+See the :doc:`Tutorials <tutorials>` for detailed examples, including :doc:`notebooks/working_with_units` for comprehensive coverage of the units functionality.
+
 
 The repository is hosted on `github <https://github.com/lmmentel/mendeleev>`_.
 
