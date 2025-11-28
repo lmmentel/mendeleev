@@ -45,9 +45,9 @@ pandas = [
 ]
 SQLAlchemy = ">=1.4.0"
 deprecated = "^1.2.14"
-pydantic = "^2.9.2"
 pint = "^0.24.4"
-pydantic-core = "2.41.5"
+pydantic = "^2.12"
+pydantic-core = "^2.23"
 
 
 [tool.poetry.group.dev.dependencies]
