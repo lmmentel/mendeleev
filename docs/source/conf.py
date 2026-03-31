@@ -23,7 +23,6 @@ autodoc_mock_imports = [
     "pandas",
     "scipy",
     "seaborn",
-    "sqlalchemy",
 ]
 
 sys.path.append(str(Path("_ext").resolve()))
@@ -332,3 +331,27 @@ mathjax2_config = {
         "processClass": "math|output_area",
     }
 }
+
+
+# -- Autodoc event handlers ----------------------------------------------------
+
+
+def skip_hybrid_properties(app, what, name, obj, skip, options):
+    """
+    Skip SQLAlchemy hybrid properties that cause issues during autodoc.
+
+    These properties use SQLAlchemy's hybrid_property decorator which doesn't
+    work well with Sphinx's autodoc introspection during documentation generation.
+    """
+    from sqlalchemy.ext.hybrid import hybrid_property
+
+    # Skip all hybrid properties to avoid SQLAlchemy introspection errors
+    if isinstance(obj, hybrid_property):
+        return True
+
+    return skip
+
+
+def setup(app):
+    """Sphinx setup hook."""
+    app.connect("autodoc-skip-member", skip_hybrid_properties)

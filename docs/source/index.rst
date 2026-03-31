@@ -32,6 +32,7 @@ the periodic table of elements.
    FAQ <faq>
    Troubleshooting <troubleshooting>
    Contributing guide <CONTRIBUTING>
+   API Overview <api_overview>
    API Reference <api/api>
    Bibliography <bibliography>
    Changes <changes_link>
