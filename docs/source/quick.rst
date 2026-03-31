@@ -48,7 +48,7 @@ or the older `BibTeX <http://www.bibtex.org/>`_ format
 .. code-block:: latex
 
    @misc{mendeleev2014,
-      auhor = {Mentel, Łukasz},
+      author = {Mentel, Łukasz},
       title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 1.1.0},
       howpublished = {\url{https://github.com/lmmentel/mendeleev}},
       year  = {2014--},

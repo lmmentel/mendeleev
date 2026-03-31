@@ -304,8 +304,20 @@ python_version = ".".join(map(str, sys.version_info[0:2]))
 
 
 intersphinx_mapping = {
-    "python": ("http://docs.python.org/", None),
-    "pandas": ("http://pandas.pydata.org/pandas-docs/dev", None),
+    "python": ("https://docs.python.org/3", None),
+    "pandas": ("https://pandas.pydata.org/docs/", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "sqlalchemy": ("https://docs.sqlalchemy.org/en/20/", None),
+    "pint": ("https://pint.readthedocs.io/en/stable/", None),
+}
+
+# autodoc configuration
+autodoc_default_options = {
+    "members": True,
+    "member-order": "bysource",
+    "special-members": "__init__",
+    "undoc-members": True,
+    "exclude-members": "__weakref__",
 }
 
 # mathjax downgrade to version to get plotly working in nbsphinx

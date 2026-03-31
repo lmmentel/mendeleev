@@ -27,7 +27,10 @@ the periodic table of elements.
    Tutorials <tutorials>
    Data <data>
    Accessing data <data_access>
+   Units <units>
    Electronegativity <electronegativity>
+   FAQ <faq>
+   Troubleshooting <troubleshooting>
    Contributing guide <CONTRIBUTING>
    API Reference <api/api>
    Bibliography <bibliography>
