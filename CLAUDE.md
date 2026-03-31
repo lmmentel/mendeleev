@@ -144,33 +144,56 @@ addopts = "--durations=10 -n auto"
 
 ## Building Documentation
 
+### Prerequisites
+
+Documentation requires additional dependencies beyond the core package:
+
+```bash
+# Install documentation dependencies (one-time setup)
+poetry run pip install -r docs/requirements.txt
+```
+
+Required packages include:
+- sphinx, nbsphinx (documentation generator)
+- sphinx-material (documentation theme)
+- myst-parser (Markdown support)
+- sphinxcontrib-bibtex (bibliography)
+- bokeh, plotly, seaborn (for visualization examples)
+- ipython, ipykernel (for notebook examples)
+
 ### Local Documentation Build
 
 ```bash
 # Navigate to docs directory
 cd docs
 
-# Build HTML documentation
-make html
+# Build HTML documentation using poetry
+poetry run make html
 
 # View the documentation
 # Open docs/build/html/index.html in your browser
 ```
 
+**Important Notes:**
+- Always use `poetry run make html` (not just `make html`)
+- First build may take longer as it processes all notebooks
+- Build produces warnings (572 warnings is normal)
+- Successfully built docs show: "build succeeded, 572 warnings"
+
 ### Other Documentation Formats
 
 ```bash
 # Build as single HTML page
-make singlehtml
+poetry run make singlehtml
 
 # Build PDF (requires LaTeX)
-make latexpdf
+poetry run make latexpdf
 
 # Check for broken links
-make linkcheck
+poetry run make linkcheck
 
 # Clean build artifacts
-make clean
+poetry run make clean
 ```
 
 ### Rendering Data Documentation
@@ -179,11 +202,35 @@ After updating the `PropertyMetadata` model, regenerate the data documentation:
 
 ```bash
 # From project root
-inv render-data-docs
+poetry run inv render-data-docs
 
 # Then rebuild docs
-cd docs && make html
+cd docs && poetry run make html
 ```
+
+### Documentation Build Troubleshooting
+
+**Issue: "sphinx-build command not found"**
+```bash
+# Install doc dependencies
+poetry run pip install -r docs/requirements.txt
+```
+
+**Issue: "No module named 'myst_parser'"**
+```bash
+# Ensure all doc dependencies are installed
+cd docs
+poetry run pip install -r requirements.txt
+```
+
+**Issue: "Build failed with SQLAlchemy errors"**
+- This should be fixed by the autodoc event handlers in `conf.py`
+- If you see `NotImplementedError: <built-in function getitem>`, the skip_hybrid_properties handler may need updating
+
+**Issue: "WARNING: duplicate object description"**
+- These are cosmetic warnings from autosummary
+- They don't prevent documentation from building
+- Safe to ignore
 
 ### Documentation Structure
 
@@ -196,6 +243,7 @@ The documentation includes:
 - **Electronegativity**: Comprehensive guide to 15+ electronegativity scales
 - **FAQ**: Frequently asked questions
 - **Troubleshooting**: Common issues and solutions
+- **API Overview**: Architecture, patterns, and decision guide
 - **API Reference**: Complete API documentation
 - **Contributing Guide**: How to contribute to the project
 
