@@ -163,6 +163,24 @@ Required packages include:
 
 ### Local Documentation Build
 
+**Prerequisites:**
+
+First, install documentation dependencies (one-time setup):
+```bash
+poetry run pip install -r docs/requirements.txt
+```
+
+This includes:
+- `sphinx` - Documentation builder
+- `sphinx-material` - Material theme
+- `sphinx-design` - Grid and card layouts for modern UI
+- `nbsphinx` - Jupyter notebook support
+- `sphinxcontrib-bibtex` - Bibliography support
+- `myst-parser` - Markdown support
+- Visualization libraries (bokeh, plotly, seaborn)
+
+**Building the Docs:**
+
 ```bash
 # Navigate to docs directory
 cd docs

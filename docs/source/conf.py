@@ -52,6 +52,7 @@ autosummary_generate = True
 extensions = [
     "myst_parser",
     "sphinx_copybutton",
+    "sphinx_design",
     "sphinx_issues",  # linking github issues, prs, users
     "sphinx_material",
     "nbsphinx",
