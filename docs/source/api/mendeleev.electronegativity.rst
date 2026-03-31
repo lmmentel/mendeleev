@@ -7,7 +7,7 @@
    .. rubric:: Functions
 
    .. autosummary::
-
+   
       allred_rochow
       cottrell_sutton
       generic
