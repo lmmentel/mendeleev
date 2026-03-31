@@ -44,68 +44,6 @@ Why mendeleev?
 🔬 **Trusted Data Sources**
    All data comes from peer-reviewed scientific literature with proper citations. See our :doc:`bibliography <bibliography>` for complete references.
 
-Use Cases
-=========
-
-.. grid:: 3
-
-   .. grid-item-card:: 📊 Data Analysis
-
-      Analyze elemental properties across the periodic table, identify correlations, and discover trends.
-
-      .. code-block:: python
-
-         import mendeleev as mv
-         from mendeleev import fetch_table
-
-         # Get all elements as DataFrame
-         df = fetch_table('elements')
-
-         # Analyze electronegativity vs. ionization
-         correlation = df[['en_pauling', 'ionenergies']].corr()
-
-   .. grid-item-card:: 🧪 Materials Research
-
-      Screen elements for materials design based on properties like electronegativity, radius, or oxidation states.
-
-      .. code-block:: python
-
-         # Find elements with specific properties
-         candidates = [
-             e for e in mv.get_all_elements()
-             if e.en_pauling and 1.5 < e.en_pauling < 2.5
-             and e.atomic_radius and e.atomic_radius < 150
-         ]
-
-   .. grid-item-card:: 📈 Visualization
-
-      Create publication-quality periodic tables and interactive plots.
-
-      .. code-block:: python
-
-         from mendeleev.vis import periodic_table
-
-         # Create custom periodic table
-         fig = periodic_table(
-             attribute='atomic_weight',
-             title='Atomic Weight Distribution'
-         )
-
-Interactive Web App
-===================
-
-Try mendeleev in your browser without installing anything!
-
-.. raw:: html
-
-   <p align="center">
-      <a href="http://mendeleev.herokuapp.com/" style="display: inline-block; padding: 12px 24px; background: #ff6347; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; margin: 10px;">
-         🌐 Launch Interactive Web App
-      </a>
-   </p>
-
-Explore the data, create custom periodic tables, and visualize correlations between properties at `mendeleev.herokuapp.com <http://mendeleev.herokuapp.com/>`_.
-
 Quick Installation
 ==================
 
@@ -198,69 +136,35 @@ Quick Start
 Key Features
 ============
 
-📊 **Rich Dataset**
+📊 **Rich Dataset** → :doc:`data`
    100+ properties per element including atomic, physical, thermodynamic, and electronic data from peer-reviewed sources
 
-🔬 **Isotope Information**
+🔬 **Isotope Information** → :doc:`data`
    Complete isotope data with abundances, masses, half-lives, decay modes, and nuclear properties
 
-📏 **Units Support** (v1.1.0+)
-   Integration with `pint <https://pint.readthedocs.io/>`_ for unit-aware calculations and conversions
+📏 **Units Support** → :doc:`units`
+   Integration with `pint <https://pint.readthedocs.io/>`_ for unit-aware calculations and conversions (v1.1.0+)
 
-📈 **Visualization**
+📈 **Visualization** → :doc:`tutorials`
    Create custom periodic tables with `bokeh <https://bokeh.org/>`_, `plotly <https://plotly.com/>`_, and `seaborn <https://seaborn.pydata.org/>`_
 
-🗄️ **Data Access**
+🗄️ **Data Access** → :doc:`data_access`
    Query the SQLite database directly, export to pandas DataFrames, or use SQLAlchemy ORM for advanced queries
 
-⚡ **Multiple Access Methods**
+⚡ **Multiple Access Methods** → :doc:`api_overview`
    Access by symbol, name, atomic number, or perform bulk queries with filtering
 
-🐍 **Pythonic API**
+🐍 **Pythonic API** → :doc:`api/api`
    Clean, intuitive interface with type hints, docstrings, and extensive examples
 
-📚 **Well Documented**
+📚 **Well Documented** → :doc:`tutorials`
    Comprehensive documentation with interactive Jupyter notebook tutorials and API reference
 
-🧪 **Electronegativity Scales**
+🧪 **Electronegativity Scales** → :doc:`electronegativity`
    Calculate electronegativity using 14+ different scales (Pauling, Allred-Rochow, Mulliken, etc.)
 
-🔓 **Open Source**
+🔓 **Open Source** → :doc:`CONTRIBUTING`
    MIT licensed, actively maintained, with contributions welcome
-
-What You Can Do
-===============
-
-.. grid:: 2
-   :gutter: 3
-
-   .. grid-item-card:: 🎓 **Education & Learning**
-
-      - Create interactive periodic table lessons
-      - Explore trends in Jupyter notebooks
-      - Generate quizzes and study materials
-      - Visualize periodic patterns
-
-   .. grid-item-card:: 🔬 **Research & Analysis**
-
-      - Screen elements for materials design
-      - Analyze property correlations
-      - Generate datasets for ML models
-      - Validate computational results
-
-   .. grid-item-card:: 📊 **Data Science**
-
-      - Export to pandas for analysis
-      - Create publication-quality plots
-      - Build chemical databases
-      - Integrate with existing workflows
-
-   .. grid-item-card:: 💻 **Software Development**
-
-      - Add chemistry features to apps
-      - Build chemical calculators
-      - Create web services with element data
-      - Develop educational software
 
 Explore the Documentation
 ==========================
