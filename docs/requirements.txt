@@ -11,6 +11,6 @@ sphinxcontrib-bibtex
 pybtex
 pybtex-docutils
 sphinx-copybutton
-sphinx-material
+sphinx-immaterial
 sphinx-issues
 sphinx-design

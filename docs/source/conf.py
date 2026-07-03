@@ -11,8 +11,8 @@
 import inspect
 import os
 import sys
+import re
 from pathlib import Path
-import sphinx_material
 
 
 autodoc_mock_imports = [
@@ -54,7 +54,7 @@ extensions = [
     "sphinx_copybutton",
     "sphinx_design",
     "sphinx_issues",  # linking github issues, prs, users
-    "sphinx_material",
+    "sphinx_immaterial",
     "nbsphinx",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
@@ -72,39 +72,55 @@ extensions = [
 bibtex_bibfiles = ["references.bib"]
 
 html_show_sourcelink = True
-html_sidebars = {
-    "**": ["logo-text.html", "globaltoc.html", "localtoc.html", "searchbox.html"]
-}
 
-# Required theme setup
-extensions.append("sphinx_material")
-html_theme = "sphinx_material"
-html_theme_path = sphinx_material.html_theme_path()
-html_context = sphinx_material.get_html_context()
+html_theme = "sphinx_immaterial"
 
-# Material theme options (see theme.conf for more information)
+# Disable synopses to work around sphinx-immaterial KeyError:
+# py.data["synopses"] not initialized before after_content runs.
+object_description_options = [
+    (re.compile(".*"), {"generate_synopses": None}),
+]
+
 html_theme_options = {
-    # Set the name of the project to appear in the navigation.
-    "nav_title": "mendeleev",
-    # Set you GA account ID to enable tracking
-    "google_analytics_account": "UA-87210403-3",
-    # Specify a base_url used to generate sitemap.xml. If not
-    # specified, then no sitemap will be built.
-    "base_url": "https://mendeleev.readthedocs.io/en/stable/",
-    # Set the color and the accent color
-    "color_primary": "deep-orange",
-    "color_accent": "orange",
-    # Set the repo location to get a badge with stats
+    "icon": {
+        "repo": "fontawesome/brands/github",
+    },
+    "site_url": "https://mendeleev.readthedocs.io/en/stable/",
     "repo_url": "https://github.com/lmmentel/mendeleev/",
     "repo_name": "mendeleev",
-    # Visible levels of the global TOC; -1 means unlimited
-    "globaltoc_depth": 1,
-    # If False, expand all TOC entries
     "globaltoc_collapse": True,
-    # If True, show hidden TOC entries
-    "globaltoc_includehidden": True,
-    "heroes": {},
-    "nav_links": [],
+    "features": [
+        "navigation.expand",
+        "navigation.sections",
+        "navigation.top",
+        "search.share",
+        "search.suggest",
+        "toc.follow",
+        "toc.sticky",
+        "content.code.copy",
+    ],
+    "palette": [
+        {
+            "media": "(prefers-color-scheme: light)",
+            "scheme": "default",
+            "primary": "deep-orange",
+            "accent": "orange",
+            "toggle": {
+                "icon": "material/lightbulb",
+                "name": "Switch to dark mode",
+            },
+        },
+        {
+            "media": "(prefers-color-scheme: dark)",
+            "scheme": "slate",
+            "primary": "deep-orange",
+            "accent": "orange",
+            "toggle": {
+                "icon": "material/lightbulb-outline",
+                "name": "Switch to light mode",
+            },
+        },
+    ],
 }
 
 # Add any paths that contain templates here, relative to this directory.
