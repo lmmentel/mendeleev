@@ -303,7 +303,7 @@ See :doc:`quick` for BibTeX and BibLaTeX formats.
    :maxdepth: 2
    :hidden:
 
-   Overview <quick>
+   Quick Start <quick>
    Installation <install>
    Tutorials <tutorials>
    Data <data>

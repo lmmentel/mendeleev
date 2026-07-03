@@ -4,12 +4,161 @@
 API Overview
 ************
 
-This page provides a high-level overview of the mendeleev API, explaining the main components,
-common usage patterns, and how to choose the right function or class for your needs.
+This page helps you choose the right function or class for your task, explains the
+main components, and shows common usage patterns.
 
 .. contents:: On this page
    :local:
    :depth: 2
+
+
+Decision Guide
+==============
+
+.. code-block:: text
+
+    What do you want to do?
+    │
+    ├─ Get data for ONE element
+    │  └─> Use element('Symbol')
+    │
+    ├─ Get data for MANY elements
+    │  └─> Use fetch_table('elements')
+    │
+    ├─ Get isotope data
+    │  ├─ For one isotope
+    │  │  └─> Use isotope('Symbol', mass_number)
+    │  └─ For all isotopes of element
+    │     └─> Use element('Symbol').isotopes
+    │
+    ├─ Work with ions
+    │  └─> Use Ion('Symbol', charge=N)
+    │
+    ├─ Create visualizations
+    │  └─> Use periodic_table(...)
+    │
+    ├─ Compare electronegativity scales
+    │  └─> Use fetch_electronegativities([scales])
+    │
+    └─ Direct database queries
+       └─> Use get_session() (advanced)
+
+
+Quick Reference
+===============
+
+Most Common Functions
+---------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 50 20
+
+   * - Function
+     - Purpose
+     - Returns
+   * - ``element(id)``
+     - Get element by symbol/name/number
+     - Element
+   * - ``fetch_table(name)``
+     - Get database table as DataFrame
+     - DataFrame
+   * - ``isotope(el, mass)``
+     - Get specific isotope
+     - Isotope
+   * - ``periodic_table(...)``
+     - Create visualization
+     - Plot/Figure
+   * - ``Ion(el, charge)``
+     - Create ionic species
+     - Ion
+
+Most Useful Element Properties
+-------------------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 35 20 20
+
+   * - Property
+     - Description
+     - Unit
+     - Example
+   * - ``atomic_number``
+     - Atomic number
+     - —
+     - ``14``
+   * - ``atomic_weight``
+     - Atomic weight
+     - Da
+     - ``28.085``
+   * - ``atomic_radius``
+     - Atomic radius (Slater)
+     - pm
+     - ``132``
+   * - ``electronegativity_pauling``
+     - Pauling electronegativity
+     - —
+     - ``1.9``
+   * - ``electron_affinity``
+     - Electron affinity
+     - eV
+     - ``1.39``
+   * - ``ionization_energies``
+     - Ionization energies
+     - eV
+     - ``[8.15, ...]``
+   * - ``melting_point``
+     - Melting point
+     - K
+     - ``1683``
+   * - ``boiling_point``
+     - Boiling point
+     - K
+     - ``2628``
+   * - ``density``
+     - Density at 295K
+     - g/cm³
+     - ``2.33``
+   * - ``isotopes``
+     - List of isotopes
+     - —
+     - ``[Isotope, ...]``
+
+Available Database Tables
+-------------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   * - Table Name
+     - Contents
+   * - ``elements``
+     - All element data (main table)
+   * - ``isotopes``
+     - Isotope data with masses, abundances, half-lives
+   * - ``ionicradii``
+     - Ionic radii for various oxidation states
+   * - ``ionizationenergies``
+     - Successive ionization energies
+   * - ``oxidationstates``
+     - Possible oxidation states
+   * - ``screeningconstants``
+     - Nuclear screening constants
+   * - ``groups``
+     - Periodic table group information
+   * - ``series``
+     - Element series (alkali metals, noble gases, etc.)
+   * - ``propertymetadata``
+     - Metadata about properties (units, sources, citations)
+   * - ``isotopedecaymodes``
+     - Isotope decay modes and branching ratios
+   * - ``phasetransitions``
+     - Phase transition data
+   * - ``scattering_factors``
+     - X-ray and neutron scattering factors
+
 
 Architecture
 ============
@@ -30,6 +179,7 @@ The mendeleev package is organized into several layers:
          │
     Database Layer
     └── SQLite database (elements.db)
+
 
 Main Components
 ===============
@@ -172,6 +322,7 @@ Low-level database access (advanced users).
 
 **Note**: Most users should use :py:func:`element() <mendeleev.mendeleev.element>`
 or :py:func:`fetch_table() <mendeleev.fetch.fetch_table>` instead.
+
 
 Common Usage Patterns
 ======================
@@ -317,153 +468,6 @@ Pattern 7: Property Metadata Lookup
     energy_props = metadata[metadata['unit'].str.contains('eV', na=False)]
     print(energy_props[['attribute_name', 'unit', 'citation_keys']])
 
-Decision Guide
-==============
-
-Use this flowchart to choose the right API component:
-
-.. code-block:: text
-
-    What do you want to do?
-    │
-    ├─ Get data for ONE element
-    │  └─> Use element('Symbol')
-    │
-    ├─ Get data for MANY elements
-    │  └─> Use fetch_table('elements')
-    │
-    ├─ Get isotope data
-    │  ├─ For one isotope
-    │  │  └─> Use isotope('Symbol', mass_number)
-    │  └─ For all isotopes of element
-    │     └─> Use element('Symbol').isotopes
-    │
-    ├─ Work with ions
-    │  └─> Use Ion('Symbol', charge=N)
-    │
-    ├─ Create visualizations
-    │  └─> Use periodic_table(...)
-    │
-    ├─ Compare electronegativity scales
-    │  └─> Use fetch_electronegativities([scales])
-    │
-    └─ Direct database queries
-       └─> Use get_session() (advanced)
-
-Quick Reference
-===============
-
-Most Common Functions
----------------------
-
-.. list-table::
-   :header-rows: 1
-   :widths: 30 50 20
-
-   * - Function
-     - Purpose
-     - Returns
-   * - ``element(id)``
-     - Get element by symbol/name/number
-     - Element
-   * - ``fetch_table(name)``
-     - Get database table as DataFrame
-     - DataFrame
-   * - ``isotope(el, mass)``
-     - Get specific isotope
-     - Isotope
-   * - ``periodic_table(...)``
-     - Create visualization
-     - Plot/Figure
-   * - ``Ion(el, charge)``
-     - Create ionic species
-     - Ion
-
-Most Useful Element Properties
--------------------------------
-
-.. list-table::
-   :header-rows: 1
-   :widths: 25 35 20 20
-
-   * - Property
-     - Description
-     - Unit
-     - Example
-   * - ``atomic_number``
-     - Atomic number
-     - —
-     - ``14``
-   * - ``atomic_weight``
-     - Atomic weight
-     - Da
-     - ``28.085``
-   * - ``atomic_radius``
-     - Atomic radius (Slater)
-     - pm
-     - ``132``
-   * - ``electronegativity_pauling``
-     - Pauling electronegativity
-     - —
-     - ``1.9``
-   * - ``electron_affinity``
-     - Electron affinity
-     - eV
-     - ``1.39``
-   * - ``ionization_energies``
-     - Ionization energies
-     - eV
-     - ``[8.15, ...]``
-   * - ``melting_point``
-     - Melting point
-     - K
-     - ``1683``
-   * - ``boiling_point``
-     - Boiling point
-     - K
-     - ``2628``
-   * - ``density``
-     - Density at 295K
-     - g/cm³
-     - ``2.33``
-   * - ``isotopes``
-     - List of isotopes
-     - —
-     - ``[Isotope, ...]``
-
-Available Database Tables
--------------------------
-
-.. list-table::
-   :header-rows: 1
-   :widths: 30 70
-
-   * - Table Name
-     - Contents
-   * - ``elements``
-     - All element data (main table)
-   * - ``isotopes``
-     - Isotope data with masses, abundances, half-lives
-   * - ``ionicradii``
-     - Ionic radii for various oxidation states
-   * - ``ionizationenergies``
-     - Successive ionization energies
-   * - ``oxidationstates``
-     - Possible oxidation states
-   * - ``screeningconstants``
-     - Nuclear screening constants
-   * - ``groups``
-     - Periodic table group information
-   * - ``series``
-     - Element series (alkali metals, noble gases, etc.)
-   * - ``propertymetadata``
-     - Metadata about properties (units, sources, citations)
-   * - ``isotopedecaymodes``
-     - Isotope decay modes and branching ratios
-   * - ``phasetransitions``
-     - Phase transition data
-   * - ``scattering_factors``
-     - X-ray and neutron scattering factors
 
 Type Hints
 ==========
@@ -489,6 +493,7 @@ The mendeleev API uses type hints extensively. Here are the main types:
 
     # Ions
     Ion(label: Union[str, int], charge: int) -> Ion
+
 
 Error Handling
 ==============
@@ -530,6 +535,7 @@ Common exceptions and how to handle them:
         iso = isotope('C', 999)
     except NoResultFound:
         print("Isotope not found")
+
 
 See Also
 ========

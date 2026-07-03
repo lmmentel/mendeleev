@@ -1,37 +1,215 @@
+.. _quick-start:
 
-***************
-Getting started
-***************
+***********
+Quick Start
+***********
 
-Overview
+Install mendeleev (see :doc:`install` for details):
+
+.. code-block:: bash
+
+   pip install mendeleev
+
+Or with visualization support:
+
+.. code-block:: bash
+
+   pip install mendeleev[vis]
+
+All examples below work after ``pip install mendeleev``. No database download needed — it ships with the package.
+
+----
+
+1. Get an element by symbol
+===========================
+
+.. code-block:: python
+
+   from mendeleev import element
+
+   si = element("Si")
+   print(si.name)           # Silicon
+   print(si.atomic_number)  # 14
+
+2. Get an element by name or atomic number
+===========================================
+
+.. code-block:: python
+
+   from mendeleev import element
+
+   al = element("Aluminium")   # by name
+   o  = element(8)             # by atomic number
+   print(al.atomic_number)     # 13
+   print(o.name)               # Oxygen
+
+3. Import elements directly by symbol
+======================================
+
+.. code-block:: python
+
+   from mendeleev import Fe, O, H
+
+   print(Fe.name)           # Iron
+   print(H.atomic_weight)   # 1.008
+
+4. Get multiple elements at once
+=================================
+
+.. code-block:: python
+
+   from mendeleev import element
+
+   c, h, o = element(["C", "Hydrogen", 8])
+   print(c.name, h.name, o.name)  # Carbon Hydrogen Oxygen
+
+5. Access element properties
+=============================
+
+.. code-block:: python
+
+   from mendeleev import element
+
+   si = element("Si")
+   print(f"Atomic weight:      {si.atomic_weight}  Da")
+   print(f"Melting point:      {si.melting_point}  K")
+   print(f"Boiling point:      {si.boiling_point}  K")
+   print(f"Density:            {si.density}        g/cm³")
+   print(f"Electronegativity:  {si.en_pauling}")
+   print(f"Electron affinity:  {si.electron_affinity}  eV")
+
+6. Work with isotopes
+=====================
+
+.. code-block:: python
+
+   from mendeleev import element
+
+   carbon = element("C")
+   for iso in carbon.isotopes:
+       print(f"C-{iso.mass_number}: {iso.abundance}%")
+   # C-12: 98.93%
+   # C-13: 1.07%
+
+Access a specific isotope directly:
+
+.. code-block:: python
+
+   from mendeleev import isotope
+
+   c14 = isotope("C", 14)
+   print(f"Half-life: {c14.half_life} years")  # 5700.0
+
+7. Bulk data with pandas
+=========================
+
+.. code-block:: python
+
+   from mendeleev import fetch_table
+
+   df = fetch_table("elements")
+   print(df[["symbol", "name", "atomic_number", "atomic_weight"]].head())
+
+   # Filter and sort
+   heavy = df[df["atomic_number"] > 80]
+   print(heavy[["symbol", "name", "density"]].sort_values("density", ascending=False))
+
+8. Create a visualization
+==========================
+
+.. code-block:: python
+
+   from mendeleev.vis import periodic_table
+
+   # Interactive plot (requires bokeh or plotly)
+   periodic_table(colorby="atomic_radius", backend="plotly")
+
+   # Save a static plot
+   periodic_table(colorby="en_pauling", backend="seaborn", output="en_periodic.png")
+
+9. Work with ions
+=================
+
+.. code-block:: python
+
+   from mendeleev.ion import Ion
+
+   fe2 = Ion("Fe", charge=2)
+   fe3 = Ion("Fe", charge=3)
+   print(f"Ionic radius Fe²⁺: {fe2.ionic_radius} pm")
+   print(f"Ionic radius Fe³⁺: {fe3.ionic_radius} pm")
+
+10. Compare electronegativity scales
+=====================================
+
+.. code-block:: python
+
+   from mendeleev import fetch_electronegativities
+
+   en = fetch_electronegativities(["pauling", "allen", "mulliken"])
+   print(en[en["symbol"] == "Si"])
+
+Or access scales directly on an element:
+
+.. code-block:: python
+
+   from mendeleev import element
+
+   si = element("Si")
+   print(si.en_pauling)       # 1.9
+   print(si.en_allen)         # 11.33
+   print(si.en_mulliken())    # computed on the fly
+
+11. Unit-aware calculations
+============================
+
+.. code-block:: python
+
+   import pint
+   from mendeleev import element
+
+   ureg = pint.UnitRegistry()
+   si = element("Si")
+
+   radius = si.atomic_radius * ureg.pm
+   volume = (4 / 3) * 3.14159 * radius**3
+   print(volume.to("angstrom**3"))  # 9.6 angstrom ** 3
+
+12. Use the CLI
+===============
+
+.. code-block:: bash
+
+   element.py Si           # by symbol
+   element.py 14           # by atomic number
+   element.py Silicon      # by name
+
+Prints all available properties in the terminal (installed with the package).
+
+
+What next?
+==========
+
+* :doc:`api_overview` — choose the right function for your task
+* :doc:`tutorials` — Jupyter notebook tutorials
+* :doc:`data` — full list of 100+ available properties
+* :doc:`faq` — frequently asked questions
+* :doc:`troubleshooting` — common issues and solutions
+
+
+Appendix
 ========
 
-This package provides an API for accessing various properties of elements from
-the periodic table of elements. 
-
-
-The repository is hosted on `github <https://github.com/lmmentel/mendeleev>`_.
-
-Contributing
-============
-
-All contributions are welcome!
-
-If you would like to suggest an improvement or report a bug or data inconsistency please consider creating an
-`issue on github <https://github.com/lmmentel/mendeleev/issues>`_.
-I would be especially grateful for references to possible data updates and sources and recommendations of new data.
-
-
 Citing
-======
+------
 
-If you use *mendeleev* in a scientific publication, please consider citing the software as
+If you use mendeleev in a scientific publication, please cite:
 
-|    L. M. Mentel, *mendeleev* - A Python resource for properties of chemical elements, ions and isotopes. , 2014-- . Available at: `https://github.com/lmmentel/mendeleev <https://github.com/lmmentel/mendeleev>`_.
+   L. M. Mentel, *mendeleev* - A Python resource for properties of chemical
+   elements, ions and isotopes. , 2014-- .
+   Available at: https://github.com/lmmentel/mendeleev
 
-
-
-Here's the reference in the `BibLaTeX <https://www.ctan.org/pkg/biblatex?lang=en>`_ format
+BibLaTeX:
 
 .. code-block:: latex
 
@@ -43,29 +221,28 @@ Here's the reference in the `BibLaTeX <https://www.ctan.org/pkg/biblatex?lang=en
       date = {2014--},
   }
 
-or the older `BibTeX <http://www.bibtex.org/>`_ format
+BibTeX:
 
 .. code-block:: latex
 
    @misc{mendeleev2014,
       author = {Mentel, Łukasz},
-      title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 1.1.0},
+      title = {mendeleev -- A Python resource for properties of chemical elements, ions and isotopes, ver. 1.1.0},
       howpublished = {\url{https://github.com/lmmentel/mendeleev}},
       year  = {2014--},
    }
 
-
 Related projects
-================
+----------------
 
 `periodictable <https://github.com/pkienzle/periodictable>`_
-    This package provides a periodic table of the elements with support for mass, density and xray/neutron scattering information.
+    Periodic table with mass, density and xray/neutron scattering information.
 
 `periodic <https://github.com/luisnaranjo733/periodic>`_
-    Periodic is an open source simple python API/command line script for the periodic table.
+    Simple Python API / CLI for the periodic table.
 
 Funding
-=======
+-------
 
 This project is supported by the RCN (The Research Council of Norway) project
 number 239193.
