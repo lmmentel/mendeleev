@@ -188,61 +188,11 @@ Prints all available properties in the terminal (installed with the package).
 
 
 What next?
-==========
+=========
 
 * :doc:`api_overview` — choose the right function for your task
 * :doc:`tutorials` — Jupyter notebook tutorials
 * :doc:`data` — full list of 100+ available properties
 * :doc:`faq` — frequently asked questions
 * :doc:`troubleshooting` — common issues and solutions
-
-
-Appendix
-========
-
-Citing
-------
-
-If you use mendeleev in a scientific publication, please cite:
-
-   L. M. Mentel, *mendeleev* - A Python resource for properties of chemical
-   elements, ions and isotopes. , 2014-- .
-   Available at: https://github.com/lmmentel/mendeleev
-
-BibLaTeX:
-
-.. code-block:: latex
-
-   @software{mendeleev2014,
-      author = {Mentel, Łukasz},
-      title = {{mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes},
-      url = {https://github.com/lmmentel/mendeleev},
-      version = {1.1.0},
-      date = {2014--},
-  }
-
-BibTeX:
-
-.. code-block:: latex
-
-   @misc{mendeleev2014,
-      author = {Mentel, Łukasz},
-      title = {mendeleev -- A Python resource for properties of chemical elements, ions and isotopes, ver. 1.1.0},
-      howpublished = {\url{https://github.com/lmmentel/mendeleev}},
-      year  = {2014--},
-   }
-
-Related projects
-----------------
-
-`periodictable <https://github.com/pkienzle/periodictable>`_
-    Periodic table with mass, density and xray/neutron scattering information.
-
-`periodic <https://github.com/luisnaranjo733/periodic>`_
-    Simple Python API / CLI for the periodic table.
-
-Funding
--------
-
-This project is supported by the RCN (The Research Council of Norway) project
-number 239193.
+* :doc:`citing` — citation formats and BibTeX entries

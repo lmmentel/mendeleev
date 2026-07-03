@@ -327,146 +327,37 @@ or :py:func:`fetch_table() <mendeleev.fetch.fetch_table>` instead.
 Common Usage Patterns
 ======================
 
-Pattern 1: Single Element Properties
--------------------------------------
+The :doc:`Quick Start guide <quick>` provides copy-paste examples for common
+tasks. This section summarizes which function to use for each use case.
 
-**Use case**: Get specific properties for one or a few elements.
+.. list-table::
+   :header-rows: 1
+   :widths: 25 25 50
 
-**Use**: :py:func:`element() <mendeleev.mendeleev.element>`
-
-::
-
-    from mendeleev import element
-
-    si = element('Si')
-    print(f"Atomic radius: {si.atomic_radius} pm")
-    print(f"Electronegativity: {si.en_pauling}")
-    print(f"Melting point: {si.melting_point} K")
-
-Pattern 2: Bulk Data Analysis
-------------------------------
-
-**Use case**: Analyze properties across many elements.
-
-**Use**: :py:func:`fetch_table() <mendeleev.fetch.fetch_table>`
-
-::
-
-    from mendeleev import fetch_table
-    import matplotlib.pyplot as plt
-
-    # Get all elements
-    df = fetch_table('elements')
-
-    # Analyze trends
-    metals = df[df['block'].isin(['s', 'd', 'f'])]
-
-    # Plot
-    plt.scatter(metals['atomic_number'], metals['density'])
-    plt.xlabel('Atomic Number')
-    plt.ylabel('Density (g/cm³)')
-    plt.show()
-
-Pattern 3: Isotope Information
--------------------------------
-
-**Use case**: Get isotope data for an element.
-
-**Method 1**: Via element object
-
-::
-
-    from mendeleev import element
-
-    carbon = element('C')
-    for iso in carbon.isotopes:
-        print(f"C-{iso.mass_number}: {iso.abundance}%")
-
-**Method 2**: Direct isotope access
-
-::
-
-    from mendeleev import isotope
-
-    c14 = isotope('C', 14)
-    print(f"Half-life: {c14.half_life} years")
-
-Pattern 4: Ion Properties
---------------------------
-
-**Use case**: Work with ionic species.
-
-**Use**: :py:class:`Ion <mendeleev.ion.Ion>` class
-
-::
-
-    from mendeleev.ion import Ion
-
-    fe2 = Ion('Fe', charge=2)
-    fe3 = Ion('Fe', charge=3)
-
-    print(f"Fe²⁺ ionic radius: {fe2.ionic_radius} pm")
-    print(f"Fe³⁺ ionic radius: {fe3.ionic_radius} pm")
-
-Pattern 5: Visualization
--------------------------
-
-**Use case**: Create periodic table visualizations.
-
-**Use**: :py:func:`periodic_table() <mendeleev.vis.periodictable.periodic_table>`
-
-::
-
-    from mendeleev.vis import periodic_table
-
-    # Interactive plot with plotly
-    periodic_table(
-        colorby='atomic_radius',
-        title='Atomic Radii',
-        backend='plotly'
-    )
-
-    # Static plot with seaborn
-    periodic_table(
-        colorby='electronegativity_pauling',
-        backend='seaborn',
-        output='en_plot.png'
-    )
-
-Pattern 6: Electronegativity Comparison
-----------------------------------------
-
-**Use case**: Compare multiple electronegativity scales.
-
-**Use**: :py:func:`fetch_electronegativities() <mendeleev.fetch.fetch_electronegativities>`
-
-::
-
-    from mendeleev import fetch_electronegativities
-
-    # Get specific scales
-    en_df = fetch_electronegativities(['pauling', 'allen', 'mulliken'])
-
-    # Compare for specific element
-    si_en = en_df[en_df['symbol'] == 'Si']
-    print(si_en)
-
-Pattern 7: Property Metadata Lookup
-------------------------------------
-
-**Use case**: Find units, sources, and citations for properties.
-
-**Use**: :py:class:`PropertyMetadata <mendeleev.models.PropertyMetadata>`
-
-::
-
-    from mendeleev import fetch_table
-
-    metadata = fetch_table('propertymetadata')
-
-    # Find properties with energy units
-    energy_props = metadata[metadata['unit'].str.contains('eV', na=False)]
-    print(energy_props[['attribute_name', 'unit', 'citation_keys']])
+   * - Use case
+     - Function
+     - See also
+   * - Get properties for one element
+     - ``element()``
+     - :doc:`quick`
+   * - Bulk data across all elements
+     - ``fetch_table()``
+     - :doc:`quick`
+   * - Isotope data
+     - ``isotope()`` / ``.isotopes``
+     - :doc:`quick`
+   * - Ion properties
+     - ``Ion()``
+     - :doc:`quick`
+   * - Periodic table plots
+     - ``periodic_table()``
+     - :doc:`tutorials`
+   * - Electronegativity comparison
+     - ``fetch_electronegativities()``
+     - :doc:`electronegativity`
+   * - Property metadata lookup
+     - ``fetch_table('propertymetadata')``
+     - :doc:`data_access`
 
 
 Type Hints

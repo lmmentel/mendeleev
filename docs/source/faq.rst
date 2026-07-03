@@ -26,7 +26,7 @@ mendeleev offers:
 - **Units support**: Integration with pint for proper physical units (v1.1.0+)
 - **Database backend**: SQLAlchemy-based for flexible data access
 
-See :doc:`quick` for related projects.
+See :doc:`citing` for related projects.
 
 Is mendeleev free to use?
 --------------------------
@@ -273,7 +273,7 @@ Yes! Please cite it as:
     elements, ions and isotopes. , 2014-- . Available at:
     https://github.com/lmmentel/mendeleev
 
-See :doc:`quick` for BibTeX and BibLaTeX formats.
+See :doc:`citing` for BibTeX and BibLaTeX formats.
 
 
 Performance

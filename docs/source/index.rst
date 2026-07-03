@@ -44,94 +44,19 @@ Why mendeleev?
 🔬 **Trusted Data Sources**
    All data comes from peer-reviewed scientific literature with proper citations. See our :doc:`bibliography <bibliography>` for complete references.
 
-Quick Installation
-==================
-
-**Requirements:** Python 3.9, 3.10, 3.11, 3.12, or 3.13
-
-Install from conda-forge (recommended):
-
-.. code-block:: bash
-
-   conda install conda-forge::mendeleev
-
-Or via pip:
-
-.. code-block:: bash
-
-   pip install mendeleev
-
-For development installation with visualization dependencies:
-
-.. code-block:: bash
-
-   pip install mendeleev[vis]
-
 Quick Start
 ===========
 
-**Simple element access:**
+See the :doc:`Quick Start guide <quick>` for copy-paste examples, or
+:doc:`install` for installation options.
 
 .. code-block:: python
 
-   >>> from mendeleev import element
+   from mendeleev import element
 
-   >>> si = element('Si')
-   >>> si.name
-   'Silicon'
-   >>> si.atomic_number
-   14
-   >>> si.thermal_conductivity
-   149
-
-**Or import directly by symbol:**
-
-.. code-block:: python
-
-   >>> from mendeleev import Fe, O, H
-   >>> Fe.name
-   'Iron'
-   >>> H.atomic_weight
-   1.008
-
-**Access isotope data:**
-
-.. code-block:: python
-
-   >>> si = element('Si')
-   >>> for iso in si.isotopes:
-   ...     print(f"{iso.mass_number}: {iso.abundance}%")
-   28: 92.23%
-   29: 4.67%
-   30: 3.10%
-
-**Work with units (v1.1.0+):**
-
-.. code-block:: python
-
-   >>> from mendeleev import element
-   >>> from mendeleev.models import fetch_unit_metadata
-
-   >>> fe = element('Fe')
-   >>> meta = fetch_unit_metadata('atomic_radius')
-   >>> print(f"Radius: {fe.atomic_radius} {meta.units}")
-   Radius: 156 pm
-
-**Query multiple elements:**
-
-.. code-block:: python
-
-   >>> from mendeleev import fetch_table
-
-   >>> # Get all elements as pandas DataFrame
-   >>> df = fetch_table('elements')
-   >>> df[['symbol', 'name', 'atomic_number']].head()
-     symbol      name  atomic_number
-   0      H  Hydrogen              1
-   1     He    Helium              2
-   2     Li   Lithium              3
-   3     Be Beryllium              4
-   4      B     Boron              5
+   si = element("Si")
+   print(si.name)           # Silicon
+   print(si.atomic_number)  # 14
 
 Key Features
 ============
@@ -292,29 +217,44 @@ Community & Support
 Citing mendeleev
 ================
 
-If you use mendeleev in your research, please cite:
-
-   L. M. Mentel, *mendeleev* - A Python resource for properties of chemical elements, ions and isotopes. 2014--. DOI: `10.5281/zenodo.204296088 <https://doi.org/10.5281/zenodo.204296088>`_
-
-See :doc:`quick` for BibTeX and BibLaTeX formats.
+If you use mendeleev in your research, see :doc:`citing` for citation formats and BibTeX entries.
 
 .. toctree::
-   :caption: Documentation
+   :caption: Getting Started
    :maxdepth: 2
    :hidden:
 
    Quick Start <quick>
    Installation <install>
    Tutorials <tutorials>
+
+.. toctree::
+   :caption: Data & Features
+   :maxdepth: 2
+   :hidden:
+
    Data <data>
    Accessing data <data_access>
    Units <units>
    Electronegativity <electronegativity>
-   FAQ <faq>
-   Troubleshooting <troubleshooting>
-   Contributing guide <CONTRIBUTING>
+
+.. toctree::
+   :caption: API Reference
+   :maxdepth: 2
+   :hidden:
+
    API Overview <api_overview>
    API Reference <api/api>
+
+.. toctree::
+   :caption: Community & Help
+   :maxdepth: 2
+   :hidden:
+
+   FAQ <faq>
+   Troubleshooting <troubleshooting>
+   Citing <citing>
+   Contributing guide <CONTRIBUTING>
    Bibliography <bibliography>
    Changes <changes_link>
    License <license_link>
