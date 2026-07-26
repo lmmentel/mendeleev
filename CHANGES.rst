@@ -2,6 +2,17 @@
 mendeleev Changelog
 *******************
 
+v1.2.0 (27.07.2026)
+-------------------
+
+* [ENH] Add units for stored properties by :user:`@lmmentel` in :pr:`239`
+* [FIX] Handle NaN colors in plotly create_tile by :user:`@lmmentel` in :pr:`266`
+* [MNT] Drop python 3.9 and add 3.14 by :user:`@lmmentel` in :pr:`246`
+* [MNT] Documentation restructure and sphinx-immaterial migration by :user:`@lmmentel` in :pr:`248`
+* [MNT] Change mendeleev installation command to conda-forge by :user:`@lmmentel` in :pr:`245`
+* [MNT] Automate mendeleev-data sync on release by :user:`@lmmentel`
+* [MNT] Consolidate dependabot updates into single lock update by :user:`@lmmentel` in :pr:`267`
+
 v1.1.0 (10.06.2025)
 -------------------
 
