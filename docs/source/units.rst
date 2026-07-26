@@ -6,145 +6,276 @@ Working with Physical Units
 
 .. versionadded:: 1.1.0
 
-As of version 1.1.0, mendeleev integrates with the `pint <https://pint.readthedocs.io/>`_
-library for proper handling of physical units and quantities. This allows you to work with
-element properties in a unit-aware manner, making conversions easier and reducing errors
-in calculations.
+mendeleev integrates with `pint <https://pint.readthedocs.io/>`_ to provide unit-aware
+access to physical properties. Append ``_u`` to any property name to get a
+`pint.Quantity <https://pint.readthedocs.io/en/stable/>`_ with proper units attached.
 
-Overview
-========
 
-The integration with pint provides:
+Quick Example
+=============
 
-- **Unit-aware properties**: Physical properties are returned with their proper units
-- **Automatic conversions**: Easy conversion between different unit systems
-- **Dimensional analysis**: Ensures calculations are dimensionally correct
-- **Type safety**: Prevents mixing incompatible units
+.. code-block:: python
 
-Getting Property Metadata
-==========================
+    >>> from mendeleev import Fe, Al
+    >>> Fe.atomic_weight_u
+    55.845 dalton
+    >>> Al.density_u
+    2.7 gram / centimeter ** 3
 
-You can access metadata about properties, including their units, using the
-:py:func:`fetch_table <mendeleev.fetch.fetch_table>` function::
+That's it — just add ``_u``.
 
-    >>> from mendeleev import fetch_table
-    >>> metadata = fetch_table('propertymetadata')
-    >>> # View properties with their units
-    >>> metadata[['attribute_name', 'unit']].head(10)
 
-This shows the units associated with each element property.
+How It Works
+============
 
-Available Units
-===============
+When you access ``element.property_u``, mendeleev:
 
-Common units used in mendeleev include:
+1. Strips the ``_u`` suffix to get the base property name.
+2. Looks up the unit in the ``PropertyMetadata`` database table.
+3. Multiplies the raw value by that unit using ``pint``.
+4. Returns a ``pint.Quantity`` object.
 
-**Length/Distance:**
-  - ``pm`` (picometers) - atomic and ionic radii
-  - ``bohr`` - Bohr radius units
+If the property doesn't exist, you'll get an ``AttributeError``. If it has no
+unit defined, you'll also get an ``AttributeError``. If the value is ``None``
+(missing data), the ``_u`` version returns ``None`` too.
 
-**Energy:**
-  - ``eV`` (electron volts) - ionization energies, electron affinities
-  - ``hartree`` - atomic units of energy
-
-**Temperature:**
-  - ``K`` (Kelvin) - melting points, boiling points
-
-**Pressure:**
-  - ``MPa`` (megapascals) - critical pressure
-
-**Mass:**
-  - ``Da`` (Daltons) - atomic weights
-  - ``g/cm^3`` - density
-
-**Other:**
-  - ``mg/kg`` - abundance in Earth's crust
-  - ``mg/L`` - abundance in seas
-  - ``cm^3/mol`` - atomic volume
-
-Working with Units
-==================
 
 Basic Usage
------------
+===========
 
-Element properties that have units are stored in the database with their unit information.
-The property metadata table contains this information::
+Accessing properties with units
+-------------------------------
 
-    >>> from mendeleev import element
-    >>> si = element('Si')
-    >>> # Access properties - units depend on the property
-    >>> si.atomic_radius  # in pm (picometers)
-    132
-    >>> si.boiling_point  # in K (Kelvin)
-    2628
+.. code-block:: python
 
-Converting Units
-----------------
+    >>> from mendeleev import H, C, Fe
+    >>> H.atomic_weight
+    1.008
+    >>> H.atomic_weight_u
+    1.008 dalton
+    >>> C.density
+    2.267
+    >>> C.density_u
+    2.267 gram / centimeter ** 3
 
-For unit conversions and dimensional analysis, you can use the pint library directly::
+Without the ``_u`` suffix, you get raw numbers (just like before). With it,
+you get pint Quantity objects that know their units.
 
-    >>> import pint
-    >>> ureg = pint.UnitRegistry()
-    >>>
-    >>> # Convert atomic radius from pm to Angstroms
-    >>> radius_pm = 132 * ureg.pm
-    >>> radius_angstrom = radius_pm.to(ureg.angstrom)
-    >>> print(radius_angstrom)
-    1.32 angstrom
-    >>>
-    >>> # Convert boiling point from K to Celsius
-    >>> bp_kelvin = 2628 * ureg.K
-    >>> bp_celsius = bp_kelvin.to(ureg.degC)
-    >>> print(bp_celsius)
-    2354.85 degree_Celsius
 
-Unit-Aware Calculations
------------------------
+Unit Conversions
+================
 
-Using pint ensures dimensional correctness in calculations::
+The returned Quantity objects support easy unit conversions:
 
-    >>> import pint
-    >>> ureg = pint.UnitRegistry()
-    >>>
-    >>> # Calculate volume from radius (spherical approximation)
-    >>> from mendeleev import element
-    >>> import math
-    >>>
-    >>> si = element('Si')
-    >>> radius = si.atomic_radius * ureg.pm
-    >>> volume = (4/3) * math.pi * radius**3
-    >>> print(volume.to('angstrom**3'))
-    9.6 angstrom ** 3
+.. code-block:: python
 
-Property Metadata Reference
-============================
+    >>> from mendeleev import Al, Fe
+    >>> Al.melting_point_u
+    933.47 kelvin
+    >>> Al.melting_point_u.to('celsius')
+    660.3199999999997 degree_Celsius
+    >>> Al.melting_point_u.to('fahrenheit')
+    1220.576 degree_Fahrenheit
 
-The ``PropertyMetadata`` table contains comprehensive information about all stored properties:
+.. code-block:: python
 
-- ``attribute_name``: The property name as accessed in code
-- ``unit``: The unit of measurement (if applicable)
-- ``description``: Human-readable description
-- ``value_origin``: Whether the value is stored or computed
-- ``citation_keys``: References to source publications
+    >>> Fe.atomic_radius_u
+    126 picometer
+    >>> Fe.atomic_radius_u.to('angstrom')
+    1.26 angstrom
 
-You can query this metadata to understand what units are used for each property::
 
-    >>> from mendeleev import fetch_table
-    >>> metadata = fetch_table('propertymetadata')
-    >>>
-    >>> # Find all properties with energy units
-    >>> energy_props = metadata[metadata['unit'].str.contains('eV', na=False)]
-    >>> print(energy_props[['attribute_name', 'unit', 'description']])
+Calculations with Units
+=======================
+
+pint Quantities support arithmetic while preserving dimensional correctness:
+
+.. code-block:: python
+
+    >>> from mendeleev import Al
+    >>> from mendeleev.models import ureg
+
+    >>> # Mass = density × volume
+    >>> density = Al.density_u
+    >>> volume = 100 * ureg.milliliter
+    >>> mass = density * volume
+    >>> mass.to('gram')
+    270.0 gram
+
+.. code-block:: python
+
+    >>> from mendeleev import Fe
+    >>> # Convert electron affinity to joules
+    >>> Fe.electron_affinity_u.to('joule')
+    3.9342e-19 joule
+
+The ``ureg`` (pint UnitRegistry) is available from ``mendeleev.models`` if you
+need to create new quantities for calculations.
+
+
+Error Handling
+==============
+
+Properties without units raise ``AttributeError``:
+
+.. code-block:: python
+
+    >>> from mendeleev import H
+    >>> H.symbol_u
+    Traceback (most recent call last):
+        ...
+    AttributeError: ...
+
+Properties with ``None`` values return ``None``:
+
+.. code-block:: python
+
+    >>> H.melting_point
+    None
+    >>> H.melting_point_u
+    None
+
+
+Supported Classes
+=================
+
+The ``_u`` suffix works on these model classes:
+
+- :py:class:`Element <mendeleev.models.Element>` — the main element class
+- :py:class:`IonicRadius <mendeleev.models.IonicRadius>`
+- :py:class:`IonizationEnergy <mendeleev.models.IonizationEnergy>`
+- :py:class:`Isotope <mendeleev.models.Isotope>`
+- :py:class:`PhaseTransition <mendeleev.models.PhaseTransition>`
+- :py:class:`ScatteringFactor <mendeleev.models.ScatteringFactor>`
+
+
+Properties with Units
+=====================
+
+Element properties with units
+-----------------------------
+
+**Atomic properties:**
+    - ``atomic_radius_u`` (pm) — Atomic radius
+    - ``atomic_radius_rahm_u`` (pm) — Atomic radius by Rahm et al.
+    - ``atomic_volume_u`` (cm³/mol) — Atomic volume
+    - ``atomic_weight_u`` (Da) — Relative atomic weight
+    - ``atomic_weight_uncertainty_u`` (Da) — Uncertainty in atomic weight
+
+**Abundance:**
+    - ``abundance_crust_u`` (mg/kg) — Abundance in Earth's crust
+    - ``abundance_sea_u`` (mg/L) — Abundance in seawater
+
+**Covalent radii:**
+    - ``covalent_radius_bragg_u`` (pm) — Bragg covalent radius
+    - ``covalent_radius_cordero_u`` (pm) — Cordero covalent radius
+    - ``covalent_radius_pyykko_u`` (pm) — Pyykkö single bond covalent radius
+    - ``covalent_radius_pyykko_double_u`` (pm) — Pyykkö double bond covalent radius
+    - ``covalent_radius_pyykko_triple_u`` (pm) — Pyykkö triple bond covalent radius
+
+**Van der Waals radii:**
+    - ``vdw_radius_u`` (pm) — Van der Waals radius
+    - ``vdw_radius_alvarez_u`` (pm) — Alvarez VdW radius
+    - ``vdw_radius_batsanov_u`` (pm) — Batsanov VdW radius
+    - ``vdw_radius_bondi_u`` (pm) — Bondi VdW radius
+    - ``vdw_radius_dreiding_u`` (pm) — Dreiding VdW radius
+    - ``vdw_radius_mm3_u`` (pm) — MM3 VdW radius
+    - ``vdw_radius_rt_u`` (pm) — RT VdW radius
+    - ``vdw_radius_truhlar_u`` (pm) — Truhlar VdW radius
+    - ``vdw_radius_uff_u`` (pm) — UFF VdW radius
+
+**Thermal properties:**
+    - ``boiling_point_u`` (K) — Boiling point
+    - ``melting_point_u`` (K) — Melting point
+    - ``critical_temperature_u`` (K) — Critical temperature
+    - ``critical_pressure_u`` (MPa) — Critical pressure
+    - ``triple_point_temperature_u`` (K) — Triple point temperature
+    - ``triple_point_pressure_u`` (kPa) — Triple point pressure
+    - ``evaporation_heat_u`` (kJ/mol) — Heat of vaporization
+    - ``fusion_heat_u`` (kJ/mol) — Heat of fusion
+    - ``heat_of_formation_u`` (kJ/mol) — Heat of formation
+    - ``molar_heat_capacity_u`` (J/mol/K) — Molar heat capacity
+    - ``specific_heat_capacity_u`` (J/g/K) — Specific heat capacity
+    - ``thermal_conductivity_u`` (W/m/K) — Thermal conductivity
+
+**Physical properties:**
+    - ``density_u`` (g/cm³) — Density
+    - ``lattice_constant_u`` (Å) — Lattice constant
+    - ``metallic_radius_u`` (pm) — Metallic radius
+    - ``metallic_radius_c12_u`` (pm) — Metallic radius (coordination 12)
+
+**Electronic properties:**
+    - ``dipole_polarizability_u`` (bohr³) — Dipole polarizability
+    - ``dipole_polarizability_unc_u`` (bohr³) — Uncertainty in dipole polarizability
+    - ``electron_affinity_u`` (eV) — Electron affinity
+    - ``c6_u`` (hartree/bohr⁶) — C₆ dispersion coefficient
+    - ``c6_gb_u`` (hartree/bohr⁶) — C₆ dispersion coefficient (Gould-Bučko)
+    - ``hardness_u`` (eV) — Chemical hardness
+    - ``softness_u`` (1/eV) — Chemical softness
+
+**Electronegativity scales:**
+    - ``electronegativity_allen_u`` (eV) — Allen electronegativity
+    - ``electronegativity_allred_rochow_u`` (e²/pm²) — Allred-Rochow electronegativity
+    - ``electronegativity_cottrell_sutton_u`` (e⁰·⁵/pm⁰·⁵) — Cottrell-Sutton electronegativity
+    - ``electronegativity_ghosh_u`` (1/pm) — Ghosh electronegativity
+    - ``electronegativity_gordy_u`` (e/pm) — Gordy electronegativity
+    - ``electronegativity_li_xue_u`` (1/pm) — Li-Xue electronegativity
+    - ``electronegativity_martynov_batsanov_u`` (eV⁰·⁵) — Martynov-Batsanov electronegativity
+    - ``electronegativity_mulliken_u`` (eV) — Mulliken electronegativity
+    - ``electronegativity_nagle_u`` (1/bohr) — Nagle electronegativity
+    - ``en_gunnarsson_lundqvist_u`` (eV) — Gunnarsson-Lundqvist electronegativity
+    - ``en_miedema_u`` (V) — Miedema electronegativity
+    - ``en_robles_bartolotti_u`` (eV) — Robles-Bartolotti electronegativity
+
+**Chemical properties:**
+    - ``gas_basicity_u`` (kJ/mol) — Gas basicity
+    - ``proton_affinity_u`` (kJ/mol) — Proton affinity
+
+**Economic properties:**
+    - ``price_per_kg_u`` (USD/kg) — Price per kilogram
+    - ``production_concentration_u`` (%) — Production concentration
+    - ``recycling_rate_u`` (%) — Recycling rate
+    - ``reserve_distribution_u`` (%) — Reserve distribution
+
+**Miedema parameters:**
+    - ``miedema_molar_volume_u`` (cm³) — Miedema molar volume
+
+
+Other classes with units
+------------------------
+
+**IonicRadius:**
+    - ``charge_u`` (e) — Ionic charge
+    - ``crystal_radius_u`` (pm) — Crystal radius
+    - ``ionic_radius_u`` (pm) — Ionic radius
+
+**IonizationEnergy:**
+    - ``ion_charge_u`` (e) — Ion charge
+    - ``ionization_energy_u`` (eV) — Ionization energy
+    - ``uncertainty_u`` (eV) — Uncertainty in ionization energy
+
+**Isotope:**
+    - ``mass_u`` (Da) — Isotopic mass
+    - ``mass_uncertainty_u`` (Da) — Uncertainty in isotopic mass
+    - ``quadrupole_moment_u`` (100 fm²) — Nuclear quadrupole moment
+    - ``quadrupole_moment_uncertainty_u`` (100 fm²) — Uncertainty in quadrupole moment
+
+**PhaseTransition:**
+    - ``boiling_point_u`` (K) — Boiling point
+    - ``critical_pressure_u`` (MPa) — Critical pressure
+    - ``critical_temperature_u`` (K) — Critical temperature
+    - ``melting_point_u`` (K) — Melting point
+    - ``triple_point_pressure_u`` (kPa) — Triple point pressure
+    - ``triple_point_temperature_u`` (K) — Triple point temperature
+
+**ScatteringFactor:**
+    - ``energy_u`` (eV) — Energy
+
 
 See Also
 ========
 
-- :doc:`Data reference <data>` - Complete list of available properties
-- :doc:`Data access <data_access>` - How to fetch and query data
-- `pint documentation <https://pint.readthedocs.io/>`_ - Full pint library documentation
-
-.. note::
-   While mendeleev integrates with pint for unit support, most properties are still
-   returned as numeric values in their documented units. Full pint Quantity objects
-   may be added in future versions for more seamless unit handling.
+- :doc:`Tutorials <tutorials>` — notebook tutorial on working with units
+- :doc:`Data reference <data>` — complete list of available properties
+- :doc:`Data access <data_access>` — how to fetch and query data
+- `pint documentation <https://pint.readthedocs.io/>`_ — full pint library docs

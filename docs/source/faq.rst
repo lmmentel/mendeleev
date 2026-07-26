@@ -316,7 +316,17 @@ Does mendeleev support units?
 Yes, starting from version 1.1.0, mendeleev integrates with the
 `pint <https://pint.readthedocs.io/>`_ library for unit support.
 
-See :doc:`units` for detailed information.
+Append ``_u`` to any property name to get a ``pint.Quantity`` with units attached:
+
+.. code-block:: python
+
+    >>> from mendeleev import Fe
+    >>> Fe.atomic_weight_u
+    55.845 dalton
+    >>> Fe.melting_point_u.to('celsius')
+    1537.85 degree_Celsius
+
+See :doc:`units` for the full reference and :doc:`tutorials` for a hands-on notebook.
 
 What units are properties stored in?
 -------------------------------------

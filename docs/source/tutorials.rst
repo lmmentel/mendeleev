@@ -8,6 +8,7 @@ Tutorials
    notebooks/quick_start.ipynb
    notebooks/bulk_data_access.ipynb
    notebooks/electronic_configuration.ipynb
+   notebooks/working_with_units.ipynb
    notebooks/ions.ipynb
    notebooks/visualizations.ipynb
    notebooks/advanced_visualizations.ipynb
@@ -27,6 +28,9 @@ notebooks on `binder <https://mybinder.org/>`_ where you can explore the example
 
 * `Electronic Configuration <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Felectronic_configuration.ipynb>`_
   — Work with electronic configurations, manipulate subshells, and derive spectroscopic terms.
+
+* `Working with Units <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fworking_with_units.ipynb>`_
+  — Access properties with units, convert between unit systems, and do unit-aware calculations.
 
 * `Ions <https://mybinder.org/v2/gh/lmmentel/mendeleev/master?filepath=docs%2Fsource%2Fnotebooks%2Fions.ipynb>`_
   — Create ionic species, access charge-dependent radii and properties.

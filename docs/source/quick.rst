@@ -160,20 +160,19 @@ Or access scales directly on an element:
    print(si.en_allen)         # 11.33
    print(si.en_mulliken())    # computed on the fly
 
-11. Unit-aware calculations
-============================
+11. Access properties with units
+=================================
 
 .. code-block:: python
 
-   import pint
-   from mendeleev import element
+   from mendeleev import Fe, Al
 
-   ureg = pint.UnitRegistry()
-   si = element("Si")
+   # Append _u to any property for a pint Quantity
+   print(Fe.atomic_weight_u)   # 55.845 dalton
+   print(Al.melting_point_u)   # 933.47 kelvin
 
-   radius = si.atomic_radius * ureg.pm
-   volume = (4 / 3) * 3.14159 * radius**3
-   print(volume.to("angstrom**3"))  # 9.6 angstrom ** 3
+   # Convert units easily
+   print(Al.melting_point_u.to("celsius"))  # 660.32 degree_Celsius
 
 12. Use the CLI
 ===============
