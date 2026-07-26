@@ -15,7 +15,7 @@ Accessing data
     - sql,
     - markdown.
 
-    All releases a tagged with the same version numbers as ``mendeeleev``.
+    All releases a tagged with the same version numbers as ``mendeleev``.
 
 Individual Elements
 -------------------
@@ -102,7 +102,7 @@ In order to use this functionality you'll need to clone the mendeleev repository
 
 .. code-block:: bash
 
-    gh clone lmmentel/mendeleev
+    git clone https://github.com/lmmentel/mendeleev.git
     cd mendeleev
     poetry install
     poetry run inv export

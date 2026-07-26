@@ -12,6 +12,7 @@
       cottrell_sutton
       generic
       gordy
+      interpolate_property
       li_xue
       martynov_batsanov
       mulliken

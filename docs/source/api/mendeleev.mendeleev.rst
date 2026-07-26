@@ -8,6 +8,7 @@
 
    .. autosummary::
    
+      _get_element
       deltaN
       element
       get_all_elements
