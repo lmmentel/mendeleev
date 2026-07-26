@@ -180,20 +180,26 @@ which should apply the changes to the ``mendeleev/elements.db`` database.
 Documentation is build with [Sphinx](https://www.sphinx-doc.org/en/master/) and [reStructuredText](https://docutils.sourceforge.io/rst.html). Once you [setup your local environment](#local-setup) you can build the documentation locally with:
 
 ```bash
+# Install documentation dependencies (one-time setup)
+poetry run pip install -r docs/requirements.txt
+
+# Build documentation
 cd docs
-make html
+poetry run make html
 ```
 
-Results and placed in ``build/_html`` and you can open ``build/_html/index.html`` with your favorite browser to see the results.
+Results are placed in ``build/html`` and you can open ``build/html/index.html`` with your favorite browser to see the results.
+
+**Note**: Always use `poetry run make html` to ensure the correct Python environment is used. The build will show warnings (this is normal) and should complete with "build succeeded, 572 warnings".
 
 Documentation of available [data points](https://mendeleev.readthedocs.io/en/stable/data.html) are require an extra step where metadata from
-the [PropertyMetadata](https://mendeleev.readthedocs.io/en/stable/api/models.html#propertymetadata) model is rendered into rst format  as ``docs/source/data.rst`` file. To generate an upadted version of ``data.rst`` after updating ``PropertyMetadata`` run:
+the [PropertyMetadata](https://mendeleev.readthedocs.io/en/stable/api/models.html#propertymetadata) model is rendered into rst format  as ``docs/source/data.rst`` file. To generate an updated version of ``data.rst`` after updating ``PropertyMetadata`` run:
 
 ```bash
-inv render-data-docs
+poetry run inv render-data-docs
 ```
 
-Inspect the ``data.rst`` file before committing to check that everyting looks correct.
+Inspect the ``data.rst`` file before committing to check that everything looks correct.
 
 ## Styleguides
 ### Commit Messages

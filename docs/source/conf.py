@@ -11,8 +11,8 @@
 import inspect
 import os
 import sys
+import re
 from pathlib import Path
-import sphinx_material
 
 
 autodoc_mock_imports = [
@@ -21,9 +21,9 @@ autodoc_mock_imports = [
     "numpy",
     "matplotlib",
     "pandas",
+    "pyfiglet",
     "scipy",
     "seaborn",
-    "sqlalchemy",
 ]
 
 sys.path.append(str(Path("_ext").resolve()))
@@ -53,8 +53,9 @@ autosummary_generate = True
 extensions = [
     "myst_parser",
     "sphinx_copybutton",
+    "sphinx_design",
     "sphinx_issues",  # linking github issues, prs, users
-    "sphinx_material",
+    "sphinx_immaterial",
     "nbsphinx",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
@@ -68,43 +69,61 @@ extensions = [
     "sphinxcontrib.bibtex",
 ]
 
+nbsphinx_allow_errors = True
+
 # sphinxcontrib.bibtex settings
 bibtex_bibfiles = ["references.bib"]
 
 html_show_sourcelink = True
-html_sidebars = {
-    "**": ["logo-text.html", "globaltoc.html", "localtoc.html", "searchbox.html"]
-}
 
-# Required theme setup
-extensions.append("sphinx_material")
-html_theme = "sphinx_material"
-html_theme_path = sphinx_material.html_theme_path()
-html_context = sphinx_material.get_html_context()
+html_theme = "sphinx_immaterial"
 
-# Material theme options (see theme.conf for more information)
+# Disable synopses to work around sphinx-immaterial KeyError:
+# py.data["synopses"] not initialized before after_content runs.
+object_description_options = [
+    (re.compile(".*"), {"generate_synopses": None}),
+]
+
 html_theme_options = {
-    # Set the name of the project to appear in the navigation.
-    "nav_title": "mendeleev",
-    # Set you GA account ID to enable tracking
-    "google_analytics_account": "UA-87210403-3",
-    # Specify a base_url used to generate sitemap.xml. If not
-    # specified, then no sitemap will be built.
-    "base_url": "https://mendeleev.readthedocs.io/en/stable/",
-    # Set the color and the accent color
-    "color_primary": "deep-orange",
-    "color_accent": "orange",
-    # Set the repo location to get a badge with stats
+    "icon": {
+        "repo": "fontawesome/brands/github",
+    },
+    "site_url": "https://mendeleev.readthedocs.io/en/stable/",
     "repo_url": "https://github.com/lmmentel/mendeleev/",
     "repo_name": "mendeleev",
-    # Visible levels of the global TOC; -1 means unlimited
-    "globaltoc_depth": 1,
-    # If False, expand all TOC entries
     "globaltoc_collapse": True,
-    # If True, show hidden TOC entries
-    "globaltoc_includehidden": False,
-    "heroes": {},
-    "nav_links": [],
+    "features": [
+        "navigation.expand",
+        "navigation.sections",
+        "navigation.top",
+        "search.share",
+        "search.suggest",
+        "toc.follow",
+        "toc.sticky",
+        "content.code.copy",
+    ],
+    "palette": [
+        {
+            "media": "(prefers-color-scheme: light)",
+            "scheme": "default",
+            "primary": "deep-orange",
+            "accent": "orange",
+            "toggle": {
+                "icon": "material/lightbulb",
+                "name": "Switch to dark mode",
+            },
+        },
+        {
+            "media": "(prefers-color-scheme: dark)",
+            "scheme": "slate",
+            "primary": "deep-orange",
+            "accent": "orange",
+            "toggle": {
+                "icon": "material/lightbulb-outline",
+                "name": "Switch to light mode",
+            },
+        },
+    ],
 }
 
 # Add any paths that contain templates here, relative to this directory.
@@ -304,8 +323,20 @@ python_version = ".".join(map(str, sys.version_info[0:2]))
 
 
 intersphinx_mapping = {
-    "python": ("http://docs.python.org/", None),
-    "pandas": ("http://pandas.pydata.org/pandas-docs/dev", None),
+    "python": ("https://docs.python.org/3", None),
+    "pandas": ("https://pandas.pydata.org/docs/", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "sqlalchemy": ("https://docs.sqlalchemy.org/en/20/", None),
+    "pint": ("https://pint.readthedocs.io/en/stable/", None),
+}
+
+# autodoc configuration
+autodoc_default_options = {
+    "members": True,
+    "member-order": "bysource",
+    "special-members": "__init__",
+    "undoc-members": True,
+    "exclude-members": "__weakref__",
 }
 
 # mathjax downgrade to version to get plotly working in nbsphinx
@@ -320,3 +351,27 @@ mathjax2_config = {
         "processClass": "math|output_area",
     }
 }
+
+
+# -- Autodoc event handlers ----------------------------------------------------
+
+
+def skip_hybrid_properties(app, what, name, obj, skip, options):
+    """
+    Skip SQLAlchemy hybrid properties that cause issues during autodoc.
+
+    These properties use SQLAlchemy's hybrid_property decorator which doesn't
+    work well with Sphinx's autodoc introspection during documentation generation.
+    """
+    from sqlalchemy.ext.hybrid import hybrid_property
+
+    # Skip all hybrid properties to avoid SQLAlchemy introspection errors
+    if isinstance(obj, hybrid_property):
+        return True
+
+    return skip
+
+
+def setup(app):
+    """Sphinx setup hook."""
+    app.connect("autodoc-skip-member", skip_hybrid_properties)

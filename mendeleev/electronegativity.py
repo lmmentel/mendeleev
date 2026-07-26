@@ -216,7 +216,7 @@ def sanderson(radius: float, noble_gas_radius: float) -> float:
 
     """
 
-    return math.pow(noble_gas_radius / radius, 3)
+    return (noble_gas_radius / radius) ** 3
 
 
 def generic(zeff: float, radius: float, rpow: float = 1, apow: float = 1) -> float:

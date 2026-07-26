@@ -40,7 +40,7 @@ of elements, ions and isotopes in the periodic table of elements.
 > - sql,
 > - markdown.
 >
-> All releases a tagged with the same version numbers as ``mendeeleev``.
+> All releases a tagged with the same version numbers as ``mendeleev``.
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -91,8 +91,9 @@ enables you to create customized periodic tables displaying various
 properties.
 
 ![peridic_table](docs/source/_static/img/mendeleev_periodic_series.png)
-Django Extensions is free and always will be. It is development and maintained by developers in an Open Source manner. Any support is welcome. You could help by writing documentation, pull-requests, report issues and/or translations.
-iodic trends in the periodic tables. If you want to
+
+The package also facilitates the exploration and visualization of
+periodic trends in the periodic table. If you want to
 look at some examples there are a few
 [tutorials](http://mendeleev.readthedocs.io/en/stable/tutorials.html)
 available as [jupyter notebooks](http://jupyter.org/).
@@ -141,6 +142,14 @@ pip install git+https://github.com/lmmentel/mendeleev.git
 ## Documentation
 
 Full documentation is hosted on [Read the Docs](http://mendeleev.readthedocs.org/en/latest/).
+
+**Key Documentation Pages:**
+- [API Overview](https://mendeleev.readthedocs.io/en/stable/api_overview.html) - Architecture and usage patterns
+- [Units Support](https://mendeleev.readthedocs.io/en/stable/units.html) - Working with physical units (v1.1.0+)
+- [FAQ](https://mendeleev.readthedocs.io/en/stable/faq.html) - Frequently asked questions
+- [Troubleshooting](https://mendeleev.readthedocs.io/en/stable/troubleshooting.html) - Common issues and solutions
+
+**Interactive Tutorials:**
 
 There are also tutorials available as [Jupyter](https://jupyter.org/)
 notebooks on [binder](https://mybinder.org/) where you can explore the examples interactively:
@@ -281,6 +290,13 @@ important entries are listed:
 - quadrupole moment
 - quadrupole moment uncertainty
 - spin
+
+### Units Support (v1.1.0+)
+
+Since version 1.1.0, mendeleev integrates with [pint](https://pint.readthedocs.io/) to provide
+physical units for properties. Each property includes metadata describing its units, making it easy
+to work with quantities in different unit systems and perform unit-aware calculations.
+See the [Units documentation](https://mendeleev.readthedocs.io/en/stable/units.html) for details.
 
 ## Getting started
 
@@ -545,7 +561,7 @@ or the older [BibTeX](http://www.bibtex.org/) format
 
 ``` {.sourceCode .latex}
 @misc{mendeleev2014,
-   auhor = {Mentel, Łukasz},
+   author = {Mentel, Łukasz},
    title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 1.1.0},
    howpublished = {\url{https://github.com/lmmentel/mendeleev}},
    year  = {2014--},

@@ -45,6 +45,14 @@ deprecated = "^1.2.14"
 pint = "^0.24.4"
 pydantic = "^2.12"
 pydantic-core = "^2.23"
+bokeh = {version = "^3.0", optional = true}
+jupyter-bokeh = {version = "^4.0", optional = true}
+plotly = {version = "^5.0", optional = true}
+seaborn = {version = ">=0.12", optional = true}
+pyzmq = {version = "^26.0.0", optional = true}
+
+[tool.poetry.extras]
+vis = ["bokeh", "jupyter-bokeh", "plotly", "seaborn", "pyzmq"]
 
 
 [tool.poetry.group.dev.dependencies]
@@ -60,7 +68,7 @@ pre-commit = "==3.5.0"
 pytest = "^8.0.0"
 Sphinx = "^8.0.0"
 sphinx-copybutton = "^0.3.1"
-sphinx-material = "^0.0.32"
+sphinx-immaterial = {version = ">=0.13.0", python = ">=3.10"}
 sphinxcontrib-bibtex = "^2.1.4"
 pytest-xdist = "^3.6.1"
 coverage = "^7.6.10"
