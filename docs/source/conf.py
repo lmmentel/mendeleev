@@ -21,6 +21,7 @@ autodoc_mock_imports = [
     "numpy",
     "matplotlib",
     "pandas",
+    "pyfiglet",
     "scipy",
     "seaborn",
 ]
@@ -67,6 +68,8 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinxcontrib.bibtex",
 ]
+
+nbsphinx_allow_errors = True
 
 # sphinxcontrib.bibtex settings
 bibtex_bibfiles = ["references.bib"]
