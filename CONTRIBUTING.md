@@ -153,7 +153,9 @@ cd mendeleev
 3. Development installation
 
 ```bash
-poetry install
+poetry install                       # core deps only
+poetry install --with vis            # add visualization (bokeh, plotly, seaborn)
+poetry install --with vis,docs       # add vis + docs (nbsphinx, ipykernel)
 ```
 
 #### Adding new or extending existing models
@@ -177,11 +179,11 @@ which should apply the changes to the ``mendeleev/elements.db`` database.
 
 ### Improving The Documentation
 
-Documentation is build with [Sphinx](https://www.sphinx-doc.org/en/master/) and [reStructuredText](https://docutils.sourceforge.io/rst.html). Once you [setup your local environment](#local-setup) you can build the documentation locally with:
+Documentation is built with [Sphinx](https://www.sphinx-doc.org/en/master/) and [reStructuredText](https://docutils.sourceforge.io/rst.html). Once you [setup your local environment](#local-setup) you can build the documentation locally with:
 
 ```bash
-# Install documentation dependencies (one-time setup)
-poetry run pip install -r docs/requirements.txt
+# Install docs dependencies
+poetry install --with docs
 
 # Build documentation
 cd docs

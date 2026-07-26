@@ -7,7 +7,7 @@ Installation
 Requirements
 ============
 
-Python 3.9, 3.10, 3.11, 3.12, or 3.13.
+Python 3.10, 3.11, 3.12, 3.13, or 3.14.
 
 User installation
 =================
@@ -62,9 +62,9 @@ For contributors who want to run tests, build docs, or modify the code:
    # Run tests
    poetry run pytest
 
-   # Build docs
+   # Build docs (one-time: install docs deps, then build)
+   poetry install --with docs
    cd docs
-   poetry run pip install -r requirements.txt   # one-time
    poetry run make html
 
 See :doc:`CONTRIBUTING` for full contribution guidelines.
