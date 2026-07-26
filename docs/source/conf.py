@@ -69,8 +69,6 @@ extensions = [
     "sphinxcontrib.bibtex",
 ]
 
-nbsphinx_allow_errors = True
-
 # sphinxcontrib.bibtex settings
 bibtex_bibfiles = ["references.bib"]
 
