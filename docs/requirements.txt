@@ -1,8 +1,4 @@
-bokeh
-jupyter_bokeh
 myst-parser
-seaborn
-plotly
 ipython
 ipykernel
 sphinx>=8.0,<9.0
