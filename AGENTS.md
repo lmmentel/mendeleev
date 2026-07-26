@@ -7,12 +7,13 @@ Pythonic periodic table library. SQLAlchemy models + SQLite db (`mendeleev/eleme
 ```bash
 poetry install                    # core deps only
 poetry install --with vis         # add bokeh/plotly/seaborn
+poetry install --with vis,docs    # add vis + docs deps (nbsphinx, ipykernel)
 poetry run pytest                 # runs with -n auto (xdist) by default
 poetry run pytest -k "element"    # pattern match
 poetry run pytest tests/test_element.py::test_element  # single test
 poetry run pytest --cov=mendeleev # coverage
 pre-commit run --all-files        # ruff lint + format (must pass before commit)
-cd docs && poetry run make html   # build docs (needs `pip install -r docs/requirements.txt` first)
+cd docs && poetry run make html   # build docs (needs --with docs)
 poetry run inv render-data-docs   # regenerate data reference rst from PropertyMetadata
 poetry run inv export             # dump db tables to csv/json/html/md/sql
 ```

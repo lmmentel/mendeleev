@@ -70,6 +70,14 @@ pytest-xdist = "^3.6.1"
 coverage = "^7.6.10"
 pytest-cov = "^6.0.0"
 
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+nbsphinx = "^0.9.0"
+ipykernel = "^6.0"
+ipython = "^8.0"
+
 [tool.poetry.group.vis]
 optional = true
 
