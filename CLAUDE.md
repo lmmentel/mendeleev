@@ -12,7 +12,7 @@
 ## Technology Stack
 
 ### Core Dependencies
-- **Python**: 3.9 - 3.13
+- **Python**: 3.10 - 3.14
 - **pandas**: Data manipulation and analysis (>=1.1.0)
 - **SQLAlchemy**: Database ORM and data models (>=1.4.0)
 - **pydantic**: Data validation and settings management (^2.9.2)
@@ -76,7 +76,7 @@ mendeleev/
 ## Development Setup
 
 ### Prerequisites
-- Python 3.9 or higher
+- Python 3.10 or higher
 - [Poetry](https://python-poetry.org/) for dependency management
 - Git
 
@@ -358,7 +358,7 @@ element.py Silicon
 
 GitHub Actions workflow (`.github/workflows/main.yml`):
 - **Runs on**: Ubuntu, macOS, Windows
-- **Python versions**: 3.9, 3.10, 3.11, 3.12, 3.13
+- **Python versions**: 3.10, 3.11, 3.12, 3.13, 3.14
 - **Steps**:
   1. Install dependencies with Poetry
   2. Run pre-commit hooks (ruff linting)
@@ -438,5 +438,5 @@ inv export
 - Development notebooks in root `notebooks/` are for experimentation
 - The project follows semantic versioning (currently v1.1.0)
 - All property metadata should include units, descriptions, and citations
-- Tests should pass on all supported Python versions (3.9-3.13)
+- Tests should pass on all supported Python versions (3.10-3.14)
 - Pre-commit hooks must pass before committing
