@@ -145,7 +145,7 @@ Full documentation is hosted on [Read the Docs](http://mendeleev.readthedocs.org
 
 **Key Documentation Pages:**
 - [API Overview](https://mendeleev.readthedocs.io/en/stable/api_overview.html) - Architecture and usage patterns
-- [Units Support](https://mendeleev.readthedocs.io/en/stable/units.html) - Working with physical units (v1.1.0+)
+- [Units Support](https://mendeleev.readthedocs.io/en/stable/units.html) - Working with physical units (v1.2.0+)
 - [FAQ](https://mendeleev.readthedocs.io/en/stable/faq.html) - Frequently asked questions
 - [Troubleshooting](https://mendeleev.readthedocs.io/en/stable/troubleshooting.html) - Common issues and solutions
 
@@ -291,9 +291,9 @@ important entries are listed:
 - quadrupole moment uncertainty
 - spin
 
-### Units Support (v1.1.0+)
+### Units Support (v1.2.0+)
 
-Since version 1.1.0, mendeleev integrates with [pint](https://pint.readthedocs.io/) to provide
+Since version 1.2.0, mendeleev integrates with [pint](https://pint.readthedocs.io/) to provide
 physical units for properties. Each property includes metadata describing its units, making it easy
 to work with quantities in different unit systems and perform unit-aware calculations.
 See the [Units documentation](https://mendeleev.readthedocs.io/en/stable/units.html) for details.
@@ -552,7 +552,7 @@ Here\'s the reference in the
    author = {Mentel, Łukasz},
    title = {{mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes},
    url = {https://github.com/lmmentel/mendeleev},
-   version = {1.1.0},
+   version = {1.2.0},
    date = {2014--},
 }
 ```
@@ -562,7 +562,7 @@ or the older [BibTeX](http://www.bibtex.org/) format
 ``` {.sourceCode .latex}
 @misc{mendeleev2014,
    author = {Mentel, Łukasz},
-   title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 1.1.0},
+   title = {mendeleev} -- A Python resource for properties of chemical elements, ions and isotopes, ver. 1.2.0},
    howpublished = {\url{https://github.com/lmmentel/mendeleev}},
    year  = {2014--},
 }
