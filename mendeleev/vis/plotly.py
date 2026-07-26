@@ -8,19 +8,24 @@ from .utils import colormap_column
 
 
 def create_tile(
-    element: pd.Series, color: str, x_offset: float = 0.45, y_offset: float = 0.45
+    element: pd.Series,
+    color: str,
+    default_color: str = "#ffffff",
+    x_offset: float = 0.45,
+    y_offset: float = 0.45,
 ) -> Shape:
     """
     Create tile shape
     """
+    fill = element[color] if pd.notna(element[color]) else default_color
     return Shape(
         type="rect",
         x0=element["x"] - x_offset,
         y0=element["y"] - y_offset,
         x1=element["x"] + x_offset,
         y1=element["y"] + y_offset,
-        line=dict(color=element[color]),
-        fillcolor=element[color],
+        line=dict(color=fill),
+        fillcolor=fill,
         opacity=0.8,
     )
 
@@ -92,7 +97,10 @@ def periodic_table_plotly(
         colorby = "attribute_color"
 
     # tiles
-    tiles = [create_tile(row, color=colorby) for _, row in elements.iterrows()]
+    tiles = [
+        create_tile(row, color=colorby, default_color=missing)
+        for _, row in elements.iterrows()
+    ]
     fig.layout["shapes"] += tuple(tiles)
 
     # symbols

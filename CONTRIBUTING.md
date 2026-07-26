@@ -203,6 +203,26 @@ poetry run inv render-data-docs
 
 Inspect the ``data.rst`` file before committing to check that everything looks correct.
 
+### Writing Tests
+
+Tests must be **pytest-style** — plain functions with `assert`, no `unittest.TestCase` or class-based tests. Use `@pytest.mark.parametrize` for data-driven tests.
+
+```python
+def test_example():
+    result = some_function()
+    assert result == expected
+
+@pytest.mark.parametrize("input,expected", [(1, 2), (3, 4)])
+def test_parametrized(input, expected):
+    assert some_function(input) == expected
+```
+
+Run the full suite before committing:
+
+```bash
+poetry run pytest
+```
+
 ## Styleguides
 ### Commit Messages
 <!-- TODO
