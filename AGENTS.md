@@ -34,6 +34,6 @@ poetry run inv export             # dump db tables to csv/json/html/md/sql
 - Database is **read-only by default** via URI parameter. Alembic needs write access.
 - Adding a property: update model → alembic revision → upgrade → update PropertyMetadata → `inv render-data-docs`
 - Tests use `-n auto` (pytest-xdist). Set `PYTEST_ADDOPTS=""` to override.
-- CI matrix: 3 OS × 5 Python versions (3.9–3.13). Runs ruff (pre-commit) then pytest.
+- CI matrix: 3 OS × 5 Python versions (3.10–3.14). Runs ruff (pre-commit) then pytest.
 - Documentation uses **sphinx-immaterial** theme (fork of sphinx-material). Workaround: `object_description_options` disables `generate_synopses` to avoid a sphinx-immaterial KeyError. If upgrading sphinx-immaterial or Sphinx, try removing that workaround first. Notebooks in `docs/source/notebooks/` are rendered by nbsphinx. Dev notebooks in root `notebooks/` are ignored by pre-commit.
 - Package published to PyPI on tags via trusted publishing (no password needed).
