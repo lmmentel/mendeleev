@@ -14,3 +14,4 @@ sphinx-copybutton
 sphinx-immaterial
 sphinx-issues
 sphinx-design
+invoke
