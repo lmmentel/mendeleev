@@ -12,6 +12,14 @@ from mendeleev.electronegativity import allred_rochow, gordy, cottrell_sutton
 from .db import get_engine, get_session
 from .models import Element, IonizationEnergy
 
+COMPUTED_SCALES = [
+    "li-xue",
+    "martynov-batsanov",
+    "mulliken",
+    "nagle",
+    "sanderson",
+]
+
 
 def fetch_table(table: str, **kwargs) -> pd.DataFrame:
     """
@@ -68,13 +76,17 @@ def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
     Returns:
         df (pandas.DataFrame): Pandas DataFrame with the contents of the table
     """
-    scales = [
-        "li-xue",
-        "martynov-batsanov",
-        "mulliken",
-        "nagle",
-        "sanderson",
-    ]
+    if scales is None:
+        scales = COMPUTED_SCALES
+    elif isinstance(scales, str):
+        scales = [scales]
+
+    invalid_scales = set(scales) - set(COMPUTED_SCALES)
+    if invalid_scales:
+        raise ValueError(
+            f"scale(s) not found: {', '.join(sorted(invalid_scales))}, "
+            f"available computed scales are: {', '.join(COMPUTED_SCALES)}"
+        )
 
     session = get_session()
     engine = get_engine()

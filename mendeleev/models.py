@@ -453,7 +453,7 @@ class Element(Base, ReprMixin, UnitMixin):
             else:
                 warnings.warn(
                     f"{self.symbol} has multiple allotropes, "
-                    "check <{self.symbol}.phase_transitions> for details.",
+                    f"check <{self.symbol}.phase_transitions> for details.",
                     UserWarning,
                 )
         else:
@@ -476,7 +476,7 @@ class Element(Base, ReprMixin, UnitMixin):
             else:
                 warnings.warn(
                     f"{self.symbol} has multiple allotropes, "
-                    "check <{self.symbol}.phase_transitions> for details.",
+                    f"check <{self.symbol}.phase_transitions> for details.",
                     UserWarning,
                 )
         else:
@@ -1197,7 +1197,9 @@ class Isotope(Base, ReprMixin, UnitMixin):
     @property
     def half_life_u(self) -> "Quantity":
         "Half life time as pint.Quantity with units"
-        return self.half_file * ureg(self.half_life_unit)
+        if self.half_life is None:
+            return None
+        return self.half_life * ureg(self.half_life_unit)
 
     def __str__(self) -> str:
         return "atomic_number={0:5d}, mass_number={1:5d}, mass={2:10s}, abundance={3:10s}".format(

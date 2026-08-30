@@ -2,6 +2,14 @@
 mendeleev Changelog
 *******************
 
+Unreleased
+----------
+
+* [FIX] Fix ``deltaN`` that crashed with an ``AttributeError`` after the electronegativity refactor
+* [FIX] Fix typo in ``Isotope.half_life_u`` (``half_file`` -> ``half_life``)
+* [FIX] Fix literal ``{symbol}`` placeholder in multi-allotrope phase transition warnings
+* [FIX] Make ``fetch_electronegativities`` respect the ``scales`` argument
+
 v1.2.0 (27.07.2026)
 -------------------
 

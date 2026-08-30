@@ -135,3 +135,11 @@ def test_electrons(element_obj):
 @pytest.mark.parametrize("element_obj", ELEMENTS)
 def test_price_per_kg_float_or_none(element_obj):
     assert isinstance(element_obj.price_per_kg, (float, type(None)))
+
+
+def test_multiple_allotropes_warning():
+    p = element("P")
+    with pytest.warns(UserWarning, match=r"check <P\.phase_transitions>"):
+        p.boiling_point
+    with pytest.warns(UserWarning, match=r"check <P\.phase_transitions>"):
+        p.melting_point

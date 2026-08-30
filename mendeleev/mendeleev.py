@@ -184,18 +184,47 @@ def deltaN(
     e1, e2 = [
         session.query(Element).filter(Element.atomic_number == a).one() for a in atns
     ]
+    session.close()
 
     chi = [
-        x.en_mulliken(charge=c, missingIsZero=missingIsZero)
+        _mulliken_electronegativity(x, c, missingIsZero)
         for x, c in zip([e1, e2], [charge1, charge2])
     ]
 
-    if all(x is not None for x in chi):
-        return (chi[0] - chi[1]) / (
-            2.0 * (e1.hardness(charge=charge1) + e2.hardness(charge=charge2))
-        )
+    hardy = [e.hardness(charge=c) for e, c in zip([e1, e2], [charge1, charge2])]
+
+    if all(x is not None for x in chi) and all(h is not None for h in hardy):
+        return (chi[0] - chi[1]) / (2.0 * (hardy[0] + hardy[1]))
     else:
         return None
+
+
+def _mulliken_electronegativity(
+    element: Element, charge: int, missing_is_zero: bool
+) -> Union[float, None]:
+    """Mulliken electronegativity for a given charge.
+
+    Args:
+        element: Element for which the electronegativity is calculated
+        charge: charge of the ion
+        missing_is_zero: if ``True`` treat missing ionization energies and
+            electron affinities as zero, otherwise return ``None`` when any of
+            the required values is missing
+    """
+    if charge < 0:
+        raise ValueError(f"Charge has to be a non-negative integer, got: {charge}")
+
+    if charge == 0:
+        ip = element.ionenergies.get(1)
+        ea = element.electron_affinity
+    else:
+        ip = element.ionenergies.get(charge + 1)
+        ea = element.ionenergies.get(charge)
+
+    if not missing_is_zero and (ip is None or ea is None):
+        return None
+
+    return (float(ip or 0.0) + float(ea or 0.0)) * 0.5
 
 
 def get_attribute_for_all_elements(attribute: str) -> List:
