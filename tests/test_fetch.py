@@ -58,12 +58,18 @@ def test_fetch_electronegativities_scales_subset():
     df = fetch_electronegativities(scales=["mulliken"])
     assert "Mulliken" in df.columns
     assert "Li-Xue" not in df.columns
+    assert "Martynov-Batsanov" not in df.columns
+    assert "Nagle" not in df.columns
     assert "Sanderson" not in df.columns
 
 
 def test_fetch_electronegativities_scales_str():
     df = fetch_electronegativities(scales="nagle")
     assert "Nagle" in df.columns
+    assert "Li-Xue" not in df.columns
+    assert "Martynov-Batsanov" not in df.columns
+    assert "Mulliken" not in df.columns
+    assert "Sanderson" not in df.columns
 
 
 def test_fetch_electronegativities_invalid_scale():
