@@ -29,6 +29,13 @@ def test_mulliken():
     assert mulliken(2.0, 1.0) == pytest.approx(1.5)
 
 
+def test_mulliken_missing_is_zero():
+    assert mulliken(None, None, missing_is_zero=True) == pytest.approx(0.0)
+    assert mulliken(None, 1.0, missing_is_zero=True) == pytest.approx(0.5)
+    assert mulliken(2.0, None, missing_is_zero=True) == pytest.approx(1.0)
+    assert mulliken(2.0, 1.0, missing_is_zero=True) == pytest.approx(1.5)
+
+
 def test_n_effective():
     assert n_effective(1, "slater") == pytest.approx(1.0)
     assert n_effective(3, "zhang") == pytest.approx(2.89)

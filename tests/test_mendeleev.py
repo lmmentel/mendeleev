@@ -1,6 +1,5 @@
 import pytest
-from mendeleev import element
-from mendeleev.mendeleev import _mulliken_electronegativity, deltaN
+from mendeleev.mendeleev import deltaN
 
 
 def test_deltaN():
@@ -28,9 +27,5 @@ def test_deltaN_missing_is_zero_false():
     assert deltaN("H", "Ne", missingIsZero=False) is None
 
 
-def test_mulliken_electronegativity_missing_values():
-    ne = element("Ne")
-    assert _mulliken_electronegativity(ne, 0, False) is None
-    assert _mulliken_electronegativity(ne, 0, True) == pytest.approx(
-        ne.ionenergies[1] / 2.0
-    )
+def test_deltaN_missing_is_zero_default_matches_true():
+    assert deltaN("H", "Ne") == deltaN("H", "Ne", missingIsZero=True)

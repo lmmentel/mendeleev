@@ -6,7 +6,6 @@ import sqlalchemy
 from sqlalchemy.orm import Session
 
 from .db import get_session, get_engine
-from .electronegativity import mulliken
 from .models import Element, Isotope
 
 
@@ -188,7 +187,7 @@ def deltaN(
     session.close()
 
     chi = [
-        _mulliken_electronegativity(x, c, missingIsZero)
+        x.electronegativity_mulliken(charge=c, missing_is_zero=missingIsZero)
         for x, c in zip([e1, e2], [charge1, charge2])
     ]
 
@@ -198,37 +197,6 @@ def deltaN(
         return (chi[0] - chi[1]) / (2.0 * (hardy[0] + hardy[1]))
     else:
         return None
-
-
-def _mulliken_electronegativity(
-    element: Element, charge: int, missing_is_zero: bool
-) -> Union[float, None]:
-    """Mulliken electronegativity for a given charge.
-
-    Args:
-        element: Element for which the electronegativity is calculated
-        charge: charge of the ion
-        missing_is_zero: if ``True`` treat missing ionization energies and
-            electron affinities as zero, otherwise return ``None`` when any of
-            the required values is missing
-    """
-    if charge < 0:
-        raise ValueError(f"Charge has to be a non-negative integer, got: {charge}")
-
-    if charge == 0:
-        ip = element.ionenergies.get(1)
-        ea = element.electron_affinity
-    else:
-        ip = element.ionenergies.get(charge + 1)
-        ea = element.ionenergies.get(charge)
-
-    if missing_is_zero:
-        ip = float(ip) if ip is not None else 0.0
-        ea = float(ea) if ea is not None else 0.0
-    elif ip is None or ea is None:
-        return None
-
-    return mulliken(ip, ea)
 
 
 def get_attribute_for_all_elements(attribute: str) -> List:

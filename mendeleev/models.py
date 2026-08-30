@@ -836,12 +836,15 @@ class Element(Base, ReprMixin, UnitMixin):
     def electronegativity_mulliken(
         self,
         charge: int = 0,
+        missing_is_zero: bool = False,
     ) -> float:
         r"""
         Return the absolute electronegativity (Mulliken scale).
 
         Args:
             charge: charge of the ion
+            missing_is_zero: if ``True`` treat missing ionization energies and
+                electron affinities as zero
 
         The value of electonegativity is calculated as:
 
@@ -863,7 +866,7 @@ class Element(Base, ReprMixin, UnitMixin):
             ea = self.ionenergies.get(charge, None)
         else:
             raise ValueError(f"Charge has to be a non-negative integer, got: {charge}")
-        return mulliken(ip, ea)
+        return mulliken(ip, ea, missing_is_zero=missing_is_zero)
 
     def electronegativity_nagle(self) -> float:
         "Nagle's electronegativity"
