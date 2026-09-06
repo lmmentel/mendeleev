@@ -146,7 +146,9 @@ Access a specific isotope directly:
 
    from mendeleev import fetch_electronegativities
 
-   en = fetch_electronegativities(["pauling", "allen", "mulliken"])
+   # `scales` selects computed scales; stored scales
+   # (Pauling, Allen, Ghosh, ...) are always included as columns
+   en = fetch_electronegativities(scales=["mulliken"])
    print(en[en["symbol"] == "Si"])
 
 Or access scales directly on an element:
@@ -158,7 +160,7 @@ Or access scales directly on an element:
    si = element("Si")
    print(si.en_pauling)       # 1.9
    print(si.en_allen)         # 11.33
-   print(si.en_mulliken())    # computed on the fly
+   print(si.electronegativity(scale="mulliken"))    # computed on the fly
 
 11. Access properties with units
 =================================

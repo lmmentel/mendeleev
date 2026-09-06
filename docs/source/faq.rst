@@ -157,7 +157,7 @@ mendeleev provides 15+ electronegativity scales:
     si = element('Si')
     print(si.en_pauling)           # Pauling scale
     print(si.en_allen)             # Allen scale
-    print(si.en_mulliken())        # Mulliken (computed)
+    print(si.electronegativity(scale="mulliken"))   # Mulliken (computed)
 
 See :doc:`electronegativity` for all available scales.
 

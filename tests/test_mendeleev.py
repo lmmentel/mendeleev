@@ -23,7 +23,8 @@ def test_deltaN_missing_hardness_returns_none():
 
 
 def test_deltaN_missing_is_zero_false():
-    # With missingIsZero=False the Mulliken electronegativity of Ne is None
+    # With missingIsZero=False chi(Ne) = IE1/2 (missing EA treated as zero),
+    # but deltaN is still None because Ne's hardness is undefined (missing EA)
     assert deltaN("H", "Ne", missingIsZero=False) is None
 
 

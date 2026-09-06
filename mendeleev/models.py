@@ -1198,7 +1198,7 @@ class Isotope(Base, ReprMixin, UnitMixin):
         return not self.is_radioactive
 
     @property
-    def half_life_u(self) -> "Quantity":
+    def half_life_u(self) -> Union["Quantity", None]:
         "Half life time as pint.Quantity with units"
         if self.half_life is None:
             return None

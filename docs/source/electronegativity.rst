@@ -306,10 +306,10 @@ potential (:math:`IP`) and the electron affinity (:math:`EA`):
 
 Example::
 
-    >>> Si.en_mulliken()
-    4.0758415
+    >>> Si.electronegativity_mulliken()
+    4.77060055
     >>> Si.electronegativity('mulliken')
-    4.0758415
+    4.77060055
 
 
 .. image:: _static/img/en_mulliken.png
