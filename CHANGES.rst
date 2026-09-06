@@ -5,10 +5,12 @@ mendeleev Changelog
 Unreleased
 ----------
 
-* [FIX] Fix ``deltaN`` that crashed with an ``AttributeError`` after the electronegativity refactor
-* [FIX] Fix typo in ``Isotope.half_life_u`` (``half_file`` -> ``half_life``)
-* [FIX] Fix literal ``{symbol}`` placeholder in multi-allotrope phase transition warnings
-* [FIX] Make ``fetch_electronegativities`` respect the ``scales`` argument
+* [FIX] Fix ``deltaN`` that crashed with an ``AttributeError`` after the electronegativity refactor by :user:`@lmmentel` in :pr:`270`
+* [FIX] Fix typo in ``Isotope.half_life_u`` (``half_file`` -> ``half_life``) by :user:`@lmmentel` in :pr:`270`
+* [FIX] Fix literal ``{symbol}`` placeholder in multi-allotrope phase transition warnings by :user:`@lmmentel` in :pr:`270`
+* [FIX] Make ``fetch_electronegativities`` respect the ``scales`` argument by :user:`@lmmentel` in :pr:`270`
+* [MNT] Consolidate missing-value handling in ``electronegativity.mulliken`` and ``Element.electronegativity_mulliken`` by :user:`@lmmentel` in :pr:`270`
+* [DOC] Fix ``fetch_electronegativities`` quick start example and replace removed ``en_mulliken`` references by :user:`@lmmentel` in :pr:`270`
 
 v1.2.0 (27.07.2026)
 -------------------
