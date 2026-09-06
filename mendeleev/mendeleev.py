@@ -161,7 +161,7 @@ def deltaN(
     charge1: int = 0,
     charge2: int = 0,
     missingIsZero: bool = True,
-) -> float:
+) -> Union[float, None]:
     r"""
     Calculate the approximate fraction of transferred electrons between
     elements or ions `id1` and `id2` with charges `charge1` and `charge2`
@@ -171,29 +171,44 @@ def deltaN(
 
        \Delta N = \frac{\chi_{A} - \chi_{B}}{2(\eta_{A} + \eta_{B})}
 
+    where :math:`\chi` is the Mulliken electronegativity and :math:`\eta`
+    is the absolute hardness. Returns ``None`` when either quantity cannot
+    be computed, i.e. when a required ionization energy or electron
+    affinity is missing and ``missingIsZero`` is ``False``, or when the
+    hardness is undefined for either of the elements.
+
     Args:
       id1: str or int
         Element identifier atomic number, symbol or element name
       id2: str or int
         Element identifier atomic number, symbol or element name
+      charge1: int
+        Charge of the ion formed from `id1`
+      charge2: int
+        Charge of the ion formed from `id2`
+      missingIsZero: bool
+        If ``True`` treat missing ionization energies and electron
+        affinities as zero when computing the Mulliken electronegativity.
+        The camelCase name is kept for backwards compatibility.
     """
 
-    session = get_session()
     atns = ids_to_attr([id1, id2], attr="atomic_number")
 
-    e1, e2 = [
-        session.query(Element).filter(Element.atomic_number == a).one() for a in atns
-    ]
+    with get_session() as session:
+        e1, e2 = [
+            session.query(Element).filter(Element.atomic_number == a).one()
+            for a in atns
+        ]
 
     chi = [
-        x.en_mulliken(charge=c, missingIsZero=missingIsZero)
+        x.electronegativity_mulliken(charge=c, missing_is_zero=missingIsZero)
         for x, c in zip([e1, e2], [charge1, charge2])
     ]
 
-    if all(x is not None for x in chi):
-        return (chi[0] - chi[1]) / (
-            2.0 * (e1.hardness(charge=charge1) + e2.hardness(charge=charge2))
-        )
+    hardy = [e.hardness(charge=c) for e, c in zip([e1, e2], [charge1, charge2])]
+
+    if all(x is not None for x in chi) and all(h is not None for h in hardy):
+        return (chi[0] - chi[1]) / (2.0 * (hardy[0] + hardy[1]))
     else:
         return None
 

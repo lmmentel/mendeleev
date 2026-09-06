@@ -14,6 +14,19 @@ def test_get_isotope():
     assert result.mass_number == 3
 
 
+def test_isotope_half_life_u():
+    from pint import Quantity
+
+    t = isotope("H", 3).half_life_u
+    assert isinstance(t, Quantity)
+    assert t.magnitude == 12.32
+    assert str(t.units) == "year"
+
+
+def test_isotope_half_life_u_none():
+    assert isotope("H", 1).half_life_u is None
+
+
 def test_isotopes_half_life_units():
     reference_units = (
         None,

@@ -1,6 +1,6 @@
 """Utility functions to fetch data from the database in bulk"""
 
-from typing import List, Union
+from typing import List, Optional, Union
 
 import pandas as pd
 from sqlalchemy.dialects import sqlite
@@ -11,6 +11,14 @@ from mendeleev.electronegativity import allred_rochow, gordy, cottrell_sutton
 
 from .db import get_engine, get_session
 from .models import Element, IonizationEnergy
+
+COMPUTED_SCALES = [
+    "li-xue",
+    "martynov-batsanov",
+    "mulliken",
+    "nagle",
+    "sanderson",
+]
 
 
 def fetch_table(table: str, **kwargs) -> pd.DataFrame:
@@ -58,23 +66,30 @@ def fetch_table(table: str, **kwargs) -> pd.DataFrame:
         return pd.read_sql_query(sql=text(query), con=conn, **kwargs)
 
 
-def fetch_electronegativities(scales: List[str] = None) -> pd.DataFrame:
+def fetch_electronegativities(scales: Optional[List[str]] = None) -> pd.DataFrame:
     """
     Fetch electronegativity scales for all elements as :py:class:`pandas.DataFrame`
 
     Args:
-        scales: list of scale names, defaults to all available scales
+        scales: list of computed scale names, defaults to all available
+            computed scales. Stored scales (Allen, Ghosh, Pauling, ...) are
+            always included as columns regardless of this argument. Raises
+            ``ValueError`` for scale names that are not computed scales.
 
     Returns:
         df (pandas.DataFrame): Pandas DataFrame with the contents of the table
     """
-    scales = [
-        "li-xue",
-        "martynov-batsanov",
-        "mulliken",
-        "nagle",
-        "sanderson",
-    ]
+    if scales is None:
+        scales = COMPUTED_SCALES
+    elif isinstance(scales, str):
+        scales = [scales]
+
+    invalid_scales = set(scales) - set(COMPUTED_SCALES)
+    if invalid_scales:
+        raise ValueError(
+            f"scale(s) not found: {', '.join(sorted(invalid_scales))}, "
+            f"available computed scales are: {', '.join(COMPUTED_SCALES)}"
+        )
 
     session = get_session()
     engine = get_engine()

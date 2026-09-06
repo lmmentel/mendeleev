@@ -453,7 +453,7 @@ class Element(Base, ReprMixin, UnitMixin):
             else:
                 warnings.warn(
                     f"{self.symbol} has multiple allotropes, "
-                    "check <{self.symbol}.phase_transitions> for details.",
+                    f"check <{self.symbol}.phase_transitions> for details.",
                     UserWarning,
                 )
         else:
@@ -476,7 +476,7 @@ class Element(Base, ReprMixin, UnitMixin):
             else:
                 warnings.warn(
                     f"{self.symbol} has multiple allotropes, "
-                    "check <{self.symbol}.phase_transitions> for details.",
+                    f"check <{self.symbol}.phase_transitions> for details.",
                     UserWarning,
                 )
         else:
@@ -836,12 +836,15 @@ class Element(Base, ReprMixin, UnitMixin):
     def electronegativity_mulliken(
         self,
         charge: int = 0,
+        missing_is_zero: bool = False,
     ) -> float:
         r"""
         Return the absolute electronegativity (Mulliken scale).
 
         Args:
             charge: charge of the ion
+            missing_is_zero: if ``True`` treat missing ionization energies and
+                electron affinities as zero
 
         The value of electonegativity is calculated as:
 
@@ -863,7 +866,7 @@ class Element(Base, ReprMixin, UnitMixin):
             ea = self.ionenergies.get(charge, None)
         else:
             raise ValueError(f"Charge has to be a non-negative integer, got: {charge}")
-        return mulliken(ip, ea)
+        return mulliken(ip, ea, missing_is_zero=missing_is_zero)
 
     def electronegativity_nagle(self) -> float:
         "Nagle's electronegativity"
@@ -1195,9 +1198,11 @@ class Isotope(Base, ReprMixin, UnitMixin):
         return not self.is_radioactive
 
     @property
-    def half_life_u(self) -> "Quantity":
+    def half_life_u(self) -> Union["Quantity", None]:
         "Half life time as pint.Quantity with units"
-        return self.half_file * ureg(self.half_life_unit)
+        if self.half_life is None:
+            return None
+        return self.half_life * ureg(self.half_life_unit)
 
     def __str__(self) -> str:
         return "atomic_number={0:5d}, mass_number={1:5d}, mass={2:10s}, abundance={3:10s}".format(

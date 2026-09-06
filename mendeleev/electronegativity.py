@@ -159,6 +159,7 @@ def martynov_batsanov(ionization_energies: List[float]) -> float:
 def mulliken(
     ionization_energy: float,
     electron_affinity: float,
+    missing_is_zero: bool = False,
 ) -> Union[float, None]:
     r"""
     Return the absolute electronegativity (Mulliken scale).
@@ -166,6 +167,10 @@ def mulliken(
     Args:
         ionization_energy: ionization energy
         electron_affinity: electron affinity
+        missing_is_zero: if ``True`` treat missing ionization energies and
+            electron affinities as zero, otherwise use the default behavior of
+            treating a missing electron affinity as zero and returning ``None``
+            when the ionization energy is missing
 
     The value of electonegativity is calculated as:
 
@@ -179,10 +184,16 @@ def mulliken(
     - :math:`A` is the electron affinity
     """
 
-    if ionization_energy is None:
+    if missing_is_zero:
+        ionization_energy = (
+            float(ionization_energy) if ionization_energy is not None else 0.0
+        )
+        electron_affinity = (
+            float(electron_affinity) if electron_affinity is not None else 0.0
+        )
+    elif ionization_energy is None:
         return None
-
-    if electron_affinity is None:
+    elif electron_affinity is None:
         return ionization_energy * 0.5
 
     return (ionization_energy + electron_affinity) * 0.5
