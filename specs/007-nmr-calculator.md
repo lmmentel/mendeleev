@@ -2,7 +2,9 @@
 
 ## Overview
 
-Add NMR (Nuclear Magnetic Resonance) utility functions using existing isotope data (`g_factor`, `spin`, `half_life`). Compute gyromagnetic ratio, Larmor frequency at a given field strength, and relative receptivity. This data is already stored in the `Isotope` model but not exposed through any NMR-specific API. Periodictable doesn't have this; pymatgen stores NMR quadrupole moments but no calculator.
+Add NMR (Nuclear Magnetic Resonance) utility functions using existing isotope data. Compute gyromagnetic ratio, Larmor frequency at a given field strength, and relative receptivity.
+
+**Existing data in mendeleev:** The `Isotope` model already stores all required inputs: `g_factor` (dimensionless magnetic moment), `spin` (nuclear spin quantum number as string), `quadrupole_moment` (float), and `abundance` (natural abundance). These are accessible via `element("H").isotopes[0].g_factor` etc. However, there's no NMR-specific API — no gyromagnetic ratio computation, no Larmor frequency calculation, no receptivity comparison. Periodictable has a full `nmr` module; pymatgen stores quadrupole moments but no calculator.
 
 ## API Design
 
@@ -56,6 +58,16 @@ def receptivity(isotope: str, reference: str = "1H") -> float | None:
 ## Effort
 
 **M** — Straightforward physics calculations using stored data. ~80 lines.
+
+## Cross-language comparison
+
+| Package | Language | Has NMR calculator? | Notes |
+|---------|----------|---------------------|-------|
+| periodictable | Python | Yes | Full `nmr` module: `nmr.gamma`, `nmr.frequency`, `nmr.receptivity` |
+| Mendeleev.jl | Julia | Yes | `gyromagnetic_ratio`, `larmor_frequency` on isotopes |
+| pymatgen | Python | Partial | `Element.gi` (quadrupole moment) only — no frequency or receptivity |
+| MolSSI | Python | Yes | `psi4` has NMR constants |
+| Chemaxon | Java | No | Not implemented |
 
 ## References
 

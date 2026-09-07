@@ -40,6 +40,18 @@ Fe.bulk_modulus_u  # -> 170.0 gigapascal  (if stored as GPa)
 
 **M** — Alembic migration + data sourcing + model changes. The data collection and validation is the bulk of the work. ~100 lines of code + migration + data script.
 
+## Cross-language comparison
+
+| Package | Language | Has mechanical properties? | Notes |
+|---------|----------|---------------------------|-------|
+| pymatgen | Yes | `Element.bulk_modulus`, `youngs_modulus`, etc. |
+| Mendeleev.jl | Julia | No | Gap — not implemented |
+| periodictable | Python | No | Gap — not implemented |
+| molmass | Python | No | Gap — not implemented |
+| Chemaxon | Java | No | Gap — not implemented |
+
+This is a differentiating feature for mendeleev — few periodic table packages include mechanical property data.
+
 ## References
 
 - pymatgen periodic table data: https://github.com/materialsproject/pymatgen/blob/master/src/pymatgen/core/periodic_table.py

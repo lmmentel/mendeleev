@@ -28,6 +28,16 @@ Fe.thermal_expansion_coefficient_u  # -> 1.18e-05 / kelvin
 
 **S** — Single column, well-documented values. ~30 lines + migration.
 
+## Cross-language comparison
+
+| Package | Language | Has thermal expansion? | Notes |
+|---------|----------|----------------------|-------|
+| pymatgen | Python | Yes | `Element.coefficient_of_linear_thermal_expansion` |
+| Mendeleev.jl | Julia | Yes | `thermal_expansion_coefficient` field |
+| periodictable | Python | No | Gap — not implemented |
+| molmass | Python | No | Gap — not implemented |
+| JSci | Java | No | Gap — not implemented |
+
 ## References
 
 - pymatgen `coefficient_of_linear_thermal_expansion`

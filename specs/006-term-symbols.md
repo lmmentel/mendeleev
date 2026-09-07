@@ -2,7 +2,9 @@
 
 ## Overview
 
-Add support for parsing and computing ground-state term symbols (e.g. `4F9/2` for Fe) from electronic configurations. The `IonizationEnergy` model already stores `ground_level` (term symbol + J value) but there's no parsing, validation, or computation. Pymatgen stores `ground_state_term_symbol` as a string attribute. Computing term symbols from electronic configuration + Hund's rules is a useful educational and scientific tool.
+Add support for parsing and computing ground-state term symbols (e.g. `4F9/2` for Fe) from electronic configurations.
+
+**Existing data in mendeleev:** The `IonizationEnergy` model already stores `ground_level` (term symbol + J value as a string, e.g. `"4F9/2"`) and `ground_configuration` (ground-state electronic configuration). These are accessible via `element._ionization_energies[0].ground_level`. However, there's no parsing, validation, or structured access to these values, and no computation of term symbols from electronic configuration via Hund's rules. Pymatgen stores `ground_state_term_symbol` as a string attribute.
 
 ## API Design
 
@@ -50,6 +52,16 @@ class Element:
 ## Effort
 
 **L** — Hund's rules implementation is non-trivial, especially for d- and f-electron systems with intermediate coupling. The parser is straightforward; the computation needs careful handling of degenerate ground states. ~200 lines.
+
+## Cross-language comparison
+
+| Package | Language | Has term symbols? | Notes |
+|---------|----------|-------------------|-------|
+| pymatgen | Python | String attribute only | `Element.ground_state_term_symbol` — no parsing or computation |
+| Mendeleev.jl | Julia | No | Not implemented |
+| periodictable | Python | No | Not implemented |
+| JSci | Java | No | Not implemented |
+| BioJava | Java | No | Has electron configuration but no term symbols |
 
 ## References
 

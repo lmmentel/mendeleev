@@ -2,7 +2,9 @@
 
 ## Overview
 
-Add an `ElementType` enum for categorizing elements (metal, nonmetal, metalloid, noble gas, halogen, alkali metal, alkaline earth metal, transition metal, post-transition metal, lanthanide, actinide, etc.). Pymatgen has this as `ElementType`; mendeleev has `block`, `geochemical_class`, and `goldschmidt_class` but no unified classification enum. Useful for filtering, querying, and ML feature engineering.
+Add an `ElementType` enum for categorizing elements (metal, nonmetal, metalloid, noble gas, halogen, alkali metal, alkaline earth metal, transition metal, post-transition metal, lanthanide, actinide, etc.). Useful for filtering, querying, and ML feature engineering.
+
+**Existing data in mendeleev:** The `Element` model already stores `block` (s/p/d/f), `geochemical_class` (string like "alkali metal"), and `goldschmidt_class` (string). These partially overlap with the proposed enum but are strings with no programmatic enum access, no `is_metal`/`is_nonmetal` boolean helpers, and no `elements_by_type()` query function. Pymatgen has `ElementType`; BioJava and Chemaxon provide `isMetal()`/`isNonMetal()`/`isMetalloid()` methods.
 
 ## API Design
 
@@ -52,8 +54,22 @@ def elements_by_type(element_type: ElementType) -> list[Element]:
 
 **S** — Classification logic is well-defined. ~60 lines, no DB changes.
 
+## Cross-language comparison
+
+| Package | Language | Has classification? | Notes |
+|---------|----------|---------------------|-------|
+| pymatgen | Python | Yes | `ElementType` enum with 10+ members, `Element.element_type` |
+| BioJava | Java | Yes | `Element.isMetal()`, `isNonMetal()`, `isMetalloid()`, `isHalogen()`, `isChalcogen()` |
+| Chemaxon JChem | Java | Yes | `PeriodicTable.isMetal()`, `isMetalloid()`, `isAlkaliMetal()`, etc. |
+| Chemistry.NET | C# | Yes | `ElementType` enum, `PhysicalState` enum |
+| Mendeleev.jl | Julia | Partial | `category` string field (from PeriodicTable.jl) |
+| molmass | Python | No | Has `block` and `series` but no metal/nonmetal classification |
+| periodictable | Python | No | Has `metal` boolean attribute only |
+
 ## References
 
 - pymatgen `ElementType` enum: https://github.com/materialsproject/pymatgen/blob/master/src/pymatgen/core/periodic_table.py
+- BioJava `Element`: https://biojava.org/docs/api/org/biojava/nbio/structure/Element.html
+- Chemaxon `PeriodicTable`: https://apidocs.chemaxon.com/jchem/developer/beans/api/chemaxon/struc/PeriodicTable.html
 - Wikipedia "Periodic table" groupings
 - IUPAC nomenclature

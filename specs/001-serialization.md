@@ -59,6 +59,17 @@ def to_dataframe(elements: list[Element]) -> pd.DataFrame:
 
 **S** — Pure Python, no DB migration, no new dependencies. ~50 lines of code.
 
+## Cross-language comparison
+
+| Package | Language | Has serialization? | Notes |
+|---------|----------|-------------------|-------|
+| pymatgen | Python | Yes | `Element.data` dict, `Element.to_json()` |
+| molmass | Python | Yes | `Element` dataclass with all fields |
+| Mendeleev.jl | Julia | Yes | `ChemElem` struct with ~80 fields, Julia dict access |
+| Chemistry.NET | C# | Yes | `Element` properties, JSON serialization |
+| periodictable | Python | Partial | `Element` attributes but no explicit serialization |
+| BioJava | Java | Partial | `Element` enum with accessor methods |
+
 ## References
 
 - pymatgen `Element.data` property: https://github.com/materialsproject/pymatgen/blob/master/src/pymatgen/core/periodic_table.py

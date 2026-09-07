@@ -65,6 +65,18 @@ def neutron_sld(compound: str, density: float, wavelength: float = 1.8) -> tuple
 
 **L** — New DB table, data import script, SLD calculator, ~300 lines + data pipeline.
 
+## Cross-language comparison
+
+| Package | Language | Has neutron scattering? | Notes |
+|---------|----------|------------------------|-------|
+| periodictable | Python | Yes | Full `nsf` module: scattering lengths, cross sections, SLD calculator |
+| Mendeleev.jl | Julia | No | Gap — not implemented |
+| pymatgen | Python | No | Gap — not implemented |
+| molmass | Python | No | Gap — not implemented |
+| Chemaxon | Java | No | Gap — not implemented |
+
+periodictable is the only package with comprehensive neutron scattering data. Adding this to mendeleev would make it competitive for neutron science workflows.
+
 ## References
 
 - periodictable neutron scattering: https://periodictable.readthedocs.io/en/latest/api/nsf.html

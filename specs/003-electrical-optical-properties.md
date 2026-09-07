@@ -37,6 +37,16 @@ Au.velocity_of_sound_u       # -> 3240.0 meter / second
 
 **M** — Same pattern as mechanical properties. ~80 lines + migration + data.
 
+## Cross-language comparison
+
+| Package | Language | Has electrical/optical? | Notes |
+|---------|----------|------------------------|-------|
+| pymatgen | Python | Yes | `Element.electrical_resistivity`, `velocity_of_sound`, etc. |
+| Mendeleev.jl | Julia | Yes | `electrical_resistivity` field |
+| JSci | Java | Yes | `Element.getElectricalConductivity()`, `getThermalConductivity()` |
+| periodictable | Python | No | Gap — not implemented |
+| molmass | Python | No | Gap — not implemented |
+
 ## References
 
 - pymatgen `_ELEMENT_GETATTR_ITEMS`: https://github.com/materialsproject/pymatgen/blob/master/src/pymatgen/core/periodic_table.py

@@ -62,6 +62,18 @@ def molecular_weight(formula: str) -> float:
 
 **M** — Pure Python, no DB changes. Parser is ~100 lines; rest is straightforward. No new dependencies.
 
+## Cross-language comparison
+
+| Package | Language | Has formula parser? | Notes |
+|---------|----------|---------------------|-------|
+| molmass | Python | Yes | `Formula` class: molecular weight, composition, mass spectrum, Hill notation |
+| chemformula | Python | Yes | `ChemFormula`: LaTeX/HTML output, arithmetic, CAS numbers |
+| Chemaxon JChem | Java | Yes | `Formula` class with molecular weight, formula parsing |
+| Mendeleev.jl | Julia | No | Gap — not implemented |
+| Chemistry.NET | C# | Yes | `ChemicalFormula` class, isotopic distribution |
+| Dart quds | Dart | Yes | `Atom` class with formula parsing |
+| periodictable | Python | Yes | `Formulas` module: `formula("H2O")`, molecular weight |
+
 ## References
 
 - periodictable formulas: https://periodictable.readthedocs.io/en/latest/api/formula.html

@@ -49,6 +49,16 @@ def bond_polarity(en1: float, en2: float) -> float:
 
 **S** — Pure Python, ~50 lines, no DB changes.
 
+## Cross-language comparison
+
+| Package | Language | Has bonding utilities? | Notes |
+|---------|----------|----------------------|-------|
+| Mendeleev.jl | Julia | Yes | `bond_polarity` field, ionic character computation |
+| pymatgen | Python | Partial | `Element.electronegativity` but no Bond class |
+| periodictable | Python | No | Gap — not implemented |
+| molmass | Python | No | Gap — not implemented |
+| Chemaxon | Java | No | Gap — not implemented |
+
 ## References
 
 - ROADMAP.md item #1

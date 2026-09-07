@@ -22,6 +22,15 @@ No API changes. Add an empty `mendeleev/py.typed` marker file and ensure it's in
 
 **S** — One empty file + one line in pyproject.toml. ~5 minutes.
 
+## Cross-language comparison
+
+| Package | Language | Has py.typed? | Notes |
+|---------|----------|--------------|-------|
+| periodictable | Python | Yes | Added in v2.1.0 |
+| pymatgen | Python | Yes | PEP 561 compliant |
+| molmass | Python | No | Not implemented |
+| chemformula | Python | No | Not implemented |
+
 ## References
 
 - PEP 561: https://peps.python.org/pep-0561/

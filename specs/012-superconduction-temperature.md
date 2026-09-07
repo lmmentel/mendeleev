@@ -31,6 +31,16 @@ Only ~30 elements have known T_c values; the rest are `None`.
 
 **S** — Single column, well-documented values. ~30 lines + migration.
 
+## Cross-language comparison
+
+| Package | Language | Has superconduction T_c? | Notes |
+|---------|----------|------------------------|-------|
+| pymatgen | Python | Yes | `Element.superconduction_temperature` |
+| Mendeleev.jl | Julia | Yes | `superconduction_temperature` field |
+| periodictable | Python | No | Gap — not implemented |
+| molmass | Python | No | Gap — not implemented |
+| Chemaxon | Java | No | Gap — not implemented |
+
 ## References
 
 - pymatgen `superconduction_temperature`
