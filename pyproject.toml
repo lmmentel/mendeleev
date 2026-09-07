@@ -27,6 +27,7 @@ readme = "README.md"
 documentation = "https://mendeleev.readthedocs.io"
 repository = "https://github.com/lmmentel/mendeleev"
 license = "MIT"
+include = ["mendeleev/py.typed"]
 
 # added source section to avoid: https://github.com/python-poetry/poetry/issues/9293
 [[tool.poetry.source]]
