@@ -5,6 +5,9 @@ mendeleev Changelog
 Unreleased
 ----------
 
+* [MNT] Loosen ``pandas`` dependency to ``>=2.1`` and ``plotly`` to ``>=5.0`` to allow newer major versions by :user:`@lmmentel` in :pr:`273`
+* [FIX] Replace deprecated ``pandas.api.types.is_float_dtype()`` with ``np.issubdtype()`` for pandas 3.0 compat by :user:`@lmmentel` in :pr:`273`
+* [FIX] Fix ``FutureWarning`` in ``vis/utils.py`` groupby.apply by selecting column before apply by :user:`@lmmentel` in :pr:`273`
 * [FIX] Fix ``deltaN`` that crashed with an ``AttributeError`` after the electronegativity refactor by :user:`@lmmentel` in :pr:`270`
 * [FIX] Fix typo in ``Isotope.half_life_u`` (``half_file`` -> ``half_life``) by :user:`@lmmentel` in :pr:`270`
 * [FIX] Fix literal ``{symbol}`` placeholder in multi-allotrope phase transition warnings by :user:`@lmmentel` in :pr:`270`
