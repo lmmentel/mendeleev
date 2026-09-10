@@ -5,6 +5,10 @@ mendeleev Changelog
 Unreleased
 ----------
 
+
+v1.3.0 (10.09.2026)
+-------------------
+
 * [MNT] Loosen ``pandas`` dependency to ``>=2.1`` and ``plotly`` to ``>=5.0`` to allow newer major versions by :user:`@lmmentel` in :pr:`273`
 * [FIX] Replace deprecated ``pandas.api.types.is_float_dtype()`` with ``np.issubdtype()`` for pandas 3.0 compat by :user:`@lmmentel` in :pr:`273`
 * [FIX] Fix ``FutureWarning`` in ``vis/utils.py`` groupby.apply by selecting column before apply by :user:`@lmmentel` in :pr:`273`
