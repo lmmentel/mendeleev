@@ -39,8 +39,8 @@ def add_tile_coordinates(
         f_mask = elements["block"] == "f"
         elements.loc[f_mask, "x"] = (
             elements[f_mask]
-            .groupby("period")
-            .apply(lambda x: x["atomic_number"] - x["atomic_number"].min())
+            .groupby("period")["atomic_number"]
+            .apply(lambda x: x - x.min())
             .to_numpy()
             + 3
         )

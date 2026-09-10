@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
+import numpy as np
 import pandas as pd
-from pandas.api.types import is_float_dtype
 
 from bokeh.plotting import figure
 from bokeh.models import HoverTool, ColumnDataSource, FixedTicker
@@ -58,7 +58,7 @@ def periodic_table_bokeh(
         elements.loc[:, "y_prop"] = elements["y"] + 0.35
 
     ac = "display_attribute"
-    if is_float_dtype(elements[attribute]):
+    if np.issubdtype(elements[attribute].dtype, np.floating):
         elements[ac] = elements[attribute].round(decimals=decimals)
     else:
         elements[ac] = elements[attribute]
