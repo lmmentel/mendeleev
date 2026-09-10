@@ -1,8 +1,8 @@
+import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.graph_objs.layout import Shape, Annotation
-from pandas.api.types import is_float_dtype
 
 from .utils import colormap_column
 
@@ -123,7 +123,7 @@ def periodic_table_plotly(
     )
 
     ac = "display_attribute"
-    if is_float_dtype(elements[attribute]):
+    if np.issubdtype(elements[attribute].dtype, np.floating):
         elements[ac] = elements[attribute].round(decimals=decimals)
     else:
         elements[ac] = elements[attribute]
