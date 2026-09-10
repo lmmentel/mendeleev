@@ -2830,24 +2830,6 @@ reference = "pypi-public"
 
 [[package]]
 name = "pandas-stubs"
-version = "1.2.0.62"
-description = "Type annotations for Pandas"
-optional = false
-python-versions = "*"
-groups = ["dev"]
-markers = "python_version >= \"3.12\""
-files = [
-    {file = "pandas-stubs-1.2.0.62.tar.gz", hash = "sha256:89c022dad41d28e26a1290eb1585db1042ccb09e6951220bb5c9146e2f795147"},
-    {file = "pandas_stubs-1.2.0.62-py3-none-any.whl", hash = "sha256:32a9e04582173104d42c090135efacc64d70e08c003405455b7dfb1540bd7e6c"},
-]
-
-[package.source]
-type = "legacy"
-url = "https://pypi.org/simple"
-reference = "pypi-public"
-
-[[package]]
-name = "pandas-stubs"
 version = "1.5.3.230321"
 description = "Type annotations for pandas"
 optional = false
@@ -5423,4 +5405,4 @@ vis = ["bokeh", "jupyter-bokeh", "plotly", "seaborn"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.15"
-content-hash = "e28d0afeeacd9c25c22eb7ce7969cec840da720dfc57eafae51b11e1b8dad1b9"
+content-hash = "7b6d257dff479b3409c484b32a659b82e9f7c4203754fbf27861506bf8b42f65"
