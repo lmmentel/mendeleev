@@ -90,22 +90,22 @@ def fetch_electronegativities(scales: Optional[List[str]] = None) -> pd.DataFram
             f"available computed scales are: {', '.join(COMPUTED_SCALES)}"
         )
 
-    session = get_session()
     engine = get_engine()
 
-    query = session.query(
-        Element.atomic_number,
-        Element.symbol,
-        Element.covalent_radius_pyykko.label("radius"),
-        Element.en_allen.label("Allen"),
-        Element.en_ghosh.label("Ghosh"),
-        Element.en_gunnarsson_lundqvist.label("Gunnarsson-Lundqvist"),
-        Element.en_miedema.label("Miedema"),
-        Element.en_mullay.label("Mullay"),
-        Element.en_pauling.label("Pauling"),
-        Element.en_robles_bartolotti.label("Robles-Bartolotti"),
-    ).order_by("atomic_number")
-    df = pd.read_sql_query(query.statement, engine)
+    with get_session() as session:
+        query = session.query(
+            Element.atomic_number,
+            Element.symbol,
+            Element.covalent_radius_pyykko.label("radius"),
+            Element.en_allen.label("Allen"),
+            Element.en_ghosh.label("Ghosh"),
+            Element.en_gunnarsson_lundqvist.label("Gunnarsson-Lundqvist"),
+            Element.en_miedema.label("Miedema"),
+            Element.en_mullay.label("Mullay"),
+            Element.en_pauling.label("Pauling"),
+            Element.en_robles_bartolotti.label("Robles-Bartolotti"),
+        ).order_by("atomic_number")
+        df = pd.read_sql_query(query.statement, engine)
 
     elems = get_all_elements()
 
@@ -148,15 +148,19 @@ def fetch_ionization_energies(degree: Union[List[int], int] = 1) -> pd.DataFrame
             f"degree should be either a positive int or a collection of positive ints, got: {degree}"
         )
 
-    session = get_session()
     engine = get_engine()
 
-    query = session.query(Element.atomic_number).order_by("atomic_number")
-    df = pd.read_sql_query(query.statement, engine)
+    with get_session() as session:
+        query = session.query(Element.atomic_number).order_by("atomic_number")
+        df = pd.read_sql_query(query.statement, engine)
+
+        energies_by_degree = {}
+        for d in degree:
+            query = session.query(IonizationEnergy).filter(IonizationEnergy.degree == d)
+            energies_by_degree[d] = pd.read_sql_query(query.statement, engine)
 
     for d in degree:
-        query = session.query(IonizationEnergy).filter(IonizationEnergy.degree == d)
-        energies = pd.read_sql_query(query.statement, engine)
+        energies = energies_by_degree[d]
 
         df = pd.merge(
             df,

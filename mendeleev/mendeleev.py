@@ -76,28 +76,27 @@ def _get_element(ids) -> Union[Element, List[Element]]:
     Valid identifiers for an element are: *name*, *symbol*, *atomic number*.
     """
 
-    session = get_session()
-
-    try:
-        if isinstance(ids, str):
-            if len(ids) <= 3 and ids.lower() != "tin":
-                return session.query(Element).filter(Element.symbol == str(ids)).one()
-            else:
-                return session.query(Element).filter(Element.name == str(ids)).one()
-        elif isinstance(ids, int):
-            return session.query(Element).filter(Element.atomic_number == ids).one()
-        raise ValueError("Expecting a <str> or <int>, got: {0!r}".format(type(ids)))
-    except sqlalchemy.exc.NoResultFound:
-        raise ValueError(f"Element not found: {ids}")
+    with get_session() as session:
+        try:
+            if isinstance(ids, str):
+                if len(ids) <= 3 and ids.lower() != "tin":
+                    return (
+                        session.query(Element).filter(Element.symbol == str(ids)).one()
+                    )
+                else:
+                    return session.query(Element).filter(Element.name == str(ids)).one()
+            elif isinstance(ids, int):
+                return session.query(Element).filter(Element.atomic_number == ids).one()
+            raise ValueError("Expecting a <str> or <int>, got: {0!r}".format(type(ids)))
+        except sqlalchemy.exc.NoResultFound:
+            raise ValueError(f"Element not found: {ids}")
 
 
 def get_all_elements() -> List[Element]:
     "Get all elements as a list"
 
-    session = get_session()
-    elements = session.query(Element).all()
-    session.close()
-    return elements
+    with get_session() as session:
+        return session.query(Element).all()
 
 
 def isotope(symbol_or_atn: Union[str, int], mass_number: int) -> Isotope:
@@ -112,24 +111,26 @@ def isotope(symbol_or_atn: Union[str, int], mass_number: int) -> Isotope:
     Returns:
         isotope (Isotope): isotope instance
     """
-    session = get_session()
-    if isinstance(symbol_or_atn, int):
-        return (
-            session.query(Isotope)
-            .filter_by(atomic_number=symbol_or_atn, mass_number=mass_number)
-            .one()
-        )
-    elif isinstance(symbol_or_atn, str):
-        return (
-            session.query(Isotope)
-            .join(Element)
-            .filter(Element.symbol == symbol_or_atn, Isotope.mass_number == mass_number)
-            .one()
-        )
-    else:
-        raise ValueError(
-            "Expecting a <str> or <int>, got: {0!r}".format(type(symbol_or_atn))
-        )
+    with get_session() as session:
+        if isinstance(symbol_or_atn, int):
+            return (
+                session.query(Isotope)
+                .filter_by(atomic_number=symbol_or_atn, mass_number=mass_number)
+                .one()
+            )
+        elif isinstance(symbol_or_atn, str):
+            return (
+                session.query(Isotope)
+                .join(Element)
+                .filter(
+                    Element.symbol == symbol_or_atn, Isotope.mass_number == mass_number
+                )
+                .one()
+            )
+        else:
+            raise ValueError(
+                "Expecting a <str> or <int>, got: {0!r}".format(type(symbol_or_atn))
+            )
 
 
 def ids_to_attr(ids, attr: str = "atomic_number"):

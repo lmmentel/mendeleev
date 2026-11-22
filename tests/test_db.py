@@ -14,7 +14,9 @@ def test_read_sql_table():
 def test_read_sql_table_old():
     engine = get_engine()
     query = "select * from elements"
-    # with engine.begin() as conn:
     conn = engine.connect()
-    df = pd.read_sql_query(sql=query, con=conn)
+    try:
+        df = pd.read_sql_query(sql=query, con=conn)
+    finally:
+        conn.close()
     assert df is not None
