@@ -5,6 +5,8 @@ mendeleev Changelog
 Unreleased
 ----------
 
+* [MNT] Drop the unused ``deprecated`` dependency, which capped it at ``<2`` and blocked installs next to Deprecated 3.0
+
 
 v1.3.0 (10.09.2026)
 -------------------
