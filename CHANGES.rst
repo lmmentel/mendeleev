@@ -2,12 +2,17 @@
 mendeleev Changelog
 *******************
 
-Unreleased
-----------
+v1.4.0 (22.11.2026)
+-------------------
 
-* [FIX] Pass SQLAlchemy ``Select`` objects directly to ``pandas.read_sql_query`` in ``fetch_electronegativities`` and ``fetch_ionization_energies`` instead of pre-compiled statements, which fail with SQLAlchemy 2.1
-* [MNT] Drop support for Python 3.10 (EOL), add support for Python 3.15 and bump Poetry to 2.5.2 in CI
-* [MNT] Drop the unused ``deprecated`` dependency, which capped it at ``<2`` and blocked installs next to Deprecated 3.0
+* [FIX] Pass SQLAlchemy ``Select`` objects directly to ``pandas.read_sql_query`` in ``fetch_electronegativities`` and ``fetch_ionization_energies`` instead of pre-compiled statements, which fail with SQLAlchemy 2.1 by :user:`@lmmentel` in :pr:`283`
+* [FIX] Raise the documented ``ValueError`` for invalid element and isotope identifiers by :user:`@swf1996120` in :pr:`277`
+* [FIX] Fix unclosed sqlite connections by caching database engines and closing sessions by :user:`@lmmentel` in :pr:`285`
+* [FIX] Use absolute URLs for README images so they render on PyPI by :user:`@lmmentel` in :pr:`286`
+* [MNT] Drop support for Python 3.10 (EOL), add support for Python 3.15 and bump Poetry to 2.5.2 in CI by :user:`@lmmentel` in :pr:`282`
+* [MNT] Drop the unused ``deprecated`` dependency, which capped it at ``<2`` and blocked installs next to Deprecated 3.0 by :user:`@itzzdev09` in :pr:`278`
+* [MNT] Bump ``pytest`` to ``^9.0.3`` by :user:`@lmmentel` in :pr:`281`
+* [MNT] Bump ``tornado`` to 6.6.1 by :user:`@lmmentel` in :pr:`284`
 
 
 v1.3.0 (10.09.2026)
