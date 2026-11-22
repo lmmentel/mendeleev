@@ -16,7 +16,7 @@ URL = "https://github.com/lmmentel/mendeleev"
 DOWNLOAD_URL = "https://github.com/lmmentel/mendeleev/archive/master.zip"
 AUTHOR = "Lukasz Mentel"
 EMAIL = "lmmentel@gmail.com"
-VERSION = "1.3.0"
+VERSION = "1.4.0"
 KEYWORDS = ["periodic", "table", "elements", "atomic", "properties", "mendeleev"]
 
 
@@ -34,7 +34,7 @@ CLASSIFIERS = [
 ]
 
 
-DEPENDENCIES = ["numpy", "pandas", "sqlalchemy>=1.3.0", "colorama", "pyfiglet"]
+DEPENDENCIES = ["numpy", "pandas", "sqlalchemy>=1.4.0", "colorama", "pyfiglet"]
 
 
 def readme():
