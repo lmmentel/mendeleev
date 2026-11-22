@@ -3,7 +3,6 @@
 from typing import List, Optional, Union
 
 import pandas as pd
-from sqlalchemy.dialects import sqlite
 from sqlalchemy import text
 
 from mendeleev import get_all_elements
@@ -106,7 +105,7 @@ def fetch_electronegativities(scales: Optional[List[str]] = None) -> pd.DataFram
         Element.en_pauling.label("Pauling"),
         Element.en_robles_bartolotti.label("Robles-Bartolotti"),
     ).order_by("atomic_number")
-    df = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
+    df = pd.read_sql_query(query.statement, engine)
 
     elems = get_all_elements()
 
@@ -153,13 +152,11 @@ def fetch_ionization_energies(degree: Union[List[int], int] = 1) -> pd.DataFrame
     engine = get_engine()
 
     query = session.query(Element.atomic_number).order_by("atomic_number")
-    df = pd.read_sql_query(query.statement.compile(dialect=sqlite.dialect()), engine)
+    df = pd.read_sql_query(query.statement, engine)
 
     for d in degree:
         query = session.query(IonizationEnergy).filter(IonizationEnergy.degree == d)
-        energies = pd.read_sql_query(
-            query.statement.compile(dialect=sqlite.dialect()), engine
-        )
+        energies = pd.read_sql_query(query.statement, engine)
 
         df = pd.merge(
             df,
