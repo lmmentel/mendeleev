@@ -12,7 +12,8 @@ ELEMENTS = get_all_elements()
 
 @pytest.fixture
 def session():
-    return get_session()
+    with get_session() as session:
+        yield session
 
 
 def test_query(session):

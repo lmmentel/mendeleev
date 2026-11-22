@@ -52,7 +52,7 @@ def test_isotopes_half_life_units():
         "Zyear",
     )
 
-    sess = get_session()
-    units = sess.query(Isotope.half_life_unit).distinct().all()
+    with get_session() as sess:
+        units = sess.query(Isotope.half_life_unit).distinct().all()
     units = [u[0] for u in units]
     assert set(units) == set(reference_units)

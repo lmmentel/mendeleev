@@ -92,6 +92,10 @@ scipy = {version = ">=1.14", optional = true} # required by seaborn
 [tool.pytest.ini_options]
 minversion = "9.0"
 addopts = "--durations=10 -n auto"
+filterwarnings = [
+    "error::ResourceWarning",
+    "error::pytest.PytestUnraisableExceptionWarning",
+]
 
 
 [build-system]
