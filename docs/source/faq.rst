@@ -64,7 +64,7 @@ See :doc:`install` for more options.
 Which Python versions are supported?
 -------------------------------------
 
-mendeleev supports Python 3.9, 3.10, 3.11, 3.12, and 3.13.
+mendeleev supports Python 3.11, 3.12, 3.13, 3.14, and 3.15.
 
 Do I need to download the database separately?
 -----------------------------------------------

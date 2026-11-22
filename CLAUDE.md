@@ -358,7 +358,7 @@ element.py Silicon
 
 GitHub Actions workflow (`.github/workflows/main.yml`):
 - **Runs on**: Ubuntu, macOS, Windows
-- **Python versions**: 3.9, 3.10, 3.11, 3.12, 3.13
+- **Python versions**: 3.11, 3.12, 3.13, 3.14, 3.15
 - **Steps**:
   1. Install dependencies with Poetry
   2. Run pre-commit hooks (ruff linting)
