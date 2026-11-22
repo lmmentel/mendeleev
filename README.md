@@ -5,13 +5,13 @@
 [![Python package](https://github.com/lmmentel/mendeleev/actions/workflows/main.yml/badge.svg)](https://github.com/lmmentel/mendeleev/actions/workflows/main.yml)
 [![image](https://pepy.tech/badge/mendeleev)](https://pepy.tech/project/mendeleev)
 [![DOI](https://zenodo.org/badge/204296088.svg)](https://zenodo.org/badge/latestdoi/204296088)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/lmmentel/mendeleev/blob/master/CODE_OF_CONDUCT.md)
 
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
   <a href="https://github.com/lmmentel/mendeleev">
-    <img src="docs/source/_static/img/name_and_logo.png" alt="Logo" width="300">
+    <img src="https://raw.githubusercontent.com/lmmentel/mendeleev/master/docs/source/_static/img/name_and_logo.png" alt="Logo" width="300">
   </a>
 
   <h3 align="center">Pythonic periodic table of elements</h3>
@@ -90,7 +90,7 @@ functionality through [bokeh](http://bokeh.pydata.org/en/latest/) that
 enables you to create customized periodic tables displaying various
 properties.
 
-![peridic_table](docs/source/_static/img/mendeleev_periodic_series.png)
+![peridic_table](https://raw.githubusercontent.com/lmmentel/mendeleev/master/docs/source/_static/img/mendeleev_periodic_series.png)
 
 The package also facilitates the exploration and visualization of
 periodic trends in the periodic table. If you want to
@@ -106,9 +106,9 @@ web app at [mendeleev.herokuapp.com](http://mendeleev.herokuapp.com/)
 where you can create your own periodic tables and visualize the
 relations between various properties of elements.
 
-![Periodic table view](docs/source/_static/img/mendeleevapp_periodic.png)
+![Periodic table view](https://raw.githubusercontent.com/lmmentel/mendeleev/master/docs/source/_static/img/mendeleevapp_periodic.png)
 
-![Correlations view](docs/source/_static/img/mendeleevapp_correlations.png)
+![Correlations view](https://raw.githubusercontent.com/lmmentel/mendeleev/master/docs/source/_static/img/mendeleevapp_correlations.png)
 
 ## Installation
 
