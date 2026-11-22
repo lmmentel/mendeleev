@@ -5,6 +5,7 @@ mendeleev Changelog
 Unreleased
 ----------
 
+* [FIX] Pass SQLAlchemy ``Select`` objects directly to ``pandas.read_sql_query`` in ``fetch_electronegativities`` and ``fetch_ionization_energies`` instead of pre-compiled statements, which fail with SQLAlchemy 2.1
 * [MNT] Drop the unused ``deprecated`` dependency, which capped it at ``<2`` and blocked installs next to Deprecated 3.0
 
 
