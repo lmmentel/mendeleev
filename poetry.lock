@@ -3270,14 +3270,14 @@ reference = "pypi-public"
 
 [[package]]
 name = "pyfiglet"
-version = "0.8.post1"
+version = "1.0.4"
 description = "Pure-python FIGlet implementation"
 optional = false
-python-versions = "*"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "pyfiglet-0.8.post1-py2.py3-none-any.whl", hash = "sha256:d555bcea17fbeaf70eaefa48bb119352487e629c9b56f30f383e2c62dd67a01c"},
-    {file = "pyfiglet-0.8.post1.tar.gz", hash = "sha256:c6c2321755d09267b438ec7b936825a4910fec696292139e664ca8670e103639"},
+    {file = "pyfiglet-1.0.4-py3-none-any.whl", hash = "sha256:65b57b7a8e1dff8a67dc8e940a117238661d5e14c3e49121032bd404d9b2b39f"},
+    {file = "pyfiglet-1.0.4.tar.gz", hash = "sha256:db9c9940ed1bf3048deff534ed52ff2dafbbc2cd7610b17bb5eca1df6d4278ef"},
 ]
 
 [package.source]
@@ -4787,4 +4787,4 @@ vis = ["bokeh", "jupyter-bokeh", "plotly", "seaborn"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<3.16"
-content-hash = "14a4fe9a84c98be507321f4bbc6e016d643944353c38a3ba145aaf5be45ec1d1"
+content-hash = "7319b695f08b8f91aee36f0df21c16954bf21f756190becdf19814b5b559291a"
