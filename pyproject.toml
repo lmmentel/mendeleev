@@ -38,7 +38,7 @@ url = "https://pypi.org/simple/"
 python = ">=3.11,<3.16"
 colorama = "^0.4.6"
 numpy = "^2.0"
-pyfiglet = "^0.8.post1"
+pyfiglet = "^1.0"
 Pygments = "^2.11.2"
 pandas = ">=2.1"
 SQLAlchemy = ">=1.4.0"
@@ -53,6 +53,9 @@ seaborn = {version = ">=0.12", optional = true}
 [tool.poetry.extras]
 vis = ["bokeh", "jupyter-bokeh", "plotly", "seaborn"]
 
+
+[tool.poetry.scripts]
+"element.py" = "mendeleev.cli:clielement"
 
 [tool.poetry.group.dev.dependencies]
 alembic = "^1.5.5"
